@@ -1,12 +1,6 @@
-from os import path
-from flask import Flask, render_template, g, url_for
-from flask import escape, request, session, redirect
-from flask_session import Session
-from flaskps.resources import user
-from flaskps.resources import auth
-from flaskps.config import Config
-from flaskps.helpers import handler
-from flaskps.helpers import auth as helper_auth
+from flask import Flask, escape, request, session
+from flask import render_template, g, url_for
+from flask import flash, redirect
 from flaskps.db import get_db
 from flaskps.resources import home_controller
 from flaskps.resources import auth
