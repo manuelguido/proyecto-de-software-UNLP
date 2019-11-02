@@ -1,0 +1,367 @@
+{% extends "layout.html" %}    
+    
+    {% block head %}
+        <script>
+            //Carga el menu por defecto en la primer opcion
+            window.onload = load;
+            function load() {
+                var subItems = document.getElementsByClassName('subItem');
+                var menuItems = document.getElementsByClassName('menuItem');
+                var panelTitle = document.getElementById('panel-title');
+                
+                for(var i = 0; i < subItems.length; i++) {
+                    subItems[i].style.display = 'none';
+                    menuItems[i].style.background = '#fff';
+                    menuItems[i].style.color = '#121212';
+                }
+                panelTitle.innerHTML = menuItems[0].innerHTML;
+                subItems[0].style.display = 'block';
+                menuItems[0].style.background = '#ddd';
+            }
+        </script>
+    {% endblock %}
+
+    {% block navbar %}
+        <!-- Cabecera -->
+        <header>
+            <!-- Navegación -->
+            <nav class="navbar navbar-expand-lg navbar-light navbar-static-top no-shadow panel-nav uns">
+                <a class="navbar-brand">Panel</a>
+            </nav>
+            <!-- /Navegación -->
+        </header>
+        <!-- /Cabecera -->
+    {% endblock %}
+    
+    {% block content %}
+        <!-- Contenido Principal -->
+        <main>
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Columna 2-->
+                    <div class="col-sm-2 p-0">
+                        <div class="card p-0 no-shadow panel-menu">
+                            <div class="row justify-content-center uns">
+                                <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item menuItem" onclick="menuSwitch(0)">Alumnos</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(1)">Instrumentos</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(2)">Empleados</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(3)">Modificar alumnos</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(4)">Modificar instrumentos</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(5)">Administración del sitio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /Columna 2 -->
+                    <!-- Columna 10 -->
+                    <div class="col-sm-10 pt-3">
+                        <h1 id="panel-title">Panel:</h1>
+                        <hr class="mb-4 pb-5">
+                        <hr>
+                        
+                        <!-- Alumnos -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Alumnos -->
+
+                        <!-- Instrumentos -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Instrumentos -->
+
+                        <!-- Empleados -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Empleados -->
+
+                        <!-- Modificar alumnos -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Estudiantes <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal"> + Nuevo Estudiante</button></h2>
+
+                                    {%with messages = get_flashed_messages()%}
+                                    {%if messages%}
+                                    {% for message in messages %}
+                                    <div class="alert alert-success alert-dismissable" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                            {{message}}
+                                    </div>
+                                    {%endfor%}
+                                    {%endif%}
+                                    {%endwith%}
+
+                                    <table class="table table-striped">
+                                        <!-- Row Titulos -->
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>Email</th>
+                                            <th>Teléfono</th>
+                                            <th>Nivel</th>
+                                            <th>DNI</th>
+                                            <th>Dirección</th>
+                                            <th>Barrio</th>
+                                            <th>Padre/Madre/Tutor</th>
+                                            <th>Instrumento</th>
+                                            <th>F. Nacimiento</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                        <!-- Row Estudiantes -->
+                                        {% for row in students %}
+                                        <tr>
+                                            <td>{{row.name}}</td>
+                                            <td>{{row.lastname}}</td>
+                                            <td>{{row.email}}</td>
+                                            <td>{{row.phone}}</td>
+                                            <td>{{row.level}}</td>
+                                            <td>{{row.dni}}</td>
+                                            <td>{{row.address}}</td>
+                                            <td>{{row.neighborhood}}</td>
+                                            <td>{{row.pmt_name}}</td>
+                                            <td>{{row.instrument}}</td>
+                                            <td>{{row.birth_date}}</td>
+                                            <td>
+                                                <a href="/update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}">Editar</a>
+                                                <a href="/delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')">Eliminar</a>
+                                            </td>
+                                        </tr>
+                                        <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Actualizar</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ url_for('update') }}" method="POST">        
+                                                            <!-- Nombre y apellido -->
+                                                            <input type="hidden"  name="id" value="{{row.id}}">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Nombre:</label>
+                                                                    <input type="text" class="form-control" name="name" required="1" value="{{row.name}}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Apellido:</label>
+                                                                    <input type="text" class="form-control" name="lastname" required="1" value="{{row.lastname}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Email -->
+                                                            <div class="form-group">
+                                                                <label>Email:</label>
+                                                                <input type="text" class="form-control" name="email" required="1" value="{{row.email}}">
+                                                            </div>
+                                                            <!-- Telefono -->
+                                                            <div class="form-group">
+                                                                <label>Teléfono:</label>
+                                                                <input type="number" min="0" class="form-control" name="phone" required="1" value="{{row.phone}}">
+                                                            </div>
+                                                            <!-- Nivel -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Nivel:</label>
+                                                                    <input type="text" class="form-control" name="level" required="1" value="{{row.level}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- DNI -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-8">
+                                                                    <label>DNI:</label>
+                                                                    <input type="number" min="0" class="form-control" name="dni" required="1" value="{{row.dni}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Direccion -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Dirección:</label>
+                                                                    <input type="text" class="form-control" name="address" required="1" value="{{row.address}}">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label>Barrio:</label>
+                                                                    <input type="text" class="form-control" name="neighborhood" required="1" value="{{row.neighborhood}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Padre madre tutor -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Nombre de padre, madre o tutor:</label>
+                                                                    <input type="text" class="form-control" name="pmt_name" required="1" value="{{row.pmt_name}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Padre madre tutor -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Instrumento:</label>
+                                                                    <input type="text" class="form-control" name="instrument" required="1" value="{{row.instrument}}">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Fecha de nacimiento (Alumno) -->
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6">
+                                                                    <label>Fecha de nacimiento (Alumno)</label>
+                                                                    <input type="date" class="form-control" name="birth_date" required="1" value="{{row.birth_date}}">
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-6 text-left">
+                                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                                </div>
+                                                                <div class="col-md-6 text-right">
+                                                                    <button class="btn btn-primary" type="sbumit">Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor  %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <!-- Modal -->
+                                <div id="myModal" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Ingresar datos</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body px-4">
+                                                <form action="{{ url_for('insert') }}" method="POST">
+                                                    <!-- Nombre y apellido -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Nombre:</label>
+                                                            <input type="text" class="form-control" name="name" required="1">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Apellido:</label>
+                                                            <input type="text" class="form-control" name="lastname" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Email -->
+                                                    <div class="form-group">
+                                                        <label>Email:</label>
+                                                        <input type="text" class="form-control" name="email" required="1">
+                                                    </div>
+                                                    <!-- Telefono -->
+                                                    <div class="form-group">
+                                                        <label>Teléfono:</label>
+                                                        <input type="number" min="0" class="form-control" name="phone" required="1">
+                                                    </div>
+                                                    <!-- Nivel -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Nivel:</label>
+                                                            <input type="text" class="form-control" name="level" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- DNI -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-8">
+                                                            <label>DNI:</label>
+                                                            <input type="number" min="0" class="form-control" name="dni" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Direccion -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Dirección:</label>
+                                                            <input type="text" class="form-control" name="address" required="1">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label>Barrio:</label>
+                                                            <input type="text" class="form-control" name="neighborhood" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Padre madre tutor -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Nombre de padre, madre o tutor:</label>
+                                                            <input type="text" class="form-control" name="mpt_name" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Padre madre tutor -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Instrumento:</label>
+                                                            <input type="text" class="form-control" name="instrument" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Fecha de nacimiento (Alumno) -->
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label>Fecha de nacimiento (Alumno)</label>
+                                                            <input type="date" class="form-control" name="birth_date" required="1">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6 text-left">
+                                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                        <div class="col-md-6 text-right">
+                                                            <button class="btn btn-primary" type="submit">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+                            <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+                        </div>
+                        <!--/.Modificar alumnos -->
+                        
+                        <!-- Alumnos -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Alumnos -->
+
+                        <!-- Admin -->
+                        <div class="subItem">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.Admin -->
+
+                    </div>
+                        <!--/col-span-10-->
+                    </div>
+                </div>
+        </main>
+        <!-- /Main -->
+    {% endblock %}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <!-- Metadata -->
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome/css/all.css') }}">
+        <!-- Scripts -->
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/mdb.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+        <!-- Block Head -->
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Block Navbar -->
+        {% block header %}
+        {% endblock %}
+        <!-- Block Navbar -->
+        {% block navbar %}
+        {% endblock %}
+        <!-- Block Content -->
+        {% block content %}
+        {% endblock %}
+        <!-- Block Footer -->
+        {% block footer %}
+        {% endblock %}
+    </body>
+</html>

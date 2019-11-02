@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+    
+    {% block header %}
+    <title>Backoffice-Orquesta</title>
+    {% endblock %}
+    
+    {% block content %}
+    <div class="login-main">
+        <!-- Contenedor principal de login -->
+        <div class="container mb-5 pt-5">
+            <!-- Row -->
+            <div class="row">
+                <!-- Columna -->
+                <div class="col-md-12">
+                    <!-- Tarjeta de fondo -->
+                    <div class="card back-card card-radius">
+                        <!-- Contenedor -->
+                        <div class="container">
+                            <!-- Row -->
+                            <div class="row">
+                                <!-- Columna del logo -->
+                                <div class="col-md-6">
+                                    <div class="row justify-content-center">
+                                        <img src="{{ url_for('static', filename='img/logo.png') }}" class="login-logo" alt="logo-de-orquesta-escuela-berisso">
+                                    </div>
+                                </div>
+                                <!-- Columna de formulario -->
+                                <div class="col-md-6">
+                                    <!-- Formulario de inicio de sesión -->
+                                    <form>
+                                        <!-- Tarjeta de inicio de sesión -->
+                                        <div class="card login-card card-radius-16">
+                                            <!-- Cabecera de tarjeta -->
+                                            <div class="card-header login-header">
+                                                <h1 class="mb-4">Iniciar sesión</h1>
+                                            </div>
+                                            <!-- Cuerpo de tarjeta -->
+                                            <div class="card-body login-body justify-content-center text-center">
+                                                <!-- Campos -->
+                                                <div class="row">
+                                                <!-- Email -->
+                                                    <div class="col-md-12">
+                                                        <label class="sr-only" for="inlineFormInputGroup">Ingrese su email</label>
+                                                        <div class="input-group mb-4">
+                                                            <div class="input-group-prepend bg-none">
+                                                            <div class="input-group-text btn-light"><i class="fas fa-envelope white-text"></i></div>
+                                                            </div>
+                                                            <input type="email" class="form-control py-0" id="inlineFormInputGroup" placeholder="Ingrese su email" required>
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <!-- Password -->
+                                                    <div class="col-md-12">
+                                                        <div class="input-group mb-4">
+                                                            <div class="input-group-prepend bg-none">
+                                                            <div class="input-group-text btn-light"><i class="fas fa-lock white-text"></i></div>
+                                                            </div>
+                                                            <input type="password" id="defaultLoginFormPassword" class="form-control py-0"  placeholder="Ingrese su contraseña" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Recordarme -->
+                                                    <div class="col-md-12 pb-4">                                  
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                                                            <label class="custom-control-label" for="defaultLoginFormRemember">Recordarme</label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Olvido su contraseña -->
+                                                    <div class="col-md-12 pb-4 text">    
+                                                        <a href="">¿Olvidó su contraseña?</a>
+                                                    </div>
+
+                                                    <!-- Sign in button -->
+                                                    <div class="col-md-12">
+                                                        <button class="btn btn-rounded btn-new-green white-text" type="submit">Entrar</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- Formulario de login -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Enlace al Home principal -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 py-4">
+                    <a class="btn btn-back white-text">Volver al inicio principal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
