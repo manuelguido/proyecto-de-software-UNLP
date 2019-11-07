@@ -95,7 +95,7 @@
                         <div class="subItem">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2>Estudiantes <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal"> + Nuevo Estudiante</button></h2>
+                                    <h2>Estudiantes <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal"><i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante</button></h2>
 
                                     {%with messages = get_flashed_messages()%}
                                     {%if messages%}
@@ -141,8 +141,8 @@
                                             <td>{{row.instrument}}</td>
                                             <td>{{row.birth_date}}</td>
                                             <td>
-                                                <a href="/update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}">Editar</a>
-                                                <a href="/delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')">Eliminar</a>
+                                                <a href="/update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                                <a href="/delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                                             </td>
                                         </tr>
                                         <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
