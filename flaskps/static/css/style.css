@@ -2,7 +2,7 @@
     Import fonts
 --------------------------------------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900|Montserrat:100,200,300,400,500,600,700,800,900|Nunito:200,300,400,600,700,800,900|Raleway:100,200,300,400,400i,500,600,700,800,900&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 /*--------------------------------------------------------------
     Root variables
 --------------------------------------------------------------*/
@@ -46,7 +46,7 @@
     /*Fonts*/
     --font-1: 'Raleway', sans-serif;
     --font-2: 'Nunito', sans-serif;
-    --font-3: 'Lato', sans-serif;
+    --font-3: 'Roboto', sans-serif;
     --font-4: 'Montserrat', sans-serif;
 }
 
@@ -57,7 +57,7 @@
     color: var(--black-1);
 }
 body {
-    background: #f9f9f9;
+    background: #fff;
 }
 .hide { 
     max-width: 0 !important;
@@ -283,11 +283,43 @@ a:hover {
 }
 
 /*--------------------------------------------------------------
+    <navbar>
+--------------------------------------------------------------*/
+.main-navbar .nav-item a {
+    color: #707070;
+    font-family: var(--font-3);
+    font-weight: 400;
+    font-size: 26px;
+    margin: 0 50px;
+}
+.nav-logo {
+    height: 22vh;
+    opacity: 0.5 !important;
+}
+
+/*--------------------------------------------------------------
+    Página de inicio
+--------------------------------------------------------------*/
+.home-row {
+    padding-top: 45vh;
+}
+.home-title {
+    font-family: var(--font-3);
+    font-weight: 700;
+    font-size: 45px;
+    color: var(--black-2);
+}
+.home-text {
+    font-size: 26px;
+}
+
+/*--------------------------------------------------------------
     Página de login
 --------------------------------------------------------------*/
 .login-main {
     background: #134153;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 200vh;
 }
 .back-card {
     padding: 0 !important;
