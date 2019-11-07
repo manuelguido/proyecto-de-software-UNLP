@@ -283,6 +283,37 @@ a:hover {
 }
 
 /*--------------------------------------------------------------
+    <navbar>
+--------------------------------------------------------------*/
+.main-navbar .nav-item a {
+    color: #707070;
+    font-family: var(--font-3);
+    font-weight: 400;
+    font-size: 26px;
+    margin: 0 50px;
+}
+.nav-logo {
+    height: 220px;
+    opacity: 0.5 !important;
+}
+
+/*--------------------------------------------------------------
+    Página de inicio
+--------------------------------------------------------------*/
+.home-row {
+    padding-top: 45vh;
+}
+.home-title {
+    font-family: var(--font-3);
+    font-weight: 700;
+    font-size: 45px;
+    color: var(--black-2);
+}
+.home-text {
+    font-size: 26px;
+}
+
+/*--------------------------------------------------------------
     Página de login
 --------------------------------------------------------------*/
 .login-main {
