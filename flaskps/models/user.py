@@ -13,7 +13,7 @@ class User(object):
     @classmethod
     def create(cls, data):
         sql = """
-            INSERT INTO users (email, password, first_name, last_name)
+            INSERT INTO usuarios (email, password, first_name, last_name)
             VALUES (%s, %s, %s, %s)
         """
 
@@ -26,7 +26,7 @@ class User(object):
     @classmethod
     def find_by_email_and_pass(cls, email, password):
         sql = """
-            SELECT * FROM users AS u
+            SELECT * FROM usuarios AS u
             WHERE u.email = %s AND u.password = %s
         """
 

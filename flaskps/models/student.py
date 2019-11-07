@@ -5,14 +5,14 @@ class Student(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM students")
+        cursor.execute("SELECT  * FROM estudiante")
         data = cursor.fetchall()
         return data
 
     @classmethod
     def store(cls, data):
         sql = """
-            INSERT INTO students (name, lastname, email, phone, level, dni, address, neighborhood, pmt_name, instrument, birth_date)
+            INSERT INTO estudiante (name, lastname, email, phone, level, dni, address, neighborhood, pmt_name, instrument, birth_date)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor = cls.db.cursor()
@@ -24,7 +24,7 @@ class Student(object):
     @classmethod
     def delete(cls, id_data):
         cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM students WHERE id=%s", (id_data,))
+        cursor.execute("DELETE FROM estudiante WHERE id=%s", (id_data,))
         cls.db.commit()
 
         return True
@@ -45,27 +45,10 @@ class Student(object):
         birth_date = request.form['birth_date']
         cursor = cls.db.cursor()
         cursor.execute("""
-               UPDATE students
+               UPDATE estudiante
                SET name=%s, lastname=%s, email=%s, phone=%s, level=%s, dni=%s, address=%s, neighborhood=%s, pmt_name=%s, instrument=%s, birth_date=%s
                WHERE id=%s
             """, (name, lastname, email, phone, level, dni, address, neighborhood, pmt_name, instrument, birth_date, id_data))
         cls.db.commit()
 
         return True
-    
-
-
-
-
-
-    @classmethod
-    def find_by_email_and_pass(cls, email, password):
-        sql = """
-            SELECT * FROM users AS u
-            WHERE u.email = %s AND u.password = %s
-        """
-
-        cursor = cls.db.cursor()
-        cursor.execute(sql, (email, password))
-
-        return cursor.fetchone()
