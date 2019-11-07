@@ -1,18 +1,18 @@
 <!--Navbar-->
-<nav class="main-navbar navbar navbar-expand-lg navbar-dark no-shadow py-5 px-5 fixed-top">
+<nav class="main-navbar navbar navbar-expand-lg bg-none navbar-dark no-shadow py-5 px-5 uns fixed-top">
     <!-- Navbar brand -->
     <a class="navbar-brand black3 px-5" href="/">
         <img src="{{ url_for('static', filename='img/logo-black.png') }}" class="nav-logo" alt="logo-de-orquesta-escuela-berisso">
     </a>
-      <!-- Collapse button -->
-    <button class="navbar-toggler black1" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
         aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon black1"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Collapsible content -->
-    <div class="collapse navbar-collapse mb-auto" id="basicExampleNav">
+    <div class="collapse navbar-collapse mb-auto row justify-content-center" id="basicExampleNav">
         <!-- Links -->
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav mr-5">
             <li class="nav-item"><a href="/">Programación</a></li>
             <li class="nav-item"><a href="/">Novedades</a></li>
             <li class="nav-item"><a href="/">Instrumentos</a></li>
@@ -20,8 +20,8 @@
         </ul>
         <!-- Links -->
         <!-- Links -->
-        <ul class="navbar-nav text-right">
-            <li class="text-right">
+        <ul class="navbar-nav ml-5 text-right">
+            <li class="ml-5 text-right">
                 <a href="/iniciar_sesion" type="button" class="btn btn-light ml-auto btn-rounded black3 px-5">Iniciar Sesión</a>
             </li>
         </ul>
