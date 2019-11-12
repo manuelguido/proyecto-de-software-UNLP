@@ -12,7 +12,7 @@ class Student(object):
     @classmethod
     def store(cls, data):
         sql = """
-            INSERT INTO estudiante (name, lastname, email, phone, level, dni, address, neighborhood, pmt_name, instrument, birth_date)
+            INSERT INTO estudiante (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor = cls.db.cursor()
@@ -32,23 +32,24 @@ class Student(object):
     @classmethod
     def update(cls, request):
         id_data = request.form['id']
-        name = request.form['name']
-        lastname = request.form['lastname']
-        email = request.form['email']
-        phone = request.form['phone']
-        level = request.form['level']
-        dni = request.form['dni']
-        address = request.form['address']
-        neighborhood = request.form['neighborhood']
-        pmt_name = request.form['pmt_name']
-        instrument = request.form['instrument']
-        birth_date = request.form['birth_date']
+        apellido = request.form['apellido']
+        nombre = request.form['nombre']
+        fecha_nac = request.form['fecha_nac']
+        localidad_id = request.form['localidad_id']
+        nivel_id = request.form['nivel_id']
+        domicilio = request.form['domicilio']
+        genero_id = request.form['genero_id']
+        escuela_id = request.form['escuela_id']
+        tipo_doc_id = request.form['tipo_doc_id']
+        numero = request.form['numero']
+        tel = request.form['tel']
+        barrio_id = request.form['barrio_id']
         cursor = cls.db.cursor()
         cursor.execute("""
                UPDATE estudiante
-               SET name=%s, lastname=%s, email=%s, phone=%s, level=%s, dni=%s, address=%s, neighborhood=%s, pmt_name=%s, instrument=%s, birth_date=%s
+               SET apellido=%s, nombre=%s, fecha_nac=%s, localidad_id=%s, nivel_id=%s, domicilio=%s, genero_id=%s, escuela_id=%s, tipo_doc_id=%s, numero=%s, tel=%s, barrio_id=%s
                WHERE id=%s
-            """, (name, lastname, email, phone, level, dni, address, neighborhood, pmt_name, instrument, birth_date, id_data))
+            """, (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, id_data))
         cls.db.commit()
 
         return True

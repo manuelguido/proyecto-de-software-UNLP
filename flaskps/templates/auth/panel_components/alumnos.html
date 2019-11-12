@@ -51,8 +51,8 @@
                         <td>{{row.instrument}}</td>
                         <td>{{row.birth_date}}</td>
                         <td>
-                            <a href="/update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                         </td>
                     </tr>
                     <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
@@ -160,58 +160,97 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body px-4">
-                            <form action="{{ url_for('insert') }}" method="POST">
+                            <form action="{{ url_for('insert_student') }}" method="POST">
+
                                 <!-- Nombre y apellido -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nombre" name="name" required="1">
+                                        <input type="text" class="form-control" placeholder="Apellido" name="apellido" required="1">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Apellido" name="lastname" required="1">
+                                        <input type="text" class="form-control" placeholder="Nombre" name="nombre" required="1">
                                     </div>
                                 </div>
-                                <!-- Email -->
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email" name="email" required="1">
+
+                                <!-- Fecha de nacimiento -->
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label>Fecha de nacimiento</label>
+                                        <input type="date" class="form-control" name="fecha_nac" required="1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Localidad</label>
+                                        <select name="localidad_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for row in localidades %}
+                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-                                <!-- Telefono -->
-                                <div class="form-group">
-                                    <input type="number" min="0" class="form-control" placeholder="Teléfono" name="phone" required="1">
-                                </div>
+
                                 <!-- Nivel y DNI -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nivel" name="level" required="1">
+                                        <select name="nivel_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Nivel</option>
+                                            {% for row in niveles %}
+                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="number" min="0" class="form-control" placeholder="DNI" name="dni" required="1">
+                                        <input type="text" min="0" class="form-control" placeholder="Domicilio" name="domicilio" required="1">
                                     </div>
                                 </div>
+                                
                                 <!-- Direccion -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Direccion" name="address" required="1">
+                                        <select name="genero_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Genero</option>
+                                            {% for row in generos %}
+                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Barrio" name="neighborhood" required="1">
+                                        <select name="escuela_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Escuela</option>
+                                            {% for row in escuelas %}
+                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
+                                
                                 <!-- Padre madre tutor e instrumento-->
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nombre padre, madre o tutor" name="mpt_name" required="1">
+                                        <select name="tipo_doc_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Tipo DNI</option>
+                                            {% for row in tipo_docs %}
+                                            <option value="{{row.id}}">{{row.tipo}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Instrumento" name="instrument" required="1">
+                                        <input type="number" min="0" class="form-control" placeholder="Numero DNI" name="numero" required="1">
                                     </div>
                                 </div>
+                                
                                 <!-- Fecha de nacimiento (Alumno) -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label>Fecha de nacimiento (Alumno)</label>
+                                        <input type="number" min="0" class="form-control" placeholder="Telefono" name="tel" required="1">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control" name="birth_date" required="1">
+                                        <select name="barrio_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Barrio</option>
+                                            {% for row in barrios %}
+                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <hr>

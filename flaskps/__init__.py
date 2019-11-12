@@ -36,20 +36,41 @@ app.add_url_rule(
 )
 
 #CRUD Estudiantes
-@app.route('/insert', methods = ['POST'])
-def insert():
-    student.store(request)
-    return redirect(url_for('panel'))
+app.add_url_rule(
+    "/insert_student",
+    'insert_student',
+    student.store,
+    methods=['POST']
+)
 
-@app.route('/delete/<string:id_data>', methods = ['GET'])
-def delete(id_data):
-    student.delete(id_data)
-    return redirect(url_for('panel'))
+app.add_url_rule(
+    "/delete_student/<string:id_data>",
+    'delete_student',
+    student.delete,
+    methods=['GET']
+)
 
-@app.route('/update',methods=['POST','GET'])
-def update():
-    student.update(request)
-    return redirect(url_for('panel'))
+app.add_url_rule(
+    "/update_student",
+    'update_student',
+    student.update,
+    methods=['POST','GET']
+)
+
+#@app.route('/insert', methods = ['POST'])
+#def insert():
+#    student.store(request)
+#    return redirect(url_for('panel'))
+
+#@app.route('/delete/<string:id_data>', methods = ['GET'])
+#def delete(id_data):
+#    student.delete(id_data)
+#    return redirect(url_for('panel'))
+
+#@app.route('/update',methods=['POST','GET'])
+#def update():
+#    student.update(request)
+#    return redirect(url_for('panel'))
 
 
 if __name__ == '__main__':
