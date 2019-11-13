@@ -7,49 +7,38 @@
                 </button>
             </div>
             <div class="col-md-12">
-                {%with messages = get_flashed_messages()%}
-                {%if messages%}
-                {% for message in messages %}
-                <div class="alert alert-success alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label ="close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                        {{message}}
-                </div>
-                {%endfor%}
-                {%endif%}
-                {%endwith%}
+                {% include 'auth/panel_components/mensajes_alertas.html' %}
 
                 <table class="table table-striped">
                     <!-- Row Titulos -->
                     <tr>
-                        <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
+                        <th>Nombre</th>
+                        <th>Fecha de Nacimiento</th>
+                        <th>Localidad</th>
                         <th>Nivel</th>
-                        <th>DNI</th>
-                        <th>Dirección</th>
+                        <th>Domicilio</th>
+                        <th>Género</th>
+                        <th>Escuela</th>
+                        <th>Documento</th>
+                        <th>Teléfono</th>
                         <th>Barrio</th>
-                        <th>Padre/Madre/Tutor</th>
-                        <th>Instrumento</th>
-                        <th>F. Nacimiento</th>
                         <th>Acciones</th>
                     </tr>
                     <!-- Row Estudiantes -->
                     {% for row in students %}
                     <tr>
-                        <td>{{row.name}}</td>
-                        <td>{{row.lastname}}</td>
-                        <td>{{row.email}}</td>
-                        <td>{{row.phone}}</td>
-                        <td>{{row.level}}</td>
-                        <td>{{row.dni}}</td>
-                        <td>{{row.address}}</td>
-                        <td>{{row.neighborhood}}</td>
-                        <td>{{row.pmt_name}}</td>
-                        <td>{{row.instrument}}</td>
-                        <td>{{row.birth_date}}</td>
+                        <td>{{row.apellido}}</td>
+                        <td>{{row.nombre}}</td>
+                        <td>{{row.fecha_nac}}</td>
+                        <td>{{row.localidad}}</td>
+                        <td>{{row.nivel}}</td>
+                        <td>{{row.domicilio}}</td>
+                        <td>{{row.genero}}</td>
+                        <td>{{row.escuela}}</td>
+                        <td>{{row.tipo_doc}}{{row.numero}}</td>
+                        <td>{{row.tel}}</td>
+                        <td>{{row.barrio}}</td>
                         <td>
                             <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
                             <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
@@ -63,73 +52,130 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update') }}" method="POST">        
-                                        <!-- Nombre y apellido -->
+                                    <form action="{{ url_for('update_student') }}" method="POST">        
                                         <input type="hidden"  name="id" value="{{row.id}}">
+                                        <!-- Nombre y apellido -->
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Nombre:</label>
-                                                <input type="text" class="form-control" name="name" required="1" value="{{row.name}}">
+                                                <label>Apellido</label>
+                                                <input type="text" class="form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1">
                                             </div>
                                             <div class="col-md-6">
-                                                <label>Apellido:</label>
-                                                <input type="text" class="form-control" name="lastname" required="1" value="{{row.lastname}}">
+                                                <label>Nombre</label>
+                                                <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
                                             </div>
                                         </div>
-                                        <!-- Email -->
-                                        <div class="form-group">
-                                            <label>Email:</label>
-                                            <input type="text" class="form-control" name="email" required="1" value="{{row.email}}">
-                                        </div>
-                                        <!-- Telefono -->
-                                        <div class="form-group">
-                                            <label>Teléfono:</label>
-                                            <input type="number" min="0" class="form-control" name="phone" required="1" value="{{row.phone}}">
-                                        </div>
-                                        <!-- Nivel -->
+
+                                        <!-- Fecha de nacimiento -->
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Nivel:</label>
-                                                <input type="text" class="form-control" name="level" required="1" value="{{row.level}}">
+                                                <label>Fecha de nacimiento</label>
+                                                <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Localidad</label>
+                                                <select name="localidad_id" class="browser-default custom-select" required="1">
+                                                    {% for localidad in localidades %}
+                                                    {% if localidad.id == row.localidad_id %}
+                                                    <option value="{{localidad.id}}" selected>{{localidad.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{localidad.id}}">{{localidad.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
-                                        <!-- DNI -->
+
+                                        <!-- Nivel y DNI -->
                                         <div class="form-group row">
-                                            <div class="col-md-8">
-                                                <label>DNI:</label>
-                                                <input type="number" min="0" class="form-control" name="dni" required="1" value="{{row.dni}}">
+                                            <div class="col-md-6">
+                                                <label>Nivel</label>
+                                                <select name="nivel_id" class="browser-default custom-select" required="1">
+                                                    <option selected disabled>Nivel</option>
+                                                    {% for nivel in niveles %}
+                                                    {% if nivel.id == row.nivel_id %}
+                                                    <option value="{{nivel.id}}" selected>{{nivel.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{nivel.id}}">{{nivel.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Domicilio</label>
+                                                <input type="text" min="0" class="form-control" value="{{row.numero}}" name="domicilio" required="1">
                                             </div>
                                         </div>
+                                        
                                         <!-- Direccion -->
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Dirección:</label>
-                                                <input type="text" class="form-control" name="address" required="1" value="{{row.address}}">
+                                                <label>Género</label>
+                                                <select name="genero_id" class="browser-default custom-select" required="1">
+                                                    <option selected disabled>Genero</option>
+                                                    {% for genero in generos %}
+                                                    {% if genero.id == row.genero_id %}
+                                                    <option value="{{genero.id}}" selected>{{genero.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{genero.id}}">{{genero.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <label>Barrio:</label>
-                                                <input type="text" class="form-control" name="neighborhood" required="1" value="{{row.neighborhood}}">
+                                                <label>Escuela</label>
+                                                <select name="escuela_id" class="browser-default custom-select" required="1">
+                                                    <option selected disabled>Escuela</option>
+                                                    {% for escuela in escuelas %}
+                                                    {% if escuela.id == row.escuela_id %}
+                                                    <option value="{{escuela.id}}" selected>{{escuela.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{escuela.id}}">{{escuela.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
-                                        <!-- Padre madre tutor -->
+                                        
+                                        <!-- Padre madre tutor e instrumento-->
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Nombre de padre, madre o tutor:</label>
-                                                <input type="text" class="form-control" name="pmt_name" required="1" value="{{row.pmt_name}}">
+                                                <label>Tipo Documento</label>
+                                                <select name="tipo_doc_id" class="browser-default custom-select" required="1">
+                                                    <option selected disabled>Tipo DNI</option>
+                                                    {% for tipo in tipo_docs %}
+                                                    {% if tipo.id == row.tipo_doc_id %}
+                                                    <option value="{{tipo.id}}" selected>{{tipo.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{tipo.id}}">{{tipo.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
-                                        </div>
-                                        <!-- Padre madre tutor -->
-                                        <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Instrumento:</label>
-                                                <input type="text" class="form-control" name="instrument" required="1" value="{{row.instrument}}">
+                                                <label>Numero</label>
+                                                <input type="number" min="0" class="form-control" value="{{row.numero}}" name="numero" required="1">
                                             </div>
                                         </div>
+                                        
                                         <!-- Fecha de nacimiento (Alumno) -->
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <label>Fecha de nacimiento (Alumno)</label>
-                                                <input type="date" class="form-control" name="birth_date" required="1" value="{{row.birth_date}}">
+                                                <label>Teléfono</label>
+                                                <input type="number" min="0" class="form-control" value="{{row.tel}}" name="tel" required="1">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Barrio</label>
+                                                <select name="barrio_id" class="browser-default custom-select" required="1">
+                                                    <option selected disabled>Barrio</option>
+                                                    {% for barrio in barrios %}
+                                                    {% if barrio.id == row.barrio_id %}
+                                                    <option value="{{barrio.id}}" selected>{{barrio.nombre}}</option>
+                                                    {% else %}
+                                                    <option value="{{barrio.id}}">{{barrio.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
                                         <hr>
@@ -146,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor  %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -165,9 +211,11 @@
                                 <!-- Nombre y apellido -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
+                                        <label>Apellido</label>
                                         <input type="text" class="form-control" placeholder="Apellido" name="apellido" required="1">
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Nombre</label>
                                         <input type="text" class="form-control" placeholder="Nombre" name="nombre" required="1">
                                     </div>
                                 </div>
@@ -182,8 +230,8 @@
                                         <label>Localidad</label>
                                         <select name="localidad_id" class="browser-default custom-select" required="1">
                                             <option selected disabled>Seleccionar</option>
-                                            {% for row in localidades %}
-                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            {% for localidad in localidades %}
+                                            <option value="{{localidad.id}}">{{localidad.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -192,14 +240,16 @@
                                 <!-- Nivel y DNI -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
+                                        <label>Nivel</label>
                                         <select name="nivel_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Nivel</option>
-                                            {% for row in niveles %}
-                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for nivel in niveles %}
+                                            <option value="{{nivel.id}}">{{nivel.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Domicilio</label>
                                         <input type="text" min="0" class="form-control" placeholder="Domicilio" name="domicilio" required="1">
                                     </div>
                                 </div>
@@ -207,18 +257,20 @@
                                 <!-- Direccion -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
+                                        <label>Género</label>
                                         <select name="genero_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Genero</option>
-                                            {% for row in generos %}
-                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for genero in generos %}
+                                            <option value="{{genero.id}}">{{genero.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Escuela</label>
                                         <select name="escuela_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Escuela</option>
-                                            {% for row in escuelas %}
-                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for escuela in escuelas %}
+                                            <option value="{{escuela.id}}">{{escuela.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
@@ -227,14 +279,16 @@
                                 <!-- Padre madre tutor e instrumento-->
                                 <div class="form-group row">
                                     <div class="col-md-6">
+                                        <label>Tipo Documento</label>
                                         <select name="tipo_doc_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Tipo DNI</option>
-                                            {% for row in tipo_docs %}
-                                            <option value="{{row.id}}">{{row.tipo}}</option>
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for tipo_doc in tipo_docs %}
+                                            <option value="{{tipo_doc.id}}">{{tipo_doc.tipo}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Número</label>
                                         <input type="number" min="0" class="form-control" placeholder="Numero DNI" name="numero" required="1">
                                     </div>
                                 </div>
@@ -242,13 +296,15 @@
                                 <!-- Fecha de nacimiento (Alumno) -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
+                                        <label>Teléfono</label>
                                         <input type="number" min="0" class="form-control" placeholder="Telefono" name="tel" required="1">
                                     </div>
                                     <div class="col-md-6">
+                                        <label>Barrio</label>
                                         <select name="barrio_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Barrio</option>
-                                            {% for row in barrios %}
-                                            <option value="{{row.id}}">{{row.nombre}}</option>
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for barrio in barrios %}
+                                            <option value="{{barrio.id}}">{{barrio.nombre}}</option>
                                             {% endfor %}
                                         </select>
                                     </div>

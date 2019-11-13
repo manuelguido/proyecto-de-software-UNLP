@@ -5,7 +5,16 @@ class Student(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM estudiante")
+        sql = """
+            SELECT  * , localidad.nombre as localidad, nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, tipo_doc.nombre as tipo_doc, barrio.nombre as barrio  FROM estudiante
+            INNER JOIN localidad ON estudiante.localidad_id = localidad.id
+            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
+            INNER JOIN genero ON estudiante.genero_id = genero.id
+            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
+            INNER JOIN tipo_doc ON estudiante.tipo_doc_id = tipo_doc.id
+            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+        """
+        cursor.execute(sql)
         data = cursor.fetchall()
         return data
 
@@ -13,12 +22,11 @@ class Student(object):
     def store(cls, data):
         sql = """
             INSERT INTO estudiante (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor = cls.db.cursor()
         cursor.execute(sql, list(data.values()))
         cls.db.commit()
-
         return True
 
     @classmethod
@@ -31,19 +39,19 @@ class Student(object):
 
     @classmethod
     def update(cls, request):
-        id_data = request.form['id']
-        apellido = request.form['apellido']
-        nombre = request.form['nombre']
-        fecha_nac = request.form['fecha_nac']
-        localidad_id = request.form['localidad_id']
-        nivel_id = request.form['nivel_id']
-        domicilio = request.form['domicilio']
-        genero_id = request.form['genero_id']
-        escuela_id = request.form['escuela_id']
-        tipo_doc_id = request.form['tipo_doc_id']
-        numero = request.form['numero']
-        tel = request.form['tel']
-        barrio_id = request.form['barrio_id']
+        id_data = request['id']
+        apellido = request['apellido']
+        nombre = request['nombre']
+        fecha_nac = request['fecha_nac']
+        localidad_id = request['localidad_id']
+        nivel_id = request['nivel_id']
+        domicilio = request['domicilio']
+        genero_id = request['genero_id']
+        escuela_id = request['escuela_id']
+        tipo_doc_id = request['tipo_doc_id']
+        numero = request['numero']
+        tel = request['tel']
+        barrio_id = request['barrio_id']
         cursor = cls.db.cursor()
         cursor.execute("""
                UPDATE estudiante

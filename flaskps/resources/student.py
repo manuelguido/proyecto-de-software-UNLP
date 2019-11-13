@@ -9,17 +9,18 @@ def store():
         Student.db = get_db()
         Student.store(params)
         flash("Estudiante agregado correctamente")
-        #return redirect(url_for('panel'))
-        #render_template('auth/panel.html')
+        return redirect(url_for('panel'))
 
 def delete(id_data):
     Student.db = get_db()
     Student.delete(id_data)
     flash("Se eliminó el estudiante correctamente")
+    return redirect(url_for('panel'))
 
-def update(request):
+def update():
     params = request.form
     if request.method == 'POST':
         Student.db = get_db()
         Student.update(params)
         flash("Se actualizó el estudiante correctamente")
+        return redirect(url_for('panel'))
