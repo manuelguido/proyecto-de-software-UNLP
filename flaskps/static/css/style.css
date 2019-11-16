@@ -19,7 +19,7 @@
     --white-3: #eee;
     --white-4: #d8d8d8;
     /*Black*/
-    --black-1: #464646;
+    --black-1: #666;
     --black-2: #575757;
     --black-3: rgb(132, 142, 156);
     --black-4: #979797;
@@ -49,7 +49,6 @@
     --font-3: 'Roboto', sans-serif;
     --font-4: 'Montserrat', sans-serif;
 }
-
 /*--------------------------------------------------------------
     General
 --------------------------------------------------------------*/
@@ -58,6 +57,10 @@
 }
 body {
     background: #fff;
+}
+#app {
+    min-height: 100vh;
+    background: none;
 }
 .hide { 
     max-width: 0 !important;

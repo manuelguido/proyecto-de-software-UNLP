@@ -6,12 +6,10 @@ class Student(object):
     def all(cls):
         cursor = cls.db.cursor()
         sql = """
-            SELECT  * , localidad.nombre as localidad, nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, tipo_doc.nombre as tipo_doc, barrio.nombre as barrio  FROM estudiante
-            INNER JOIN localidad ON estudiante.localidad_id = localidad.id
+            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
             INNER JOIN nivel ON estudiante.nivel_id = nivel.id
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
-            INNER JOIN tipo_doc ON estudiante.tipo_doc_id = tipo_doc.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
         """
         cursor.execute(sql)

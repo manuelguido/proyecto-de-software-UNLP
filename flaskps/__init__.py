@@ -3,7 +3,7 @@ from flask import render_template, g, url_for
 from flask import flash, redirect
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import home_controller
+from flaskps.resources import site_controller
 from flaskps.resources import auth
 from flaskps.resources import student
 from flaskps.config import Config
@@ -20,7 +20,7 @@ Session(app)
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
 #url Inicio
-app.add_url_rule("/", 'home', home_controller.index)
+app.add_url_rule("/", 'home', site_controller.index)
 
 #url Panel de administración
 app.add_url_rule("/panel", 'panel', auth.getPanel)
@@ -35,7 +35,11 @@ app.add_url_rule(
     methods=['POST']
 )
 
-#CRUD Estudiantes
+#Cambiar estado del sitio
+app.add_url_rule("/change_site_status", 'change_site_status', site_controller.change_site_status, methods=['POST'])
+
+#ABM Estudiantes
+#Alta
 app.add_url_rule(
     "/insert_student",
     'insert_student',
@@ -43,6 +47,7 @@ app.add_url_rule(
     methods=['POST']
 )
 
+#Baja
 app.add_url_rule(
     "/delete_student/<string:id_data>",
     'delete_student',
@@ -50,27 +55,13 @@ app.add_url_rule(
     methods=['GET']
 )
 
+#Modificación
 app.add_url_rule(
     "/update_student",
     'update_student',
     student.update,
     methods=['POST','GET']
 )
-
-#@app.route('/insert', methods = ['POST'])
-#def insert():
-#    student.store(request)
-#    return redirect(url_for('panel'))
-
-#@app.route('/delete/<string:id_data>', methods = ['GET'])
-#def delete(id_data):
-#    student.delete(id_data)
-#    return redirect(url_for('panel'))
-
-#@app.route('/update',methods=['POST','GET'])
-#def update():
-#    student.update(request)
-#    return redirect(url_for('panel'))
 
 
 if __name__ == '__main__':

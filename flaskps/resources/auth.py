@@ -3,21 +3,19 @@ from flaskps.db import get_db
 #Modelos
 from flaskps.models.user import User
 from flaskps.models.student import Student
-from flaskps.models.localidad import Localidad
 from flaskps.models.nivel import Nivel
 from flaskps.models.genero import Genero
 from flaskps.models.escuela import Escuela
-from flaskps.models.tipo_doc import TipoDoc
 from flaskps.models.barrio import Barrio
-
+from flaskps.models.info_sitio import InfoSitio
 
 def getPanel():
+    #Informacion del sitio
+    InfoSitio.db = get_db()
+    infositio = InfoSitio.index()
     #Estudiantes
     Student.db = get_db()
     students = Student.all()
-    #Localidades
-    Localidad.db = get_db()
-    localidades = Localidad.all()
     #Niveles
     Nivel.db = get_db()
     niveles = Nivel.all()
@@ -27,21 +25,17 @@ def getPanel():
     #Escuelas
     Escuela.db = get_db()
     escuelas = Escuela.all()
-    #Tipos de documento
-    TipoDoc.db = get_db()
-    tipo_docs = TipoDoc.all()
     #Barrios
     Barrio.db = get_db()
     barrios = Barrio.all()
     #Retorno todo en el panel
     return render_template(
         'auth/panel.html',
+        infositio = infositio,
         students=students,
-        localidades=localidades,
         niveles=niveles,
         generos=generos,
         escuelas=escuelas,
-        tipo_docs=tipo_docs,
         barrios=barrios
     )
 
