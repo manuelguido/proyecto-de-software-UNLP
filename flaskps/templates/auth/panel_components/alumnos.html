@@ -1,7 +1,7 @@
     <div class="subItem">
         <div class="row">
             <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModal">
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
                     <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
                 </button>
             </div>
@@ -37,11 +37,11 @@
                         <td>{{row.tel}}</td>
                         <td>{{row.barrio}}</td>
                         <td>
-                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modaledit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                            <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                         </td>
                     </tr>
-                    <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                    <div id="studentEdit{{row.id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -49,7 +49,7 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update_student') }}" method="POST">        
+                                    <form action="{{ url_for('update_docente') }}" method="POST">        
                                         <input type="hidden"  name="id" value="{{row.id}}">
                                         <!-- Nombre y apellido -->
                                         <div class="form-group row">
@@ -196,7 +196,7 @@
             </div>
             
             <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
+            <div id="studentCreate" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

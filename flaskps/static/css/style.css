@@ -413,7 +413,7 @@ a:hover {
     transition: 0.3s all;
 }
 #panel-menu {
-    z-index: 10000;
+    z-index: 10;
 }
 .navbar-static-top {
   margin-bottom: 0px;

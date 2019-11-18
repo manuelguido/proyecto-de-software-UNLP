@@ -6,6 +6,7 @@ from flaskps.db import get_db
 from flaskps.resources import site_controller
 from flaskps.resources import auth
 from flaskps.resources import student
+from flaskps.resources import docente
 from flaskps.config import Config
 from flaskps.helpers import handler
 from flaskps.helpers import auth as helper_auth
@@ -63,6 +64,30 @@ app.add_url_rule(
     methods=['POST','GET']
 )
 
+#ABM Docentes
+#Alta
+app.add_url_rule(
+    "/insert_docente",
+    'insert_docente',
+    docente.store,
+    methods=['POST']
+)
+
+#Baja
+app.add_url_rule(
+    "/delete_docente/<string:id_data>",
+    'delete_docente',
+    docente.delete,
+    methods=['GET']
+)
+
+#Modificación
+app.add_url_rule(
+    "/update_docente",
+    'update_docente',
+    docente.update,
+    methods=['POST','GET']
+)
 
 if __name__ == '__main__':
     app.run(debug=True)
