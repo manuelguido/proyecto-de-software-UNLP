@@ -16,3 +16,11 @@ def change_site_status():
         InfoSitio.change_site_status(params)
         flash("Se actualizó el estado del sitio correctamente")
         return redirect(url_for('panel'))
+
+def change_site_pagination():
+    params = request.form
+    if request.method == 'POST':
+        InfoSitio.db = get_db()
+        InfoSitio.change_site_pagination(params)
+        flash("Se actualizó el numero de paginación correctamente")
+        return redirect(url_for('panel'))

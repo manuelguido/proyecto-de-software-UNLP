@@ -4,7 +4,7 @@ class User(object):
 
     @classmethod
     def all(cls):
-        sql = 'SELECT * FROM users'
+        sql = 'SELECT * FROM usuario'
         cursor = cls.db.cursor()
         cursor.execute(sql)
 
@@ -13,7 +13,7 @@ class User(object):
     @classmethod
     def create(cls, data):
         sql = """
-            INSERT INTO usuarios (email, password, first_name, last_name)
+            INSERT INTO usuario (email, password, first_name, last_name)
             VALUES (%s, %s, %s, %s)
         """
 
@@ -26,7 +26,7 @@ class User(object):
     @classmethod
     def find_by_email_and_pass(cls, email, password):
         sql = """
-            SELECT * FROM usuarios AS u
+            SELECT * FROM usuario AS u
             WHERE u.email = %s AND u.password = %s
         """
 

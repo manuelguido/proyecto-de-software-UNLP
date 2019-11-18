@@ -5,7 +5,21 @@
             //Carga el menu por defecto en la primer opcion
             window.onload = load;
             function load() {
-                menuSwitch(5);
+                menuSwitch(1);
+                
+                function processRequest(e) {
+                    if (xhr.status == 200) {
+                        alert(xhr.response.ip); // no parsing needed
+                    }
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.responseType = "json"; // xhr.response will be parsed into a JSON object
+                xhr.open('GET', "https://ipinfo.io/json", true);
+                xhr.send();
+
+                xhr.onreadystatechange = processRequest;
+
             }
         </script>
     {% endblock %}
@@ -22,12 +36,10 @@
                             <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item menuItem" onclick="menuSwitch(0)">Asistencia</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(1)">Instrumentos</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(2)">Empleados</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(3)">Alumnos</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(4)">Modificar instrumentos</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(5)">Administración del sitio</li>
+                            <li class="list-group-item menuItem" onclick="menuSwitch(0)"><i class="fas fa-user-tag black3 mr-2"></i>Empleados</li>
+                            <li class="list-group-item menuItem" onclick="menuSwitch(1)"><i class="fas fa-users black3 mr-2"></i>Alumnos</li>
+                            <li class="list-group-item menuItem" onclick="menuSwitch(2)"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</li>
+                            <div id="mypanel"></div>
                         </ul>
                     </div>
                 </aside>
@@ -35,7 +47,7 @@
                 <!-- Columna full width -->
                 <div class="col p-0">
                     <!-- Navegación -->
-                    <nav class="navbar navbar-expand-lg navbar-light navbar-static-top shadow-sm panel-nav uns">
+                    <nav class="navbar navbar-expand-lg navbar-light navbar-static-top shadow-sm bg-white uns">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-link ml-3">
                                 Panel
@@ -45,49 +57,29 @@
                     <!-- /Navegación -->
 
                     <!-- Container Fluid -->
-                    <div class="container-fluid w-100 p-4 m-0">
-                        <h1 id="panel-title"></h1>
-                        <hr>
-                            
-                        <!-- Alumnos -->
-                        <div class="subItem">
-                            <div class="row">
-                                <div class="col-md-12">
-                                </div>
+                    <div class="container-fluid w-100 p-5 m-0">
+                        <div class="row">
+                            <div class="col-4">
+                                <h1 class="h4 black2" id="panel-title"></h1>
+                            </div>
+                            <div class="col-8">
+                                {% include 'auth/panel_components/mensajes_alertas.html' %}
                             </div>
                         </div>
-                        <!--/.Alumnos -->
+                        <div class="row">
+                            <div class="col-12">
+                                <hr>
+                            </div>
+                        </div>
 
-                        <!-- Instrumentos -->
-                        <div class="subItem">
-                            <div class="row">
-                                <div class="col-md-12">
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.Instrumentos -->
 
                         <!-- Empleados -->
-                        <div class="subItem">
-                            <div class="row">
-                                <div class="col-md-12">
-                                </div>
-                            </div>
-                        </div>
+                        {% include 'auth/panel_components/empleados.html' %}
                         <!--/.Empleados -->
 
                         <!-- Modificar alumnos -->
                         {% include 'auth/panel_components/alumnos.html' %}
                         <!--/.Modificar alumnos -->
-                            
-                        <!-- Alumnos -->
-                        <div class="subItem">
-                            <div class="row">
-                                <div class="col-md-12">
-                                </div>
-                            </div>
-                        </div>
-                        <!--/.Alumnos -->
 
                         <!-- Admin -->
                         {% include 'auth/panel_components/estado_sitio.html' %}

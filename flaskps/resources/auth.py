@@ -3,19 +3,24 @@ from flaskps.db import get_db
 #Modelos
 from flaskps.models.user import User
 from flaskps.models.student import Student
+from flaskps.models.docente import Docente
 from flaskps.models.nivel import Nivel
 from flaskps.models.genero import Genero
 from flaskps.models.escuela import Escuela
 from flaskps.models.barrio import Barrio
 from flaskps.models.info_sitio import InfoSitio
+from flaskps.models.rol import Rol
 
 def getPanel():
     #Informacion del sitio
     InfoSitio.db = get_db()
-    infositio = InfoSitio.index()
+    infositio = InfoSitio.all()
     #Estudiantes
     Student.db = get_db()
     students = Student.all()
+    #Docentes
+    Docente.db = get_db()
+    docentes = Docente.all()
     #Niveles
     Nivel.db = get_db()
     niveles = Nivel.all()
@@ -28,18 +33,24 @@ def getPanel():
     #Barrios
     Barrio.db = get_db()
     barrios = Barrio.all()
+    #Generos
+    Rol.db = get_db()
+    roles = Rol.all()
     #Retorno todo en el panel
     return render_template(
         'auth/panel.html',
         infositio = infositio,
         students=students,
+        docentes=docentes,
         niveles=niveles,
         generos=generos,
         escuelas=escuelas,
-        barrios=barrios
+        barrios=barrios,
+        roles=roles
     )
 
 def login():
+
     return render_template('auth/login.html')
 
 
@@ -56,7 +67,7 @@ def authenticate():
     session['user'] = user['email']
     flash("La sesión se inició correctamente.")
 
-    return redirect(url_for('home'))
+    return redirect(url_for('panel'))
 
 
 def logout():

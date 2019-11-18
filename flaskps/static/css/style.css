@@ -1,8 +1,7 @@
 /*--------------------------------------------------------------
     Import fonts
 --------------------------------------------------------------*/
-@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900|Montserrat:100,200,300,400,500,600,700,800,900|Nunito:200,300,400,600,700,800,900|Raleway:100,200,300,400,400i,500,600,700,800,900&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
 /*--------------------------------------------------------------
     Root variables
 --------------------------------------------------------------*/
@@ -18,11 +17,13 @@
     --white-2: #fbfbfb;
     --white-3: #eee;
     --white-4: #d8d8d8;
+    --white-5: #d8d8d8;
     /*Black*/
-    --black-1: #666;
-    --black-2: #575757;
-    --black-3: rgb(132, 142, 156);
+    --black-1: #474747;
+    --black-2: #595959;
+    --black-3: #7a7a7a;
     --black-4: #979797;
+    --black-5: #aaa;
     /*Link*/
     --link: #3e64ff;
     --link-dark: #1d41d1;
@@ -44,16 +45,14 @@
     /*Transition*/
     --base-transition: 0.09s all !important;
     /*Fonts*/
-    --font-1: 'Raleway', sans-serif;
-    --font-2: 'Nunito', sans-serif;
-    --font-3: 'Roboto', sans-serif;
-    --font-4: 'Montserrat', sans-serif;
+    --font-1: 'Open Sans', sans-serif;
 }
 /*--------------------------------------------------------------
     General
 --------------------------------------------------------------*/
 * {
     color: var(--black-1);
+    font-family: var(--font-1);
 }
 body {
     background: #fff;
@@ -95,41 +94,38 @@ body {
 /*--------------------------------------------------------------
     Text
 --------------------------------------------------------------*/
-h1 { font-size: 32px; }
-h2 { font-size: 26px; }
-h3 { font-size: 23px; }
-h4 { font-size: 21px; }
-h5 { font-size: 19px; }
-h6 { font-size: 18px; }
+.h1 { font-size: 2.0em !important; }
+.h2 { font-size: 1.9em !important; }
+.h3 { font-size: 1.8em !important; }
+.h4 { font-size: 1.5em !important; }
+.h5 { font-size: 1.2em !important; }
+.h6 { font-size: 0.8em !important; }
 p { font-size: 16px; }
 h1, h2, h3, h4, h5, h6, p {
-    font-family: var(--font-2);
-    font-weight: 200;
     color: var(--black-1);
+    font-family: var(--font-1);
+    font-weight: 400 !important;
 }
 a {
-    transition: 0.08s all !important;
     color: var(--link);
+    transition: 0.08s all !important;
 }
 a:hover {
     color: var(--link-dark);
     text-decoration: none;
 }
 .font-1 { font-family: var(--font-1); }
-.font-2 { font-family: var(--font-2); }
-.font-3 { font-family: var(--font-3); }
-.font-4 { font-family: var(--font-4); }
 
 /*--------------------------------------------------------------
     Buttons
 --------------------------------------------------------------*/
 .btn {
     margin: 0px !important;
-    font-family: var(--font-2) !important;
-    font-weight: 500;
-    font-size: 12.5px;
+    font-family: var(--font-1) !important;
+    font-weight: 700;
     padding: 10px 20px;
     border: 0 none;
+    letter-spacing: .1em;
     box-shadow: 0 .07em .125em 0 rgba(0,0,0,.15) !important;
 }
 .btn i {
@@ -206,11 +202,13 @@ a:hover {
 .white2 { color: var(--white-2) !important; }
 .white3 { color: var(--white-3) !important; }
 .white4 { color: var(--white-4) !important; }
+.white5 { color: var(--white-5) !important; }
 
 .black1 { color: var(--black-1) !important; }
 .black2 { color: var(--black-2) !important; }
 .black3 { color: var(--black-3) !important; }
 .black4 { color: var(--black-4) !important; }
+.black5 { color: var(--black-5) !important; }
 
 .primary { color: var(--primary) !important; }
 .primary-dark { color: var(--primary-dark) !important; }
@@ -246,11 +244,13 @@ a:hover {
 .bg-white2 { background: var(--white-2) !important; }
 .bg-white3 { background: var(--white-3) !important; }
 .bg-white4 { background: var(--white-4) !important; }
+.bg-white5 { background: var(--white-5) !important; }
 
 .bg-black1 { background: var(--black-1) !important; }
 .bg-black2 { background: var(--black-2) !important; }
 .bg-black3 { background: var(--black-3) !important; }
 .bg-black4 { background: var(--black-4) !important; }
+.bg-black5 { background: var(--black-5) !important; }
 
 .bg-primary { background: var(--primary) !important; }
 .bg-primary-dark { background: var(--primary-dark) !important; }
@@ -279,7 +279,7 @@ a:hover {
 .card {
     border-radius: 3px;
     border: 0 none !important;
-    box-shadow: 0 .07em .125em 0 rgba(0,0,0,.15);
+    box-shadow: 0 .07em .155em 0 rgba(0,0,0,.22) !important;
 }
 .card-radius-16 {
     border-radius: 16px !important;
@@ -378,7 +378,7 @@ a:hover {
     padding: 40px !important;
 }
 .login-header h1 {
-    font-family: var(--font-2);
+    font-family: var(--font-1);
     font-weight: 400;
     font-size: 30px;
     color: var(--black-1) !important;
@@ -400,17 +400,19 @@ a:hover {
 /*--------------------------------------------------------------
     Panel de docente
 --------------------------------------------------------------*/
+.panel {
+    background: #fcfcfc;
+}
 .panel nav .nav-link {
-    color: var(--black-1);
-    font-weight: 400;
-    font-family: var(--font-2);
+    color: var(--black-3);
+    font-weight: 600;
+    font-family: var(--font-1);
     font-size: 16;
 }
 #panel-menu, #panel-menu-inner, .panel-content, #panel-toggle {
     transition: 0.3s all;
 }
 #panel-menu {
-    background: var(--primary-dark);
     z-index: 10000;
 }
 .navbar-static-top {
@@ -434,9 +436,6 @@ a:hover {
     border: 1px solid #e5e5e5;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-}
-#panel-title {
-    font-size: 28px !important;
 }
 .menuItem {
     transition: 0.2s all;
