@@ -19,10 +19,10 @@
     --white-4: #d8d8d8;
     --white-5: #d8d8d8;
     /*Black*/
-    --black-1: #474747;
-    --black-2: #595959;
-    --black-3: #7a7a7a;
-    --black-4: #979797;
+    --black-1: #333;
+    --black-2: #454545;
+    --black-3: #575757;
+    --black-4: #777;
     --black-5: #aaa;
     /*Link*/
     --link: #3e64ff;
@@ -397,10 +397,15 @@ h1, h2, h3, h4, h5, h6, p {
 .panel {
     background: #fff;
 }
-.panel nav .nav-link {
+.nav-link-panel, .nav-link-nombre {
     color: var(--black-4);
     font-weight: 500;
+}
+.nav-link-panel {
     font-size: 1.2em;
+}
+.nav-link-nombre {
+    font-size: .9em;
 }
 #panel-menu, #panel-menu-inner, .panel-content, #panel-toggle {
     transition: 0.3s all;

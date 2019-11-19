@@ -34,3 +34,15 @@ class User(object):
         cursor.execute(sql, (email, password))
 
         return cursor.fetchone()
+
+    @classmethod
+    def get_roles(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM usario_tiene_rol
+            INNER JOIN rol ON usuario_tiene_rol.rol_id = rol.id
+            WHERE usuario_tiene_rol.usuario_id = %s
+        """
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        return data
