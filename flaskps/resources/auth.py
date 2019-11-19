@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
-import requests
-import json
+#import requests
+#import json
 #Modelos
 from flaskps.models.user import User
 from flaskps.models.student import Student
@@ -14,13 +14,13 @@ from flaskps.models.info_sitio import InfoSitio
 from flaskps.models.rol import Rol
 
 def getPanel():
-    request_localidad = requests.get(
-        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
-    localidades = request_localidad.json()
+    #request_localidad = requests.get(
+    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
+    #localidades = request_localidad.json()
 
-    request_tipo_docs = requests.get(
-        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
-    tipo_docs = request_tipo_docs.json()
+    #request_tipo_docs = requests.get(
+    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
+    #tipo_docs = request_tipo_docs.json()
 
     #Informacion del sitio
     InfoSitio.db = get_db()
@@ -56,8 +56,8 @@ def getPanel():
         generos=generos,
         escuelas=escuelas,
         barrios=barrios,
-        localidades=localidades,
-        tipo_docs=tipo_docs,
+        #localidades=localidades,
+        #tipo_docs=tipo_docs,
         roles=roles
     )
 

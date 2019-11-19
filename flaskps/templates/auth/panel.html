@@ -6,6 +6,59 @@
             window.onload = load;
             function load() {
                 menuSwitch(0);
+                
+                //Llamado a la API de localidades
+                var xmlhttp = new XMLHttpRequest();
+                var url = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad";
+
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myArr = JSON.parse(this.responseText);
+                        myFunction(myArr);
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
+                function myFunction(arr) {
+                    var out = "";
+                    var i;
+                    for(i = 0; i < arr.length; i++) {
+                        out += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
+                    }
+                    //document.getElementById("id-loc").innerHTML = out;
+                    var localidades = document.getElementsByClassName('localidades');
+                    for(i = 0; i < localidades.length; i++) {
+                        localidades[i].innerHTML = out;
+                    }
+                }
+
+                //Llamado a la API de localidades
+                var xmlhttp = new XMLHttpRequest();
+                var url = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento";
+
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var myArr = JSON.parse(this.responseText);
+                        myFunction2(myArr);
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
+                function myFunction2(arr) {
+                    var out = "";
+                    var i;
+                    for(i = 0; i < arr.length; i++) {
+                        out += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
+                    }
+                    //document.getElementById("id-loc").innerHTML = out;
+                    var tipo_docs = document.getElementsByClassName('tipo_docs');
+                    for(i = 0; i < tipo_docs.length; i++) {
+                        tipo_docs[i].innerHTML = out;
+                    }
+                }
+
             }
         </script>
     {% endblock %}
@@ -25,7 +78,6 @@
                             <li class="list-group-item menuItem" onclick="menuSwitch(0)"><i class="fas fa-user-tag black3 mr-2"></i>Empleados</li>
                             <li class="list-group-item menuItem" onclick="menuSwitch(1)"><i class="fas fa-users black3 mr-2"></i>Alumnos</li>
                             <li class="list-group-item menuItem" onclick="menuSwitch(2)"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</li>
-                            <div id="mypanel"></div>
                         </ul>
                     </div>
                 </aside>
