@@ -28,17 +28,20 @@
                         <td>{{row.apellido}}</td>
                         <td>{{row.nombre}}</td>
                         <td>{{row.fecha_nac}}</td>
-                        <td>{{row.localidad}}</td>
+                        <td><span class="min_loc">{{row.localidad_id}}</span></td>
                         <td>{{row.nivel}}</td>
                         <td>{{row.domicilio}}</td>
                         <td>{{row.genero}}</td>
                         <td>{{row.escuela}}</td>
-                        <td>{{row.tipo_doc}}{{row.numero}}</td>
+                        <td>
+                            <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
+                            {{row.numero}}
+                        </td>
                         <td>{{row.tel}}</td>
                         <td>{{row.barrio}}</td>
                         <td>
-                            <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                            <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                         </td>
                     </tr>
                     <div id="studentEdit{{row.id}}" class="modal fade" role="dialog">
@@ -49,7 +52,7 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ url_for('update_docente') }}" method="POST">        
+                                    <form action="{{ url_for('update_student') }}" method="POST">        
                                         <input type="hidden"  name="id" value="{{row.id}}">
                                         <!-- Nombre y apellido -->
                                         <div class="form-group row">
@@ -132,15 +135,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-6">
                                                 <label>Tipo Documento</label>
-                                                <select name="tipo_doc_id" class="browser-default custom-select" required="1">
-                                                    <option selected disabled>Tipo DNI</option>
-                                                    {% for tipo in tipo_docs %}
-                                                    {% if tipo.id == row.tipo_doc_id %}
-                                                    <option value="{{tipo.id}}" selected>{{tipo.nombre}}</option>
-                                                    {% else %}
-                                                    <option value="{{tipo.id}}">{{tipo.nombre}}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
+                                                <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
+
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
@@ -263,15 +259,12 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Padre madre tutor e instrumento-->
+                                <!-- Documento -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label>Tipo Documento</label>
-                                        <select name="tipo_doc_id" class="browser-default custom-select" required="1">
-                                            <option selected disabled>Seleccionar</option>
-                                            {% for tipo_doc in tipo_docs %}
-                                            <option value="{{tipo_doc.id}}">{{tipo_doc.tipo}}</option>
-                                            {% endfor %}
+                                        <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
+                                            
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -280,7 +273,7 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Fecha de nacimiento (Alumno) -->
+                                <!-- Telefono y barrio -->
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label>Teléfono</label>

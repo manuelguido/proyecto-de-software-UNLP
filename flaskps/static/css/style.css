@@ -401,7 +401,7 @@ a:hover {
     Panel de docente
 --------------------------------------------------------------*/
 .panel {
-    background: #fcfcfc;
+    background: #faf6ee;
 }
 .panel nav .nav-link {
     color: var(--black-3);

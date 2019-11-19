@@ -20,16 +20,19 @@
                         <th>Teléfono</th>
                         <th>Acciones</th>
                     </tr>
-                    <!-- Row Estudiantes -->
+                    <!-- Row Docentes -->
                     {% for row in docentes %}
                     <tr>
                         <td>{{row.apellido}}</td>
                         <td>{{row.nombre}}</td>
                         <td>{{row.fecha_nac}}</td>
-                        <td>{{row.localidad}}</td>
+                        <td><span class="min_loc">{{row.localidad_id}}</span></td>
                         <td>{{row.domicilio}}</td>
                         <td>{{row.genero}}</td>
-                        <td>{{row.tipo_doc}}{{row.numero}}</td>
+                        <td>
+                            <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
+                            {{row.numero}}
+                        </td>
                         <td>{{row.tel}}</td>
                         <td>
                             <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
