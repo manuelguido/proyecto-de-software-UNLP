@@ -1,139 +1,142 @@
     <div class="subItem">
         <div class="row">
             <div class="col-md-12 mb-3">
-                <h2 class="mb-2">Docentes</h2>
+                <h2 class="h4 black2">Docentes</h2>
+                <hr>
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#docenteCreate">
                     <i class="fas fa-user-plus mr-2"></i> Nuevo Docente
                 </button>
             </div>
             <div class="col-md-12">
-                <table class="table table-striped">
-                    <!-- Row Titulos -->
-                    <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Localidad</th>
-                        <th>Domicilio</th>
-                        <th>Género</th>
-                        <th>Documento</th>
-                        <th>Teléfono</th>
-                        <th>Acciones</th>
-                    </tr>
-                    <!-- Row Docentes -->
-                    {% for row in docentes %}
-                    <tr>
-                        <td>{{row.apellido}}</td>
-                        <td>{{row.nombre}}</td>
-                        <td>{{row.fecha_nac}}</td>
-                        <td><span class="min_loc">{{row.localidad_id}}</span></td>
-                        <td>{{row.domicilio}}</td>
-                        <td>{{row.genero}}</td>
-                        <td>
-                            <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
-                            {{row.numero}}
-                        </td>
-                        <td>{{row.tel}}</td>
-                        <td>
-                            <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                            <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
-                        </td>
-                    </tr>
-                    <div id="docenteEdit{{row.id}}" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Actualizar</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ url_for('update_docente') }}" method="POST">        
-                                        <input type="hidden"  name="id" value="{{row.id}}">
-                                        <!-- Nombre y apellido -->
-                                        <div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label>Apellido</label>
-                                                <input type="text" class="form-control" value="{{row.apellido}}" placeholder="Apellido" name="apellido" required="1">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <!-- Row Titulos -->
+                        <tr>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Localidad</th>
+                            <th>Domicilio</th>
+                            <th>Género</th>
+                            <th>Documento</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                        </tr>
+                        <!-- Row Docentes -->
+                        {% for row in docentes %}
+                        <tr>
+                            <td>{{row.apellido}}</td>
+                            <td>{{row.nombre}}</td>
+                            <td>{{row.fecha_nac}}</td>
+                            <td><span class="min_loc">{{row.localidad_id}}</span></td>
+                            <td>{{row.domicilio}}</td>
+                            <td>{{row.genero}}</td>
+                            <td>
+                                <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
+                                {{row.numero}}
+                            </td>
+                            <td>{{row.tel}}</td>
+                            <td>
+                                <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            </td>
+                        </tr>
+                        <div id="docenteEdit{{row.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Actualizar</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ url_for('update_docente') }}" method="POST">        
+                                            <input type="hidden"  name="id" value="{{row.id}}">
+                                            <!-- Nombre y apellido -->
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Apellido</label>
+                                                    <input type="text" class="form-control" value="{{row.apellido}}" placeholder="Apellido" name="apellido" required="1">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Nombre</label>
+                                                    <input type="text" class="form-control" value="{{row.nombre}}" placeholder="Nombre" name="nombre" required="1">
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label>Nombre</label>
-                                                <input type="text" class="form-control" value="{{row.nombre}}" placeholder="Nombre" name="nombre" required="1">
-                                            </div>
-                                        </div>
-            
-                                        <!-- Fecha de nacimiento y localidad -->
-                                        <div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label>Fecha de nacimiento</label>
-                                                <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label>Localidad</label>
-                                                <select name="localidad_id" class="localidades browser-default custom-select" required="1">
+                
+                                            <!-- Fecha de nacimiento y localidad -->
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Fecha de nacimiento</label>
+                                                    <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Localidad</label>
+                                                    <select name="localidad_id" class="localidades browser-default custom-select" required="1">
 
-                                                </select>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-            
-                                        <!-- Domicilio y genero -->
-                                        <div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label>Domicilio</label>
-                                                <input type="text" min="0" class="form-control" value="{{row.domicilio}}" placeholder="Domicilio" name="domicilio" required="1">
+                
+                                            <!-- Domicilio y genero -->
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Domicilio</label>
+                                                    <input type="text" min="0" class="form-control" value="{{row.domicilio}}" placeholder="Domicilio" name="domicilio" required="1">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Género</label>
+                                                    <select name="genero_id" class="browser-default custom-select" required="1">
+                                                        <option selected disabled>Genero</option>
+                                                        {% for genero in generos %}
+                                                        {% if genero.id == row.genero_id %}
+                                                        <option value="{{genero.id}}" selected>{{genero.nombre}}</option>
+                                                        {% else %}
+                                                        <option value="{{genero.id}}">{{genero.nombre}}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label>Género</label>
-                                                <select name="genero_id" class="browser-default custom-select" required="1">
-                                                    <option selected disabled>Genero</option>
-                                                    {% for genero in generos %}
-                                                    {% if genero.id == row.genero_id %}
-                                                    <option value="{{genero.id}}" selected>{{genero.nombre}}</option>
-                                                    {% else %}
-                                                    <option value="{{genero.id}}">{{genero.nombre}}</option>
-                                                    {% endif %}
-                                                    {% endfor %}
-                                                </select>
+                                                
+                                            <!-- Documento -->
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Tipo Documento</label>
+                                                    <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
+                                                        
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Número</label>
+                                                    <input type="number" min="0" class="form-control" value="{{row.numero}}" placeholder="Numero DNI" name="numero" required="1">
+                                                </div>
                                             </div>
-                                        </div>
-                                            
-                                        <!-- Documento -->
-                                        <div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label>Tipo Documento</label>
-                                                <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
-                                                    
-                                                </select>
+                                                
+                                            <!-- Teléfono -->
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Teléfono</label>
+                                                    <input type="number" min="0" class="form-control" value="{{row.tel}}" placeholder="Telefono" name="tel" required="1">
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label>Número</label>
-                                                <input type="number" min="0" class="form-control" value="{{row.numero}}" placeholder="Numero DNI" name="numero" required="1">
+                                            <hr>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 text-left">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <button class="btn btn-primary" type="sbumit">Actualizar</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                            
-                                        <!-- Teléfono -->
-                                        <div class="form-group row">
-                                            <div class="col-md-6">
-                                                <label>Teléfono</label>
-                                                <input type="number" min="0" class="form-control" value="{{row.tel}}" placeholder="Telefono" name="tel" required="1">
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="form-group row">
-                                            <div class="col-md-6 text-left">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                <button class="btn btn-primary" type="sbumit">Actualizar</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
             <!-- Modal -->

@@ -106,14 +106,7 @@ h1, h2, h3, h4, h5, h6, p {
     font-family: var(--font-1);
     font-weight: 400 !important;
 }
-a {
-    color: var(--link);
-    transition: 0.08s all !important;
-}
-a:hover {
-    color: var(--link-dark);
-    text-decoration: none;
-}
+
 .font-1 { font-family: var(--font-1); }
 
 /*--------------------------------------------------------------
@@ -292,11 +285,12 @@ a:hover {
     color: #707070;
     font-family: var(--font-3);
     font-weight: 400;
-    font-size: 26px;
+    font-size: 1.3em;
     margin: 0 50px;
+    letter-spacing: .1em;
 }
 .nav-logo {
-    height: 220px;
+    height: 210px;
     opacity: 0.5 !important;
 }
 
@@ -401,13 +395,12 @@ a:hover {
     Panel de docente
 --------------------------------------------------------------*/
 .panel {
-    background: #faf6ee;
+    background: #fff;
 }
 .panel nav .nav-link {
-    color: var(--black-3);
-    font-weight: 600;
-    font-family: var(--font-1);
-    font-size: 16;
+    color: var(--black-4);
+    font-weight: 500;
+    font-size: 1.2em;
 }
 #panel-menu, #panel-menu-inner, .panel-content, #panel-toggle {
     transition: 0.3s all;
@@ -416,7 +409,7 @@ a:hover {
     z-index: 10;
 }
 .navbar-static-top {
-  margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 .panel-logo {
     margin: 50px auto;
@@ -431,16 +424,15 @@ a:hover {
     padding-top: 10vh;
 }
 .panel-menu {
-    border-top: 0 none !important;
     height: 100vh;
-    border: 1px solid #e5e5e5;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border-radius: 0 !important;
+    background: #fff;
 }
 .menuItem {
     transition: 0.2s all;
-    border-color: #e5e5e5 !important;
     color: #444 !important;
+    border: 0 none !important;
+    padding: 1.3em 2.3em;
 }
 .menuItem:hover {
 	cursor: pointer;
@@ -469,7 +461,6 @@ a:hover {
     cursor: default !important;
 }
 .panel-nav {
-    border-bottom: 1px solid #eee;
     background: #fdfdfd;
 }
 .btn-note-detail {
