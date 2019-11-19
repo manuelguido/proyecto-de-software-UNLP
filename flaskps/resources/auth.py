@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
-from flask import requests
+import requests
 import json
 #Modelos
 from flaskps.models.user import User
