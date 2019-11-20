@@ -7,6 +7,7 @@ from flaskps.resources import site_controller
 from flaskps.resources import auth
 from flaskps.resources import student
 from flaskps.resources import docente
+from flaskps.resources import panel
 from flaskps.config import Config
 from flaskps.helpers import handler
 from flaskps.helpers import auth as helper_auth
@@ -24,7 +25,7 @@ app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 app.add_url_rule("/", 'home', site_controller.index)
 
 #url Panel de administración
-app.add_url_rule("/panel", 'panel', auth.getPanel)
+app.add_url_rule("/panel", 'panel', panel.getPanel)
 
 # Autenticación
 app.add_url_rule("/iniciar_sesion", 'auth_login', auth.login)
