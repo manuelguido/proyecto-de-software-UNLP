@@ -39,7 +39,7 @@ class User(object):
     def get_permisos(cls, id_data):
         cursor = cls.db.cursor()
         sql = """
-            SELECT * FROM usuario_tiene_rol
+            SELECT permiso.nombre FROM usuario_tiene_rol
             INNER JOIN rol ON usuario_tiene_rol.rol_id = rol.id
             INNER JOIN rol_tiene_permiso ON rol_tiene_permiso.rol_id = rol.id
             INNER JOIN permiso ON rol_tiene_permiso.permiso_id = permiso.id
@@ -53,7 +53,7 @@ class User(object):
     def get_rol(cls, id_data):
         cursor = cls.db.cursor()
         sql = """
-            SELECT * FROM usuario_tiene_rol
+            SELECT rol.nombre FROM usuario_tiene_rol
             INNER JOIN rol ON usuario_tiene_rol.rol_id = rol.id
             WHERE usuario_tiene_rol.usuario_id = %s
         """

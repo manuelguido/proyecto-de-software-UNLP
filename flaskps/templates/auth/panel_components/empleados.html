@@ -1,48 +1,91 @@
     <div class="subItem">
         <div class="row">
-            <div class="col-md-12 mb-3">
+            <div class="col-md-6 mb-3">
                 <h2 class="h4 black2">Docentes</h2>
                 <hr>
+                {% for p in permisos %}
+                {% if p.nombre == 'docente_new' %}
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#docenteCreate">
                     <i class="fas fa-user-plus mr-2"></i> Nuevo Docente
                 </button>
+                {% endif %}
+                {% endfor %}
             </div>
-            <div class="col-md-12">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <!-- Row Titulos -->
                         <tr>
                             <th>Apellido</th>
                             <th>Nombre</th>
-                            <th>Fecha de Nacimiento</th>
-                            <th>Localidad</th>
-                            <th>Domicilio</th>
-                            <th>Género</th>
-                            <th>Documento</th>
                             <th>Teléfono</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                         <!-- Row Docentes -->
                         {% for row in docentes %}
                         <tr>
                             <td>{{row.apellido}}</td>
                             <td>{{row.nombre}}</td>
-                            <td>{{row.fecha_nac}}</td>
-                            <td>
-                                <span class="min_loc">{{row.localidad_id}}</span>
-                            </td>
-                            <td>{{row.domicilio}}</td>
-                            <td>{{row.genero}}</td>
-                            <td>
-                                <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
-                                {{row.numero}}
-                            </td>
                             <td>{{row.tel}}</td>
-                            <td>
+                            <td class="text-center">
+                                {% for p in permisos %}
+                                {% if p.nombre == 'docente_show' %}
+                                <!-- Ver estudiante -->
+                                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#docenteShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
+                                {% endif %}
+                                {% endfor %}
+                                {% for p in permisos %}
+                                {% if p.nombre == 'docente_update' %}
                                 <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                {% endif %}
+                                {% endfor %}
+                                {% for p in permisos %}
+                                {% if p.nombre == 'docente_destroy' %}
                                 <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                                {% endif %}
+                                {% endfor %}
                             </td>
                         </tr>
+
+                        {% for p in permisos %}
+                        {% if p.nombre == 'docente_show' %}
+                        <div id="docenteShow{{row.id}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Docente</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="mb-2">Nombre: {{row.nombre}}</p>
+                                                <p class="mb-2">Apellido: {{row.apellido}}</p>
+                                                <p class="mb-2">Fecha de nacimiento: {{row.fecha_nac}}</p>
+                                                <p class="mb-2">Localidad: {{row.localidad_id}}</p>
+                                                <p class="mb-2">Domicilio: {{row.domicilio}}</p>
+                                                <p class="mb-2">
+                                                    {% for genero in generos %}
+                                                    {% if genero.id == row.genero_id %}
+                                                        Genero: {{genero.nombre}}
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </p>
+                                                <p class="mb-2">Documento: {{row.numero}}</p>
+                                                <p class="mb-2">Telefono: {{row.tel}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% for p in permisos %}
+                        {% if p.nombre == 'docente_update' %}
                         <div id="docenteEdit{{row.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -135,12 +178,16 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
+                        {% endfor %}
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-            
+
+            {% for p in permisos %}
+            {% if p.nombre == 'docente_new' %}
             <!-- Modal -->
             <div id="docenteCreate" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -230,6 +277,8 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
         <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
