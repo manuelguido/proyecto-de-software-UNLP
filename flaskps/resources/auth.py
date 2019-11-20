@@ -86,7 +86,6 @@ def authenticate():
     session['email'] = user['email']
     session['nombre'] = user['first_name']
     session['apellido'] = user['last_name']
-    flash("La sesión se inició correctamente.")
 
     return redirect(url_for('panel'))
 
