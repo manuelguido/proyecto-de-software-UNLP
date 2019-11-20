@@ -101,7 +101,9 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item menuItem" onclick="menuSwitch(0)"><i class="fas fa-user-tag black3 mr-2"></i>Empleados</li>
                             <li class="list-group-item menuItem" onclick="menuSwitch(1)"><i class="fas fa-users black3 mr-2"></i>Alumnos</li>
+                            {% if rol == administrador %}
                             <li class="list-group-item menuItem" onclick="menuSwitch(2)"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</li>
+                            {% endif %}
                         </ul>
                     </div>
                     
@@ -156,7 +158,9 @@
                         <!--/.Modificar alumnos -->
 
                         <!-- Admin -->
+                        {% if rol == administrador %}
                         {% include 'auth/panel_components/estado_sitio.html' %}
+                        {% endif %}
                         <!--/.Admin -->
                     </div>
                     <!-- /.Container Fluid -->

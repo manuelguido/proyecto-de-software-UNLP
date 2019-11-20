@@ -19,31 +19,34 @@ def authenticated():
 
 def getPanel():
     if authenticated():
-        g.user = session['user']
-        #Informacion del sitio
+        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+        #Obtiene informacion del sitio (Estado y paginacion)
         InfoSitio.db = get_db()
         infositio = InfoSitio.all()
-        #Estudiantes
+        #Obtiene estudiantes
         Student.db = get_db()
         students = Student.all()
-        #Docentes
+        #Obtiene docentes
         Docente.db = get_db()
         docentes = Docente.all()
-        #Niveles
+        #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()
-        #Generos
+        #Obtiene generos
         Genero.db = get_db()
         generos = Genero.all()
-        #Escuelas
+        #Obtiene escuelas
         Escuela.db = get_db()
         escuelas = Escuela.all()
-        #Barrios
+        #Obtiene barrios
         Barrio.db = get_db()
         barrios = Barrio.all()
-        #Generos
-        Rol.db = get_db()
-        roles = Rol.all()
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        #Obtiene rol
+        User.db = get_db()
+        rol = User.get_rol(session['id']) #Session user es el email unico del usuario
         #Retorno todo en el panel
         return render_template(
             'auth/panel.html',
@@ -54,7 +57,8 @@ def getPanel():
             generos=generos,
             escuelas=escuelas,
             barrios=barrios,
-            roles=roles,
+            permisos=permisos,
+            rol=rol,
             nombre=session['nombre'],
             apellido=session['apellido']
         )
@@ -77,7 +81,9 @@ def authenticate():
         flash("Usuario o clave incorrecto.")
         return redirect(url_for('auth_login'))
 
-    session['user'] = user['email']
+    session['id'] = user['id']
+    session['user'] = user['username']
+    session['email'] = user['email']
     session['nombre'] = user['first_name']
     session['apellido'] = user['last_name']
     flash("La sesión se inició correctamente.")
@@ -86,7 +92,11 @@ def authenticate():
 
 
 def logout():
+    del session['id']
     del session['user']
+    del session['email']
+    del session['nombre']
+    del session['apellido']
     session.clear()
     flash("La sesión se cerró correctamente.")
 
