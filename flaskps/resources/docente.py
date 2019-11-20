@@ -4,6 +4,7 @@ from flaskps.models.user import User
 from flaskps.models.docente import Docente
 
 def store():
+    permisos = User.get_permisos(session['id'])
     params = request.form
     if request.method == "POST":
         Docente.db = get_db()

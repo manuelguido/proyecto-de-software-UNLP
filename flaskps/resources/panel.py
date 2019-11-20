@@ -56,4 +56,5 @@ def getPanel():
             nombre=session['nombre'],
             apellido=session['apellido']
         )
+        
     return redirect(url_for('auth_login'))

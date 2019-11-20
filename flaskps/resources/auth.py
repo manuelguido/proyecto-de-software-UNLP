@@ -2,20 +2,11 @@ from flask import redirect, render_template, request, url_for, abort, session, f
 from flaskps.db import get_db
 from flaskps.models.user import User
 
-def authenticated():
-    #Si el usuario esta autenticado retora 1(verdadero), sino retorna 0
-    g.user = None
-    if 'user' in session:
-        g.user = session['user']
-        return 1
-    return 0
-
 def login():
     #Si esta autenticado, va derecho al panel
     if authenticated():
         return redirect(url_for('panel'))    
     return render_template('auth/login.html')
-
 
 def authenticate():
     params = request.form
@@ -34,6 +25,14 @@ def authenticate():
     session['apellido'] = user['last_name']
 
     return redirect(url_for('panel'))
+
+def authenticated():
+    #Si el usuario esta autenticado retora 1(verdadero), sino retorna 0
+    g.user = None
+    if 'user' in session:
+        g.user = session['user']
+        return 1
+    return 0
 
 
 def logout():

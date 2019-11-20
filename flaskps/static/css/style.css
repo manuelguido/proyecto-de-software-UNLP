@@ -281,18 +281,59 @@ h1, h2, h3, h4, h5, h6, p {
 /*--------------------------------------------------------------
     <navbar>
 --------------------------------------------------------------*/
-.main-navbar .nav-item a {
+.home-navbar .nav-item a {
     color: #707070;
-    font-family: var(--font-3);
     font-weight: 400;
     font-size: 1.3em;
     margin: 0 50px;
     letter-spacing: .1em;
 }
 .nav-logo {
-    height: 210px;
+    height: 8em;
     opacity: 0.5 !important;
+    margin-right: 8em;
 }
+.home-login-button {
+    margin-left: 5em;
+}
+
+@media (max-width: 1400px) {
+    .nav-logo {
+        height: 4em !important;
+        margin: 0 !important;
+    }
+    .home-navbar .nav-item a {
+        font-size: 1em;
+        margin: .7em 2em !important;
+    }
+    .home-login-button {
+        margin-left: 1.6em !important;
+    }
+    .home-login-button button {
+        font-size: .7em !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .home-navbar {
+        background: #fcfcfc !important;
+        box-shadow: 0 .07em .155em 0 rgba(0,0,0,.22) !important;
+        padding: 1em !important;
+    }
+    .nav-logo {
+        height: 4em !important;
+        margin: 0 !important;
+    }
+    .home-navbar .nav-item a {
+        font-size: 1em;
+        margin: .7em 2em !important;
+    }
+    .home-login-button {
+        margin-left: 1.6em !important;
+    }
+}
+
+
 
 /*--------------------------------------------------------------
     Página de inicio
