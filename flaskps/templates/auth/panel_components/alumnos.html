@@ -42,7 +42,11 @@
                             <td>{{row.barrio}}</td>
                             <td>
                                 <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                {% for p in permisos %}
+                                {% if p == estudiante_destroy %}
                                 <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                                {% endif %}
+                                {% endfor %}
                             </td>
                         </tr>
                         <div id="studentEdit{{row.id}}" class="modal fade" role="dialog">
