@@ -1,0 +1,174 @@
+<div class="subItem">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Ciclos lectivos
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <h1 class="h5 mb-4">Ciclo lectivo 1 (2019)</h1>
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Fecha inicio</label>
+                                <input class="form-control" name="fecha_inicio" type="date">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Fecha cierre</label>
+                                <input class="form-control" name="fecha_inicio" type="date">
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <form method="POST">
+                        <h1 class="h5 mb-4">Ciclo lectivo 2 (2019)</h1>
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Fecha inicio</label>
+                                <input class="form-control" name="fecha_inicio" type="date">
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Fecha cierre</label>
+                                <input class="form-control" name="fecha_inicio" type="date">
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-success">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Talleres
+                </div>
+                <div class="card-body">
+                    <h1 class="h5">Asociar taller a ciclo lectivo</h1>
+                    <hr>
+                    <form method="POST">
+                        <h1 class="h5 mb-4">Ciclo lectivo 1 (2019)</h1>
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Semestre</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Seleccionar</option>
+                                    <option value="1">Semestre I</option>
+                                    <option value="2">Semestre II</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Taller</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Seleccionar</option>
+                                    {% for taller in talleres %}
+                                    <option value="{{taller.id}}">{{taller.nombre}} ({{taller.nombre_corto}})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-info">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Row -->
+    <h1 class="h4 mt-5">Asignacion a talleres</h1>
+    <hr class="mb-4">
+    <!-- Row -->
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Docentes
+                </div>
+                <div class="card-body">
+                    <h1 class="h5">Asociar docente a taller</h1>
+                    <hr>
+                    <form method="POST">
+                        <h1 class="h5 mb-4">Ciclo lectivo 1 (2019)</h1>
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Taller</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Seleccionar</option>
+                                    {% for taller in talleres %}
+                                    <option value="{{taller.id}}">{{taller.nombre}} ({{taller.nombre_corto}})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Docente</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Docente</option>
+                                    {% for docente in docentes %}
+                                    <option value="{{docente.id}}">{{docente.nombre}} {{docente.apellido}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-info">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    Estudiantes
+                </div>
+                <div class="card-body">
+                    <h1 class="h5">Asociar estudiante a taller</h1>
+                    <hr>
+                    <form method="POST">
+                        <h1 class="h5 mb-4">Ciclo lectivo 1 (2019)</h1>
+                        <div class="form-group row">
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Taller</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Seleccionar</option>
+                                    {% for taller in talleres %}
+                                    <option value="{{taller.id}}">{{taller.nombre}} ({{taller.nombre_corto}})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label class="mb-2">Estudiante</label>
+                                <select class="browser-default custom-select" required>
+                                    <option selected disabled>Seleccionar</option>
+                                    {% for student in students %}
+                                    <option value="{{student.id}}">{{student.nombre}} {{student.apellido}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-info">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Row -->
+</div>

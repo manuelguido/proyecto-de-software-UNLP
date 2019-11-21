@@ -9,6 +9,7 @@ from flaskps.models.escuela import Escuela
 from flaskps.models.barrio import Barrio
 from flaskps.models.info_sitio import InfoSitio
 from flaskps.models.rol import Rol
+from flaskps.models.taller import Taller
 from flaskps.resources import auth
 
 def getPanel():
@@ -38,6 +39,9 @@ def getPanel():
         #Obtiene roles
         Rol.db = get_db()
         roles = Rol.all()
+        #Obtiene Taller
+        Taller.db = get_db()
+        talleres = Taller.all()
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
@@ -59,6 +63,7 @@ def getPanel():
             roles=roles,
             rol=rol,
             usuarios=usuarios,
+            talleres=talleres,
             nombre=session['nombre'],
             apellido=session['apellido']
         )

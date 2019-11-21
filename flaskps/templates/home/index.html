@@ -1,13 +1,10 @@
 {% extends "layout.html" %}
-    
     {% block header %}
     <title>Orquesta escuela de berisso</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
     {% endblock %}
-    
     {% block content %}
         {% include 'home/login_navbar.html' %}
-
     <!-- Container -->
     <div class="home-bg">
         <!-- Row-->
@@ -28,12 +25,10 @@
             </div>
             <!-- Col-->
             <div class="col-md-6">
-                
             </div>
             <!-- /.Col-->
         </div>
         <!-- /.Row -->
     </div>
     <!-- /.Container -->
-
     {% endblock %}

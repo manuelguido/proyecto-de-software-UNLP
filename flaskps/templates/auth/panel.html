@@ -1,176 +1,178 @@
-{% extends "layout.html" %}    
-    
-    {% block head %}
-        <script>
-            //Carga el menu por defecto en la primer opcion
-            window.onload = load;
-            function load() {
-                menuSwitch(0);
-                
-                //Llamado a la API de localidades
-                var xmlhttp = new XMLHttpRequest();
-                var url = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad";
-
-                xmlhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var myArr = JSON.parse(this.responseText);
-                        myFunction(myArr);
-                    }
-                };
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
-
-                function myFunction(arr) {
-                    var out = "";
-                    var i;
-                    for(i = 0; i < arr.length; i++) {
-                        out += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
-                    }
-                    //document.getElementById("id-loc").innerHTML = out;
-                    var localidades = document.getElementsByClassName('localidades');
-                    for(i = 0; i < localidades.length; i++) {
-                        localidades[i].innerHTML = out;
-                    }
-
-                    //Agrega el elemento a los listados
-                    var min_loc = document.getElementsByClassName('min_loc');
-                    for(i = 0; i < min_loc.length; i++) {
-                        for(j = 0; j < arr.length; j++) {
-                            if (arr[j].id == min_loc[i].innerHTML){
-                                min_loc[i].innerHTML = arr[j].nombre;
-                                break;
-                            }
-                        }   
-                    }
-
-                }
-
-                //Llamado a la API de localidades
-                var xmlhttp2 = new XMLHttpRequest();
-                var url2 = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento";
-
-                xmlhttp2.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        var myArr2 = JSON.parse(this.responseText);
-                        myFunction2(myArr2);
-                        return myArr2;
-                    }
-                };
-                xmlhttp2.open("GET", url2, true);
-                xmlhttp2.send();
-
-                function myFunction2(arr) {
-                    //Arma los desplegables
-                    var out2 = "";
-                    var i;
-                    for(i = 0; i < arr.length; i++) {
-                        out2 += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
-                    }
-
-                    var tipo_docs = document.getElementsByClassName('tipo_docs');
-                    for(i = 0; i < tipo_docs.length; i++) {
-                        tipo_docs[i].innerHTML = out2;
-                    }
-
-                    var min_dni = document.getElementsByClassName('min_dni');
-                    //Agrega el elemento a los listados
-                    for(i = 0; i < min_dni.length; i++) {
-                        for(j = 0; j < arr.length; j++) {
-                            if (arr[j].id == min_dni[i].innerHTML){
-                                min_dni[i].innerHTML = arr[j].nombre;
-                                break;
-                            }
-                        }   
-                    }
-                }
-
-            }
-        </script>
-    {% endblock %}
-    
-    {% block content %}
-        <!-- Contenido Principal -->
-        <main class="panel">
-            <!-- Row-->
-            <div class="row m-0 p-0">
-                <!-- Menu-->
-                <aside id="panel-menu" class="col-sm-2 col-xs-2 p-0 uns">
-                    <div id="panel-menu-inner" class="card p-0 panel-menu shadow-sm">
-                        <div class="row justify-content-center">
-                            <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item menuItem" onclick="menuSwitch(0)"><i class="fas fa-user-friends black3 mr-2"></i>Empleados</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(1)"><i class="fas fa-user-graduate black3 mr-2"></i>Alumnos</li>
-                            {% if rol.nombre == 'administrador' %}
-                            <li class="list-group-item menuItem" onclick="menuSwitch(2)"><i class="fas fa-users black3 mr-2"></i>Usuarios</li>
-                            <li class="list-group-item menuItem" onclick="menuSwitch(3)"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</li>
-                            {% endif %}
-                        </ul>
-                    </div>
+    {% extends "layout.html" %}    
+        
+        {% block head %}
+            <script>
+                //Carga el menu por defecto en la primer opcion
+                window.onload = load;
+                function load() {
+                    menuSwitch(3);
                     
-                </aside>
-                <!-- /.Menu -->
-                <!-- Columna full width -->
-                <div class="col p-0">
-                    <!-- Navegación -->
-                    <nav class="navbar navbar-expand-lg navbar-light navbar-static-top shadow-sm bg-white uns px-5">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-link nav-link-panel">
-                                Panel de administración
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item dropdown">
-                                <i class="nav-link nav-link-nombre dropdown-toggle black4 cursor-p" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-user black4 mr-2"></i><span class="black4">{{nombre}} {{apellido}}</span>
-                                </i>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-default py-2" aria-labelledby="navbarDropdownMenuLink-333">
-                                    <a class="dropdown-item" href="/cerrar_sesion"><i class="fas fa-sign-out-alt black5 mr-2 my-0"></i><b>Salir</b></a>
+                    //Llamado a la API de localidades
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad";
+
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var myArr = JSON.parse(this.responseText);
+                            myFunction(myArr);
+                        }
+                    };
+                    xmlhttp.open("GET", url, true);
+                    xmlhttp.send();
+
+                    function myFunction(arr) {
+                        var out = "";
+                        var i;
+                        for(i = 0; i < arr.length; i++) {
+                            out += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
+                        }
+                        //document.getElementById("id-loc").innerHTML = out;
+                        var localidades = document.getElementsByClassName('localidades');
+                        for(i = 0; i < localidades.length; i++) {
+                            localidades[i].innerHTML = out;
+                        }
+
+                        //Agrega el elemento a los listados
+                        var min_loc = document.getElementsByClassName('min_loc');
+                        for(i = 0; i < min_loc.length; i++) {
+                            for(j = 0; j < arr.length; j++) {
+                                if (arr[j].id == min_loc[i].innerHTML){
+                                    min_loc[i].innerHTML = arr[j].nombre;
+                                    break;
+                                }
+                            }   
+                        }
+
+                    }
+
+                    //Llamado a la API de localidades
+                    var xmlhttp2 = new XMLHttpRequest();
+                    var url2 = "https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento";
+
+                    xmlhttp2.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var myArr2 = JSON.parse(this.responseText);
+                            myFunction2(myArr2);
+                            return myArr2;
+                        }
+                    };
+                    xmlhttp2.open("GET", url2, true);
+                    xmlhttp2.send();
+
+                    function myFunction2(arr) {
+                        //Arma los desplegables
+                        var out2 = "";
+                        var i;
+                        for(i = 0; i < arr.length; i++) {
+                            out2 += '<option value="' + arr[i].id + '">' + arr[i].nombre + '</option>'
+                        }
+
+                        var tipo_docs = document.getElementsByClassName('tipo_docs');
+                        for(i = 0; i < tipo_docs.length; i++) {
+                            tipo_docs[i].innerHTML = out2;
+                        }
+
+                        var min_dni = document.getElementsByClassName('min_dni');
+                        //Agrega el elemento a los listados
+                        for(i = 0; i < min_dni.length; i++) {
+                            for(j = 0; j < arr.length; j++) {
+                                if (arr[j].id == min_dni[i].innerHTML){
+                                    min_dni[i].innerHTML = arr[j].nombre;
+                                    break;
+                                }
+                            }   
+                        }
+                    }
+
+                }
+            </script>
+        {% endblock %}
+        
+        {% block content %}
+            <!-- Contenido Principal -->
+            <main class="panel">
+                <!-- Row-->
+                <div class="row m-0 p-0">
+                    <!-- Menu-->
+                    <aside id="panel-menu" class="col-sm-2 col-xs-2 p-0 uns card shadow-sm">
+                        <div id="panel-menu-inner" class="p-0 panel-menu">
+                            <div class="row justify-content-center">
+                                <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item menuItem" onclick="menuSwitch(0)" role="button"><i class="fas fa-user-friends black3 mr-2"></i>Empleados</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(1)" role="button"><i class="fas fa-user-graduate black3 mr-2"></i>Alumnos</li>
+                                {% if rol.nombre == 'administrador' %}
+                                <li class="list-group-item menuItem" onclick="menuSwitch(2)" role="button"><i class="fas fa-users black3 mr-2"></i>Usuarios</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(3)" role="button"><i class="fas fa-globe-americas black3 mr-2"></i>Ciclos lectivos</li>
+                                <li class="list-group-item menuItem" onclick="menuSwitch(4)" role="button"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        
+                    </aside>
+                    <!-- /.Menu -->
+                    <!-- Columna full width -->
+                    <div class="col p-0">
+                        <!-- Navegación -->
+                        <nav class="navbar navbar-expand-lg navbar-light navbar-static-top shadow-sm bg-white uns px-5">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-link nav-link-panel">
+                                    Panel de administración
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item dropdown">
+                                    <i class="nav-link nav-link-nombre dropdown-toggle black4 cursor-p" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-user black4 mr-2"></i><span class="black4">{{nombre}} {{apellido}}</span>
+                                    </i>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-default py-2" aria-labelledby="navbarDropdownMenuLink-333">
+                                        <a class="dropdown-item" href="/cerrar_sesion"><i class="fas fa-sign-out-alt black5 mr-2 my-0"></i><b>Salir</b></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                        <!-- /Navegación -->
+
+                        <!-- Container Fluid -->
+                        <div class="container-fluid w-100 p-5 m-0">
+                            <div class="row">
+                                <div class="col-4">
+                                    <h1 class="h4 black2" id="panel-title">Panel de administración</h1>
                                 </div>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- /Navegación -->
+                                <div class="col-8">
+                                    {% include 'auth/panel_components/mensajes_alertas.html' %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <hr>
+                                </div>
+                            </div>
 
-                    <!-- Container Fluid -->
-                    <div class="container-fluid w-100 p-5 m-0">
-                        <div class="row">
-                            <div class="col-4">
-                                <h1 class="h4 black2" id="panel-title">Panel de administración</h1>
-                            </div>
-                            <div class="col-8">
-                                {% include 'auth/panel_components/mensajes_alertas.html' %}
-                            </div>
+
+                            <!-- Empleados -->
+                            {% include 'auth/panel_components/empleados.html' %}
+                            <!--/.Empleados -->
+
+                            <!-- Modificar alumnos -->
+                            {% include 'auth/panel_components/alumnos.html' %}
+                            <!--/.Modificar alumnos -->
+
+                            <!-- Admin -->
+                            {% if rol.nombre == 'administrador' %}
+                            {% include 'auth/panel_components/usuarios.html' %}
+                            {% include 'auth/panel_components/ciclos_lectivos.html' %}
+                            {% include 'auth/panel_components/estado_sitio.html' %}
+                            {% endif %}
+                            <!--/.Admin -->
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <hr>
-                            </div>
-                        </div>
-
-
-                        <!-- Empleados -->
-                        {% include 'auth/panel_components/empleados.html' %}
-                        <!--/.Empleados -->
-
-                        <!-- Modificar alumnos -->
-                        {% include 'auth/panel_components/alumnos.html' %}
-                        <!--/.Modificar alumnos -->
-
-                        <!-- Admin -->
-                        {% if rol.nombre == 'administrador' %}
-                        {% include 'auth/panel_components/usuarios.html' %}
-                        {% include 'auth/panel_components/estado_sitio.html' %}
-                        {% endif %}
-                        <!--/.Admin -->
+                        <!-- /.Container Fluid -->
                     </div>
-                    <!-- /.Container Fluid -->
+                    <!--/.Columna full width -->
                 </div>
-                <!--/.Columna full width -->
-            </div>
-            <!-- /.Row-->
-        </main>
-        <!-- /Main -->
-    {% endblock %}
+                <!-- /.Row-->
+            </main>
+            <!-- /Main -->
+        {% endblock %}

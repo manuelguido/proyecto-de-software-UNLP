@@ -272,7 +272,7 @@ h1, h2, h3, h4, h5, h6, p {
 .card {
     border-radius: 3px;
     border: 0 none !important;
-    box-shadow: 0 .07em .155em 0 rgba(0,0,0,.22) !important;
+    box-shadow: 0 .07em .24em 0 rgba(0,0,0,.22) !important;
 }
 .card-radius-16 {
     border-radius: 16px !important;
@@ -453,6 +453,8 @@ h1, h2, h3, h4, h5, h6, p {
 }
 #panel-menu {
     z-index: 10;
+    min-height: 100vh;
+    border-radius: 0 !important;
 }
 .navbar-static-top {
     margin-bottom: 0px;
@@ -469,11 +471,7 @@ h1, h2, h3, h4, h5, h6, p {
     margin: 0 auto;
     padding-top: 10vh;
 }
-.panel-menu {
-    height: 100vh;
-    border-radius: 0 !important;
-    background: #fff;
-}
+
 .menuItem {
     transition: 0.2s all;
     color: #444 !important;
