@@ -35,12 +35,16 @@ def getPanel():
         #Obtiene barrios
         Barrio.db = get_db()
         barrios = Barrio.all()
+        #Obtiene roles
+        Rol.db = get_db()
+        roles = Rol.all()
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
         #Obtiene rol
-        User.db = get_db()
         rol = User.get_rol(session['id']) #Session user es el email unico del usuario
+        #Obtiene usuarios
+        usuarios = User.all()
         #Retorno todo en el panel
         return render_template(
             'auth/panel.html',
@@ -52,9 +56,11 @@ def getPanel():
             escuelas=escuelas,
             barrios=barrios,
             permisos=permisos,
+            roles=roles,
             rol=rol,
+            usuarios=usuarios,
             nombre=session['nombre'],
             apellido=session['apellido']
         )
-        
+
     return redirect(url_for('auth_login'))

@@ -14,8 +14,14 @@ def authenticate():
     User.db = get_db()
     user = User.find_by_email_and_pass(params['email'], params['password'])
 
+    #Usuario no existe
     if not user:
         flash("Usuario o clave incorrecto.")
+        return redirect(url_for('auth_login'))
+
+    #Usuario no activo
+    if not user['activo']:
+        flash("Usuario desactivado.")
         return redirect(url_for('auth_login'))
 
     session['id'] = user['id']

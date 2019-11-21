@@ -5,6 +5,7 @@ from flask_session import Session
 from flaskps.db import get_db
 from flaskps.resources import site_controller
 from flaskps.resources import auth
+from flaskps.resources import user
 from flaskps.resources import student
 from flaskps.resources import docente
 from flaskps.resources import panel
@@ -39,6 +40,31 @@ app.add_url_rule(
 
 #Cambiar estado del sitio
 app.add_url_rule("/change_site_status", 'change_site_status', site_controller.change_site_status, methods=['POST'])
+
+#ABM Usuarios
+#Alta
+app.add_url_rule(
+    "/user_new",
+    'user_new',
+    user.new,
+    methods=['POST']
+)
+
+#Baja
+app.add_url_rule(
+    "/user_delete/<string:id_data>",
+    'user_delete',
+    user.delete,
+    methods=['GET']
+)
+
+#Modificación de estado
+app.add_url_rule(
+    "/update_user_status",
+    'update_user_status',
+    user.update_user_status,
+    methods=['POST','GET']
+)
 
 #ABM Estudiantes
 #Alta

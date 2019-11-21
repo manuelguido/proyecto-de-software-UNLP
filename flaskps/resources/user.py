@@ -4,27 +4,31 @@ from flaskps.models.user import User
 from flaskps.helpers.auth import authenticated
 
 
-def index():
+def update_user_status():
     if not authenticated(session):
         abort(401)
 
-    User.db = get_db()
-    users = User.all()
-
-    return render_template('user/index.html', users=users)
-
+    if request.method == "POST":
+        params = request.form
+        User.db = get_db()
+        User.update_user_status(params)
+        return redirect(url_for('panel'))
 
 def new():
     if not authenticated(session):
         abort(401)
 
-    return render_template('user/new.html')
+    if request.method == "POST":
+        params = request.form
+        User.db = get_db()
+        User.create(params)
+        return redirect(url_for('panel'))
 
-
-def create():
+def delete():
     if not authenticated(session):
         abort(401)
 
+    params = request.form
     User.db = get_db()
-    User.create(request.form)
-    return redirect(url_for('user_index'))
+    User.delete(params)
+    return redirect(url_for('panel'))
