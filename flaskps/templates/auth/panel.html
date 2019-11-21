@@ -5,7 +5,7 @@
                 //Carga el menu por defecto en la primer opcion
                 window.onload = load;
                 function load() {
-                    menuSwitch(3);
+                    menuSwitch(1);
                     
                     //Llamado a la API de localidades
                     var xmlhttp = new XMLHttpRequest();
@@ -28,13 +28,13 @@
                         }
                         //document.getElementById("id-loc").innerHTML = out;
                         var localidades = document.getElementsByClassName('localidades');
-                        for(i = 0; i < localidades.length; i++) {
+                        for(i = 0; i <= localidades.length; i++) {
                             localidades[i].innerHTML = out;
                         }
 
                         //Agrega el elemento a los listados
                         var min_loc = document.getElementsByClassName('min_loc');
-                        for(i = 0; i < min_loc.length; i++) {
+                        for(i = 0; i <= min_loc.length; i++) {
                             for(j = 0; j < arr.length; j++) {
                                 if (arr[j].id == min_loc[i].innerHTML){
                                     min_loc[i].innerHTML = arr[j].nombre;

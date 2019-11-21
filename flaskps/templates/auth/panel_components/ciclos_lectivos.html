@@ -26,7 +26,7 @@
                         {% endfor %}
                         <div class="form-group row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-success">Guardar</button>
+                                <button class="btn btn-secondary disabled" disabled>Guardar</button>
                             </div>
                         </div> 
                     </form>
@@ -66,7 +66,7 @@
                         <hr>
                         <div class="form-group row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-info">Guardar</button>
+                                <button class="btn btn-secondary disabled" disabled>Guardar</button>
                             </div>
                         </div>
                     </form>
@@ -107,12 +107,12 @@
                                     <option value="{{docente.id}}">{{docente.nombre}} {{docente.apellido}}</option>
                                     {% endfor %}
                                 </select>
-                            </div>
+                            </div>  
                         </div>
                         <hr>
                         <div class="form-group row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-info">Guardar</button>
+                                <button class="btn btn-secondary disabled" disabled>Guardar</button>
                             </div>
                         </div>
                     </form>
@@ -152,7 +152,7 @@
                         <hr>
                         <div class="form-group row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-info">Guardar</button>
+                                <button class="btn btn-secondary disabled" disabled>Guardar</button>
                             </div>
                         </div>
                     </form>
@@ -164,44 +164,163 @@
     <h1 class="h4 mt-5">Talleres asignados</h1>
     <hr class="mb-4">
     <!-- Row -->
-    <div class="row">
+    <div class="row row-eq-height">
         <div class="col-md-4 mb-4">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header py-0">
-                    
+                    Nombre de taller 1
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <!-- Row Estudiantes -->
-                            {% for estudiante in taller_estudiante %}
-                            <tr>
-                                <td>{{row.last_name}}</td>
-                                <td>{{row.first_name}}</td>
-                                <td>{{row.username}}</td>
-                                <td>{{row.email}}</td>
-                                <td>
-                                    <form action="{{ url_for('update_user_status') }}" method="POST">        
-                                        <input type="hidden"  name="id" value="{{row.id}}">                          
-                                        {% if row.activo == 1 %}
-                                        <span class="mr-2">Activo</span>
-                                        <input type="hidden"  name="activo" value="0">
-                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-retweet mr-2"></i>Desactivar</a>
-                                        {% else %}
-                                        <span class="mr-2">Inactivo</span>
-                                        <input type="hidden"  name="activo" value="1">
-                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-retweet mr-2"></i>Activar</a>
-                                        {% endif %}
-                                    </form>
-                                </td>
-                                <td class="text-center">
-                                    <!-- Eliminar usuario -->
-                                    <!--a href="/user_delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a-->
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="h5 black5 mb-2">Docentes</h2>
+                            <p class="black4 mb-1">Docente 1</p>
+                            <p class="black4 mb-1">Docente 2</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <!-- Row Estudiantes -->
+                                    <tr>
+                                        <th><h2 class="h5 black4 mb-2">Alumnos</h2></td>
+                                    </tr>
+                                    <tr><td class="p-1">Alumno 1</td></tr>
+                                    <tr><td class="p-1">Alumno 2</td></tr>
+                                    <tr><td class="p-1">Alumno 3</td></tr>
+                                    <tr><td class="p-1">Alumno 4</td></tr>
+                                    <tr><td class="p-1">Alumno 5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header py-0">
+                    Nombre de taller 2
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="h5 black5 mb-2">Docentes</h2>
+                            <p class="black4 mb-1">Docente 1</p>
+                            <p class="black4 mb-1">Docente 2</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <!-- Row Estudiantes -->
+                                    <tr>
+                                        <th><h2 class="h5 black4 mb-2">Alumnos</h2></td>
+                                    </tr>
+                                    <tr><td class="p-1">Alumno 1</td></tr>
+                                    <tr><td class="p-1">Alumno 2</td></tr>
+                                    <tr><td class="p-1">Alumno 3</td></tr>
+                                    <tr><td class="p-1">Alumno 4</td></tr>
+                                    <tr><td class="p-1">Alumno 5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header py-0">
+                    Nombre de taller 3
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="h5 black5 mb-2">Docentes</h2>
+                            <p class="black4 mb-1">Docente 1</p>
+                            <p class="black4 mb-1">Docente 2</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <!-- Row Estudiantes -->
+                                    <tr>
+                                        <th><h2 class="h5 black4 mb-2">Alumnos</h2></td>
+                                    </tr>
+                                    <tr><td class="p-1">Alumno 1</td></tr>
+                                    <tr><td class="p-1">Alumno 2</td></tr>
+                                    <tr><td class="p-1">Alumno 3</td></tr>
+                                    <tr><td class="p-1">Alumno 4</td></tr>
+                                    <tr><td class="p-1">Alumno 5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header py-0">
+                    Nombre de taller 4
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="h5 black5 mb-2">Docentes</h2>
+                            <p class="black4 mb-1">Docente 1</p>
+                            <p class="black4 mb-1">Docente 2</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <!-- Row Estudiantes -->
+                                    <tr>
+                                        <th><h2 class="h5 black4 mb-2">Alumnos</h2></td>
+                                    </tr>
+                                    <tr><td class="p-1">Alumno 1</td></tr>
+                                    <tr><td class="p-1">Alumno 2</td></tr>
+                                    <tr><td class="p-1">Alumno 3</td></tr>
+                                    <tr><td class="p-1">Alumno 4</td></tr>
+                                    <tr><td class="p-1">Alumno 5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header py-0">
+                    Nombre de taller 5
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="h5 black5 mb-2">Docentes</h2>
+                            <p class="black4 mb-1">Docente 1</p>
+                            <p class="black4 mb-1">Docente 2</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <!-- Row Estudiantes -->
+                                    <tr>
+                                        <th><h2 class="h5 black4 mb-2">Alumnos</h2></td>
+                                    </tr>
+                                    <tr><td class="p-1">Alumno 1</td></tr>
+                                    <tr><td class="p-1">Alumno 2</td></tr>
+                                    <tr><td class="p-1">Alumno 3</td></tr>
+                                    <tr><td class="p-1">Alumno 4</td></tr>
+                                    <tr><td class="p-1">Alumno 5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
