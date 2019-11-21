@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, flash
 from flaskps.db import get_db
 from flaskps.models.info_sitio import InfoSitio
+from flaskps.helpers.auth import authenticated
 
 def index():
     x = InfoSitio.index()
@@ -10,6 +11,9 @@ def index():
         return render_template('home/site_down.html')
 
 def change_site_status():
+    if not authenticated(session):
+        abort(401)
+    
     params = request.form
     if request.method == 'POST':
         InfoSitio.db = get_db()
@@ -18,6 +22,9 @@ def change_site_status():
         return redirect(url_for('panel'))
 
 def change_site_pagination():
+    if not authenticated(session):
+        abort(401)
+
     params = request.form
     if request.method == 'POST':
         InfoSitio.db = get_db()
