@@ -25,6 +25,15 @@ app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 #url Inicio
 app.add_url_rule("/", 'home', site_controller.index)
 
+#Modificar datos de sitio
+#Modificación de estado
+app.add_url_rule(
+    "/update_info_sitio",
+    'update_info_sitio',
+    site_controller.update_info_sitio,
+    methods=['POST','GET']
+)
+
 #url Panel de administración
 app.add_url_rule("/panel", 'panel', panel.getPanel)
 

@@ -23,7 +23,7 @@ class InfoSitio(object):
         cursor = cls.db.cursor()
         cursor.execute(sql)
 
-        return cursor.fetchall()
+        return cursor.fetchone()
 
 
     @classmethod
@@ -35,6 +35,18 @@ class InfoSitio(object):
                SET activo=%s
                WHERE id=1
             """, (estado))
+        cls.db.commit()
+
+        return True
+
+    @classmethod
+    def update_info_sitio(cls, request):
+        cursor = cls.db.cursor()
+        cursor.execute("""
+               UPDATE configuracion
+               SET titulo=%s, descripcion=%s, email=%s
+               WHERE id=1
+            """, (request['titulo'], request['descripcion'], request['email']))
         cls.db.commit()
 
         return True

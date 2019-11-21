@@ -2,7 +2,7 @@
     <div class="row row-eq-height">
         <div class="col-md-3 mb-4">
             <div class="card h-100">
-                <div class="card-header">
+                <div class="card-header py-1">
                     <h1 class="h5 my-0">Estado del sitio</h1>
                 </div>
                 <div class="card-body p-4">
@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <select name="estado_sitio" class="browser-default custom-select">
-                                    {% if infositio[0].activo == 1 %}
+                                    {% if infositio.activo == 1 %}
                                     <option value="0">Inactivo</option>
                                     <option value="1" selected>Activo</option>
                                     {% else %}
@@ -29,14 +29,14 @@
         </div>
         <div class="col-md-2 mb-4">
             <div class="card h-100">
-                <div class="card-header">
+                <div class="card-header py-1">
                     <h1 class="h5 my-0">Paginación</h1>
                 </div>
                 <div class="card-body p-4">
                     <form action="{{ url_for('change_site_status') }}" method="POST">
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input type="number" min="0" name="paginacion" class="form-control" value="{{ infositio[0].paginacion }}">
+                                <input type="number" min="0" name="paginacion" class="form-control" value="{{ infositio.paginacion }}">
                             </div>
                             <div class="col-md-12 text-right">
                                 <button type="submit" class="btn btn-primary">Guardar</button>                                             
@@ -46,17 +46,45 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row row-eq-height">
+        
         <div class="col-md-3 mb-4">
             <div class="card h-100">
-                <div class="card-header">
-                    <h1 class="h5 my-0">Ir al sitio de escuela orquesta</h1>
+                <div class="card-header py-1">
+                    <h1 class="h5 my-0">Sitio</h1>
                 </div>
                 <div class="card-body p-4">
                     <div class="row justify-content-center">
+                        <h1 class="h5 mb-4">Ir al sitio de escuela orquesta</h1>
                         <button class="btn btn-primary btn-rounded" onclick="window.location.href='/'">Ver sitio</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-eq-height">
+        <div class="col-md-5 mb-4">
+            <div class="card h-100">
+                <div class="card-header py-1">
+                    <h1 class="h5 my-0">Información del sitio</h1>
+                </div>
+                <div class="card-body p-4">
+                    <form action="{{ url_for('update_info_sitio') }}" method="POST">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label>Titulo</label>
+                                <input type="text" class="form-control mb-2" name="titulo" value="{{infositio.titulo}}">
+                                <div class="form-group mb-2">
+                                    <label for="exampleFormControlTextarea1">Descripción</label>
+                                    <textarea class="form-control rounded-0" name="descripcion" id="descripcion" rows="8">{{infositio.descripcion}}</textarea>
+                                </div>
+                                <label>Email de contacto</label>
+                                <input type="text" class="form-control mb-2" name="email" value="{{infositio.email}}">
+                            </div>
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-primary">Guardar</button>                                             
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,42 +1,44 @@
 <div class="subItem">
     <!-- Row -->
-    <div class="row">
+    <div class="row row-eq-height">
         <div class="col-md-6 mb-3">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header py-1">
                     Ciclos lectivos
                 </div>
-                <div class="card-body">
-                    {% for ciclo in ciclos_lectivos %}
+                <div class="card-body pb-1">
                     <form method="POST">
-                        <h1 class="h5 mb-4">Ciclo lectivo {{ciclo.semestre}} (2019)</h1>
+                        {% for ciclo in ciclos_lectivos %}
                         <div class="form-group row">
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
+                                <h1 class="h5 mb-4">Ciclo lectivo {{ciclo.semestre}} (2019)</h1>
+                            </div>
+                            <div class="col-md-4 mb-2">
                                 <label class="mb-2">Fecha inicio</label>
                                 <input class="form-control" type="date" name="fecha_ini" value="{{ciclo.fecha_ini.strftime('%Y-%m-%d')}}">
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4">
                                 <label class="mb-2">Fecha cierre</label>
                                 <input class="form-control" type="date" name="fecha_fin" value="{{ciclo.fecha_fin.strftime('%Y-%m-%d')}}">
                             </div>
-                        </div>
-                        <div class="form-group row py-2">
+                        </div> 
+                        <hr>
+                        {% endfor %}
+                        <div class="form-group row">
                             <div class="col-md-12 text-right">
                                 <button class="btn btn-success">Guardar</button>
                             </div>
-                        </div>
+                        </div> 
                     </form>
-                    <hr>
-                    {% endfor %}
                 </div>
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header py-1">
                     Talleres
                 </div>
-                <div class="card-body">
+                <div class="card-body pb-1">
                     <h1 class="h5">Asociar taller a ciclo lectivo</h1>
                     <hr>
                     <form method="POST">
@@ -51,7 +53,7 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6">
                                 <label class="mb-2">Taller</label>
                                 <select class="browser-default custom-select" required>
                                     <option selected disabled>Seleccionar</option>
@@ -61,7 +63,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row py-2">
+                        <hr>
+                        <div class="form-group row">
                             <div class="col-md-12 text-right">
                                 <button class="btn btn-info">Guardar</button>
                             </div>
@@ -81,7 +84,7 @@
                 <div class="card-header py-1">
                     Docentes
                 </div>
-                <div class="card-body">
+                <div class="card-body pb-1">
                     <h1 class="h5">Asociar docente a taller</h1>
                     <hr>
                     <form method="POST">
@@ -93,7 +96,7 @@
                                     <option selected disabled>Seleccionar</option>
                                     {% for taller in talleres %}
                                     <option value="{{taller.id}}">{{taller.nombre}} ({{taller.nombre_corto}})</option>
-                                    {% endfor %}
+                                    {% endfor %}    
                                 </select>
                             </div>
                             <div class="col-md-6 mb-2">
@@ -106,7 +109,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row py-2">
+                        <hr>
+                        <div class="form-group row">
                             <div class="col-md-12 text-right">
                                 <button class="btn btn-info">Guardar</button>
                             </div>
@@ -120,7 +124,7 @@
                 <div class="card-header py-1">
                     Estudiantes
                 </div>
-                <div class="card-body">
+                <div class="card-body pb-1">
                     <h1 class="h5">Asociar estudiante a taller</h1>
                     <hr>
                     <form method="POST">
@@ -145,7 +149,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row py-2">
+                        <hr>
+                        <div class="form-group row">
                             <div class="col-md-12 text-right">
                                 <button class="btn btn-info">Guardar</button>
                             </div>
