@@ -10,38 +10,53 @@ from flaskps.models.barrio import Barrio
 from flaskps.models.info_sitio import InfoSitio
 from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
+from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 
 def getPanel():
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+        
         #Obtiene informacion del sitio (Estado y paginacion)
         InfoSitio.db = get_db()
         infositio = InfoSitio.all()
+        
         #Obtiene estudiantes
         Student.db = get_db()
         students = Student.all()
+        
         #Obtiene docentes
         Docente.db = get_db()
         docentes = Docente.all()
+        
         #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()
+        
         #Obtiene generos
         Genero.db = get_db()
         generos = Genero.all()
+        
         #Obtiene escuelas
         Escuela.db = get_db()
         escuelas = Escuela.all()
+        
         #Obtiene barrios
         Barrio.db = get_db()
         barrios = Barrio.all()
+        
         #Obtiene roles
         Rol.db = get_db()
         roles = Rol.all()
+        
         #Obtiene Taller
         Taller.db = get_db()
         talleres = Taller.all()
+        
+        #Obtiene Taller
+        Ciclo.db = get_db()
+        ciclos_lectivos = Ciclo.all()
+        
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
@@ -64,6 +79,7 @@ def getPanel():
             rol=rol,
             usuarios=usuarios,
             talleres=talleres,
+            ciclos_lectivos=ciclos_lectivos,
             nombre=session['nombre'],
             apellido=session['apellido']
         )

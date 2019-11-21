@@ -272,7 +272,10 @@ h1, h2, h3, h4, h5, h6, p {
 .card {
     border-radius: 3px;
     border: 0 none !important;
-    box-shadow: 0 .07em .24em 0 rgba(0,0,0,.22) !important;
+    box-shadow: 0 .1em .24em 0 rgba(0,0,0,.22) !important;
+}
+.card-header {
+    background: #fbfbfb !important;
 }
 .card-radius-16 {
     border-radius: 16px !important;
@@ -436,7 +439,7 @@ h1, h2, h3, h4, h5, h6, p {
     Panel de docente
 --------------------------------------------------------------*/
 .panel {
-    background: #fff;
+    background: #fefefe;
 }
 .nav-link-panel, .nav-link-nombre {
     color: var(--black-4);
@@ -455,6 +458,7 @@ h1, h2, h3, h4, h5, h6, p {
     z-index: 10;
     min-height: 100vh;
     border-radius: 0 !important;
+    box-shadow: 0 .07em .18em 0 rgba(0,0,0,.22) !important;
 }
 .navbar-static-top {
     margin-bottom: 0px;
