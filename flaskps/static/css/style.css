@@ -3,56 +3,11 @@
 --------------------------------------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
 /*--------------------------------------------------------------
-    Root variables
---------------------------------------------------------------*/
-:root {
-    /*Pallete*/
-    --color-1:#6059f7;
-    --color-2: #6592fe;
-    --color-3:#5143de;
-    --color-4: #1d252d;
-    --color-5:#3d5265;
-    /*White*/
-    --white-1: #fff;
-    --white-2: #fbfbfb;
-    --white-3: #eee;
-    --white-4: #d8d8d8;
-    --white-5: #d8d8d8;
-    /*Black*/
-    --black-1: #333;
-    --black-2: #454545;
-    --black-3: #575757;
-    --black-4: #777;
-    --black-5: #aaa;
-    /*Link*/
-    --link: #3e64ff;
-    --link-dark: #1d41d1;
-    /*Notation*/
-    --primary: #3d87ff;
-    --primary-dark: #251f87;
-    --secondary: #3d30ba;
-    --secondary-dark: #3428a7;
-    --info: #29cae4;
-    --info-dark: #20b8d1;
-    --light: #ddd;
-    --light-dark: #b8c4d6;
-    --success: #00c851;
-    --success-dark: #007e33;
-    --warning: #ffbb33;
-    --warning-dark: #ff8800;
-    --danger: #ff4444;
-    --danger-dark: #cc0000;
-    /*Transition*/
-    --base-transition: 0.09s all !important;
-    /*Fonts*/
-    --font-1: 'Open Sans', sans-serif;
-}
-/*--------------------------------------------------------------
     General
 --------------------------------------------------------------*/
 * {
-    color: var(--black-1);
-    font-family: var(--font-1);
+    color: #333;
+    font-family: 'Open Sans', sans-serif;
 }
 body {
     background: #fff;
@@ -102,19 +57,17 @@ body {
 .h6 { font-size: 0.8em !important; }
 p { font-size: 16px; }
 h1, h2, h3, h4, h5, h6, p {
-    color: var(--black-1);
-    font-family: var(--font-1);
+    color: #333;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400 !important;
 }
-
-.font-1 { font-family: var(--font-1); }
 
 /*--------------------------------------------------------------
     Buttons
 --------------------------------------------------------------*/
 .btn {
     margin: 0px !important;
-    font-family: var(--font-1) !important;
+    font-family: 'Open Sans', sans-serif !important;
     font-weight: 700;
     padding: 10px 20px;
     border: 0 none;
@@ -131,49 +84,6 @@ h1, h2, h3, h4, h5, h6, p {
 .btn-rounded {
     border-radius: 50px !important;
 }
-    /* Colors */
-.btn-primary {
-    background-color: var(--primary) !important;
-}
-.btn-primary-dark {
-    background-color: var(--primary-dark) !important;
-}
-.btn-secondary {
-    background-color: var(--secondary) !important;
-}
-.btn-secondary-dark {
-    background-color: var(--secondary-dark) !important;
-}
-.btn-info {
-    background-color: var(--info) !important;
-}
-.btn-info-dark {
-    background-color: var(--info-dark) !important;
-}
-.btn-light {
-    background-color: var(--light) !important;
-}
-.btn-light-dark {
-    background-color: var(--light-dark) !important;
-}
-.btn-success {
-    background-color: var(--success) !important;
-}
-.btn-success-dark {
-    background-color: var(--success-dark) !important;
-}
-.btn-warning {
-    background-color: var(--warning) !important;
-}
-.btn-warning-dark {
-    background-color: var(--warning-dark) !important;
-}
-.btn-danger {
-    background-color: var(--danger) !important;
-}
-.btn-danger-dark {
-    background-color: var(--danger-dark) !important;
-}
 
 /*--------------------------------------------------------------
     Icons
@@ -181,90 +91,6 @@ h1, h2, h3, h4, h5, h6, p {
 .icon-sm { font-size: 1.2em !important; }
 .icon-md { font-size: 1.5em !important; }
 .icon-lg { font-size: 1.9em !important; }
-
-/*--------------------------------------------------------------
-    Colors
---------------------------------------------------------------*/
-.color1 { color: var(--color-1) !important;}
-.color2 { color: var(--color-2) !important;}
-.color3 { color: var(--color-3) !important;}
-.color4 { color: var(--color-4) !important;}
-.color5 { color: var(--color-5) !important;}
-
-.white1 { color: var(--white-1) !important; }
-.white2 { color: var(--white-2) !important; }
-.white3 { color: var(--white-3) !important; }
-.white4 { color: var(--white-4) !important; }
-.white5 { color: var(--white-5) !important; }
-
-.black1 { color: var(--black-1) !important; }
-.black2 { color: var(--black-2) !important; }
-.black3 { color: var(--black-3) !important; }
-.black4 { color: var(--black-4) !important; }
-.black5 { color: var(--black-5) !important; }
-
-.primary { color: var(--primary) !important; }
-.primary-dark { color: var(--primary-dark) !important; }
-
-.secondary { color: var(--secondary) !important; }
-.secondary-dark { color: var(--secondary-dark) !important; }
-
-.info { color: var(--info) !important; }
-.info-dark { color: var(--info-dark) !important; }
-
-.light { color: var(--light) !important; }
-.light-dark { color: var(--light-dark) !important; }
-
-.success { color: var(--success) !important; }
-.success-dark { color: var(--success-dark) !important; }
-
-.warning { color: var(--warning) !important; }
-.warning-dark { color: var(--warning-dark) !important; }
-
-.danger { color: var(--danger) !important; }
-.danger-dark { color: var(--danger-dark) !important; }
-
-/*--------------------------------------------------------------
-    Background Colors
---------------------------------------------------------------*/
-.bg-color1 { background: var(--color-1) !important;}
-.bg-color2 { background: var(--color-2) !important;}
-.bg-color3 { background: var(--color-3) !important;}
-.bg-color4 { background: var(--color-4) !important;}
-.bg-color5 { background: var(--color-5) !important;}
-
-.bg-white1 { background: var(--white-1) !important; }
-.bg-white2 { background: var(--white-2) !important; }
-.bg-white3 { background: var(--white-3) !important; }
-.bg-white4 { background: var(--white-4) !important; }
-.bg-white5 { background: var(--white-5) !important; }
-
-.bg-black1 { background: var(--black-1) !important; }
-.bg-black2 { background: var(--black-2) !important; }
-.bg-black3 { background: var(--black-3) !important; }
-.bg-black4 { background: var(--black-4) !important; }
-.bg-black5 { background: var(--black-5) !important; }
-
-.bg-primary { background: var(--primary) !important; }
-.bg-primary-dark { background: var(--primary-dark) !important; }
-
-.bg-secondary { background: var(--secondary) !important; }
-.bg-secondary-dark { background: var(--secondary-dark) !important; }
-
-.bg-info { background: var(--info) !important; }
-.bg-info-dark { background: var(--info-dark) !important; }
-
-.bg-light { background: var(--light) !important; }
-.bg-light-dark { background: var(--light-dark) !important; }
-
-.bg-success { background: var(--success) !important; }
-.bg-success-dark { background: var(--success-dark) !important; }
-
-.bg-warning { background: var(--warning) !important; }
-.bg-warning-dark { background: var(--warning-dark) !important; }
-
-.bg-danger { background: var(--danger) !important; }
-.bg-danger-dark { background: var(--danger-dark) !important; }
 
 /*--------------------------------------------------------------
     Cards
@@ -336,8 +162,6 @@ h1, h2, h3, h4, h5, h6, p {
     }
 }
 
-
-
 /*--------------------------------------------------------------
     Página de inicio
 --------------------------------------------------------------*/
@@ -345,10 +169,9 @@ h1, h2, h3, h4, h5, h6, p {
     padding-top: 45vh;
 }
 .home-title {
-    font-family: var(--font-3);
     font-weight: 700;
     font-size: 45px;
-    color: var(--black-2);
+    color: #454545;
 }
 .home-text {
     font-size: 26px;
@@ -416,10 +239,9 @@ h1, h2, h3, h4, h5, h6, p {
     padding: 40px !important;
 }
 .login-header h1 {
-    font-family: var(--font-1);
     font-weight: 400;
     font-size: 30px;
-    color: var(--black-1) !important;
+    color: #333 !important;
 }
 .login-body {
     padding: 20px;
@@ -442,7 +264,7 @@ h1, h2, h3, h4, h5, h6, p {
     background: #fcfcfc;
 }
 .nav-link-panel, .nav-link-nombre {
-    color: var(--black-4);
+    color: #777;
     font-weight: 500;
 }
 .nav-link-panel {
@@ -491,7 +313,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .menuItemActive {
     background: #ddd;
-    color: var(--black-2);
+    color: #454545;
 }
 .subItem {
 	display: none;
