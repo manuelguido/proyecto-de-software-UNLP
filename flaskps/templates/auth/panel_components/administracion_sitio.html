@@ -1,7 +1,11 @@
-<div class="subItem">
-    <div class="row row-eq-height">
-        <div class="col-md-3 mb-4">
-            <div class="card h-100">
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio
+{% endblock %}
+{% block contentitem %}
+    <div class="row">
+        <div class="col-12 col-lg-3 mb-4">
+            <div class="card">
                 <div class="card-header py-1">
                     <h1 class="h5 my-0">Estado del sitio</h1>
                 </div>
@@ -27,8 +31,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 mb-4">
-            <div class="card h-100">
+        <div class="col-12 col-lg-3 mb-4">
+            <div class="card">
                 <div class="card-header py-1">
                     <h1 class="h5 my-0">Paginación</h1>
                 </div>
@@ -47,23 +51,8 @@
             </div>
         </div>
         
-        <div class="col-md-3 mb-4">
-            <div class="card h-100">
-                <div class="card-header py-1">
-                    <h1 class="h5 my-0">Sitio</h1>
-                </div>
-                <div class="card-body p-4">
-                    <div class="row justify-content-center">
-                        <h1 class="h5 mb-4">Ir al sitio de escuela orquesta</h1>
-                        <button class="btn btn-primary btn-rounded" onclick="window.location.href='/'">Ver sitio</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-eq-height">
-        <div class="col-md-5 mb-4">
-            <div class="card h-100">
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="card">
                 <div class="card-header py-1">
                     <h1 class="h5 my-0">Información del sitio</h1>
                 </div>
@@ -89,4 +78,4 @@
             </div>
         </div>
     </div>
-</div>
+{% endblock %}

@@ -1,4 +1,8 @@
-<div class="subItem">
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-users black3 mr-2"></i>Usuarios
+{% endblock %}
+{% block contentitem %}
         <div class="row">
             <div class="col-md-12 mb-3">
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#usuarioCreate">
@@ -122,4 +126,4 @@
         </div>
         <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
-    </div>
+{% endblock %}

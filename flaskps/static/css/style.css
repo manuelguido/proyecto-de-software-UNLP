@@ -260,6 +260,16 @@ h1, h2, h3, h4, h5, h6, p {
 /*--------------------------------------------------------------
     Panel de docente
 --------------------------------------------------------------*/
+@media (min-width: 702px) {
+    #panel-menu {
+        min-height: 100vh;
+    }
+}
+@media (min-width: 992px) {
+    .panel-logo {
+        display: block !important;
+    }
+}
 .panel {
     background: #fcfcfc;
 }
@@ -273,12 +283,8 @@ h1, h2, h3, h4, h5, h6, p {
 .nav-link-nombre {
     font-size: .9em;
 }
-#panel-menu, #panel-menu-inner, .panel-content, #panel-toggle {
-    transition: 0.3s all;
-}
 #panel-menu {
     z-index: 10;
-    min-height: 100vh;
     border-radius: 0 !important;
     box-shadow: 0 .07em .18em 0 rgba(0,0,0,.22) !important;
 }
@@ -288,6 +294,7 @@ h1, h2, h3, h4, h5, h6, p {
 .panel-logo {
     margin: 50px auto;
     width: 50%;
+    display: none;
 }
 .panel-main {
     background: #e6e6e4;

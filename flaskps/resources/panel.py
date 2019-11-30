@@ -51,7 +51,7 @@ def getPanelAlumnos():
     return redirect(url_for('auth_login'))
 
 #Modulo docentes
-def getPanelDocentes():
+def getPanelEmpleados():
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
@@ -74,7 +74,7 @@ def getPanelDocentes():
         barrios = Barrio.all()
 
         return render_template(
-            'auth/panel_components/alumnos.html',
+            'auth/panel_components/empleados.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
@@ -111,7 +111,7 @@ def getPanelUsuarios():
         barrios = Barrio.all()
 
         return render_template(
-            'auth/panel_components/alumnos.html',
+            'auth/panel_components/usuarios.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
@@ -148,7 +148,7 @@ def getPanelCiclos():
         barrios = Barrio.all()
 
         return render_template(
-            'auth/panel_components/alumnos.html',
+            'auth/panel_components/ciclos_lectivos.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
@@ -168,32 +168,16 @@ def getPanelAdminSitio():
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene estudiantes
-        Student.db = get_db()
-        students = Student.all()
-        #Obtiene niveles
-        Nivel.db = get_db()
-        niveles = Nivel.all()
-        #Obtiene generos
-        Genero.db = get_db()
-        generos = Genero.all()
-        #Obtiene escuelas
-        Escuela.db = get_db()
-        escuelas = Escuela.all()
-        #Obtiene barrios
-        Barrio.db = get_db()
-        barrios = Barrio.all()
+        #Obtiene informacion del sitio (Estado y paginacion)
+        ConfigSitio.db = get_db()
+        infositio = ConfigSitio.all()
 
         return render_template(
-            'auth/panel_components/alumnos.html',
+            'auth/panel_components/administracion_sitio.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
-            students=students,
-            niveles=niveles,
-            generos=generos,
-            escuelas=escuelas,
-            barrios=barrios
+            infositio = infositio
         )
 
     return redirect(url_for('auth_login'))

@@ -1,4 +1,8 @@
-    <div class="subItem">
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-user-friends black3 mr-2"></i>Empleados
+{% endblock %}
+{% block contentitem %}
         <div class="row">
             <div class="col-md-6 mb-3">
                 <h2 class="h4 black2">Docentes</h2>
@@ -282,4 +286,4 @@
         </div>
         <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
-    </div>
+{% endblock %}

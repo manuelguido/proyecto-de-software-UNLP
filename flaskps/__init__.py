@@ -36,7 +36,7 @@ app.add_url_rule(
 
 #url Panel de administración
 app.add_url_rule("/panel_alumnos", 'panel_alumnos', panel.getPanelAlumnos)
-app.add_url_rule("/panel_docentes", 'panel_docentes', panel.getPanelDocentes)
+app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados)
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios)
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
 app.add_url_rule("/panel_adminsitio", 'panel_adminsitio', panel.getPanelAdminSitio)

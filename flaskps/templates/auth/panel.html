@@ -93,14 +93,14 @@
                 <!-- Row-->
                 <div class="row m-0 p-0">
                     <!-- Menu-->
-                    <aside id="panel-menu" class="col-sm-2 col-xs-2 p-0 uns card shadow-sm">
+                    <aside id="panel-menu" class="col-12 col-lg-2 col-md-4 p-0 uns card shadow-sm">
                         <div id="panel-menu-inner" class="p-0 panel-menu">
                             <div class="row justify-content-center">
                                 <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_alumnos"><i class="fas fa-user-graduate black3 mr-2"></i>Alumnos</a></li>
-                                <li class="list-group-item menuItem" role="button"><a href="/panel_docentes"><i class="fas fa-user-friends black3 mr-2"></i>Empleados</a></li>
+                                <li class="list-group-item menuItem" role="button"><a href="/panel_empleados"><i class="fas fa-user-friends black3 mr-2"></i>Empleados</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_usuarios"><i class="fas fa-users black3 mr-2"></i>Usuarios</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_ciclos"><i class="fas fa-school black3 mr-2"></i>Ciclos lectivos</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_adminsitio"><i class="fas fa-globe-americas black3 mr-2"></i>Administración del sitio</a></li>
@@ -151,12 +151,10 @@
                                 </div>
                             </div>
 
-                            <div class="row">
-                                <!-- Block Contenido -->
-                                {% block contentitem %}
-                                {% endblock %}
-                                <!-- /.Block Contenido -->
-                            </div>
+                            <!-- Block Contenido -->
+                            {% block contentitem %}
+                            {% endblock %}
+                            <!-- /.Block Contenido -->
 
                         </div>
                         <!-- /.Container Fluid -->
