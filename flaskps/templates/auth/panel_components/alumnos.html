@@ -1,5 +1,8 @@
-    <div class="subItem">
-        <div class="row">
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-user-graduate black3 mr-2"></i>Alumnos</a>
+{% endblock %}
+{% block contentitem %}
             {% for p in permisos %}
             {% if p.nombre == 'estudiante_new' %}
             <div class="col-md-12 mb-3">
@@ -16,8 +19,6 @@
                         <tr>
                             <th>Apellido</th>
                             <th>Nombre</th>
-                            <th>Nivel</th>
-                            <th>Escuela</th>
                             <th>Documento</th>
                             <th class="text-center">Acciones</th>
                         </tr>
@@ -26,8 +27,6 @@
                         <tr>
                             <td>{{row.apellido}}</td>
                             <td>{{row.nombre}}</td>
-                            <td>{{row.nivel}}</td>
-                            <td>{{row.escuela}}</td>
                             <td>
                                 <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
                                 {{row.numero}}
@@ -376,8 +375,7 @@
             </div>
             {% endif %}
             {% endfor %}
-            
-        </div>
-        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
-    </div>
+{% endblock %}

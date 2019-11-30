@@ -1,16 +1,12 @@
-from flaskps.db import get_db
-
-class InfoSitio(object):
+class ConfigSitio(object):
 
     db = None
 
     #retorna el estado del sitio 1 = activo, 0 = inactivo
     @classmethod
     def index(cls):
-        connection = get_db()
-        sql_select_Query = "select * from configuracion"
-        cursor = connection.cursor()
-        cursor.execute(sql_select_Query)
+        cursor = cls.db.cursor()
+        cursor.execute("select * from configuracion")
         results = cursor.fetchall()        
         for r in results:
             y = r['activo']

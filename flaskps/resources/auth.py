@@ -5,7 +5,7 @@ from flaskps.models.user import User
 def login():
     #Si esta autenticado, va derecho al panel
     if authenticated():
-        return redirect(url_for('panel'))    
+        return redirect(url_for('panel_alumnos'))    
     return render_template('auth/login.html')
 
 def authenticate():
@@ -30,7 +30,7 @@ def authenticate():
     session['nombre'] = user['first_name']
     session['apellido'] = user['last_name']
 
-    return redirect(url_for('panel'))
+    return redirect(url_for('panel_alumnos'))
 
 def authenticated():
     #Si el usuario esta autenticado retora 1(verdadero), sino retorna 0

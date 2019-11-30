@@ -1,12 +1,17 @@
 from flask import redirect, render_template, request, url_for, flash, session, abort
 from flaskps.db import get_db
-from flaskps.models.info_sitio import InfoSitio
+from flaskps.models.config_sitio import ConfigSitio
 from flaskps.helpers.auth import authenticated
 
 def index():
-    x = InfoSitio.index()
+    ConfigSitio.db = get_db()
+    x = ConfigSitio.index()
     if (x):
-        return render_template('home/index.html')
+        infositio = ConfigSitio.all()
+        return render_template(
+            'home/index.html',
+            infositio=infositio
+            )
     else:
         return render_template('home/site_down.html')
 
@@ -16,8 +21,8 @@ def change_site_status():
     
     params = request.form
     if request.method == 'POST':
-        InfoSitio.db = get_db()
-        InfoSitio.change_site_status(params)
+        ConfigSitio.db = get_db()
+        ConfigSitio.change_site_status(params)
         flash("Se actualizó el estado del sitio correctamente")
         return redirect(url_for('panel'))
 
@@ -27,8 +32,8 @@ def update_info_sitio():
     
     params = request.form
     if request.method == 'POST':
-        InfoSitio.db = get_db()
-        InfoSitio.update_info_sitio(params)
+        ConfigSitio.db = get_db()
+        ConfigSitio.update_info_sitio(params)
         flash("Se actualizó la información del sitio correctamente")
         return redirect(url_for('panel'))
 
@@ -38,7 +43,7 @@ def change_site_pagination():
 
     params = request.form
     if request.method == 'POST':
-        InfoSitio.db = get_db()
-        InfoSitio.change_site_pagination(params)
+        ConfigSitio.db = get_db()
+        ConfigSitio.change_site_pagination(params)
         flash("Se actualizó el numero de paginación correctamente")
         return redirect(url_for('panel'))
