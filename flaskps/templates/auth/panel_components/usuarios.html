@@ -4,12 +4,12 @@
 {% endblock %}
 {% block contentitem %}
         <div class="row">
-            <div class="col-md-12 mb-3">
+            <div class="col-12 mb-3">
                 <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#usuarioCreate">
                     <i class="fas fa-user-plus mr-2"></i> Nuevo Usuario
                 </button>
             </div>
-            <div class="col-md-8">
+            <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <!-- Row Titulos -->
@@ -44,7 +44,14 @@
                             </td>
                             <td class="text-center">
                                 <!-- Eliminar usuario -->
-                                <!--a href="/user_delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a-->
+                                {% for p in permisos %}
+                                    {% if p.nombre == 'usuario_update' %}
+                                    <a href="/user_update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#userEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                    {% endif %}
+                                    {% if p.nombre == 'usuario_destroy' %}
+                                    <a href="/user_delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                                    {% endif %}
+                                {% endfor %}
                             </td>
                         </tr>
                         {% endfor %}
@@ -66,43 +73,35 @@
 
                                 <!-- Nombre y apellido -->
                                 <div class="form-group row">
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Apellido</label>
                                         <input type="text" class="form-control" placeholder="Ingrese apellido" name="first_name" required>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Nombre</label>
                                         <input type="text" class="form-control" placeholder="Ingrese nombre" name="last_name" required>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Nombre de usuario</label>
                                         <input type="text" class="form-control" placeholder="Ingrese nombre de usuario" name="username" required>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Email</label>
                                         <input type="email" class="form-control" name="email" placeholder="Ingrese email" required>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Contraseña</label>
                                         <input type="password" class="form-control" name="password" placeholder="Ingrese contraseña" required>
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Repetir Contraseña</label>
                                         <input type="password" class="form-control" name="password-repeat" placeholder="Repita la contraseña" required>
                                     </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>Activo/Inactivo</label>
-                                        <select name="activo" class="browser-default custom-select" required>
-                                            <option selected disabled>Seleccionar</option>
-                                            <option value="1">Activo</option>
-                                            <option value="0">Inactivo</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-12 mb-3">
                                         <label>Rol</label>
                                         <select name="rol" class="browser-default custom-select" required>
                                             <option selected disabled>Seleccionar</option>
-                                            {% for rol in roles %}
+                                            {% for rol in roles_lista %}
                                             <option value="{{rol.id}}">{{rol.nombre}}</option>
                                             {% endfor %}
                                         </select>
@@ -110,11 +109,11 @@
                                 </div>
                                 <hr>
                                 <div class="form-group row">
-                                    <div class="col-md-6 text-left">
+                                    <div class="col-6 text-left">
                                         <button type="button" class="btn btn-light black2" data-dismiss="modal">Cancelar</button>
                                     </div>
-                                    <div class="col-md-6 text-right">
-                                        <button class="btn btn-primary-dark white1" type="submit">Crear usuario</button>
+                                    <div class="col-6 text-right">
+                                        <button class="btn btn-primary" type="submit">Crear usuario</button>
                                     </div>
                                 </div>
                             </form>

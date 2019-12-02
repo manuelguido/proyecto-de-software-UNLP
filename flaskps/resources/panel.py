@@ -57,32 +57,15 @@ def getPanelEmpleados():
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene estudiantes
-        Student.db = get_db()
-        students = Student.all()
-        #Obtiene niveles
-        Nivel.db = get_db()
-        niveles = Nivel.all()
-        #Obtiene generos
-        Genero.db = get_db()
-        generos = Genero.all()
-        #Obtiene escuelas
-        Escuela.db = get_db()
-        escuelas = Escuela.all()
-        #Obtiene barrios
-        Barrio.db = get_db()
-        barrios = Barrio.all()
-
+        #Obtiene docentes
+        Docente.db = get_db()
+        docentes = Docente.all()
         return render_template(
             'auth/panel_components/empleados.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
-            students=students,
-            niveles=niveles,
-            generos=generos,
-            escuelas=escuelas,
-            barrios=barrios
+            docentes=docentes
         )
 
     return redirect(url_for('auth_login'))
@@ -94,32 +77,19 @@ def getPanelUsuarios():
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene estudiantes
-        Student.db = get_db()
-        students = Student.all()
-        #Obtiene niveles
-        Nivel.db = get_db()
-        niveles = Nivel.all()
-        #Obtiene generos
-        Genero.db = get_db()
-        generos = Genero.all()
-        #Obtiene escuelas
-        Escuela.db = get_db()
-        escuelas = Escuela.all()
-        #Obtiene barrios
-        Barrio.db = get_db()
-        barrios = Barrio.all()
+        #Obtiene usuarios
+        usuarios = User.all()
+        #Obtiene roles
+        Rol.db = get_db()
+        roles_lista = Rol.all()
 
         return render_template(
             'auth/panel_components/usuarios.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
-            students=students,
-            niveles=niveles,
-            generos=generos,
-            escuelas=escuelas,
-            barrios=barrios
+            usuarios=usuarios,
+            roles_lista=roles_lista
         )
 
     return redirect(url_for('auth_login'))
@@ -234,9 +204,9 @@ def getPanel():
         
         #Obtiene permisos del usuario
         User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        permisos = User.get_permisos(session['id'])
         #Obtiene rol
-        rol = User.get_rol(session['id']) #Session user es el email unico del usuario
+        rol = User.get_rol(session['id'])
         #Obtiene usuarios
         usuarios = User.all()
         #Retorno todo en el panel

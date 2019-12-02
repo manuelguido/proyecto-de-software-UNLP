@@ -6,14 +6,14 @@
     <div class="row">
         {% for p in permisos %}
         {% if p.nombre == 'estudiante_new' %}
-        <div class="col-md-12 mb-3">
+        <div class="col-12 mb-3">
             <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
                 <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
             </button>
         </div>
         {% endif %}
         {% endfor %}
-        <div class="col-md-12">
+        <div class="col-12">
             <div class="table-responsive">
                 <table class="table table-striped">
                     <!-- Row Titulos -->
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-12">
                                             <p class="mb-2">Nombre: {{row.nombre}}</p>
                                             <p class="mb-2">Apellido: {{row.apellido}}</p>
                                             <p class="mb-2">Fecha de nacimiento: {{row.fecha_nac}}</p>
@@ -122,22 +122,22 @@
                                         <input type="hidden"  name="id" value="{{row.id}}">
                                         <!-- Nombre y apellido -->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Apellido</label>
                                                 <input type="text" class="form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Nombre</label>
                                                 <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
                                             </div>
                                         </div>
                                         <!-- Fecha de nacimiento -->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Fecha de nacimiento</label>
                                                 <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Localidad</label>
                                                 <select name="localidad_id" class="localidades browser-default custom-select" required="1">
                                                     <option value="0" selected disabled>Seleccionar</option>
@@ -146,7 +146,7 @@
                                         </div>
                                         <!-- Nivel y DNI -->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Nivel</label>
                                                 <select name="nivel_id" class="browser-default custom-select" required="1">
                                                     <option selected disabled>Nivel</option>
@@ -159,14 +159,14 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Domicilio</label>
                                                 <input type="text" min="0" class="form-control" value="{{row.numero}}" name="domicilio" required="1">
                                             </div>
                                         </div>                                
                                         <!-- Direccion -->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Género</label>
                                                 <select name="genero_id" class="browser-default custom-select" required="1">
                                                     <option selected disabled>Genero</option>
@@ -179,7 +179,7 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Escuela</label>
                                                 <select name="escuela_id" class="browser-default custom-select" required="1">
                                                     <option selected disabled>Escuela</option>
@@ -195,23 +195,23 @@
                                         </div>    
                                         <!-- Padre madre tutor e instrumento-->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Tipo Documento</label>
                                                 <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
                                                 </select>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Numero</label>
                                                 <input type="number" min="0" class="form-control" value="{{row.numero}}" name="numero" required="1">
                                             </div>
                                         </div>                    
                                         <!-- Fecha de nacimiento (Alumno) -->
                                         <div class="form-group row">
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Teléfono</label>
                                                 <input type="number" min="0" class="form-control" value="{{row.tel}}" name="tel" required="1">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-6">
                                                 <label>Barrio</label>
                                                 <select name="barrio_id" class="browser-default custom-select" required="1">
                                                     <option selected disabled>Barrio</option>
@@ -227,10 +227,10 @@
                                         </div>
                                         <hr>
                                         <div class="form-group row">
-                                            <div class="col-md-6 text-left">
+                                            <div class="col-6 text-left">
                                                 <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
                                             </div>
-                                            <div class="col-md-6 text-right">
+                                            <div class="col-6 text-right">
                                                 <button class="btn btn-primary" type="sbumit">Actualizar</button>
                                             </div>
                                         </div>
@@ -260,22 +260,22 @@
                         <form action="{{ url_for('insert_student') }}" method="POST">
                             <!-- Nombre y apellido -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Apellido</label>
                                     <input type="text" class="form-control" placeholder="Apellido" name="apellido" required="1">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Nombre</label>
                                     <input type="text" class="form-control" placeholder="Nombre" name="nombre" required="1">
                                 </div>
                             </div>
                             <!-- Fecha de nacimiento -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Fecha de nacimiento</label>
                                     <input type="date" class="form-control" name="fecha_nac" required="1">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Localidad</label>
                                     <select name="localidad_id" class="localidades browser-default custom-select" required="1">
                                     </select>
@@ -283,7 +283,7 @@
                             </div>
                             <!-- Nivel y DNI -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Nivel</label>
                                     <select name="nivel_id" class="browser-default custom-select" required="1">
                                         <option selected disabled>Seleccionar</option>
@@ -292,14 +292,14 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Domicilio</label>
                                     <input type="text" min="0" class="form-control" placeholder="Domicilio" name="domicilio" required="1">
                                 </div>
                             </div>                    
                             <!-- Direccion -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Género</label>
                                     <select name="genero_id" class="browser-default custom-select" required="1">
                                         <option selected disabled>Seleccionar</option>
@@ -308,7 +308,7 @@
                                         {% endfor %}
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Escuela</label>
                                     <select name="escuela_id" class="browser-default custom-select" required="1">
                                         <option selected disabled>Seleccionar</option>
@@ -320,23 +320,23 @@
                             </div>    
                             <!-- Documento -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Tipo Documento</label>
                                     <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">                                    
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Número</label>
                                     <input type="number" min="0" class="form-control" placeholder="Numero DNI" name="numero" required="1">
                                 </div>
                             </div>                    
                             <!-- Telefono y barrio -->
                             <div class="form-group row">
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Teléfono</label>
                                     <input type="number" min="0" class="form-control" placeholder="Telefono" name="tel" required="1">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-6">
                                     <label>Barrio</label>
                                     <select name="barrio_id" class="browser-default custom-select" required="1">
                                         <option selected disabled>Seleccionar</option>
@@ -348,11 +348,11 @@
                             </div>
                             <hr>
                             <div class="form-group row">
-                                <div class="col-md-6 text-left">
+                                <div class="col-6 text-left">
                                     <button type="button" class="btn btn-light black2" data-dismiss="modal">Cancelar</button>
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    <button class="btn btn-primary-dark white1" type="submit">Guardar</button>
+                                <div class="col-6 text-right">
+                                    <button class="btn btn-primary" type="submit">Guardar</button>
                                 </div>
                             </div>
                         </form>
