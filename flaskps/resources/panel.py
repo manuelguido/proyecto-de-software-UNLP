@@ -30,9 +30,6 @@ def getDocumentos():
 #Modulo estudiantes
 def getPanelAlumnos():
     if auth.authenticated():
-        localidades = getLocalidades()
-        tipo_docs = getDocumentos()
-        
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
@@ -52,7 +49,10 @@ def getPanelAlumnos():
         #Obtiene barrios
         Barrio.db = get_db()
         barrios = Barrio.all()
-
+        #Obtiene la información de las apis
+        localidades = getLocalidades()
+        tipo_docs = getDocumentos()
+        #Retorna el template
         return render_template(
             'auth/panel_components/alumnos.html',
             permisos=permisos,
@@ -79,11 +79,17 @@ def getPanelEmpleados():
         #Obtiene docentes
         Docente.db = get_db()
         docentes = Docente.all()
+        #Obtiene la información de las apis
+        localidades = getLocalidades()
+        tipo_docs = getDocumentos()
+        #Retorna el template
         return render_template(
             'auth/panel_components/empleados.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
+            localidades=localidades,
+            tipo_docs=tipo_docs,
             docentes=docentes
         )
 

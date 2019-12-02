@@ -117,8 +117,14 @@
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Localidad</label>
-                                                    <select name="localidad_id" class="localidades browser-default custom-select" required="1">
-
+                                                    <select name="localidad_id" class="browser-default custom-select" required="1">
+                                                        {% for localidad in localidades %}
+                                                        {% if localidad.id == row.localidad_id %}
+                                                        <option value="{{localidad.id}}" selected>{{localidad.nombre}}</option>
+                                                        {% else %}
+                                                        <option value="{{localidad.id}}">{{localidad.nombre}}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -148,8 +154,14 @@
                                             <div class="form-group row">
                                                 <div class="col-6">
                                                     <label>Tipo Documento</label>
-                                                    <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
-                                                        
+                                                    <select name="tipo_doc_id" class="browser-default custom-select" required="1">
+                                                        {% for tipo_doc in tipo_docs %}
+                                                        {% if tipo_doc.id == row.tipo_doc_id %}
+                                                        <option value="{{tipo_doc.id}}" selected>{{tipo_doc.nombre}}</option>
+                                                        {% else %}
+                                                        <option value="{{tipo_doc.id}}">{{tipo_doc.nombre}}</option>
+                                                        {% endif %}
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                                 <div class="col-6">
@@ -220,8 +232,11 @@
                                     </div>
                                     <div class="col-6">
                                         <label>Localidad</label>
-                                        <select name="localidad_id" class="localidades browser-default custom-select" required="1">
-                                            
+                                        <select name="localidad_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for localidad in localidades %}
+                                            <option value="{{localidad.id}}">{{localidad.nombre}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
@@ -247,8 +262,11 @@
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <label>Tipo Documento</label>
-                                        <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">
-
+                                        <select name="tipo_doc_id" class="browser-default custom-select" required="1">
+                                            <option selected disabled>Seleccionar</option>
+                                            {% for tipo_doc in tipo_docs %}
+                                            <option value="{{tipo_doc.id}}">{{tipo_doc.nombre}}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                     <div class="col-6">
