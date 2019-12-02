@@ -21,7 +21,7 @@
                         <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Documento</th>
-                        <th class="text-center">Acciones</th>
+                        <th>Acciones</th>
                     </tr>
                     <!-- Row Estudiantes -->
                     {% for row in students %}
@@ -277,7 +277,10 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Localidad</label>
-                                    <select name="localidad_id" class="localidades browser-default custom-select" required="1">
+                                    <select name="localidad_id" class="browser-default custom-select" required="1">
+                                        {% for localidad in localidades %}
+                                        <option value="{{localidad.id}}">{{localidad.nombre}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -322,7 +325,10 @@
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Tipo Documento</label>
-                                    <select name="tipo_doc_id" class="tipo_docs browser-default custom-select" required="1">                                    
+                                    <select name="tipo_doc_id" class="browser-default custom-select" required="1">
+                                        {% for tipo_doc in tipo_docs %}
+                                        <option value="{{tipo_doc.id}}">{{tipo_doc.nombre}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-6">

@@ -1,4 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, g
+import requests
+import json
+#Modelos
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.student import Student
@@ -13,9 +16,23 @@ from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 
+#Metodos para las apis
+def getLocalidades():
+    request_localidad = requests.get(
+        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
+    return request_localidad.json()
+
+def getDocumentos():
+    request_tipo_docs = requests.get(
+        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
+    return request_tipo_docs.json()
+
 #Modulo estudiantes
 def getPanelAlumnos():
     if auth.authenticated():
+        localidades = getLocalidades()
+        tipo_docs = getDocumentos()
+        
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
@@ -42,6 +59,8 @@ def getPanelAlumnos():
             nombre=session['nombre'],
             apellido=session['apellido'],
             students=students,
+            localidades=localidades,
+            tipo_docs=tipo_docs,
             niveles=niveles,
             generos=generos,
             escuelas=escuelas,
