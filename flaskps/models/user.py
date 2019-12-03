@@ -76,6 +76,14 @@ class User(object):
         return data
 
     @classmethod
+    def tiene_permiso(cls, id_data, permiso):
+        data = cls.get_permisos(id_data)
+        for permisos in data:
+            if permisos['nombre'] == permiso:
+                return True
+        return False
+
+    @classmethod
     def get_rol(cls, id_data):
         cursor = cls.db.cursor()
         sql = """

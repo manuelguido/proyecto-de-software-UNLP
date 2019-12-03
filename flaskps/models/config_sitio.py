@@ -23,13 +23,13 @@ class ConfigSitio(object):
 
 
     @classmethod
-    def change_site_status(cls, request):
+    def change_site_status(cls, estado_sitio):
         cursor = cls.db.cursor()
         cursor.execute("""
                UPDATE configuracion
                SET activo=%s
                WHERE id=1
-            """, (request['estado_sitio']))
+            """, (estado_sitio))
         cls.db.commit()
 
         return True
@@ -47,13 +47,13 @@ class ConfigSitio(object):
         return True
 
     @classmethod
-    def change_site_pagination(cls, request):
+    def change_site_pagination(cls, paginacion):
         cursor = cls.db.cursor()
         cursor.execute("""
                UPDATE configuracion
                SET paginacion=%s
                WHERE id=1
-            """, (request['paginacion']))
+            """, (paginacion))
         cls.db.commit()
         
         return True

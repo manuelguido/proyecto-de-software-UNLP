@@ -37,10 +37,11 @@ def getPanelEstudiantes(page):
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
 
         #Obtiene estudiantes
-#        if request.method == 'GET':
         Student.db = get_db()
-        students = Student.all(site_controller.get_pagination(),page)
-        lastpage = Student.getLastPage(site_controller.get_pagination(),page)
+        if (not int(page) > 0):
+            page = 1
+        students = Student.all(site_controller.get_pagination(),int(page))
+        lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
         #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()

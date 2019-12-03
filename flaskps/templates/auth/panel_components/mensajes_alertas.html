@@ -1,25 +1,50 @@
 {%with messages = get_flashed_messages()%}
-{%if messages%}
-{% for message in messages %}
-<div class="alert-fixed">
-<div id="success-primary" class="card alert alert-primary alert-dismissable c-alert" role="alert">
-    <div class="row m-0 p-0">
-        <div class="col-9">
-            {{message}}
-        </div>
-        <div class="col-3">
-            <button type="button" class="close" data-dismiss="alert" aria-label ="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
-</div>
-</div>
+    {%if messages%}
+        {% for message in messages %}
+            <div class="alert-fixed">
+                <div id="alert-success" class="card alert alert-success alert-dismissable c-alert" role="alert">
+                    <div class="row m-0 p-0">
+                        <div class="col-9">
+                            {{message}}
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    {%endif%}
+{%endwith%}
+
+{%with messages = get_flashed_messages(category_filter=["error"]) %}
+    {%if messages%}
+        {% for message in messages %}
+            <div class="alert-fixed">
+                <div id="alert-danger" class="card alert alert-danger alert-dismissable c-alert" role="alert">
+                    <div class="row m-0 p-0">
+                        <div class="col-9">
+                            {{message}}
+                        </div>
+                        <div class="col-3">
+                            <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    {%endif%}
+{%endwith%}
+
 <script>
-    $("#success-primary").fadeTo(3000, 500).slideUp(500, function(){
-        $("#success-primary").slideUp(500);
+    $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+        $("#alert-success").slideUp(500);
+    });
+    $("#alert-danger").fadeTo(3000, 500).slideUp(500, function(){
+        $("#alert-danger").slideUp(500);
     });
 </script>
-{%endfor%}
-{%endif%}
-{%endwith%} 

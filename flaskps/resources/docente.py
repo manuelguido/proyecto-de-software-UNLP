@@ -33,4 +33,4 @@ def update():
         Docente.db = get_db()
         Docente.update(params)
         flash("Se actualizó el docente correctamente")
-        return redirect(url_for('panel'))
+        return redirect(url_for('panel_empleados'))

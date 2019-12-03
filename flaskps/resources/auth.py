@@ -16,7 +16,7 @@ def authenticate():
 
     #Usuario no existe
     if not user:
-        flash("Usuario o clave incorrecto.")
+        flash("Usuario o clave incorrecto")
         return redirect(url_for('auth_login'))
 
     #Usuario no activo
@@ -48,6 +48,6 @@ def logout():
     del session['nombre']
     del session['apellido']
     session.clear()
-    flash("La sesión se cerró correctamente.")
+    flash("La sesión se cerró correctamente")
 
     return redirect(url_for('auth_login'))
