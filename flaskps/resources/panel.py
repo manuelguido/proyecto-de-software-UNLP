@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, g
 import requests
 import json
-from flask_paginate import Pagination, get_page_args
 #Modelos
 from flaskps.db import get_db
 from flaskps.models.user import User
