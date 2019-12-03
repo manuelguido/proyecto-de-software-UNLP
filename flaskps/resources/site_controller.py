@@ -44,3 +44,7 @@ def change_site_pagination():
         ConfigSitio.change_site_pagination(request.form)
         flash("Se actualizó el numero de paginación correctamente")
         return redirect(url_for('panel_adminsitio'))
+
+def get_pagination():
+    ConfigSitio.db = get_db()
+    return ConfigSitio.get_pagination()

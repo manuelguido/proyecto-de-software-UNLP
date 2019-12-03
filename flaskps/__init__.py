@@ -49,8 +49,10 @@ app.add_url_rule(
 )
 
 #url Panel de administración
-app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes)
-app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados)
+app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes, defaults={'page': 1})
+app.add_url_rule("/panel_estudiantes/<int:page>", 'panel_estudiantes', panel.getPanelEstudiantes)
+app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados, defaults={'page': 1})
+app.add_url_rule("/panel_empleados/<int:page>", 'panel_empleados', panel.getPanelEmpleados)
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios)
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
 app.add_url_rule("/panel_adminsitio", 'panel_adminsitio', panel.getPanelAdminSitio)

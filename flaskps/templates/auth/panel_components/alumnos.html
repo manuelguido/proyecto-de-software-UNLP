@@ -292,7 +292,23 @@
                     </tbody>
                 </table>
             </div>
-        </div>        
+        </div>
+        <div class="col-12 my-4">
+            <nav class="row">
+                <div class="col-12">
+                    {% if page == 1 %}
+                    <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                    {% else %}
+                    <a class="btn btn-primary mr-3" href="/panel_estudiantes/{{page - 1}}">Anterior</a>
+                    {% endif %}
+                    {% if lastpage == 1 %}
+                    <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                    {% else %}
+                    <a class="btn btn-primary mr-3" href="/panel_estudiantes/{{page + 1}}">Anterior</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
         {% for p in permisos %}
         {% if p.nombre == 'estudiante_new' %}
         <!-- Modal -->

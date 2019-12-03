@@ -3,7 +3,7 @@ class Student(object):
     db = None
 
     @classmethod
-    def all(cls):
+    def all(cls,pagination,page):
         cursor = cls.db.cursor()
         sql = """
             SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
@@ -11,10 +11,22 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LIMIT {limit} offset {offset}
         """
-        cursor.execute(sql)
-        data = cursor.fetchall()
-        return data
+        cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
+        return cursor.fetchall()
+
+    @classmethod
+    def getLastPage(cls,pagination,page):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT  * FROM estudiante
+            COUNT
+        """
+        if ((cursor.execute(sql) / pagination) <= page):
+            return 1
+        else:
+            return 0
 
     @classmethod
     def store(cls, data):
@@ -32,7 +44,6 @@ class Student(object):
         cursor = cls.db.cursor()
         cursor.execute("DELETE FROM estudiante WHERE id=%s", (id_data,))
         cls.db.commit()
-
         return True
 
     @classmethod
@@ -57,5 +68,5 @@ class Student(object):
                WHERE id=%s
             """, (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, id_data))
         cls.db.commit()
-
         return True
+        

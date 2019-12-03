@@ -13,7 +13,7 @@ def store():
         Docente.db = get_db()
         Docente.store(params)
         flash("Docente agregado correctamente")
-        return redirect(url_for('panel'))
+        return redirect(url_for('panel_empleados'))
 
 def delete(id_data):
     if not authenticated(session):
@@ -22,7 +22,7 @@ def delete(id_data):
     Docente.db = get_db()
     Docente.delete(id_data)
     flash("Se eliminó el docente correctamente")
-    return redirect(url_for('panel'))
+    return redirect(url_for('panel_empleados'))
 
 def update():
     if not authenticated(session):

@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, g
 import requests
 import json
+from flask_paginate import Pagination, get_page_args
 #Modelos
 from flaskps.db import get_db
 from flaskps.models.user import User
@@ -15,6 +16,7 @@ from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
+from flaskps.resources import site_controller
 
 #Metodos para las apis
 def getLocalidades():
@@ -28,18 +30,18 @@ def getDocumentos():
     return request_tipo_docs.json()
 
 #Modulo estudiantes
-def getPanelEstudiantes():
+def getPanelEstudiantes(page):
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+
         #Obtiene estudiantes
+#        if request.method == 'GET':
         Student.db = get_db()
-        if request.method == "GET":
-            students = Student.all()
-        else:
-            students = Student.all()
+        students = Student.all(site_controller.get_pagination(),page)
+        lastpage = Student.getLastPage(site_controller.get_pagination(),page)
         #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()
@@ -67,13 +69,15 @@ def getPanelEstudiantes():
             niveles=niveles,
             generos=generos,
             escuelas=escuelas,
-            barrios=barrios
+            barrios=barrios,
+            page=page,
+            lastpage=lastpage
         )
 
     return redirect(url_for('auth_login'))
 
 #Modulo docentes
-def getPanelEmpleados():
+def getPanelEmpleados(page):
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
@@ -82,6 +86,9 @@ def getPanelEmpleados():
         #Obtiene docentes
         Docente.db = get_db()
         docentes = Docente.all()
+        #Obtiene docentes
+        Genero.db = get_db()
+        generos = Genero.all()
         #Obtiene la información de las apis
         localidades = getLocalidades()
         tipo_docs = getDocumentos()
@@ -93,6 +100,7 @@ def getPanelEmpleados():
             apellido=session['apellido'],
             localidades=localidades,
             tipo_docs=tipo_docs,
+            generos=generos,
             docentes=docentes
         )
 

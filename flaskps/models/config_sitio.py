@@ -57,3 +57,13 @@ class ConfigSitio(object):
         cls.db.commit()
         
         return True
+
+    @classmethod
+    def get_pagination(cls):
+        cursor = cls.db.cursor()
+        cursor.execute("select * from configuracion")
+        results = cursor.fetchall()        
+        for r in results:
+            paginacion = r['paginacion']
+            break
+        return paginacion
