@@ -28,7 +28,7 @@ def getDocumentos():
     return request_tipo_docs.json()
 
 #Modulo estudiantes
-def getPanelAlumnos():
+def getPanelEstudiantes():
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
@@ -36,7 +36,10 @@ def getPanelAlumnos():
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
         #Obtiene estudiantes
         Student.db = get_db()
-        students = Student.all()
+        if request.method == "GET":
+            students = Student.all()
+        else:
+            students = Student.all()
         #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()

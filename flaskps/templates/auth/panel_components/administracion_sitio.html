@@ -37,7 +37,7 @@
                     <h1 class="h5 my-0">Paginación</h1>
                 </div>
                 <div class="card-body p-4">
-                    <form action="{{ url_for('change_site_status') }}" method="POST">
+                    <form action="{{ url_for('change_site_pagination') }}" method="POST">
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <input type="number" min="0" name="paginacion" class="form-control" value="{{ infositio.paginacion }}">

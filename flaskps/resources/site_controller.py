@@ -19,31 +19,28 @@ def change_site_status():
     if not authenticated(session):
         abort(401)
     
-    params = request.form
     if request.method == 'POST':
         ConfigSitio.db = get_db()
-        ConfigSitio.change_site_status(params)
+        ConfigSitio.change_site_status(request.form)
         flash("Se actualizó el estado del sitio correctamente")
-        return redirect(url_for('panel'))
+        return redirect(url_for('panel_adminsitio'))
 
 def update_info_sitio():
     if not authenticated(session):
         abort(401)
     
-    params = request.form
     if request.method == 'POST':
         ConfigSitio.db = get_db()
-        ConfigSitio.update_info_sitio(params)
+        ConfigSitio.update_info_sitio(request.form)
         flash("Se actualizó la información del sitio correctamente")
-        return redirect(url_for('panel'))
+        return redirect(url_for('panel_adminsitio'))
 
 def change_site_pagination():
     if not authenticated(session):
         abort(401)
 
-    params = request.form
     if request.method == 'POST':
         ConfigSitio.db = get_db()
-        ConfigSitio.change_site_pagination(params)
+        ConfigSitio.change_site_pagination(request.form)
         flash("Se actualizó el numero de paginación correctamente")
-        return redirect(url_for('panel'))
+        return redirect(url_for('panel_adminsitio'))

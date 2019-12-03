@@ -1,18 +1,49 @@
 {% extends "auth/panel.html" %}
 {% block contenttitle %}
-<i class="fas fa-user-graduate black3 mr-2"></i>Alumnos
+<i class="fas fa-user-graduate black3 mr-2"></i>Estudiantes
 {% endblock %}
 {% block contentitem %}
-    <div class="row">
+    <div class="row mb-4">
         {% for p in permisos %}
-        {% if p.nombre == 'estudiante_new' %}
-        <div class="col-12 mb-3">
-            <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
-                <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
-            </button>
-        </div>
-        {% endif %}
+            {% if p.nombre == 'estudiante_new' %}
+            <div class="col-12 col-md-8 mb-3">
+                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
+                    <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
+                </button>
+            </div>
+            {% endif %}
         {% endfor %}
+        <div class="col-12 col-md-4">
+            <form method="GET" class="card">
+                <div class="card-header px-2 py-1">
+                    <h1 class="h6 m-0 p-0">Buscar estudiantes</h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Nombre  -->
+                        <div class="col-md-6 mb-3">
+                            <input type="text" placeholder="Nombre" name="nombre_busqueda" class="form-control">
+                        </div>
+                        <!-- Apellido  -->
+                        <div class="col-md-6 mb-3">
+                            <input type="text" placeholder="Apellido" name="apellido_busqueda" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- DNI  -->
+                        <div class="col-md-6 mb-3">
+                            <input type="number" min="0" placeholder="Dni" name="dni_busqueda" class="form-control">
+                        </div>
+                        <!-- Search  -->
+                        <div class="col-md-6 mb-3">
+                            <button type="button" type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-search ml-3"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -28,27 +59,24 @@
                     <tr>
                         <td>{{row.apellido}}</td>
                         <td>{{row.nombre}}</td>
+                        <td>{{row.numero}}</td>
                         <td>
-                            <span class="min_dni font-1">{{row.tipo_doc_id}}</span>
-                            {{row.numero}}
-                        </td>
-                        <td class="text-center">
                             {% for p in permisos %}
                             {% if p.nombre == 'estudiante_show' %}
                             <!-- Ver estudiante -->
-                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#studentShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
+                            <a class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#studentShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
                             {% endif %}
                             {% endfor %}
                             {% for p in permisos %}
                             {% if p.nombre == 'estudiante_update' %}
                             <!-- Modificar estudiante -->
-                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm mb-3" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
                             {% endif %}
                             {% endfor %}
                             {% for p in permisos %}
                             {% if p.nombre == 'estudiante_destroy' %}
                             <!-- Eliminar estudiante -->
-                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm mb-3" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -68,7 +96,13 @@
                                             <p class="mb-2">Nombre: {{row.nombre}}</p>
                                             <p class="mb-2">Apellido: {{row.apellido}}</p>
                                             <p class="mb-2">Fecha de nacimiento: {{row.fecha_nac}}</p>
-                                            <p class="mb-2">Localidad: {{row.localidad_id}}</p>
+                                            <p class="mb-2">
+                                                {% for localidad in localidades %}
+                                                
+                                                    {{localidad.nombre}}
+                                                
+                                                {% endfor %}
+                                            </p>
                                             <p class="mb-2">
                                                 {% for nivel in niveles %}
                                                 {% if nivel.id == row.nivel_id %}

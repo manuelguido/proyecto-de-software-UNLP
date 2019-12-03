@@ -33,9 +33,23 @@ app.add_url_rule(
     site_controller.update_info_sitio,
     methods=['POST','GET']
 )
+#Cambiar estado del sitio
+app.add_url_rule(
+    "/change_site_status",
+    'change_site_status',
+    site_controller.change_site_status,
+    methods=['POST']
+)
+#Cambiar paginacion del sitio
+app.add_url_rule(
+    "/change_site_pagination",
+    'change_site_pagination',
+    site_controller.change_site_pagination,
+    methods=['POST']
+)
 
 #url Panel de administración
-app.add_url_rule("/panel_alumnos", 'panel_alumnos', panel.getPanelAlumnos)
+app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes)
 app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados)
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios)
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
@@ -50,9 +64,6 @@ app.add_url_rule(
     auth.authenticate,
     methods=['POST']
 )
-
-#Cambiar estado del sitio
-app.add_url_rule("/change_site_status", 'change_site_status', site_controller.change_site_status, methods=['POST'])
 
 #ABM Usuarios
 #Alta

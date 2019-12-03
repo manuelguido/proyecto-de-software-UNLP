@@ -1,18 +1,21 @@
     {% extends "layout.html" %}    
 
         {% block content %}
+        <div class="container-fluid w-100">
+            {% include 'auth/panel_components/mensajes_alertas.html' %}
+        </div>
             <!-- Contenido Principal -->
             <main class="panel">
                 <!-- Row-->
                 <div class="row m-0 p-0">
                     <!-- Menu-->
                     <aside id="panel-menu" class="col-12 col-lg-2 col-md-4 p-0 uns card shadow-sm">
-                        <div id="panel-menu-inner" class="p-0 panel-menu">
+                        <div id="panel-menu-inner" class="p-0 panel-menu navbar-light">
                             <div class="row justify-content-center">
                                 <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item menuItem" role="button"><a href="/panel_alumnos"><i class="fas fa-user-graduate black3 mr-2"></i>Alumnos</a></li>
+                                <li class="list-group-item menuItem" role="button"><a href="/panel_estudiantes"><i class="fas fa-user-graduate black3 mr-2"></i>Estudiantes</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_empleados"><i class="fas fa-user-friends black3 mr-2"></i>Empleados</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_usuarios"><i class="fas fa-users black3 mr-2"></i>Usuarios</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_ciclos"><i class="fas fa-school black3 mr-2"></i>Ciclos lectivos</a></li>
@@ -48,14 +51,11 @@
                         <!-- Container Fluid -->
                         <div class="container-fluid w-100 p-5 m-0">
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-12">
                                     <h1 class="h4 black2" id="panel-title">
                                         {% block contenttitle %}
                                         {% endblock %}
                                     </h1>
-                                </div>
-                                <div class="col-8">
-                                    {% include 'auth/panel_components/mensajes_alertas.html' %}
                                 </div>
                             </div>
                             <div class="row">
