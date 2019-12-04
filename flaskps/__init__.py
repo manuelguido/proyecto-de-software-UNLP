@@ -25,122 +25,77 @@ app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 #url Inicio
 app.add_url_rule("/", 'home', site_controller.index)
 
-#Modificar datos de sitio
-#Modificación de estado
-app.add_url_rule(
-    "/update_info_sitio",
-    'update_info_sitio',
-    site_controller.update_info_sitio,
-    methods=['POST','GET']
-)
-#Cambiar estado del sitio
-app.add_url_rule(
-    "/change_site_status",
-    'change_site_status',
-    site_controller.change_site_status,
-    methods=['POST']
-)
-#Cambiar paginacion del sitio
-app.add_url_rule(
-    "/change_site_pagination",
-    'change_site_pagination',
-    site_controller.change_site_pagination,
-    methods=['POST']
-)
-
-#url Panel de administración
+#---------------------------------------------------#
+#   Panel de administracion
+#---------------------------------------------------#
+    #Seccion Estudiantes
 app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes, defaults={'page': 1})
 app.add_url_rule("/panel_estudiantes/<int:page>", 'panel_estudiantes', panel.getPanelEstudiantes)
+    #Seccion Empleados
 app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados, defaults={'page': 1})
 app.add_url_rule("/panel_empleados/<int:page>", 'panel_empleados', panel.getPanelEmpleados)
-app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios)
+    #Seccion Usuarios 
+app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios, defaults={'page': 1})
+app.add_url_rule("/panel_usuarios/<int:page>", 'panel_usuarios', panel.getPanelUsuarios)
+    #Seccion ciclos
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
+    #Seccion configuracion de sitio
 app.add_url_rule("/panel_adminsitio", 'panel_adminsitio', panel.getPanelAdminSitio)
 
-# Autenticación
+
+#---------------------------------------------------#
+#   Modificar datos del sitio
+#---------------------------------------------------#
+    #Modificación de estado
+app.add_url_rule("/update_info_sitio", 'update_info_sitio', site_controller.update_info_sitio,methods=['POST','GET'])
+    #Cambiar estado del sitio
+app.add_url_rule("/change_site_status", 'change_site_status', site_controller.change_site_status, methods=['POST'])
+    #Cambiar paginacion del sitio
+app.add_url_rule("/change_site_pagination", 'change_site_pagination', site_controller.change_site_pagination, methods=['POST'])
+
+
+#---------------------------------------------------#
+#   Autenticacion
+#---------------------------------------------------#
+    #Mostrar pagina de login
 app.add_url_rule("/iniciar_sesion", 'auth_login', auth.login)
+    #Cerrar sesión
 app.add_url_rule("/cerrar_sesion", 'auth_logout', auth.logout)
-app.add_url_rule(
-    "/autenticacion",
-    'auth_authenticate',
-    auth.authenticate,
-    methods=['POST']
-)
+    #Autenticar usuario
+app.add_url_rule("/autenticacion", 'auth_authenticate', auth.authenticate, methods=['POST'])
 
-#ABM Usuarios
-#Alta
-app.add_url_rule(
-    "/user_new",
-    'user_new',
-    user.new,
-    methods=['POST']
-)
 
-#Baja
-app.add_url_rule(
-    "/user_delete/<string:id_data>",
-    'user_delete',
-    user.delete,
-    methods=['GET']
-)
+#---------------------------------------------------#
+#   ABM Usuarios
+#---------------------------------------------------#
+    #Alta
+app.add_url_rule("/user_new", 'user_new', user.new, methods=['POST'])
+    #Baja
+app.add_url_rule("/user_delete/<string:id_data>", 'user_delete', user.delete, methods=['GET'])
+    #Modificación
+app.add_url_rule("/update_user_status", 'update_user_status', user.update_user_status, methods=['POST','GET'])
 
-#Modificación de estado
-app.add_url_rule(
-    "/update_user_status",
-    'update_user_status',
-    user.update_user_status,
-    methods=['POST','GET']
-)
 
-#ABM Estudiantes
-#Alta
-app.add_url_rule(
-    "/insert_student",
-    'insert_student',
-    student.store,
-    methods=['POST']
-)
+#---------------------------------------------------#
+#   ABM Estudiantes
+#---------------------------------------------------#
+    #Alta
+app.add_url_rule("/insert_student", 'insert_student', student.store, methods=['POST'])
+    #Baja
+app.add_url_rule("/delete_student/<string:id_data>", 'delete_student', student.delete, methods=['GET'])
+    #Modificación
+app.add_url_rule("/update_student", 'update_student', student.update, methods=['POST','GET'])
 
-#Baja
-app.add_url_rule(
-    "/delete_student/<string:id_data>",
-    'delete_student',
-    student.delete,
-    methods=['GET']
-)
 
-#Modificación
-app.add_url_rule(
-    "/update_student",
-    'update_student',
-    student.update,
-    methods=['POST','GET']
-)
-
-#ABM Docentes
-#Alta
-app.add_url_rule(
-    "/insert_docente",
-    'insert_docente',
-    docente.store,
-    methods=['POST']
-)
-
-#Baja
-app.add_url_rule(
-    "/delete_docente/<string:id_data>",
-    'delete_docente',
-    docente.delete,
-    methods=['GET']
-)
-
-#Modificación
-app.add_url_rule(
-    "/update_docente",
-    'update_docente',
-    docente.update,
-    methods=['POST','GET']
-)
+#---------------------------------------------------#
+#   ABM Docentes
+#---------------------------------------------------#
+    #Alta
+app.add_url_rule("/insert_docente", 'insert_docente', docente.store, methods=['POST'])
+    #Baja
+app.add_url_rule("/delete_docente/<string:id_data>", 'delete_docente', docente.delete, methods=['GET'])
+    #Modificación
+app.add_url_rule("/update_docente", 'update_docente', docente.update, methods=['POST','GET'])
 
 if __name__ == '__main__':
     app.run(debug=True)

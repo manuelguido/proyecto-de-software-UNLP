@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, g
 from flaskps.db import get_db
 from flaskps.models.user import User
+from flaskps.resources import forms
 
 def login():
     #Si esta autenticado, va derecho al panel
@@ -10,13 +11,19 @@ def login():
 
 def authenticate():
     params = request.form
-
-    User.db = get_db()
-    user = User.find_by_email_and_pass(params['email'], params['password'])
+    #Validacion de formulario
+    form = forms.Login(request.form)
+    if form.validate():
+        #Busco usuario
+        User.db = get_db()
+        user = User.find_by_email_and_pass(params['email'], params['password'])
+    else:
+        flash("Ingrese email y contraseña")
+        return redirect(url_for('auth_login'))
 
     #Usuario no existe
     if not user:
-        flash("Usuario o clave incorrecto")
+        flash("Email o contraseña incorrectos")
         return redirect(url_for('auth_login'))
 
     #Usuario no activo
@@ -24,6 +31,7 @@ def authenticate():
         flash("Usuario desactivado.")
         return redirect(url_for('auth_login'))
 
+    #Variables de sesion
     session['id'] = user['id']
     session['user'] = user['username']
     session['email'] = user['email']
@@ -40,7 +48,6 @@ def authenticated():
         return 1
     return 0
 
-
 def logout():
     del session['id']
     del session['user']
@@ -48,6 +55,5 @@ def logout():
     del session['nombre']
     del session['apellido']
     session.clear()
-    flash("La sesión se cerró correctamente")
 
     return redirect(url_for('auth_login'))

@@ -107,7 +107,7 @@ def getPanelEmpleados(page):
     return redirect(url_for('auth_login'))
 
 #Modulo usuarios
-def getPanelUsuarios():
+def getPanelUsuarios(page):
     if auth.authenticated():
         g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
