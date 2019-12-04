@@ -8,14 +8,19 @@ from flaskps.resources import forms
 #Mostrar el index del sitio
 def index():
     ConfigSitio.db = get_db()
-    if (ConfigSitio.index()):
+    estadositio = ConfigSitio.index() 
+    if (estadositio):
         infositio = ConfigSitio.all()
         return render_template(
             'home/index.html',
+            estadositio=estadositio,
             infositio=infositio
             )
     else:
-        return render_template('home/site_down.html')
+        return render_template(
+            'home/site_down.html',
+            estadositio=estadositio
+            )
 
 #Cambiar el estado del sitio a inactivo
 def change_site_status():
@@ -26,8 +31,7 @@ def change_site_status():
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_update')):
         #Chequea el metodo y valida el formulario
-        form = forms.ChangeSiteStatus(request.form)
-        if request.method == 'POST' and form.validate():
+        if request.method == 'POST' and forms.ChangeSiteStatus(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.change_site_status(request.form['estado_sitio'])
             flash("Se actualizó el estado del sitio correctamente")
@@ -35,8 +39,7 @@ def change_site_status():
             flash('Ingresaste información inválida, solo puedes ingresar: ACTIVO o INACTIVO', 'error')
         return redirect(url_for('panel_adminsitio'))
     else:
-        flash('Acceso restringido', 'error')
-        return redirect(url_for('panel_adminsitio'))
+        abort(401)
 
 #Actualizar la informacion del sitio (Titulo, descripcion e email)
 def update_info_sitio():
@@ -46,9 +49,8 @@ def update_info_sitio():
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_update')):
-        form = forms.ChangeSiteInfo(request.form)
         #Chequea el metodo y valida el formulario
-        if request.method == 'POST' and form.validate():
+        if request.method == 'POST' and forms.ChangeSiteInfo(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.update_info_sitio(request.form)
             flash("Se actualizó la información del sitio correctamente")
@@ -57,8 +59,7 @@ def update_info_sitio():
             flash('Informacion inválida, solo puede ingresarse un titulo(máximo 255 char), email(máximo 255 char) y descripción(máximo 1000 char)', 'error')
         return redirect(url_for('panel_adminsitio'))
     else:
-        flash('Acceso restringido', 'error')
-        return redirect(url_for('panel_adminsitio'))
+        abort(401)
 
 #Cambiar paginacion del sitio
 def change_site_pagination():
@@ -68,9 +69,8 @@ def change_site_pagination():
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_update')):
-        form = forms.ChangePagination(request.form)
         #Chequea el metodo y valida el formulario
-        if request.method == 'POST' and form.validate():
+        if request.method == 'POST' and forms.ChangePagination(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.change_site_pagination(request.form['paginacion'])
             flash("Se actualizó el numero de paginación correctamente")
@@ -78,8 +78,7 @@ def change_site_pagination():
             flash('La paginacion debe ser un numero entre 1 y 20', 'error')
         return redirect(url_for('panel_adminsitio'))
     else:
-        flash('Acceso restringido', 'error')
-        return redirect(url_for('panel_adminsitio'))
+        abort(401)
 
 #Metodo sin restriccion de permisos para paginar
 def get_pagination():

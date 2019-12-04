@@ -13,10 +13,12 @@
     <div class="collapse navbar-collapse mb-auto row" id="basicExampleNav">
         <!-- Links -->
         <ul class="navbar-nav mr-5">
-            <li class="nav-item"><a href="/">Programación</a></li>
-            <li class="nav-item"><a href="/">Novedades</a></li>
-            <li class="nav-item"><a href="/">Instrumentos</a></li>
-            <li class="nav-item"><a href="/">Orquestas</a></li>
+            {% if estadositio == 1 %}
+                <li class="nav-item"><a href="/">Programación</a></li>
+                <li class="nav-item"><a href="/">Novedades</a></li>
+                <li class="nav-item"><a href="/">Instrumentos</a></li>
+                <li class="nav-item"><a href="/">Orquestas</a></li>
+            {% endif %}
             <li class="nav-item home-login-button">
                 <button class="btn btn-primary btn-rounded" onclick="window.location.href='/iniciar_sesion'">Iniciar Sesión</button>
             </li>

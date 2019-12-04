@@ -1,5 +1,5 @@
 from wtforms import Form
-from wtforms import StringField, TextField, SelectField, IntegerField, ValidationError, TextAreaField
+from wtforms import StringField, TextField, SelectField, IntegerField, ValidationError, DateField, TextAreaField
 from wtforms.fields.html5 import EmailField
 from wtforms import validators
 
@@ -28,7 +28,24 @@ class ChangeSiteStatus(Form):
     estado_sitio = SelectField(u'Estado sitio', choices=[('0', 'Inactivo'), ('1', 'Activo')])
 
 #---------------------------------------------------#
-#   Informacion del sitio
+#   ABM Estudiantes
+#---------------------------------------------------#
+class VerifyStudent(Form):
+    apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
+    nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    fecha_nac = DateField('Fecha de nacimiento', [validators.required()], format='%Y-%m-%d')
+    localidad_id = IntegerField('Fecha de nacimiento', [validators.required()], min=1)
+    nivel_id = IntegerField('Nivel', [validators.required()], min=1)
+    domicilio = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    genero_id = IntegerField('Genero', [validators.required()], min=1)
+    escuela_id = IntegerField('Escuela', [validators.required()], min=1)
+    tipo_doc_id = IntegerField('Tipo de documento', [validators.required()], min=1)
+    numero = IntegerField('Numero de documento', [validators.required()], min=1)
+    tel = IntegerField('Telefono', [validators.required()], min=1)
+    barrio_id = IntegerField('Barrio', [validators.required()], min=1)
+
+#---------------------------------------------------#
+#   Buscar estudiantes
 #---------------------------------------------------#
     #Buscar estudiante por nombre
 class searchEstudiantesByFirstName(Form):

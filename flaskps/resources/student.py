@@ -9,12 +9,18 @@ def store():
     if not authenticated(session):
         abort(401)
 
-    params = request.form
-    if request.method == "POST":
-        Student.db = get_db()
-        Student.store(params)
-        flash("Estudiante agregado correctamente")
+     #Chequea permiso
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'estudiante_new')):
+        if request.method == "POST" and forms.VerifyStudent(request.form).validate():
+            Student.db = get_db()
+            Student.store(request.form)
+            flash("Estudiante agregado correctamente")
+        else:
+            flash('Los campos deben estar todos completos', 'error')
         return redirect(url_for('panel_estudiantes'))
+    else:
+        abort(401)
 
 def delete(id_data):
     if not authenticated(session):
