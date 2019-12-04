@@ -4,8 +4,8 @@
 {% endblock %}
 {% block contentitem %}
     <div class="row mb-4">
-        <div class="col-12">
-            <form method="GET" class="card py-0">
+        <div class="col-12 col-md-8">
+            <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -14,21 +14,85 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- Nombre  -->
-                        <div class="col-12 col-md-5 my-1">
-                            <input type="text" placeholder="Nombre" name="nombre_busqueda" class="form-control">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                    aria-selected="true">Nombre</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                                    aria-selected="false">Apellido</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                                    aria-selected="false">Ambos</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <form action="{{ url_for('panel_estudiantes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                            <!-- Nombre  -->
+                                            <div class="col-12 col-md-8 my-1">
+                                                <input type="text" placeholder="Nombre" name="solo_nombre" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <form action="{{ url_for('panel_estudiantes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                            <!-- Apellido  -->
+                                            <div class="col-12 col-md-8 my-1">
+                                                <input type="text" placeholder="Apellido" name="solo_apellido" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <form action="{{ url_for('panel_estudiantes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                        <!-- Nombre  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <input type="text" placeholder="Nombre" name="ambos_nombre" class="form-control" required>
+                                            </div>
+                                            <!-- Apellido  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <input type="text" placeholder="Apellido" name="ambos_apellido" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Apellido  -->
-                        <div class="col-12 col-md-5 my-1">
-                            <input type="text" placeholder="Apellido" name="apellido_busqueda" class="form-control">
-                        </div>
-                        <!-- Search  -->
-                        <div class="col-12 col-md-2 my-1">
-                            <button type="button" type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
-                        </div>
-                    </div>
+                    </div>  
+                </div>  
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            {% for p in permisos %}
+                {% if p.nombre == 'estudiante_new' %}
+                <div class="col-12 col-md-8 mb-3">
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
+                        <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
+                    </button>
                 </div>
-            </form>
+                {% endif %}
+            {% endfor %}
+            <hr class="mx-3">
         </div>
     </div>
     <div class="row">
@@ -297,18 +361,6 @@
                     {% endif %}
                 </div>
             </nav>
-        </div>
-        <div class="col-12 px-0">
-            <hr class="mx-3">
-            {% for p in permisos %}
-                {% if p.nombre == 'estudiante_new' %}
-                <div class="col-12 col-md-8 mb-3">
-                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
-                        <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
-                    </button>
-                </div>
-                {% endif %}
-            {% endfor %}
         </div>
         {% for p in permisos %}
         {% if p.nombre == 'estudiante_new' %}

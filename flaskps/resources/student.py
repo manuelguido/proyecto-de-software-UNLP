@@ -3,6 +3,7 @@ from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.student import Student
 from flaskps.helpers.auth import authenticated
+from flaskps.resources import forms
 
 def store():
     if not authenticated(session):

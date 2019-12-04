@@ -16,6 +16,7 @@ from flaskps.models.taller import Taller
 from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 from flaskps.resources import site_controller
+from flaskps.resources import forms
 
 #Metodos para las apis
 def getLocalidades():
@@ -31,7 +32,7 @@ def getDocumentos():
 #Modulo estudiantes
 def getPanelEstudiantes(page):
     if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+        #g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
@@ -40,8 +41,22 @@ def getPanelEstudiantes(page):
         Student.db = get_db()
         if (not int(page) > 0):
             page = 1
-        students = Student.allPaginated(site_controller.get_pagination(),int(page))
-        lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
+        lastpage = 1
+        #Chequea si hubo busquedas
+            #Se buscó solo nombre
+        if forms.searchEstudiantesByFirstName(request.args).validate():
+            students = Student.searchByFirstName(request.args.get('solo_nombre'))
+            #Se buscó solo apellido
+        elif forms.searchEstudiantesByLastName(request.args).validate():
+            students = Student.searchByLastName(request.args.get('solo_apellido'))
+        elif forms.searchEstudiantesByBoth(request.args).validate():
+            #Se buscó ambos
+            students = Student.searchByBoth(request.args.get('ambos_nombre'), request.args.get('ambos_apellido'))
+            #No hubo busqueda
+        else:
+            students = Student.allPaginated(site_controller.get_pagination(),int(page))
+            #Ultima pagina de paginado
+            lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
         #Obtiene niveles
         Nivel.db = get_db()
         niveles = Nivel.all()

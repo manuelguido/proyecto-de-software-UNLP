@@ -26,3 +26,17 @@ class ChangeSiteInfo(Form):
     #Cambiar estado del sitio
 class ChangeSiteStatus(Form):
     estado_sitio = SelectField(u'Estado sitio', choices=[('0', 'Inactivo'), ('1', 'Activo')])
+
+#---------------------------------------------------#
+#   Informacion del sitio
+#---------------------------------------------------#
+    #Buscar estudiante por nombre
+class searchEstudiantesByFirstName(Form):
+    solo_nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+
+class searchEstudiantesByLastName(Form):
+    solo_apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
+
+class searchEstudiantesByBoth(Form):
+    ambos_nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    ambos_apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])

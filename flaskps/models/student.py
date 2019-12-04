@@ -30,6 +30,48 @@ class Student(object):
         return cursor.fetchall()
 
     @classmethod
+    def searchByFirstName(cls,firstname):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
+            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
+            INNER JOIN genero ON estudiante.genero_id = genero.id
+            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
+            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            WHERE estudiante.nombre LIKE '%{firstname}%'
+        """
+        cursor.execute(sql.format(firstname = firstname))
+        return cursor.fetchall()
+
+    @classmethod
+    def searchByLastName(cls,lastname):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
+            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
+            INNER JOIN genero ON estudiante.genero_id = genero.id
+            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
+            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            WHERE estudiante.apellido LIKE '%{lastname}%'
+        """
+        cursor.execute(sql.format(lastname = lastname))
+        return cursor.fetchall()
+    
+    @classmethod
+    def searchByBoth(cls,firstname,lastname):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
+            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
+            INNER JOIN genero ON estudiante.genero_id = genero.id
+            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
+            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            WHERE estudiante.nombre LIKE '%{firstname}%' AND estudiante.apellido LIKE '%{lastname}%'
+        """
+        cursor.execute(sql.format(firstname = firstname, lastname = lastname))
+        return cursor.fetchall()
+
+    @classmethod
     def getLastPage(cls,pagination,page):
         cursor = cls.db.cursor()
         sql = """

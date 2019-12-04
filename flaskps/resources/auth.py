@@ -49,11 +49,12 @@ def authenticated():
     return 0
 
 def logout():
-    del session['id']
-    del session['user']
-    del session['email']
-    del session['nombre']
-    del session['apellido']
-    session.clear()
+    if authenticated():
+        del session['id']
+        del session['user']
+        del session['email']
+        del session['nombre']
+        del session['apellido']
+        session.clear()
 
     return redirect(url_for('auth_login'))

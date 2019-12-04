@@ -29,8 +29,12 @@ app.add_url_rule("/", 'home', site_controller.index)
 #   Panel de administracion
 #---------------------------------------------------#
     #Seccion Estudiantes
-app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes, defaults={'page': 1})
-app.add_url_rule("/panel_estudiantes/<int:page>", 'panel_estudiantes', panel.getPanelEstudiantes)
+app.add_url_rule("/panel_estudiantes", 'panel_estudiantes', panel.getPanelEstudiantes, defaults={'page': 1}, methods=['POST', 'GET'])
+app.add_url_rule("/panel_estudiantes/<int:page>", 'panel_estudiantes', panel.getPanelEstudiantes, methods=['POST', 'GET'])
+
+#app.add_url_rule("/search_student", 'search_student', student.searchEstudiantes, defaults={'page': 1})
+#app.add_url_rule("/search_student/<int:page>", 'search_student', student.searchEstudiantes)
+
     #Seccion Empleados
 app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados, defaults={'page': 1})
 app.add_url_rule("/panel_empleados/<int:page>", 'panel_empleados', panel.getPanelEmpleados)
@@ -96,6 +100,17 @@ app.add_url_rule("/insert_docente", 'insert_docente', docente.store, methods=['P
 app.add_url_rule("/delete_docente/<string:id_data>", 'delete_docente', docente.delete, methods=['GET'])
     #Modificación
 app.add_url_rule("/update_docente", 'update_docente', docente.update, methods=['POST','GET'])
+
+#---------------------------------------------------#
+#   Error views
+#---------------------------------------------------#
+@app.errorhandler(404)
+def error404(error):
+    return render_template('error/error404.html')
+
+@app.errorhandler(401)
+def error401(error):
+    return render_template('error/error401.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
