@@ -4,39 +4,27 @@
 {% endblock %}
 {% block contentitem %}
     <div class="row mb-4">
-        {% for p in permisos %}
-            {% if p.nombre == 'estudiante_new' %}
-            <div class="col-12 col-md-8 mb-3">
-                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
-                    <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
-                </button>
-            </div>
-            {% endif %}
-        {% endfor %}
-        <div class="col-12 col-md-4">
-            <form method="GET" class="card">
-                <div class="card-header px-2 py-1">
-                    <h1 class="h6 m-0 p-0">Buscar estudiantes</h1>
-                </div>
+        <div class="col-12">
+            <form method="GET" class="card py-0">
                 <div class="card-body">
                     <div class="row">
-                        <!-- Nombre  -->
-                        <div class="col-md-6 mb-3">
-                            <input type="text" placeholder="Nombre" name="nombre_busqueda" class="form-control">
-                        </div>
-                        <!-- Apellido  -->
-                        <div class="col-md-6 mb-3">
-                            <input type="text" placeholder="Apellido" name="apellido_busqueda" class="form-control">
+                        <div class="col-12">
+                            <h1 class="h5">Búsqueda</h1>
+                            <hr>
                         </div>
                     </div>
                     <div class="row">
-                        <!-- DNI  -->
-                        <div class="col-md-6 mb-3">
-                            <input type="number" min="0" placeholder="Dni" name="dni_busqueda" class="form-control">
+                        <!-- Nombre  -->
+                        <div class="col-12 col-md-5 my-1">
+                            <input type="text" placeholder="Nombre" name="nombre_busqueda" class="form-control">
+                        </div>
+                        <!-- Apellido  -->
+                        <div class="col-12 col-md-5 my-1">
+                            <input type="text" placeholder="Apellido" name="apellido_busqueda" class="form-control">
                         </div>
                         <!-- Search  -->
-                        <div class="col-md-6 mb-3">
-                            <button type="button" type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-search ml-3"></i></button>
+                        <div class="col-12 col-md-2 my-1">
+                            <button type="button" type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
                         </div>
                     </div>
                 </div>
@@ -45,6 +33,7 @@
     </div>
     <div class="row">
         <div class="col-12">
+            <h1 class="h4 my-4">Listado</h1>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <!-- Row Titulos -->
@@ -308,6 +297,18 @@
                     {% endif %}
                 </div>
             </nav>
+        </div>
+        <div class="col-12 px-0">
+            <hr class="mx-3">
+            {% for p in permisos %}
+                {% if p.nombre == 'estudiante_new' %}
+                <div class="col-12 col-md-8 mb-3">
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
+                        <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
+                    </button>
+                </div>
+                {% endif %}
+            {% endfor %}
         </div>
         {% for p in permisos %}
         {% if p.nombre == 'estudiante_new' %}

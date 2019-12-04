@@ -40,7 +40,7 @@ def getPanelEstudiantes(page):
         Student.db = get_db()
         if (not int(page) > 0):
             page = 1
-        students = Student.all(site_controller.get_pagination(),int(page))
+        students = Student.allPaginated(site_controller.get_pagination(),int(page))
         lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
         #Obtiene niveles
         Nivel.db = get_db()

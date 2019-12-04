@@ -3,7 +3,20 @@ class Student(object):
     db = None
 
     @classmethod
-    def all(cls,pagination,page):
+    def all(cls):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
+            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
+            INNER JOIN genero ON estudiante.genero_id = genero.id
+            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
+            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+        """
+        cursor.execute(sql)
+        return cursor.fetchall()
+
+    @classmethod
+    def allPaginated(cls,pagination,page):
         cursor = cls.db.cursor()
         sql = """
             SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
