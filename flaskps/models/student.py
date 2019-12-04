@@ -14,6 +14,23 @@ class Student(object):
         """
         cursor.execute(sql)
         return cursor.fetchall()
+    
+    @classmethod
+    def total_paginas(cls,paginacion):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT estudiante.nombre
+            FROM estudiante
+        """
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        count = 0
+        for i in result:
+            count += 1
+        paginas = count / paginacion 
+        if not (count % paginacion == 0):
+            paginas += 1
+        return paginas
 
     @classmethod
     def allPaginated(cls,pagination,page):

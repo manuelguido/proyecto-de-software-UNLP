@@ -53,11 +53,11 @@ body {
 .h2 { font-size: 1.9em !important; }
 .h3 { font-size: 1.8em !important; }
 .h4 { font-size: 1.5em !important; }
-.h5 { font-size: 1.2em !important; }
+.h5 { font-size: 1.04em !important; }
 .h6 { font-size: 0.88em !important; }
 p { font-size: 16px; }
 h1, h2, h3, h4, h5, h6, p {
-    color: #393939;
+    color: #444;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400 !important;
 }

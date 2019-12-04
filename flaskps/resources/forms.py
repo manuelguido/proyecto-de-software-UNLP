@@ -30,19 +30,19 @@ class ChangeSiteStatus(Form):
 #---------------------------------------------------#
 #   ABM Estudiantes
 #---------------------------------------------------#
-class VerifyStudent(Form):
+class ValidateStudent(Form):
     apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
     nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
     fecha_nac = DateField('Fecha de nacimiento', [validators.required()], format='%Y-%m-%d')
-    localidad_id = IntegerField('Fecha de nacimiento', [validators.required()], min=1)
-    nivel_id = IntegerField('Nivel', [validators.required()], min=1)
+    localidad_id = IntegerField('Fecha de nacimiento', [validators.required(), validators.NumberRange(min=1, max=None)])
+    nivel_id = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=1, max=None)])
     domicilio = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
-    genero_id = IntegerField('Genero', [validators.required()], min=1)
-    escuela_id = IntegerField('Escuela', [validators.required()], min=1)
-    tipo_doc_id = IntegerField('Tipo de documento', [validators.required()], min=1)
-    numero = IntegerField('Numero de documento', [validators.required()], min=1)
-    tel = IntegerField('Telefono', [validators.required()], min=1)
-    barrio_id = IntegerField('Barrio', [validators.required()], min=1)
+    genero_id = IntegerField('Genero', [validators.required(), validators.NumberRange(min=1, max=None)])
+    escuela_id = IntegerField('Escuela', [validators.required(), validators.NumberRange(min=1, max=None)])
+    tipo_doc_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
+    numero = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
+    tel = IntegerField('Telefono', [validators.required(), validators.NumberRange(min=1, max=None)])
+    barrio_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
 
 #---------------------------------------------------#
 #   Buscar estudiantes

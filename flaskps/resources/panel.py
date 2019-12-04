@@ -39,9 +39,10 @@ def getPanelEstudiantes(page):
 
         #Obtiene estudiantes
         Student.db = get_db()
-        if (not int(page) > 0):
-            page = 1
         lastpage = 1
+        #Si se envia una pagina inexistente se aborta
+        if (page > Student.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
         #Chequea si hubo busquedas
             #Se buscó solo nombre
         if forms.searchEstudiantesByFirstName(request.args).validate():
