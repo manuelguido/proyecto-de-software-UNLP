@@ -13,6 +13,7 @@ from flaskps.models.barrio import Barrio
 from flaskps.models.config_sitio import ConfigSitio
 from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
+from flaskps.models.responsable import Responsable
 from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 from flaskps.resources import site_controller
@@ -45,12 +46,12 @@ def getPanelEstudiantes(page):
             abort (404)
         #Chequea si hubo busquedas
             #Se buscó solo nombre
-        if forms.searchEstudiantesByFirstName(request.args).validate():
+        if forms.searchByFirstName(request.args).validate():
             students = Student.searchByFirstName(request.args.get('solo_nombre'))
             #Se buscó solo apellido
-        elif forms.searchEstudiantesByLastName(request.args).validate():
+        elif forms.searchByLastName(request.args).validate():
             students = Student.searchByLastName(request.args.get('solo_apellido'))
-        elif forms.searchEstudiantesByBoth(request.args).validate():
+        elif forms.searchByBoth(request.args).validate():
             #Se buscó ambos
             students = Student.searchByBoth(request.args.get('ambos_nombre'), request.args.get('ambos_apellido'))
             #No hubo busqueda
@@ -70,6 +71,9 @@ def getPanelEstudiantes(page):
         #Obtiene barrios
         Barrio.db = get_db()
         barrios = Barrio.all()
+        #Obtiene responsables
+        Responsable.db = get_db()
+        responsables = Responsable.all()
         #Obtiene la información de las apis
         localidades = getLocalidades()
         tipo_docs = getDocumentos()
@@ -86,6 +90,7 @@ def getPanelEstudiantes(page):
             generos=generos,
             escuelas=escuelas,
             barrios=barrios,
+            responsables=responsables,
             page=page,
             lastpage=lastpage
         )
@@ -93,16 +98,35 @@ def getPanelEstudiantes(page):
     return redirect(url_for('auth_login'))
 
 #Modulo docentes
-def getPanelEmpleados(page):
+def getPanelDocentes(page):
     if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+        #g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        permisos = User.get_permisos(session['id'])
         #Obtiene docentes
         Docente.db = get_db()
-        docentes = Docente.all()
-        #Obtiene docentes
+
+        lastpage = 1
+        #Si se envia una pagina inexistente se aborta
+        if (page > Docente.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        #Chequea si hubo busquedas
+            #Se buscó solo nombre
+        if forms.searchByFirstName(request.args).validate():
+            docentes = Docente.searchByFirstName(request.args.get('solo_nombre'))
+            #Se buscó solo apellido
+        elif forms.searchByLastName(request.args).validate():
+            docentes = Docente.searchByLastName(request.args.get('solo_apellido'))
+        elif forms.searchByBoth(request.args).validate():
+            #Se buscó ambos
+            docentes = Docente.searchByBoth(request.args.get('ambos_nombre'), request.args.get('ambos_apellido'))
+            #No hubo busqueda
+        else:
+            docentes = Docente.allPaginated(site_controller.get_pagination(),int(page))
+            #Ultima pagina de paginado
+            lastpage = Docente.getLastPage(site_controller.get_pagination(),int(page))
+        #Obtiene generos
         Genero.db = get_db()
         generos = Genero.all()
         #Obtiene la información de las apis
@@ -110,14 +134,16 @@ def getPanelEmpleados(page):
         tipo_docs = getDocumentos()
         #Retorna el template
         return render_template(
-            'auth/panel_components/empleados.html',
+            'auth/panel_components/docentes.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
             localidades=localidades,
             tipo_docs=tipo_docs,
             generos=generos,
-            docentes=docentes
+            docentes=docentes,
+            page=page,
+            lastpage=lastpage
         )
 
     return redirect(url_for('auth_login'))
@@ -129,8 +155,24 @@ def getPanelUsuarios(page):
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        
+        lastpage = 1
+
         #Obtiene usuarios
-        usuarios = User.all()
+        if (page > User.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        #Chequea si hubo busquedas
+            #Se buscó solo nombre
+        if forms.searchByFirstName(request.args).validate():
+            usuarios = User.searchByUserName(request.args.get('solo_nombre'))
+            #Se buscó solo activo
+        #elif forms.searchByActive(request.args).validate():
+        #    usuarios = User.searchByActive(request.args.get('activo'))
+        else:
+            usuarios = User.allPaginated(site_controller.get_pagination(),int(page))
+            #Ultima pagina de paginado
+            lastpage = User.getLastPage(site_controller.get_pagination(),int(page))
+
         #Obtiene roles
         Rol.db = get_db()
         roles_lista = Rol.all()
@@ -141,6 +183,8 @@ def getPanelUsuarios(page):
             nombre=session['nombre'],
             apellido=session['apellido'],
             usuarios=usuarios,
+            page=page,
+            lastpage=lastpage,
             roles_lista=roles_lista
         )
 

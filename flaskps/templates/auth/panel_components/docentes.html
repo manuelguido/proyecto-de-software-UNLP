@@ -1,21 +1,100 @@
 {% extends "auth/panel.html" %}
 {% block contenttitle %}
-<i class="fas fa-user-friends black3 mr-2"></i>Empleados
+<i class="fas fa-user-friends black3 mr-2"></i>Docentes
 {% endblock %}
 {% block contentitem %}
-        <div class="row">
-            <div class="col-12 mb-3">
-                <h2 class="h4 black2">Docentes</h2>
-                <hr>
-                {% for p in permisos %}
-                {% if p.nombre == 'docente_new' %}
-                <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#docenteCreate">
-                    <i class="fas fa-user-plus mr-2"></i> Nuevo Docente
-                </button>
-                {% endif %}
-                {% endfor %}
+    <div class="row mb-4">
+        <div class="col-12 col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1 class="h5"><i class="fas fa-search mr-2"></i>Búsqueda</h1>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                    aria-selected="true">Nombre</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                                    aria-selected="false">Apellido</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                                    aria-selected="false">Ambos</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <form action="{{ url_for('panel_docentes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                            <!-- Nombre  -->
+                                            <div class="col-12 col-md-8 my-1">
+                                                <input type="text" placeholder="Nombre" name="solo_nombre" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <form action="{{ url_for('panel_docentes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                            <!-- Apellido  -->
+                                            <div class="col-12 col-md-8 my-1">
+                                                <input type="text" placeholder="Apellido" name="solo_apellido" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <form action="{{ url_for('panel_docentes') }}" method="GET" class="py-4">
+                                        <div class="row">
+                                        <!-- Nombre  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <input type="text" placeholder="Nombre" name="ambos_nombre" class="form-control" required>
+                                            </div>
+                                            <!-- Apellido  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <input type="text" placeholder="Apellido" name="ambos_apellido" class="form-control" required>
+                                            </div>
+                                            <!-- Search  -->
+                                            <div class="col-12 col-md-4 my-1">
+                                                <button type="submit" class="btn btn-primary btn-block">Buscar<i class="fas fa-arrow-right ml-3"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>  
             </div>
         </div>
+        <div class="col-12 col-md-4">
+            {% for p in permisos %}
+                {% if p.nombre == 'docente_new' %}
+                <div class="col-12 col-md-8 mb-3">
+                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#docenteCreate">
+                        <i class="fas fa-user-plus mr-2"></i> Nuevo Docente
+                    </button>
+                </div>
+                <hr class="mx-3">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
         <div class="row">
             <div class="col-12">
                 <div class="table-responsive">
@@ -26,7 +105,17 @@
                             <th>Apellido</th>
                             <th>Nombre</th>
                             <th>Teléfono</th>
-                            <th class="text-center">Acciones</th>
+                            {% for p in permisos %}
+                            {% if p.nombre == 'docente_show' %}
+                            <th>Ver</th>
+                            {% endif %}
+                            {% if p.nombre == 'docente_update' %}
+                            <th>Modificar</th>
+                            {% endif %}
+                            {% if p.nombre == 'docente_destroy' %}
+                            <th>Eliminar</th>
+                            {% endif %}
+                            {% endfor %}
                         </tr>
                         <!-- Row Docentes -->
                         {% for row in docentes %}
@@ -34,20 +123,25 @@
                             <td>{{row.apellido}}</td>
                             <td>{{row.nombre}}</td>
                             <td>{{row.tel}}</td>
-                            <td class="text-center">
-                                {% for p in permisos %}
-                                {% if p.nombre == 'docente_show' %}
-                                <!-- Ver estudiante -->
-                                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#docenteShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
-                                {% endif %}
-                                {% if p.nombre == 'docente_update' %}
-                                <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                                {% endif %}
-                                {% if p.nombre == 'docente_destroy' %}
-                                <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
-                                {% endif %}
-                                {% endfor %}
+                            
+                            {% for p in permisos %}
+                            {% if p.nombre == 'docente_show' %}
+                            <!-- Ver estudiante -->
+                            <td>
+                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#docenteShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
                             </td>
+                            {% endif %}
+                            {% if p.nombre == 'docente_update' %}
+                            <td>
+                            <a href="/update_docente/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#docenteEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                            </td>
+                            {% endif %}
+                            {% if p.nombre == 'docente_destroy' %}
+                            <td>
+                            <a href="/delete_docente/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                            </td>
+                            {% endif %}
+                            {% endfor %}
                         </tr>
 
                         {% for p in permisos %}
@@ -65,7 +159,6 @@
                                                 <p class="mb-2">Nombre: {{row.nombre}}</p>
                                                 <p class="mb-2">Apellido: {{row.apellido}}</p>
                                                 <p class="mb-2">Fecha de nacimiento: {{row.fecha_nac}}</p>
-                                                <p class="mb-2">Localidad: {{row.localidad_id}}</p>
                                                 <p class="mb-2">Domicilio: {{row.domicilio}}</p>
                                                 <p class="mb-2">
                                                     {% for genero in generos %}
@@ -90,22 +183,22 @@
                         <div id="docenteEdit{{row.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Actualizar</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ url_for('update_docente') }}" method="POST">        
+                                    <form action="{{ url_for('update_docente') }}" method="POST">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Actualizar</h4>
+                                            <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">        
                                             <input type="hidden"  name="id" value="{{row.id}}">
                                             <!-- Nombre y apellido -->
                                             <div class="form-group row">
                                                 <div class="col-6">
                                                     <label>Apellido</label>
-                                                    <input type="text" class="form-control" value="{{row.apellido}}" placeholder="Apellido" name="apellido" required="1">
+                                                    <input type="text" class="solo-letras form-control" value="{{row.apellido}}" placeholder="Apellido" name="apellido" required="1">
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Nombre</label>
-                                                    <input type="text" class="form-control" value="{{row.nombre}}" placeholder="Nombre" name="nombre" required="1">
+                                                    <input type="text" class="solo-letras form-control" value="{{row.nombre}}" placeholder="Nombre" name="nombre" required="1">
                                                 </div>
                                             </div>
                 
@@ -113,7 +206,7 @@
                                             <div class="form-group row">
                                                 <div class="col-6">
                                                     <label>Fecha de nacimiento</label>
-                                                    <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
+                                                    <input type="date" class="datefield form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
                                                 </div>
                                                 <div class="col-6">
                                                     <label>Localidad</label>
@@ -180,7 +273,7 @@
                                             <hr>
                                             <div class="form-group row">
                                                 <div class="col-6 text-left">
-                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                    <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
                                                 </div>
                                                 <div class="col-6 text-right">
                                                     <button class="btn btn-primary" type="sbumit">Actualizar</button>
@@ -199,28 +292,44 @@
                 </div>
             </div>
 
+            <div class="col-12 my-4">
+                <nav class="row">
+                    <div class="col-12">
+                        {% if page == 1 %}
+                        <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                        {% else %}
+                        <a class="btn btn-primary mr-3" href="/panel_docentes/{{page - 1}}">Anterior</a>
+                        {% endif %}
+                        {% if lastpage == 1 %}
+                        <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                        {% else %}
+                        <a class="btn btn-primary mr-3" href="/panel_docentes/{{page + 1}}">Siguiente</a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+
             {% for p in permisos %}
             {% if p.nombre == 'docente_new' %}
             <!-- Modal -->
             <div id="docenteCreate" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Ingresar datos</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body px-4">
-                            <form action="{{ url_for('insert_docente') }}" method="POST">
-
+                        <form action="{{ url_for('insert_docente') }}" method="POST">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Ingresar datos</h4>
+                                <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body px-4">
                                 <!-- Nombre y apellido -->
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <label>Apellido</label>
-                                        <input type="text" class="form-control" placeholder="Apellido" name="apellido" required="1">
+                                        <input type="text" class="solo-letras form-control" placeholder="Apellido" name="apellido" required="1">
                                     </div>
                                     <div class="col-6">
                                         <label>Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Nombre" name="nombre" required="1">
+                                        <input type="text" class="solo-letras form-control" placeholder="Nombre" name="nombre" required="1">
                                     </div>
                                 </div>
 
@@ -228,7 +337,7 @@
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <label>Fecha de nacimiento</label>
-                                        <input type="date" class="form-control" name="fecha_nac" required="1">
+                                        <input type="date" class="datefield form-control" name="fecha_nac" required="1">
                                     </div>
                                     <div class="col-6">
                                         <label>Localidad</label>
@@ -285,7 +394,7 @@
                                 <hr>
                                 <div class="form-group row">
                                     <div class="col-6 text-left">
-                                        <button type="button" class="btn btn-light black2" data-dismiss="modal">Cancelar</button>
+                                        <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div class="col-6 text-right">
                                         <button class="btn btn-primary" type="submit">Guardar</button>
@@ -299,6 +408,15 @@
             {% endif %}
             {% endfor %}
         </div>
-        <script type="text/javascript" src="{{url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+        <script>
+            function testInput(event) {
+                var value = String.fromCharCode(event.which);
+                var pattern = new RegExp(/[a-zåäö ]/i);
+                return pattern.test(value);
+                }
+
+                $('.solo-letras').bind('keypress', testInput);
+        </script>
 {% endblock %}

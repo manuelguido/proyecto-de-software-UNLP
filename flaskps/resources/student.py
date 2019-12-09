@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for, abort, session, f
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.student import Student
+from flaskps.models.responsable import Responsable
 from flaskps.helpers.auth import authenticated
 from flaskps.resources import forms
 
@@ -12,12 +13,12 @@ def store():
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'estudiante_new')):
-        if request.method == "POST" and forms.ValidateStudent(request.form).validate():
+        if request.method == "POST" and forms.ValidateUserActive(request.form).validate():
             Student.db = get_db()
             Student.store(request.form)
             flash("Estudiante agregado correctamente")
         else:
-            flash('Los campos deben estar todos completos', 'error')
+            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_estudiantes'))
     else:
         abort(401)
@@ -47,7 +48,7 @@ def update():
             Student.update(request.form)
             flash("Se actualizó el estudiante correctamente")
         else:
-            flash('Los campos deben estar todos completos', 'error')
+            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_estudiantes'))
     else:
         abort(401)

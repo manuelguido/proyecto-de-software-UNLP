@@ -11,6 +11,7 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LEFT JOIN responsable ON responsable.id = estudiante.responsable_id
         """
         cursor.execute(sql)
         return cursor.fetchall()
@@ -27,6 +28,7 @@ class Student(object):
         count = 0
         for i in result:
             count += 1
+            i = i
         paginas = count / paginacion 
         if not (count % paginacion == 0):
             paginas += 1
@@ -41,6 +43,7 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LEFT JOIN responsable ON responsable.id = estudiante.responsable_id
             LIMIT {limit} offset {offset}
         """
         cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
@@ -55,6 +58,7 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LEFT JOIN responsable ON responsable.id = estudiante.responsable_id
             WHERE estudiante.nombre LIKE '%{firstname}%'
         """
         cursor.execute(sql.format(firstname = firstname))
@@ -69,6 +73,7 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LEFT JOIN responsable ON responsable.id = estudiante.responsable_id
             WHERE estudiante.apellido LIKE '%{lastname}%'
         """
         cursor.execute(sql.format(lastname = lastname))
@@ -83,6 +88,7 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LEFT JOIN responsable ON responsable.id = estudiante.responsable_id
             WHERE estudiante.nombre LIKE '%{firstname}%' AND estudiante.apellido LIKE '%{lastname}%'
         """
         cursor.execute(sql.format(firstname = firstname, lastname = lastname))
@@ -103,8 +109,8 @@ class Student(object):
     @classmethod
     def store(cls, data):
         sql = """
-            INSERT INTO estudiante (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO estudiante (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, responsable_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         cursor = cls.db.cursor()
         cursor.execute(sql, list(data.values()))
@@ -133,12 +139,13 @@ class Student(object):
         numero = request['numero']
         tel = request['tel']
         barrio_id = request['barrio_id']
+        responsable_id = request['responsable_id']
         cursor = cls.db.cursor()
         cursor.execute("""
                UPDATE estudiante
-               SET apellido=%s, nombre=%s, fecha_nac=%s, localidad_id=%s, nivel_id=%s, domicilio=%s, genero_id=%s, escuela_id=%s, tipo_doc_id=%s, numero=%s, tel=%s, barrio_id=%s
+               SET apellido=%s, nombre=%s, fecha_nac=%s, localidad_id=%s, nivel_id=%s, domicilio=%s, genero_id=%s, escuela_id=%s, tipo_doc_id=%s, numero=%s, tel=%s, barrio_id=%s, responsable_id=%s
                WHERE id=%s
-            """, (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, id_data))
+            """, (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, responsable_id, id_data))
         cls.db.commit()
         return True
         

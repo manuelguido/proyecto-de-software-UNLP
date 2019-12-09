@@ -105,34 +105,49 @@
                         <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Documento</th>
-                        <th>Acciones</th>
+                        {% for p in permisos %}
+                        {% if p.nombre == 'estudiante_show' %}
+                        <th>Ver</th>
+                        {% endif %}
+                        {% if p.nombre == 'estudiante_update' %}
+                        <th>Modificar</th>
+                        {% endif %}
+                        {% if p.nombre == 'estudiante_destroy' %}
+                        <th>Eliminar</th>
+                        {% endif %}
+                        {% endfor %}
                     </tr>
                     <!-- Row Estudiantes -->
                     {% for row in students %}
                     <tr>
                         <td>{{row.apellido}}</td>
                         <td>{{row.nombre}}</td>
-                        <td>{{row.numero}}</td>
+                        <td>{{row.numero}}</td>            
+                        {% for p in permisos %}
+                        {% if p.nombre == 'estudiante_show' %}
+                        <!-- Ver estudiante -->
                         <td>
-                            {% for p in permisos %}
-                            {% if p.nombre == 'estudiante_show' %}
-                            <!-- Ver estudiante -->
-                            <a class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#studentShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
-                            {% endif %}
-                            {% endfor %}
-                            {% for p in permisos %}
-                            {% if p.nombre == 'estudiante_update' %}
-                            <!-- Modificar estudiante -->
-                            <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm mb-3" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
-                            {% endif %}
-                            {% endfor %}
-                            {% for p in permisos %}
-                            {% if p.nombre == 'estudiante_destroy' %}
-                            <!-- Eliminar estudiante -->
-                            <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm mb-3" onclick="return confirm('Estas seguro que deseas eliminar el estudiante?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
-                            {% endif %}
-                            {% endfor %}
+                        <a class="btn btn-success btn-sm mb-3" data-toggle="modal" data-target="#studentShow{{row.id}}"><i class="fas fa-eye mr-2"></i>Ver</a>
                         </td>
+                        {% endif %}
+                        {% endfor %}
+                        {% for p in permisos %}
+                        {% if p.nombre == 'estudiante_update' %}
+                        <!-- Modificar estudiante -->
+                        <td>
+                        <a href="/update_student/{{row.id}}" class="btn btn-warning btn-sm mb-3" data-toggle="modal" data-target="#studentEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        {% for p in permisos %}
+                        {% if p.nombre == 'estudiante_destroy' %}
+                        <!-- Eliminar estudiante -->
+                        <td>
+                        <a href="/delete_student/{{row.id}}" class="btn btn-danger btn-sm mb-3" onclick="return confirm('Estas seguro que deseas eliminar el estudiante?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                        </td>
+                        {% endif %}
+                        {% endfor %}
+                        
                     </tr>
                     {% for p in permisos %}
                     {% if p.nombre == 'estudiante_show' %}
@@ -149,13 +164,6 @@
                                             <p class="mb-2">Nombre: {{row.nombre}}</p>
                                             <p class="mb-2">Apellido: {{row.apellido}}</p>
                                             <p class="mb-2">Fecha de nacimiento: {{row.fecha_nac}}</p>
-                                            <p class="mb-2">
-                                                {% for localidad in localidades %}
-                                                
-                                                    {{localidad.nombre}}
-                                                
-                                                {% endfor %}
-                                            </p>
                                             <p class="mb-2">
                                                 {% for nivel in niveles %}
                                                 {% if nivel.id == row.nivel_id %}
@@ -200,29 +208,29 @@
                     <div id="studentEdit{{row.id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Editar</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{ url_for('update_student') }}" method="POST">        
+                                <form action="{{ url_for('update_student') }}" method="POST">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Editar</h4>
+                                        <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
                                         <input type="hidden"  name="id" value="{{row.id}}">
                                         <!-- Nombre y apellido -->
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Apellido</label>
-                                                <input type="text" class="form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1">
+                                                <input type="text" class="solo-letras form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1"/>
                                             </div>
                                             <div class="col-6">
                                                 <label>Nombre</label>
-                                                <input type="text" class="form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
+                                                <input type="text" class="solo-letras form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
                                             </div>
                                         </div>
                                         <!-- Fecha de nacimiento -->
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Fecha de nacimiento</label>
-                                                <input type="date" class="form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
+                                                <input type="date" class="datefield form-control" value="{{row.fecha_nac}}" name="fecha_nac" required="1">
                                             </div>
                                             <div class="col-6">
                                                 <label>Localidad</label>
@@ -309,7 +317,7 @@
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Teléfono</label>
-                                                <input type="number" min="0" class="form-control" value="{{row.tel}}" name="tel" required="1">
+                                                <input type="number" min="99999" class="form-control" value="{{row.tel}}" name="tel" required="1">
                                             </div>
                                             <div class="col-6">
                                                 <label>Barrio</label>
@@ -325,10 +333,26 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <!-- Responsable -->
+                                        <div class="form-group row">
+                                            <div class="col-6">
+                                                <label>Responsable</label>
+                                                <select name="barrio_id" class="browser-default custom-select">
+                                                    <option selected disabled>Seleccionar</option>
+                                                    {% for responsable in responsables %}
+                                                    {% if responsable.id == row.responsable_id %}
+                                                    <option value="{{responsable.id}}" selected>{{responsable.nombre}} {{responsable.apellido}}</option>
+                                                    {% else %}
+                                                    <option value="{{responsable.id}}">{{responsable.nombre}}</option>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
                                         <hr>
                                         <div class="form-group row">
                                             <div class="col-6 text-left">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                                                <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
                                             </div>
                                             <div class="col-6 text-right">
                                                 <button class="btn btn-primary" type="sbumit">Actualizar</button>
@@ -368,28 +392,28 @@
         <div id="studentCreate" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingresar datos</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body px-4">
-                        <form action="{{ url_for('insert_student') }}" method="POST">
+                    <form action="{{ url_for('insert_student') }}" method="POST">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Ingresar datos</h4>
+                            <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body px-4">
                             <!-- Nombre y apellido -->
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Apellido</label>
-                                    <input type="text" class="form-control" placeholder="Apellido" name="apellido" required="1">
+                                    <input type="text" class="solo-letras form-control" placeholder="Apellido" name="apellido" required="1">
                                 </div>
                                 <div class="col-6">
                                     <label>Nombre</label>
-                                    <input type="text" class="form-control" placeholder="Nombre" name="nombre" required="1">
+                                    <input type="text" class="solo-letras form-control" placeholder="Nombre" name="nombre" required="1">
                                 </div>
                             </div>
                             <!-- Fecha de nacimiento -->
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Fecha de nacimiento</label>
-                                    <input type="date" class="form-control" name="fecha_nac" required="1">
+                                    <input type="date" class="datefield form-control" name="fecha_nac" required="1">
                                 </div>
                                 <div class="col-6">
                                     <label>Localidad</label>
@@ -451,14 +475,14 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Número</label>
-                                    <input type="number" min="0" class="form-control" placeholder="Numero DNI" name="numero" required="1">
+                                    <input type="number" min="99999" class="form-control" placeholder="Numero DNI" name="numero" required="1">
                                 </div>
                             </div>                    
                             <!-- Telefono y barrio -->
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Teléfono</label>
-                                    <input type="number" min="0" class="form-control" placeholder="Telefono" name="tel" required="1">
+                                    <input type="number" min="99999" class="form-control" placeholder="Telefono" name="tel" required="1">
                                 </div>
                                 <div class="col-6">
                                     <label>Barrio</label>
@@ -470,10 +494,22 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- Telefono y barrio -->
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <label>Responsable</label>
+                                    <select name="responsable_id" class="browser-default custom-select">
+                                        <option selected disabled>Seleccionar</option>
+                                        {% for responsable in responsables %}
+                                        <option value="{{responsable.id}}">{{responsable.nombre}} {{responsable.apellido}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <hr>
                             <div class="form-group row">
                                 <div class="col-6 text-left">
-                                    <button type="button" class="btn btn-light black2" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
                                 </div>
                                 <div class="col-6 text-right">
                                     <button class="btn btn-primary" type="submit">Guardar</button>
@@ -488,5 +524,15 @@
         {% endfor %}
         <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+        
+        <script>
+            function testInput(event) {
+                var value = String.fromCharCode(event.which);
+                var pattern = new RegExp(/[a-zåäö ]/i);
+                return pattern.test(value);
+                }
+
+                $('.solo-letras').bind('keypress', testInput);
+        </script>
     </div>
 {% endblock %}

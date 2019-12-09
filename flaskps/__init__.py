@@ -36,13 +36,16 @@ app.add_url_rule("/panel_estudiantes/<int:page>", 'panel_estudiantes', panel.get
 #app.add_url_rule("/search_student/<int:page>", 'search_student', student.searchEstudiantes)
 
     #Seccion Empleados
-app.add_url_rule("/panel_empleados", 'panel_empleados', panel.getPanelEmpleados, defaults={'page': 1})
-app.add_url_rule("/panel_empleados/<int:page>", 'panel_empleados', panel.getPanelEmpleados)
+app.add_url_rule("/panel_docentes", 'panel_docentes', panel.getPanelDocentes, defaults={'page': 1})
+app.add_url_rule("/panel_docentes/<int:page>", 'panel_docentes', panel.getPanelDocentes)
+
     #Seccion Usuarios 
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios, defaults={'page': 1})
 app.add_url_rule("/panel_usuarios/<int:page>", 'panel_usuarios', panel.getPanelUsuarios)
+
     #Seccion ciclos
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
+
     #Seccion configuracion de sitio
 app.add_url_rule("/panel_adminsitio", 'panel_adminsitio', panel.getPanelAdminSitio)
 
