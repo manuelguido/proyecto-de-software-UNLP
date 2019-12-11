@@ -21,6 +21,7 @@ from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 from flaskps.resources import site_controller
 from flaskps.resources import forms
+#Api de geolocalizacion
 
 #Metodos para las apis
 def getLocalidades():
@@ -337,7 +338,6 @@ def getNucleos(page):
     if auth.authenticated():
         #Obtiene permisos del usuario
         User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
         Nucleo.db = get_db()
         #Si se envia una pagina inexistente se aborta
         if (page > Nucleo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
@@ -347,7 +347,6 @@ def getNucleos(page):
         lastpage = Nucleo.getLastPage(site_controller.get_pagination(),int(page))
         return render_template(
             'auth/panel_components/nucleos.html',
-            permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
             page=page,
@@ -359,25 +358,15 @@ def getNucleos(page):
 
 #Modulos ciclos lectivos
 def getNucleo(id_data):
-    if auth.authenticated():
-        #Obtiene permisos del usuario
-        User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+    if (1<2):#auth.authenticated():
+        #Nucleo
         Nucleo.db = get_db()
-        #Si se envia una pagina inexistente se aborta
-        if (page > Nucleo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
-            abort (404)
-        nucleos = Nucleo.allPaginated(site_controller.get_pagination(),int(page))
-        #Ultima pagina de paginado
-        lastpage = Nucleo.getLastPage(site_controller.get_pagination(),int(page))
+        nucleo = Nucleo.getNucleo(id_data)
         return render_template(
-            'auth/panel_components/nucleos.html',
-            permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
-            page=page,
-            lastpage=lastpage,
-            nucleos=nucleos
+            'auth/panel_components/nucleo.html',
+            #nombre=session['nombre'],
+            #apellido=session['apellido'],
+            nucleo=nucleo
         )
     else:
         return redirect(url_for('auth_login'))
@@ -400,84 +389,5 @@ def getPanelAdminSitio():
             apellido=session['apellido'],
             infositio = infositio
         )
-
-    return redirect(url_for('auth_login'))
-
-
-
-
-
-
-
-def getPanel():
-    if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
-        
-        #Obtiene informacion del sitio (Estado y paginacion)
-        ConfigSitio.db = get_db()
-        infositio = ConfigSitio.all()
-        
-        #Obtiene estudiantes
-        Student.db = get_db()
-        students = Student.all()
-        
-        #Obtiene docentes
-        Docente.db = get_db()
-        docentes = Docente.all()
-        
-        #Obtiene niveles
-        Nivel.db = get_db()
-        niveles = Nivel.all()
-        
-        #Obtiene generos
-        Genero.db = get_db()
-        generos = Genero.all()
-        
-        #Obtiene escuelas
-        Escuela.db = get_db()
-        escuelas = Escuela.all()
-        
-        #Obtiene barrios
-        Barrio.db = get_db()
-        barrios = Barrio.all()
-        
-        #Obtiene roles
-        Rol.db = get_db()
-        roles = Rol.all()
-        
-        #Obtiene Taller
-        Taller.db = get_db()
-        talleres = Taller.all()
-        
-        #Obtiene Taller
-        Ciclo.db = get_db()
-        ciclos_lectivos = Ciclo.all()
-        
-        #Obtiene permisos del usuario
-        User.db = get_db()
-        permisos = User.get_permisos(session['id'])
-        #Obtiene rol
-        rol = User.get_rol(session['id'])
-        #Obtiene usuarios
-        usuarios = User.all()
-        #Retorno todo en el panel
-        return render_template(
-            'auth/panel.html',
-            infositio = infositio,
-            students=students,
-            docentes=docentes,
-            niveles=niveles,
-            generos=generos,
-            escuelas=escuelas,
-            barrios=barrios,
-            permisos=permisos,
-            roles=roles,
-            rol=rol,
-            usuarios=usuarios,
-            talleres=talleres,
-            ciclos_lectivos=ciclos_lectivos,
-            nombre=session['nombre'],
-            apellido=session['apellido']
-        )
-
-    return redirect(url_for('auth_login'))
+    else:
+        return redirect(url_for('auth_login'))
