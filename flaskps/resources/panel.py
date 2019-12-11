@@ -21,7 +21,6 @@ from flaskps.models.ciclo_lectivo import Ciclo
 from flaskps.resources import auth
 from flaskps.resources import site_controller
 from flaskps.resources import forms
-#Api de geolocalizacion
 
 #Metodos para las apis
 def getLocalidades():
@@ -33,12 +32,6 @@ def getDocumentos():
     request_tipo_docs = requests.get(
         'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
     return request_tipo_docs.json()
-
-def maps():
-    maps = requests.get(
-        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
-    return maps.json()
-
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
@@ -358,14 +351,14 @@ def getNucleos(page):
 
 #Modulos ciclos lectivos
 def getNucleo(id_data):
-    if (1<2):#auth.authenticated():
+    if auth.authenticated():
         #Nucleo
         Nucleo.db = get_db()
         nucleo = Nucleo.getNucleo(id_data)
         return render_template(
             'auth/panel_components/nucleo.html',
-            #nombre=session['nombre'],
-            #apellido=session['apellido'],
+            nombre=session['nombre'],
+            apellido=session['apellido'],
             nucleo=nucleo
         )
     else:
