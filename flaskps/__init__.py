@@ -6,6 +6,7 @@ from flaskps.db import get_db
 from flaskps.resources import site_controller
 from flaskps.resources import auth
 from flaskps.resources import user
+from flaskps.resources import instrumento
 from flaskps.resources import student
 from flaskps.resources import docente
 from flaskps.resources import panel
@@ -42,6 +43,14 @@ app.add_url_rule("/panel_docentes/<int:page>", 'panel_docentes', panel.getPanelD
     #Seccion Usuarios 
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios, defaults={'page': 1})
 app.add_url_rule("/panel_usuarios/<int:page>", 'panel_usuarios', panel.getPanelUsuarios)
+
+    #Seccion Instrumentos
+app.add_url_rule("/panel_instrumentos", 'panel_instrumentos', panel.getPanelInstrumentos, defaults={'page': 1}, methods=['POST', 'GET'])
+app.add_url_rule("/panel_instrumentos/<int:page>", 'panel_instrumentos', panel.getPanelInstrumentos, methods=['POST', 'GET'])
+        #Muestra el instrumento
+app.add_url_rule("/panel_instrumento/<int:id_data>", 'panel_instrumento', panel.getInstrumento, methods=['GET'])
+        #Para crear un instrumento
+app.add_url_rule("/new_instrumento/<int:id>", 'get_instrumento', panel.getNewInstrumento, methods=['POST', 'GET'])
 
     #Seccion ciclos
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
@@ -103,6 +112,18 @@ app.add_url_rule("/insert_docente", 'insert_docente', docente.store, methods=['P
 app.add_url_rule("/delete_docente/<string:id_data>", 'delete_docente', docente.delete, methods=['GET'])
     #Modificación
 app.add_url_rule("/update_docente", 'update_docente', docente.update, methods=['POST','GET'])
+
+
+#---------------------------------------------------#
+#   ABM Instrumentos
+#---------------------------------------------------#
+    #Alta
+app.add_url_rule("/insert_instrument", 'insert_instrument', instrumento.store, methods=['POST'])
+    #Baja
+app.add_url_rule("/delete_instrument/<string:id_data>", 'delete_instrument', instrumento.delete, methods=['GET'])
+    #Modificación
+app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, methods=['POST','GET'])
+
 
 #---------------------------------------------------#
 #   Error views

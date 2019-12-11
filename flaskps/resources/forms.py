@@ -15,7 +15,7 @@ class Login(Form):
 #---------------------------------------------------#
     #Cambiar paginacion
 class ChangePagination(Form):
-    paginacion = IntegerField([validators.DataRequired()])
+    paginacion = IntegerField('Paginacion', [validators.required(), validators.NumberRange(min=1, max=20)])
 
     #Cambiar información del sitio
 class ChangeSiteInfo(Form):
@@ -61,7 +61,7 @@ class ValidateDocente(Form):
 #---------------------------------------------------#
 #   Buscar estudiantes y docentes
 #---------------------------------------------------#
-    #Buscar estudiante por nombre
+    #Buscar por nombre: Se usa para usuarios,docentes estudiantes e instrumentos
 class searchByFirstName(Form):
     solo_nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
 

@@ -6,6 +6,8 @@ from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.student import Student
 from flaskps.models.docente import Docente
+from flaskps.models.instrumento import Instrumento
+from flaskps.models.tipo_instrumento import TipoInstrumento
 from flaskps.models.nivel import Nivel
 from flaskps.models.genero import Genero
 from flaskps.models.escuela import Escuela
@@ -186,6 +188,102 @@ def getPanelUsuarios(page):
             page=page,
             lastpage=lastpage,
             roles_lista=roles_lista
+        )
+
+    return redirect(url_for('auth_login'))
+
+#Modulo estudiantes
+def getPanelInstrumentos(page):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        #Obtiene estudiantes
+        Instrumento.db = get_db()
+        lastpage = 1
+        #Si se envia una pagina inexistente se aborta
+        if (page > Instrumento.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        #Chequea si hubo busquedas
+            #Se buscó instrumento
+        if forms.searchByFirstName(request.args).validate():
+            instrumentos = Instrumento.searchByName(request.args.get('solo_nombre'))
+            #No hubo busqueda
+        else:
+            instrumentos = Instrumento.allPaginated(site_controller.get_pagination(),int(page))
+            #Ultima pagina de paginado
+            lastpage = Instrumento.getLastPage(site_controller.get_pagination(),int(page))
+        #Retorna el template
+        return render_template(
+            'auth/panel_components/instrumentos.html',
+            permisos=permisos,
+            nombre=session['nombre'],
+            apellido=session['apellido'],
+            instrumentos=instrumentos,
+            page=page,
+            lastpage=lastpage
+        )
+    else:
+        return redirect(url_for('auth_login'))
+
+def getInstrumento(id_data):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'instrumento_show')):
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+            #Obtiene niveles
+            TipoInstrumento.db = get_db()
+            tipos = TipoInstrumento.all()
+            Instrumento.db = get_db()
+            instrumento = Instrumento.getInstrumento(id_data)
+            #Retorna el template
+            return render_template(
+                'auth/panel_components/instrumento.html',
+                permisos=permisos,
+                nombre=session['nombre'],
+                apellido=session['apellido'],
+                tipos=tipos,
+                instrumento=instrumento,
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
+
+def getNewInstrumento(page):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        #Obtiene estudiantes
+        Instrumento.db = get_db()
+        lastpage = 1
+        #Si se envia una pagina inexistente se aborta
+        if (page > Instrumento.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        #Chequea si hubo busquedas
+            #Se buscó instrumento
+        if forms.searchByFirstName(request.args).validate():
+            instrumentos = Instrumento.searchByName(request.args.get('solo_nombre'))
+            #No hubo busqueda
+        else:
+            instrumentos = Instrumento.allPaginated(site_controller.get_pagination(),int(page))
+            #Ultima pagina de paginado
+            lastpage = Instrumento.getLastPage(site_controller.get_pagination(),int(page))
+        #Obtiene niveles
+        TipoInstrumento.db = get_db()
+        tipos = TipoInstrumento.all()
+        #Retorna el template
+        return render_template(
+            'auth/panel_components/instrumentos.html',
+            permisos=permisos,
+            nombre=session['nombre'],
+            apellido=session['apellido'],
+            tipos=tipos,
+            instrumentos=instrumentos,
+            page=page,
+            lastpage=lastpage
         )
 
     return redirect(url_for('auth_login'))
