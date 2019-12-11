@@ -46,7 +46,7 @@ class ValidateStudent(Form):
     responsable_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
 
 #---------------------------------------------------#
-#   Validacion Estudiantes
+#   Validacion Docentes
 #---------------------------------------------------#
 class ValidateDocente(Form):
     apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
@@ -57,6 +57,16 @@ class ValidateDocente(Form):
     tipo_doc_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
     numero = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=99999, max=None)])
     tel = IntegerField('Telefono', [validators.required(), validators.NumberRange(min=99999, max=None)])
+
+#---------------------------------------------------#
+#   Validacion Instrumentos
+#---------------------------------------------------#
+class ValidateInstrument(Form):
+    id_data = IntegerField('id', [validators.required(), validators.NumberRange(min=0, max=None)])
+    nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    tipo_instrumento = IntegerField('Tipo', [validators.required(), validators.NumberRange(min=1, max=3)])
+    codigo = StringField(u'Codigo', [validators.required(), validators.length(max=50)])
+    img = StringField(u'Image', [validators.optional()])
 
 #---------------------------------------------------#
 #   Buscar estudiantes y docentes

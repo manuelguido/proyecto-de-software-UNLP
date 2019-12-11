@@ -381,3 +381,8 @@ th, td {
 .table-select:active {
     background: rgba(44, 118, 149, 0.8) !important;
 }
+
+.instrumento {
+    max-height: 300px;
+    max-width: 200px;
+}

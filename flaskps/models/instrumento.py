@@ -97,16 +97,17 @@ class Instrumento(object):
 
     @classmethod
     def update(cls, request):
-        id_data = request['id']
-        apellido = request['apellido']
+        id_data = request['id_data']
         nombre = request['nombre']
-        fecha_nac = request['fecha_nac']
+        codigo = request['codigo']
+        tipo_id = request['tipo_instrumento']
+        #img = request['img']
         cursor = cls.db.cursor()
         cursor.execute("""
-               UPDATE estudiante
-               SET apellido=%s, nombre=%s, fecha_nac=%s, localidad_id=%s, nivel_id=%s, domicilio=%s, genero_id=%s, escuela_id=%s, tipo_doc_id=%s, numero=%s, tel=%s, barrio_id=%s, responsable_id=%s
+               UPDATE instrumento
+               SET nombre=%s, codigo=%s, tipo_id=%s
                WHERE id=%s
-            """, (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, responsable_id, id_data))
+            """, (nombre, codigo, tipo_id, id_data))
         cls.db.commit()
         return True
         

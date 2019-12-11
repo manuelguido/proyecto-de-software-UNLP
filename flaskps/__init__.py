@@ -50,7 +50,9 @@ app.add_url_rule("/panel_instrumentos/<int:page>", 'panel_instrumentos', panel.g
         #Muestra el instrumento
 app.add_url_rule("/panel_instrumento/<int:id_data>", 'panel_instrumento', panel.getInstrumento, methods=['GET'])
         #Para crear un instrumento
-app.add_url_rule("/new_instrumento/<int:id>", 'get_instrumento', panel.getNewInstrumento, methods=['POST', 'GET'])
+app.add_url_rule("/new_instrumento/<int:id_data>", 'get_instrumento', panel.getNewInstrumento, methods=['POST', 'GET'])
+app.add_url_rule("/get_update_instrumento/<int:id_data>", 'get_update_instrumento', panel.getUpdateInstrumento, methods=['GET'])
+
 
     #Seccion ciclos
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
@@ -122,7 +124,7 @@ app.add_url_rule("/insert_instrument", 'insert_instrument', instrumento.store, m
     #Baja
 app.add_url_rule("/delete_instrument/<string:id_data>", 'delete_instrument', instrumento.delete, methods=['GET'])
     #Modificación
-app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, methods=['POST','GET'])
+app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, methods=['POST'])
 
 
 #---------------------------------------------------#

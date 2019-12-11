@@ -228,19 +228,14 @@ def getPanelInstrumentos(page):
 
 def getInstrumento(id_data):
     if auth.authenticated():
-        #Obtiene permisos del usuario
         User.db = get_db()
         if (User.tiene_permiso(session['id'],'instrumento_show')):
-            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-            #Obtiene niveles
             TipoInstrumento.db = get_db()
             tipos = TipoInstrumento.all()
             Instrumento.db = get_db()
             instrumento = Instrumento.getInstrumento(id_data)
-            #Retorna el template
             return render_template(
                 'auth/panel_components/instrumento.html',
-                permisos=permisos,
                 nombre=session['nombre'],
                 apellido=session['apellido'],
                 tipos=tipos,
@@ -287,6 +282,28 @@ def getNewInstrumento(page):
         )
 
     return redirect(url_for('auth_login'))
+
+def getUpdateInstrumento(id_data):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'instrumento_update')):
+            TipoInstrumento.db = get_db()
+            tipos = TipoInstrumento.all()
+            Instrumento.db = get_db()
+            instrumento = Instrumento.getInstrumento(id_data)   
+            #Retorna el template
+            return render_template(
+                'auth/panel_components/instrumento_update.html',
+                nombre=session['nombre'],
+                apellido=session['apellido'],
+                tipos=tipos,
+                instrumento=instrumento,
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
 
 #Modulos ciclos lectivos
 def getPanelCiclos():
