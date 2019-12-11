@@ -80,8 +80,8 @@ class Instrumento(object):
     @classmethod
     def store(cls, data):
         sql = """
-            INSERT INTO instrumento (nombre, tipo_id, codigo)
-            VALUES (%s, %s, %s)
+            INSERT INTO instrumento (nombre, tipo_id, codigo, img)
+            VALUES (%s, %s, %s, %s)
         """
         cursor = cls.db.cursor()
         cursor.execute(sql, list(data.values()))

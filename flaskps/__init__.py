@@ -23,6 +23,13 @@ Session(app)
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def get_dir(path):
+    categories = os.path.abspath(path)  # <--
+    return categories
+
 #url Inicio
 app.add_url_rule("/", 'home', site_controller.index)
 
@@ -53,6 +60,11 @@ app.add_url_rule("/panel_instrumento/<int:id_data>", 'panel_instrumento', panel.
 app.add_url_rule("/new_instrumento", 'new_instrumento', panel.getNewInstrumento, methods=['POST', 'GET'])
 app.add_url_rule("/get_update_instrumento/<int:id_data>", 'get_update_instrumento', panel.getUpdateInstrumento, methods=['GET'])
 
+    #Seccion Nucleos
+app.add_url_rule("/panel_nucleos", 'panel_nucleos', panel.getNucleos, defaults={'page': 1})
+app.add_url_rule("/panel_nucleos/<int:page>", 'panel_nucleos', panel.getNucleos)
+        #Muestra el nucleo
+app.add_url_rule("/panel_nucleo/<int:id_data>", 'panel_nucleo', panel.getNucleo, methods=['GET'])
 
     #Seccion ciclos
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
@@ -120,7 +132,7 @@ app.add_url_rule("/update_docente", 'update_docente', docente.update, methods=['
 #   ABM Instrumentos
 #---------------------------------------------------#
     #Alta
-app.add_url_rule("/insert_instrument", 'insert_instrument', instrumento.store, methods=['POST'])
+app.add_url_rule("/insert_instrument", 'insert_instrument', instrumento.store, methods=['POST', 'GET'])
     #Baja
 app.add_url_rule("/delete_instrument/<string:id_data>", 'delete_instrument', instrumento.delete, methods=['GET'])
     #Modificación

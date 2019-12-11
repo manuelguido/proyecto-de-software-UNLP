@@ -12,6 +12,7 @@ from flaskps.models.nivel import Nivel
 from flaskps.models.genero import Genero
 from flaskps.models.escuela import Escuela
 from flaskps.models.barrio import Barrio
+from flaskps.models.nucleo import Nucleo
 from flaskps.models.config_sitio import ConfigSitio
 from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
@@ -31,6 +32,12 @@ def getDocumentos():
     request_tipo_docs = requests.get(
         'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
     return request_tipo_docs.json()
+
+def maps():
+    maps = requests.get(
+        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
+    return maps.json()
+
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
@@ -324,6 +331,56 @@ def getPanelCiclos():
         )
 
     return redirect(url_for('auth_login'))
+
+#Modulos ciclos lectivos
+def getNucleos(page):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        Nucleo.db = get_db()
+        #Si se envia una pagina inexistente se aborta
+        if (page > Nucleo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        nucleos = Nucleo.allPaginated(site_controller.get_pagination(),int(page))
+        #Ultima pagina de paginado
+        lastpage = Nucleo.getLastPage(site_controller.get_pagination(),int(page))
+        return render_template(
+            'auth/panel_components/nucleos.html',
+            permisos=permisos,
+            nombre=session['nombre'],
+            apellido=session['apellido'],
+            page=page,
+            lastpage=lastpage,
+            nucleos=nucleos
+        )
+    else:
+        return redirect(url_for('auth_login'))
+
+#Modulos ciclos lectivos
+def getNucleo(id_data):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        Nucleo.db = get_db()
+        #Si se envia una pagina inexistente se aborta
+        if (page > Nucleo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        nucleos = Nucleo.allPaginated(site_controller.get_pagination(),int(page))
+        #Ultima pagina de paginado
+        lastpage = Nucleo.getLastPage(site_controller.get_pagination(),int(page))
+        return render_template(
+            'auth/panel_components/nucleos.html',
+            permisos=permisos,
+            nombre=session['nombre'],
+            apellido=session['apellido'],
+            page=page,
+            lastpage=lastpage,
+            nucleos=nucleos
+        )
+    else:
+        return redirect(url_for('auth_login'))
 
 #Modulo administracion del sitio
 def getPanelAdminSitio():

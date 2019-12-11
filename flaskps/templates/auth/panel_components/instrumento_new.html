@@ -13,7 +13,7 @@
                             <hr>
                         </div>
                         <div class="col-12">
-                            <form method="POST" action="{{ url_for('insert_instrument') }}">
+                            <form method="POST" action="{{ url_for('insert_instrument') }}" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="h6 w400 black4">Nombre</label>
@@ -26,6 +26,18 @@
                                         </select>
                                         <label class="h6 w400 black4">Codigo</label>
                                         <input type="text" class="form-control mb-3" placeholder="Codigo" name="codigo" required>
+                                        <label class="h6 w400 black4">Imagen</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input name="img" type="file" class="custom-file-input" id="inputGroupFile01"
+                                                    aria-describedby="inputGroupFileAddon01">
+                                                    
+                                                <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-12 text-right">
                                         <hr>

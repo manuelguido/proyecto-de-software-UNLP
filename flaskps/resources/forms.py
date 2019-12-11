@@ -65,8 +65,7 @@ class ValidateInstrument(Form):
     nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
     tipo_instrumento = IntegerField('Tipo', [validators.required(), validators.NumberRange(min=1, max=3)])
     codigo = StringField(u'Codigo', [validators.required(), validators.length(max=50)])
-    img = StringField(u'Image', [validators.optional()])
-
+    
 #---------------------------------------------------#
 #   Buscar estudiantes y docentes
 #---------------------------------------------------#
