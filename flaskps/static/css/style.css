@@ -306,21 +306,24 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .menuItem {
-    transition: 0.2s all;
-    color: #444 !important;
+    transition: 0.1s all !important;
+    color: #555 !important;
     border: 0 none !important;
     width: 100% !important;
     padding: .9em 2.3em !important;
     background: none !important;
 }
-.menuItem a, .menuItem a i{
-    color: #494949 !important;
+.menuItem a, .menuItem a i {
+    color: #555;
     font-size: 1.1em;
 }
 .menuItem a:hover {
     color: #0971d9 !important;
 }
 .menuItem a:hover i {
+    color: #0971d9 !important;
+}
+.menuItemActive a i, .menuItemActive a {
     color: #0971d9 !important;
 }
 .subItem {
@@ -362,6 +365,15 @@ h1, h2, h3, h4, h5, h6, p {
 .page-buttons {
     display: inline-block !important;
 }
+#bigmapid {
+    height: 40vh;
+    width: 100%;
+}
+#minmapid {
+    height: 65vh;
+    width: 100%;
+}
+
 /*--------------------------------------------------------------
     Interacción de tablas del panel de doncente
 --------------------------------------------------------------*/

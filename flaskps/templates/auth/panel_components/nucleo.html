@@ -15,21 +15,19 @@
                 <div class="card-body">
                     <h1 class="black5 h5"><i class="fas fa-map-marker-alt mr-2"></i>Ubicación</h1>
                     <hr>
-                    <style>#mapid { height: 60vh; width: 100%;}</style>
-                        <div id="mapid"></div>
-
+                    <div id="minmapid"></div>
                     <script>
-                    var mymap = L.map('mapid').setView([-34.9060, -57.89], 12);
-                    var latitude = {{nucleo.latitude}}
-                    var longitude = {{nucleo.longitude}}
+                        var mymap = L.map('minmapid').setView([-34.9060, -57.89], 12.1);
+                        var latitude = {{nucleo.latitude}}
+                        var longitude = {{nucleo.longitude}}
 
-                    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                        maxZoom: 18,
-                        id: 'mapbox/streets-v11',
-                        accessToken: 'pk.eyJ1IjoibnVtZXJhIiwiYSI6ImNrNDF0bnQ2ejAxZmwzZHB0aTNta3FrZmgifQ.72Hy10HV07lVW5VjaQr9sA'
-                    }).addTo(mymap);
-                    var marker = L.marker([latitude, longitude]).addTo(mymap);
+                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            accessToken: 'pk.eyJ1IjoibnVtZXJhIiwiYSI6ImNrNDF0bnQ2ejAxZmwzZHB0aTNta3FrZmgifQ.72Hy10HV07lVW5VjaQr9sA'
+                        }).addTo(mymap);
+                        var marker = L.marker([latitude, longitude]).addTo(mymap);
                     </script>
                 </div>
             </div>
