@@ -46,9 +46,9 @@
             {% for p in permisos %}
                 {% if p.nombre == 'instrumento_new' %}
                 <div class="col-12 col-md-8 mb-3">
-                    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
+                    <a href="/new_instrumento" class="btn btn-success pull-right">
                         <i class="fas fa-guitar black3 mr-2"></i> Nuevo Instrumetno
-                    </button>
+                    </a>
                 </div>
                 <hr class="mx-3">
                 {% endif %}

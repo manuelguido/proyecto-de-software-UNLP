@@ -11,13 +11,14 @@ def store():
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'instrumento_new')):
-        if request.method == "POST" and forms.ValidateUserActive(request.form).validate():
+        if request.method == "POST" and forms.ValidateInstrument(request.form).validate():
             Instrumento.db = get_db()
             Instrumento.store(request.form)
             flash("Instrumento agregado correctamente")
+            return redirect(url_for('panel_instrumentos'))
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_instrumentos'))
+            return redirect(url_for('new_instrumento'))
     else:
         abort(401)
 

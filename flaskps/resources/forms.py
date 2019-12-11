@@ -62,7 +62,6 @@ class ValidateDocente(Form):
 #   Validacion Instrumentos
 #---------------------------------------------------#
 class ValidateInstrument(Form):
-    id_data = IntegerField('id', [validators.required(), validators.NumberRange(min=0, max=None)])
     nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
     tipo_instrumento = IntegerField('Tipo', [validators.required(), validators.NumberRange(min=1, max=3)])
     codigo = StringField(u'Codigo', [validators.required(), validators.length(max=50)])
