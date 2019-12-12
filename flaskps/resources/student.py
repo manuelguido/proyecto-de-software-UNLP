@@ -42,6 +42,7 @@ def update():
         abort(401)
 
     #Chequea permiso
+    User.db = get_db()
     if (User.tiene_permiso(session['id'],'estudiante_update')):
         if request.method == "POST" and forms.ValidateStudent(request.form).validate():
             Student.db = get_db()

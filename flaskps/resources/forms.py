@@ -88,9 +88,13 @@ class ValidateUserActive(Form):
     active = IntegerField('Activo', [validators.required(), validators.NumberRange(min=0, max=1)])
 
 #---------------------------------------------------#
-#   Buscar estudiantes y docentes
+#   
 #---------------------------------------------------#
 class ValidateCiclo(Form):
     fecha_ini = DateField('Fecha de inicio', [validators.required()], format='%Y-%m-%d')
     fecha_fin = DateField('Fecha de fin', [validators.required()], format='%Y-%m-%d')
     semestre = SelectField(u'Semestre', choices=[('1', 'Semestre I'), ('2', 'Semestre II')])
+
+class ValidateCicloTaller(Form):
+    ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+    taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])

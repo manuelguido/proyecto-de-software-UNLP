@@ -340,12 +340,17 @@ def getPanelCiclos():
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
         Ciclo.db = get_db()
         ciclos = Ciclo.all()
+        Taller.db = get_db()
+        talleres = Taller.all()
+        ciclo_talleres = Ciclo.allCicloTaller()
         return render_template(
             'auth/panel_components/ciclos_lectivos.html',
             permisos=permisos,
             nombre=session['nombre'],
             apellido=session['apellido'],
-            ciclos=ciclos
+            ciclos=ciclos,
+            talleres=talleres,
+            ciclo_talleres=ciclo_talleres
         )
     return redirect(url_for('auth_login'))
 

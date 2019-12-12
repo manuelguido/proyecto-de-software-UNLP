@@ -7,7 +7,7 @@
         <div class="col-12 col-md-6 mb-3">
             <div class="card">
                 <div class="card-header py-1">
-                    Ciclos lectivos
+                    Agregar nuevo ciclo lectivo
                 </div>
                 <div class="card-body pb-1">
                     <form method="POST" action="/insert_ciclo">
@@ -48,65 +48,78 @@
                     {% for ciclo in ciclos %}
                     <form method="POST" action="/update_ciclo">
                         <div class="form-group row">
+                            <input type="hidden"  name="id_ciclo" value="{{ciclo.id}}" required>
                             <div class="col-12 mb-4">
                                 <label class="p2">(*) Las fechas de los ciclos lectivos se pueden modificar haciendo click sobre el picker date y guardando la nueva fecha seleccionada</label>
                             </div>
                             <div class="col-12 mb-2">
-                                <h1 class="h5 mb-4">Ciclo lectivo {{ciclo.semestre}} (2019)</h1>
+                                <h1 class="h5 mb-4">Semestre {{ciclo.semestre}} (2019)</h1>
                             </div>
                             <div class="col-12 col-md-6 mb-2">
                                 <label class="mb-2">Fecha inicio</label>
-                                <input class="form-control" type="date" name="fecha_ini" value="{{ciclo.fecha_ini.strftime('%Y-%m-%d')}}">
+                                {{ciclo.fecha_ini.strftime('%Y-%m-%d')}}
                             </div>
                             <div class="col-12 col-md-6">
                                 <label class="mb-2">Fecha cierre</label>
-                                <input class="form-control" type="date" name="fecha_fin" value="{{ciclo.fecha_fin.strftime('%Y-%m-%d')}}">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label class="mb-2">Semestre</label>
-                                <select name="semestre" class="browser-default custom-select" required>
-                                    <option selected disabled>Seleccionar</option>
-                                    <option value="1">Semestre I</option>
-                                    <option value="2">Semestre II</option>
-                                </select>
+                                {{ciclo.fecha_fin.strftime('%Y-%m-%d')}}
                             </div>
                         </div> 
                         <hr>
-                        <div class="form-group row">
-                            <div class="col-md-12 text-right">
-                                <button type="submit" class="btn btn-secondary">Guardar</button>
-                            </div>
-                        </div> 
                     </form>
                     {% endfor %}
                 </div>
             </div>
         </div>
-
+    </div>
+    
+    <div class="row row-eq-height">
+        <div class="col-12 my-4">
+            <h1 class="h4"><i class="fas fa-school black3 mr-2"></i>Relación ciclos con talleres</h1>
+            <hr>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-header py-1">
+                    Talleres ya asignados
+                </div>
+                <div class="card-body pb-1">
+                    {% for ciclo in ciclos %}
+                    <p class="h3">Semestre {{ciclo.semestre}}</p>
+                    <p class="h4 color-gris">Talleres ya asignados</p>
+                        {% for ct in ciclo_talleres %}
+                            {% if ciclo.id == ct.ciclo_lectivo_id %}
+                                {% for taller in talleres %}
+                                    {% if taller.id == ct.taller_id %}
+                                    <p class="h6 color20">{{taller.nombre}}</p>
+                                    {% endif%}
+                                    {% endfor %}
+                            {% endif%}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
         
         <div class="col-md-6 mb-3">
             <div class="card h-100">
                 <div class="card-header py-1">
-                    Talleres
+                    Asignar taller a ciclo lectivo
                 </div>
                 <div class="card-body pb-1">
-                    <h1 class="h5">Asociar taller a ciclo lectivo</h1>
-                    <hr>
-                    <form method="POST">
-                        <h1 class="h5 mb-4">Ciclo lectivo 1 (2019)</h1>
+                    <form method="POST" action="/ciclo_taller">
                         <div class="form-group row">
                             <div class="col-md-6 mb-2">
                                 <label class="mb-2">Semestre</label>
-                                <select class="browser-default custom-select" required>
+                                <select name="ciclo_lectivo_id" class="browser-default custom-select" required>
                                     <option selected disabled>Seleccionar</option>
-                                    {% for ciclo in ciclos_lectivos %}
+                                    {% for ciclo in ciclos %}
                                     <option value="{{ciclo.id}}">Semestre {{ciclo.semestre}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-2">Taller</label>
-                                <select class="browser-default custom-select" required>
+                                <select name="taller_id" class="browser-default custom-select" required>
                                     <option selected disabled>Seleccionar</option>
                                     {% for taller in talleres %}
                                     <option value="{{taller.id}}">{{taller.nombre}} ({{taller.nombre_corto}})</option>
@@ -117,7 +130,7 @@
                         <hr>
                         <div class="form-group row">
                             <div class="col-md-12 text-right">
-                                <button class="btn btn-secondary disabled" disabled>Guardar</button>
+                                <button type="submit" class="btn btn-secondary">Asignar taller</button>
                             </div>
                         </div>
                     </form>
@@ -126,7 +139,7 @@
         </div>
     </div>
     <!-- /.Row -->
-    <h1 class="h4 mt-5">Asignacion a talleres</h1>
+    <h1 class="h4 mt-5">Docentes</h1>
     <hr class="mb-4">
     <!-- Row -->
     <div class="row">

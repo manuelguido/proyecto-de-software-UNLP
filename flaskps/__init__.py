@@ -140,15 +140,12 @@ app.add_url_rule("/delete_instrument/<string:id_data>", 'delete_instrument', ins
 app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, methods=['POST'])
 
 #---------------------------------------------------#
-#   ABM Ciclos lectivos
+#   Ciclos lectivos
 #---------------------------------------------------#
-    #Alta
+    #Alta de ciclo
 app.add_url_rule("/insert_ciclo", 'insert_ciclo', ciclo.store, methods=['POST', 'GET'])
-    #Baja
-app.add_url_rule("/delete_ciclo/<string:id_data>", 'delete_ciclo', ciclo.delete, methods=['GET'])
-    #Modificación
-app.add_url_rule("/update_ciclo", 'update_ciclo', ciclo.update, methods=['POST'])
-
+    #Alta de taller a ciclo
+app.add_url_rule("/ciclo_taller", 'ciclo_taller', ciclo.ciclo_taller, methods=['POST', 'GET'])
 
 #---------------------------------------------------#
 #   Error views

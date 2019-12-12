@@ -38,15 +38,19 @@ def delete(id_data):
     else:
         abort(401)
 
-def update():
+def ciclo_taller():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    if (User.tiene_permiso(session['id'],'administrativo_update')):
-        if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_new')):
+        if request.method == "POST" and forms.ValidateCicloTaller(request.form).validate():
             Ciclo.db = get_db()
-            Ciclo.update(request.form)
-            flash("Se actualizó el ciclo lectivo correctamente")
+            if Ciclo.cicloNoTieneTaller(request.form):
+                Ciclo.storeConTaller(request.form)
+                flash("Se agrego el taller al ciclo lectivo correctamente")
+            else:
+                flash("El taller ya esta asignado al ciclo lectivo seleccionado", 'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_ciclos'))

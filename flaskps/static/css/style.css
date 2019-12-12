@@ -64,6 +64,12 @@ h1, h2, h3, h4, h5, h6, p {
     font-family: 'Open Sans', sans-serif;
     font-weight: 400 !important;
 }
+.color-gris {
+    color: #676767 !important;
+}
+.color20 {
+    color: #206be3 !important;
+}
 
 /*--------------------------------------------------------------
     Buttons
