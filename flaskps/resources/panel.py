@@ -22,18 +22,21 @@ from flaskps.resources import auth
 from flaskps.resources import site_controller
 from flaskps.resources import forms
 
+#---------------------------
+#-  El return [{}] se uso para que no se rompa el servidor. Si el servidor se rompe es por la falla de la api, no del codigo
+#--------------------------
 #Metodos para las apis
 def getLocalidades():
-    #request_localidad = requests.get(
-    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
-    #return request_localidad.json()
-    return [{}]
+    request_localidad = requests.get(
+        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
+    return request_localidad.json()
+    #return [{}]
 
 def getDocumentos():
-    #request_tipo_docs = requests.get(
-    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
-    #return request_tipo_docs.json()
-    return [{}]
+    request_tipo_docs = requests.get(
+        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
+    return request_tipo_docs.json()
+    #return [{}]
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
@@ -343,6 +346,9 @@ def getPanelCiclos():
         Taller.db = get_db()
         talleres = Taller.all()
         ciclo_talleres = Ciclo.allCicloTaller()
+        Docente.db = get_db()
+        docente_talleres = Docente.getAllConTalleres()
+        docentes = Docente.all()
         return render_template(
             'auth/panel_components/ciclos_lectivos.html',
             permisos=permisos,
@@ -350,7 +356,9 @@ def getPanelCiclos():
             apellido=session['apellido'],
             ciclos=ciclos,
             talleres=talleres,
-            ciclo_talleres=ciclo_talleres
+            ciclo_talleres=ciclo_talleres,
+            docente_talleres=docente_talleres,
+            docentes=docentes
         )
     return redirect(url_for('auth_login'))
 

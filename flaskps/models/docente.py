@@ -14,6 +14,19 @@ class Docente(object):
         return data
 
     @classmethod
+    def getAllConTalleres(cls):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT *, taller.nombre AS nombretaller, taller.id AS idtaller, docente.nombre AS docentetaller FROM docente_responsable_taller
+            INNER JOIN docente ON docente.id = docente_responsable_taller.docente_id
+            INNER JOIN taller ON taller.id = docente_responsable_taller.taller_id
+            INNER JOIN ciclo_lectivo ON ciclo_lectivo.id = docente_responsable_taller.ciclo_lectivo_id
+        """
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        return data
+
+    @classmethod
     def total_paginas(cls,paginacion):
         cursor = cls.db.cursor()
         sql = """

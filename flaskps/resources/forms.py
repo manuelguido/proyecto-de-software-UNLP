@@ -98,3 +98,7 @@ class ValidateCiclo(Form):
 class ValidateCicloTaller(Form):
     ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
     taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateTallerDocente(Form):
+    taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    docente_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])

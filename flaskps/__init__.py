@@ -146,6 +146,8 @@ app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, 
 app.add_url_rule("/insert_ciclo", 'insert_ciclo', ciclo.store, methods=['POST', 'GET'])
     #Alta de taller a ciclo
 app.add_url_rule("/ciclo_taller", 'ciclo_taller', ciclo.ciclo_taller, methods=['POST', 'GET'])
+    #Alta de docente a taller
+app.add_url_rule("/taller_docente", 'taller_docente', ciclo.taller_docente, methods=['POST', 'GET'])
 
 #---------------------------------------------------#
 #   Error views

@@ -16,6 +16,8 @@ class Ciclo(object):
         cursor = cls.db.cursor()
         sql = """
             SELECT * FROM ciclo_lectivo_taller
+            INNER JOIN taller ON taller.id = ciclo_lectivo_taller.taller_id
+            INNER JOIN ciclo_lectivo ON ciclo_lectivo.id = ciclo_lectivo_taller.ciclo_lectivo_id
         """
         cursor.execute(sql)
         return cursor.fetchall()
