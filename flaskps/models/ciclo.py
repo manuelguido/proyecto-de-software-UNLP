@@ -44,3 +44,17 @@ class Ciclo(object):
         cls.db.commit()
         return True
         
+    @classmethod
+    def semestreNoExiste(cls, request):
+        cursor = cls.db.cursor()
+        a = cursor.execute("""
+               SELECT ciclo_lectivo.semestre COUNT
+               FROM ciclo_lectivo
+               WHERE ciclo_lectivo.semestre=%s
+            """, (request['semestre']))
+        cls.db.commit()
+        if (a>0):
+            return False
+        else:
+            return True
+    

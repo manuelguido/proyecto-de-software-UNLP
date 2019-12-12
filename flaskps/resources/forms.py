@@ -93,4 +93,4 @@ class ValidateUserActive(Form):
 class ValidateCiclo(Form):
     fecha_ini = DateField('Fecha de inicio', [validators.required()], format='%Y-%m-%d')
     fecha_fin = DateField('Fecha de fin', [validators.required()], format='%Y-%m-%d')
-    semestre = SelectField(u'Estado sitio', choices=[('1', 'Primer semestre'), ('2', 'Segundo semestre')])
+    semestre = SelectField(u'Semestre', choices=[('1', 'Semestre I'), ('2', 'Semestre II')])

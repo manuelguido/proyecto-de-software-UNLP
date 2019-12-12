@@ -14,11 +14,14 @@ def store():
     if (User.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
             Ciclo.db = get_db()
-            Ciclo.store(request.form)
-            flash("Ciclo lectivo agregado correctamente")
+            if Ciclo.semestreNoExiste(request.form):
+                Ciclo.store(request.form)
+                flash("Ciclo lectivo agregado correctamente")
+            else:
+                flash("El semestre ya tiene un ciclo lectivo asignado", 'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_estudiantes'))
+        return redirect(url_for('panel_ciclos'))
     else:
         abort(401)
 
@@ -31,7 +34,7 @@ def delete(id_data):
         Ciclo.db = get_db()
         Ciclo.delete(id_data)
         flash("Se eliminó el ciclo lectivo correctamente")
-        return redirect(url_for('panel_estudiantes'))
+        return redirect(url_for('panel_ciclos'))
     else:
         abort(401)
 
@@ -46,6 +49,6 @@ def update():
             flash("Se actualizó el ciclo lectivo correctamente")
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_estudiantes'))
+        return redirect(url_for('panel_ciclos'))
     else:
         abort(401)

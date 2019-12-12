@@ -10,6 +10,7 @@ from flaskps.resources import instrumento
 from flaskps.resources import student
 from flaskps.resources import docente
 from flaskps.resources import panel
+from flaskps.resources import ciclo
 from flaskps.config import Config
 from flaskps.helpers import handler
 from flaskps.helpers import auth as helper_auth
@@ -137,6 +138,16 @@ app.add_url_rule("/insert_instrument", 'insert_instrument', instrumento.store, m
 app.add_url_rule("/delete_instrument/<string:id_data>", 'delete_instrument', instrumento.delete, methods=['GET'])
     #Modificación
 app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, methods=['POST'])
+
+#---------------------------------------------------#
+#   ABM Ciclos lectivos
+#---------------------------------------------------#
+    #Alta
+app.add_url_rule("/insert_ciclo", 'insert_ciclo', ciclo.store, methods=['POST', 'GET'])
+    #Baja
+app.add_url_rule("/delete_ciclo/<string:id_data>", 'delete_ciclo', ciclo.delete, methods=['GET'])
+    #Modificación
+app.add_url_rule("/update_ciclo", 'update_ciclo', ciclo.update, methods=['POST'])
 
 
 #---------------------------------------------------#

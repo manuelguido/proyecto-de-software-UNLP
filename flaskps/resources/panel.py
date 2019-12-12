@@ -24,14 +24,16 @@ from flaskps.resources import forms
 
 #Metodos para las apis
 def getLocalidades():
-    request_localidad = requests.get(
-        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
-    return request_localidad.json()
+    #request_localidad = requests.get(
+    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/localidad')
+    #return request_localidad.json()
+    return [{}]
 
 def getDocumentos():
-    request_tipo_docs = requests.get(
-        'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
-    return request_tipo_docs.json()
+    #request_tipo_docs = requests.get(
+    #    'https://api-referencias.proyecto2019.linti.unlp.edu.ar/tipo-documento')
+    #return request_tipo_docs.json()
+    return [{}]
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
