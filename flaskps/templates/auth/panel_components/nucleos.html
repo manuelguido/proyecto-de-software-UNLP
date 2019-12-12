@@ -52,7 +52,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="black5 h5"><i class="fas fa-map-marker-alt mr-2"></i>Ubicación</h1>
+                    <h1 class="black5 h5"><i class="fas fa-map-marker-alt mr-2"></i>Ubicación de todos los núcleos</h1>
                     <hr>
                     <div id="bigmapid"></div>
                     <script>
@@ -66,7 +66,7 @@
                         }).addTo(mymap);
 
                     </script>
-                    {% for row in nucleos %}
+                    {% for row in fullnucleos %}
                     <script>
                         var latitude = {{row.latitude}}
                         var longitude = {{row.longitude}}

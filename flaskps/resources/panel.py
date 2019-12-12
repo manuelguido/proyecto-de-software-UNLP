@@ -336,6 +336,7 @@ def getNucleos(page):
         if (page > Nucleo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
             abort (404)
         nucleos = Nucleo.allPaginated(site_controller.get_pagination(),int(page))
+        fullnucleos = Nucleo.all()
         #Ultima pagina de paginado
         lastpage = Nucleo.getLastPage(site_controller.get_pagination(),int(page))
         return render_template(
@@ -344,7 +345,8 @@ def getNucleos(page):
             apellido=session['apellido'],
             page=page,
             lastpage=lastpage,
-            nucleos=nucleos
+            nucleos=nucleos,
+            fullnucleos=fullnucleos,
         )
     else:
         return redirect(url_for('auth_login'))

@@ -8,7 +8,8 @@
             <h1 class="h4 black3 mb-3 text-uppercase">{{nucleo.nombre}}</h1>
             <p class="h5 black4 mb-2">Dirección: {{nucleo.direccion}}</p>
             <p class="h5 black4">Teléfono: {{nucleo.telefono}}</p>
-            <hr>
+            <hr class="my-4">
+            <a class="btn btn-primary mr-3" href="/panel_nucleos"><i class="fas fa-chevron-left mr-2"></i>Volver a los núcleos</a>
         </div>
         <div class="col-12 col-md-8">
             <div class="card">
@@ -28,6 +29,7 @@
                             accessToken: 'pk.eyJ1IjoibnVtZXJhIiwiYSI6ImNrNDF0bnQ2ejAxZmwzZHB0aTNta3FrZmgifQ.72Hy10HV07lVW5VjaQr9sA'
                         }).addTo(mymap);
                         var marker = L.marker([latitude, longitude]).addTo(mymap);
+                        marker.bindPopup("<b>{{nucleo.nombre}}</b><br>{{nucleo.direccion}}").openPopup();
                     </script>
                 </div>
             </div>
