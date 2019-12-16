@@ -17,7 +17,7 @@ def store():
             Ciclo.db = get_db()
             if Ciclo.semestreNoExiste(request.form):
                 Ciclo.store(request.form)
-                flash("Ciclo lectivo agregado correctamente")
+                flash("Ciclo lectivo agregado correctamente" ,'success')
             else:
                 flash("El semestre ya tiene un ciclo lectivo asignado", 'error')
         else:
@@ -34,7 +34,7 @@ def delete(id_data):
     if (User.tiene_permiso(session['id'],'administrativo_destroy')):
         Ciclo.db = get_db()
         Ciclo.delete(id_data)
-        flash("Se eliminó el ciclo lectivo correctamente")
+        flash("Se eliminó el ciclo lectivo correctamente" ,'success')
         return redirect(url_for('panel_ciclos'))
     else:
         abort(401)
@@ -49,7 +49,7 @@ def ciclo_taller():
             Ciclo.db = get_db()
             if Ciclo.cicloNoTieneTaller(request.form):
                 Ciclo.storeConTaller(request.form)
-                flash("Se agrego el taller al ciclo lectivo correctamente")
+                flash("Se agrego el taller al ciclo lectivo correctamente" ,'success')
             else:
                 flash("El taller ya esta asignado al ciclo lectivo seleccionado", 'error')
         else:
@@ -68,7 +68,7 @@ def taller_docente():
             Taller.db = get_db()
             if Taller.tallerNoTieneDocente(request.form):
                 Taller.storeConDocente(request.form)
-                flash("Se agrego el taller al ciclo lectivo correctamente")
+                flash("Se agrego el taller al ciclo lectivo correctamente" ,'success')
             else:
                 flash("El taller ya esta asignado al ciclo lectivo seleccionado", 'error')
         else:

@@ -85,7 +85,7 @@
         <div class="col-12 col-md-4">
             {% for p in permisos %}
                 {% if p.nombre == 'estudiante_new' %}
-                <div class="col-12 col-md-8 mb-3">
+                <div class="col-12 mb-3">
                     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#studentCreate">
                         <i class="fas fa-user-plus mr-2"></i> Nuevo Estudiante
                     </button>
@@ -219,11 +219,11 @@
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Apellido</label>
-                                                <input type="text" class="solo-letras form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1"/>
+                                                <input type="text" class="string solo-letras form-control" placeholder="Apellido" name="apellido" value="{{row.apellido}}" required="1"/>
                                             </div>
                                             <div class="col-6">
                                                 <label>Nombre</label>
-                                                <input type="text" class="solo-letras form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
+                                                <input type="text" class="string solo-letras form-control" placeholder="Nombre" name="nombre" value="{{row.nombre}}" required="1">
                                             </div>
                                         </div>
                                         <!-- Fecha de nacimiento -->
@@ -262,7 +262,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label>Domicilio</label>
-                                                <input type="text" min="0" class="form-control" value="{{row.domicilio}}" name="domicilio" required="1">
+                                                <input type="text" min="0" class="string form-control" value="{{row.domicilio}}" name="domicilio" required="1">
                                             </div>
                                         </div>                                
                                         <!-- Direccion -->
@@ -310,14 +310,14 @@
                                             </div>
                                             <div class="col-6">
                                                 <label>Numero</label>
-                                                <input type="number" min="0" class="form-control" value="{{row.numero}}" name="numero" required="1">
+                                                <input type="number" min="99999" class="form-control" value="{{row.numero}}" name="numero" required="1">
                                             </div>
                                         </div>                    
                                         <!-- Fecha de nacimiento (Alumno) -->
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Teléfono</label>
-                                                <input type="number" min="99999" class="form-control" value="{{row.tel}}" name="tel" required="1">
+                                                <input type="number" min="99999" class="form-control" value="{{row.tel}}" name="tel" >
                                             </div>
                                             <div class="col-6">
                                                 <label>Barrio</label>
@@ -337,16 +337,28 @@
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label>Responsable</label>
-                                                <select name="barrio_id" class="browser-default custom-select">
+                                                <select name="responsable" class="browser-default custom-select" required>
                                                     <option selected disabled>Seleccionar</option>
-                                                    {% for responsable in responsables %}
-                                                    {% if responsable.id == row.responsable_id %}
-                                                    <option value="{{responsable.id}}" selected>{{responsable.nombre}} {{responsable.apellido}}</option>
-                                                    {% else %}
-                                                    <option value="{{responsable.id}}">{{responsable.nombre}}</option>
+                                                    <option value="Padre"
+                                                    {% if row.responsable == 'Padre' %}
+                                                    selected
                                                     {% endif %}
-                                                    {% endfor %}
+                                                    >Padre</option>
+                                                    <option value="Madre"
+                                                    {% if row.responsable == 'Madre' %}
+                                                    selected
+                                                    {% endif %}
+                                                    >Madre</option>
+                                                    <option value="Tutor"
+                                                    {% if row.responsable == 'Tutor' %}
+                                                    selected
+                                                    {% endif %}
+                                                    >Tutor</option>
                                                 </select>
+                                            </div>
+                                            <div class="col-6">
+                                                <label>Nombre</label>
+                                                <input type="text" class="string solo-letras form-control" placeholder="Nombre p/m/t" value="{{row.pmt}}" name="pmt" required>
                                             </div>
                                         </div>
                                         <hr>
@@ -402,11 +414,11 @@
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Apellido</label>
-                                    <input type="text" class="solo-letras form-control" placeholder="Apellido" name="apellido" required="1">
+                                    <input type="text" class="string solo-letras form-control" placeholder="Apellido" name="apellido" required="1">
                                 </div>
                                 <div class="col-6">
                                     <label>Nombre</label>
-                                    <input type="text" class="solo-letras form-control" placeholder="Nombre" name="nombre" required="1">
+                                    <input type="text" class="string solo-letras form-control" placeholder="Nombre" name="nombre" required="1">
                                 </div>
                             </div>
                             <!-- Fecha de nacimiento -->
@@ -438,7 +450,7 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Domicilio</label>
-                                    <input type="text" min="0" class="form-control" placeholder="Domicilio" name="domicilio" required="1">
+                                    <input type="text" min="0" class="string form-control" placeholder="Domicilio" name="domicilio" required="1">
                                 </div>
                             </div>                    
                             <!-- Direccion -->
@@ -475,14 +487,14 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Número</label>
-                                    <input type="number" min="99999" class="form-control" placeholder="Numero DNI" name="numero" required="1">
+                                    <input type="number" min="99999" class="form-control" placeholder="Numero DNI" name="numero" required>
                                 </div>
                             </div>                    
                             <!-- Telefono y barrio -->
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Teléfono</label>
-                                    <input type="number" min="99999" class="form-control" placeholder="Telefono" name="tel" required="1">
+                                    <input type="number" min="99999" class="form-control" placeholder="Telefono" name="tel">
                                 </div>
                                 <div class="col-6">
                                     <label>Barrio</label>
@@ -494,16 +506,20 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- Telefono y barrio -->
+                            <!-- Responsable -->
                             <div class="form-group row">
                                 <div class="col-6">
                                     <label>Responsable</label>
-                                    <select name="responsable_id" class="browser-default custom-select">
+                                    <select name="responsable" class="browser-default custom-select" required>
                                         <option selected disabled>Seleccionar</option>
-                                        {% for responsable in responsables %}
-                                        <option value="{{responsable.id}}">{{responsable.nombre}} {{responsable.apellido}}</option>
-                                        {% endfor %}
+                                        <option value="Padre">Padre</option>
+                                        <option value="Madre">Madre</option>
+                                        <option value="Tutor">Tutor</option>
                                     </select>
+                                </div>
+                                <div class="col-6">
+                                    <label>Nombre</label>
+                                    <input type="text" class="string solo-letras form-control" placeholder="Nombre p/m/t" name="pmt" required>
                                 </div>
                             </div>
                             <hr>

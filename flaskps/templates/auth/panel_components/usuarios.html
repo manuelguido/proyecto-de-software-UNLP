@@ -89,8 +89,8 @@
                             <th>Email</th>
                             {% for p in permisos %}
                             {% if p.nombre == 'usuario_update' %}
-                            <th>Modificar</th>
                             <th>Activo/Inactivo</th>
+                            <th>Modificar</th>
                             {% endif %}
                             {% if p.nombre == 'usuario_destroy' %}
                             <th>Eliminar</th>
@@ -121,12 +121,12 @@
                                 </form>
                             </td>
                             <td>    
-                                <a href="/user_update/{{row.id}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#userEdit{{row.id}}"><i class="fas fa-edit mr-2"></i>Editar</a>
+                                <a href="/get_update_user/{{row.id}}" class="btn btn-warning btn-sm"><i class="fas fa-edit mr-2"></i>Editar</a>
                             </td>
                             {% endif %}
                             {% if p.nombre == 'usuario_destroy' %}
                             <td>
-                                <a href="/user_delete/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('Are You Sure For Delete?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
+                                <a href="/delete_user/{{row.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro deseas eliminar el usuario?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                             </td>
                             {% endif %}
                             {% endfor %}
@@ -159,7 +159,7 @@
             <div id="usuarioCreate" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="{{ url_for('user_new') }}" method="POST">
+                        <form action="{{ url_for('insert_user') }}" method="POST" id="sectionForm" onSubmit = "return checkPassword(this)"> 
                             <div class="modal-header">
                                 <h4 class="modal-title">Ingresar datos</h4>
                                 <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
@@ -189,17 +189,61 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label>Repetir Contraseña</label>
-                                        <input type="password" class="form-control" name="password-repeat" placeholder="Repita la contraseña" required>
+                                        <input type="password" class="form-control" name="password_repeat" placeholder="Repita la contraseña" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label>Rol</label>
                                         {% for rol in roles_lista %}
                                         <!-- Default checked -->
                                         <div class="custom-control custom-checkbox">
-                                            <input name="rol{{ rol.id }}" type="checkbox" class="custom-control-input" id="{{ rol.nombre }}">
+                                            <input name="rol{{ rol.id }}" type="checkbox" class="custom-control-input" id="{{ rol.nombre }}" value="rol{{ rol.id }}">
                                             <label class="custom-control-label" for="{{ rol.nombre }}">{{ rol.nombre }}</label>
                                         </div>
                                         {% endfor %}
+                                        <script>
+                                            (function() {
+                                                const form = document.querySelector('#sectionForm');
+                                                const checkboxes = form.querySelectorAll('input[type=checkbox]');
+                                                const checkboxLength = checkboxes.length;
+                                                const firstCheckbox = checkboxLength > 0 ? checkboxes[0] : null;
+
+                                                function init() {
+                                                    if (firstCheckbox) {
+                                                        for (let i = 0; i < checkboxLength; i++) {
+                                                            checkboxes[i].addEventListener('change', checkValidity);
+                                                        }
+
+                                                        checkValidity();
+                                                    }
+                                                }
+
+                                                function isChecked() {
+                                                    for (let i = 0; i < checkboxLength; i++) {
+                                                        if (checkboxes[i].checked) return true;
+                                                    }
+
+                                                    return false;
+                                                }
+
+                                                function checkValidity() {
+                                                    const errorMessage = !isChecked() ? 'Elige al menos un rol.' : '';
+                                                    firstCheckbox.setCustomValidity(errorMessage);
+                                                }
+
+                                                init();
+                                            })();
+
+
+                                                function checkPassword(form) { 
+                                                    password1 = form.password.value; 
+                                                    password2 = form.password_repeat.value; 
+ 
+                                                    if (password1 != password2) { 
+                                                        alert ("\nLas contraseñas no coinciden") 
+                                                        return false; 
+                                                    }
+                                                }
+                                        </script>
                                     </div>
                                 </div>
                                 <hr>

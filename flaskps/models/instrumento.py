@@ -26,8 +26,10 @@ class Instrumento(object):
         for i in result:
             count += 1
             i = i
-        paginas = count / paginacion 
-        if not (count % paginacion == 0):
+        paginas = count / paginacion
+        if (paginas == 0):
+            paginas = 1
+        elif not (count % paginacion == 0):
             paginas += 1
         return paginas
 

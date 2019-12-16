@@ -26,7 +26,7 @@ def store():
             #    return redirect(url_for('new_instrumento'))
             Instrumento.db = get_db()
             Instrumento.store(request.form)
-            flash("Instrumento agregado correctamente")
+            flash("Instrumento agregado correctamente" ,'success')
             return redirect(url_for('panel_instrumentos'))
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
@@ -42,7 +42,7 @@ def delete(id_data):
     if (User.tiene_permiso(session['id'],'instrumento_destroy')):
         Instrumento.db = get_db()
         Instrumento.delete(id_data)
-        flash("Se eliminó el instrumento correctamente")
+        flash("Se eliminó el instrumento correctamente" ,'success')
         return redirect(url_for('panel_instrumentos'))
     else:
         abort(401)
@@ -56,7 +56,7 @@ def update():
         if request.method == "POST" and forms.ValidateInstrument(request.form).validate():
             Instrumento.db = get_db()
             Instrumento.update(request.form)
-            flash("Se actualizó el instrumento correctamente")
+            flash("Se actualizó el instrumento correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for("get_update_instrumento", id_data=request.form.get("id_data")))

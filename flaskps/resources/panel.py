@@ -18,9 +18,7 @@ from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
 from flaskps.models.responsable import Responsable
 from flaskps.models.ciclo import Ciclo
-from flaskps.resources import auth
-from flaskps.resources import site_controller
-from flaskps.resources import forms
+from flaskps.resources import auth, site_controller, forms
 
 #---------------------------
 #-  El return [{}] se uso para que no se rompa el servidor. Si el servidor se rompe es por la falla de la api, no del codigo
@@ -41,11 +39,9 @@ def getDocumentos():
 #Modulo estudiantes
 def getPanelEstudiantes(page):
     if auth.authenticated():
-        #g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-
         #Obtiene estudiantes
         Student.db = get_db()
         lastpage = 1
@@ -159,13 +155,10 @@ def getPanelDocentes(page):
 #Modulo usuarios
 def getPanelUsuarios(page):
     if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        
         lastpage = 1
-
         #Obtiene usuarios
         if (page > User.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
             abort (404)
@@ -180,16 +173,12 @@ def getPanelUsuarios(page):
             usuarios = User.allPaginated(site_controller.get_pagination(),int(page))
             #Ultima pagina de paginado
             lastpage = User.getLastPage(site_controller.get_pagination(),int(page))
-
         #Obtiene roles
         Rol.db = get_db()
         roles_lista = Rol.all()
-
         return render_template(
             'auth/panel_components/usuarios.html',
             permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
             usuarios=usuarios,
             page=page,
             lastpage=lastpage,
@@ -197,6 +186,29 @@ def getPanelUsuarios(page):
         )
 
     return redirect(url_for('auth_login'))
+
+def getUpdateUser(id_data):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'usuario_update')):
+            user = User.find_by_id(id_data)
+            roles = User.get_rol(id_data)
+            #Obtiene roles
+            Rol.db = get_db()
+            roles_lista = Rol.all()
+            #Retorna el template
+            return render_template(
+                'auth/panel_components/usuario_update.html',
+                user=user,
+                roles=roles,
+                roles_lista=roles_lista
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
+
 
 #Modulo estudiantes
 def getPanelInstrumentos(page):

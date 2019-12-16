@@ -14,7 +14,7 @@ def store():
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
             Docente.db = get_db()
             Docente.store(request.form)
-            flash("Docente agregado correctamente")
+            flash("Docente agregado correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_docentes'))
@@ -30,7 +30,7 @@ def delete(id_data):
     if (User.tiene_permiso(session['id'],'docente_destroy')):
         Docente.db = get_db()
         Docente.delete(id_data)
-        flash("Se eliminó el docente correctamente")
+        flash("Se eliminó el docente correctamente" ,'success')
         return redirect(url_for('panel_docentes'))
     else:
         abort(401)
@@ -44,7 +44,7 @@ def update():
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
             Docente.db = get_db()
             Docente.update(request.form)
-            flash("Se actualizó el docente correctamente")
+            flash("Se actualizó el docente correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_docentes'))

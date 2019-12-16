@@ -52,25 +52,34 @@ app.add_url_rule("/panel_docentes/<int:page>", 'panel_docentes', panel.getPanelD
 app.add_url_rule("/panel_usuarios", 'panel_usuarios', panel.getPanelUsuarios, defaults={'page': 1})
 app.add_url_rule("/panel_usuarios/<int:page>", 'panel_usuarios', panel.getPanelUsuarios)
 
-    #Seccion Instrumentos
+#---------------------------------------------------#
+#   Instrumentos
+#---------------------------------------------------#
 app.add_url_rule("/panel_instrumentos", 'panel_instrumentos', panel.getPanelInstrumentos, defaults={'page': 1}, methods=['POST', 'GET'])
 app.add_url_rule("/panel_instrumentos/<int:page>", 'panel_instrumentos', panel.getPanelInstrumentos, methods=['POST', 'GET'])
         #Muestra el instrumento
 app.add_url_rule("/panel_instrumento/<int:id_data>", 'panel_instrumento', panel.getInstrumento, methods=['GET'])
         #Para crear un instrumento
 app.add_url_rule("/new_instrumento", 'new_instrumento', panel.getNewInstrumento, methods=['POST', 'GET'])
+        #Para actualizar un instrumento
 app.add_url_rule("/get_update_instrumento/<int:id_data>", 'get_update_instrumento', panel.getUpdateInstrumento, methods=['GET'])
 
-    #Seccion Nucleos
+#---------------------------------------------------#
+#   Núcleos
+#---------------------------------------------------#
 app.add_url_rule("/panel_nucleos", 'panel_nucleos', panel.getNucleos, defaults={'page': 1})
 app.add_url_rule("/panel_nucleos/<int:page>", 'panel_nucleos', panel.getNucleos)
         #Muestra el nucleo
 app.add_url_rule("/panel_nucleo/<int:id_data>", 'panel_nucleo', panel.getNucleo, methods=['GET'])
 
-    #Seccion ciclos
+#---------------------------------------------------#
+#   Ciclos
+#---------------------------------------------------#
 app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
 
-    #Seccion configuracion de sitio
+#---------------------------------------------------#
+#   Configuración del sitio
+#---------------------------------------------------#
 app.add_url_rule("/panel_adminsitio", 'panel_adminsitio', panel.getPanelAdminSitio)
 
 
@@ -100,12 +109,13 @@ app.add_url_rule("/autenticacion", 'auth_authenticate', auth.authenticate, metho
 #   ABM Usuarios
 #---------------------------------------------------#
     #Alta
-app.add_url_rule("/user_new", 'user_new', user.new, methods=['POST'])
+app.add_url_rule("/insert_user", 'insert_user', user.store, methods=['POST'])
     #Baja
-app.add_url_rule("/user_delete/<string:id_data>", 'user_delete', user.delete, methods=['GET'])
+app.add_url_rule("/delete_user/<string:id_data>", 'delete_user', user.delete, methods=['GET'])
     #Modificación
+app.add_url_rule("/update_user", 'update_user', user.update, methods=['POST','GET'])
 app.add_url_rule("/update_user_status", 'update_user_status', user.update_user_status, methods=['POST','GET'])
-
+app.add_url_rule("/get_update_user/<int:id_data>", 'get_update_user', panel.getUpdateUser, methods=['GET'])
 
 #---------------------------------------------------#
 #   ABM Estudiantes

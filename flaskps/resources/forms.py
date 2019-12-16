@@ -28,6 +28,26 @@ class ChangeSiteStatus(Form):
     estado_sitio = SelectField(u'Estado sitio', choices=[('0', 'Inactivo'), ('1', 'Activo')])
 
 #---------------------------------------------------#
+#   Validacion Usuarios
+#---------------------------------------------------#
+class ValidateUser(Form):
+    first_name = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    last_name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
+    username = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
+    email = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    password = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    password_repeat = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+
+class ValidateUserWithOutPassword(Form):
+    first_name = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    last_name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
+    username = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
+    email = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+
+class ValidateUserStatus(Form):
+    activo = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=0, max=1)])
+
+#---------------------------------------------------#
 #   Validacion Estudiantes
 #---------------------------------------------------#
 class ValidateStudent(Form):
@@ -41,9 +61,10 @@ class ValidateStudent(Form):
     escuela_id = IntegerField('Escuela', [validators.required(), validators.NumberRange(min=1, max=None)])
     tipo_doc_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
     numero = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=99999, max=None)])
-    tel = IntegerField('Telefono', [validators.required(), validators.NumberRange(min=99999, max=None)])
+    tel = IntegerField('Telefono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
     barrio_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
-    responsable_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
+    responsable = SelectField(u'Responsable', choices=[('Padre', 'Padre'), ('Madre', 'Madre'), ('Tutor', 'Tutor')])
+    pmt = StringField(u'Pmt', [validators.required(), validators.length(max=100)])
 
 #---------------------------------------------------#
 #   Validacion Docentes
@@ -56,7 +77,7 @@ class ValidateDocente(Form):
     domicilio = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
     tipo_doc_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
     numero = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=99999, max=None)])
-    tel = IntegerField('Telefono', [validators.required(), validators.NumberRange(min=99999, max=None)])
+    tel = IntegerField('Telefono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
 
 #---------------------------------------------------#
 #   Validacion Instrumentos

@@ -34,7 +34,7 @@ def change_site_status():
         if request.method == 'POST' and forms.ChangeSiteStatus(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.change_site_status(request.form['estado_sitio'])
-            flash("Se actualizó el estado del sitio correctamente")
+            flash("Se actualizó el estado del sitio correctamente" ,'success')
         else:
             flash('Ingresaste información inválida, solo puedes ingresar: ACTIVO o INACTIVO', 'error')
         return redirect(url_for('panel_adminsitio'))
@@ -53,7 +53,7 @@ def update_info_sitio():
         if request.method == 'POST' and forms.ChangeSiteInfo(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.update_info_sitio(request.form)
-            flash("Se actualizó la información del sitio correctamente")
+            flash("Se actualizó la información del sitio correctamente" ,'success')
             return redirect(url_for('panel_adminsitio'))
         else:
             flash('Informacion inválida, solo puede ingresarse un titulo(máximo 255 char), email(máximo 255 char) y descripción(máximo 1000 char)', 'error')
@@ -73,7 +73,7 @@ def change_site_pagination():
         if request.method == 'POST' and forms.ChangePagination(request.form).validate():
             ConfigSitio.db = get_db()
             ConfigSitio.change_site_pagination(request.form['paginacion'])
-            flash("Se actualizó el numero de paginación correctamente")
+            flash("Se actualizó el numero de paginación correctamente" ,'success')
         else:
             flash('La paginacion debe ser un numero entre 1 y 20', 'error')
         return redirect(url_for('panel_adminsitio'))
