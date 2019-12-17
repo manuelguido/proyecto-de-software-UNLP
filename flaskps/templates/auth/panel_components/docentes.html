@@ -122,7 +122,7 @@
                         <tr>
                             <td>{{row.apellido}}</td>
                             <td>{{row.nombre}}</td>
-                            <td>{{row.tel}}</td>
+                            <td>{% if row.tel != 0 %}{{row.tel}}{% endif %}</td>
                             
                             {% for p in permisos %}
                             {% if p.nombre == 'docente_show' %}

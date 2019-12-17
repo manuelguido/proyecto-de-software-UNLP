@@ -306,7 +306,7 @@ def getUpdateInstrumento(id_data):
     else:
         return redirect(url_for('auth_login'))
 
-#Modulos ciclos lectivos
+#Modulos nucleos
 def getNucleos(page):
     if auth.authenticated():
         #Obtiene permisos del usuario
@@ -331,7 +331,6 @@ def getNucleos(page):
     else:
         return redirect(url_for('auth_login'))
 
-#Modulos ciclos lectivos
 def getNucleo(id_data):
     if auth.authenticated():
         #Nucleo
@@ -347,32 +346,43 @@ def getNucleo(id_data):
         return redirect(url_for('auth_login'))
 
 #Modulos ciclos lectivos
-def getPanelCiclos():
-    if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+def getPanelCiclos(page):
+    Ciclo.db = get_db()
+    if auth.authenticated():# or not auth.authenticated():
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        Ciclo.db = get_db()
+        if (page > Ciclo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
         ciclos = Ciclo.all()
-        Taller.db = get_db()
-        talleres = Taller.all()
-        ciclo_talleres = Ciclo.allCicloTaller()
-        Docente.db = get_db()
-        docente_talleres = Docente.getAllConTalleres()
-        docentes = Docente.all()
+        pciclos = Ciclo.allPaginated(site_controller.get_pagination(),int(page))
+        lastpage = Ciclo.getLastPage(site_controller.get_pagination(),int(page))
         return render_template(
             'auth/panel_components/ciclos_lectivos.html',
             permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
             ciclos=ciclos,
-            talleres=talleres,
-            ciclo_talleres=ciclo_talleres,
-            docente_talleres=docente_talleres,
-            docentes=docentes
+            pciclos=pciclos, #ciclos paginados
+            page=page,
+            lastpage=lastpage
         )
     return redirect(url_for('auth_login'))
+
+def getUpdateCiclo(id_data):
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'administrativo_update')):
+            Ciclo.db = get_db()
+            ciclo = Ciclo.getCiclo(id_data)   
+            #Retorna el template
+            return render_template(
+                'auth/panel_components/ciclos_lectivos_update.html',
+                ciclo=ciclo,
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
 
 
 #Modulo administracion del sitio

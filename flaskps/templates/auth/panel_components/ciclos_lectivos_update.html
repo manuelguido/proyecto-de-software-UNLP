@@ -1,87 +1,39 @@
 {% extends "auth/panel.html" %}
 {% block contenttitle %}
-<i class="fas fa-school black3 mr-2"></i>Ciclos
+<i class="fas fa-school black3 mr-2"></i>Modificar ciclo
 {% endblock %}
 {% block contentitem %}
     <div class="row">
-        <div class="col-12 col-md-7 mb-3">
-            <h1 class="h4 w400">Listado</h1>
-            <hr>
-            <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <!-- Row Titulos -->
-                            <tr>
-                                <th>Año</th>
-                                <th>Semestre</th>
-                                <th>Fecha de inicio</th>
-                                <th>Fecha de fin</th>
-                                <th>Modificar</th>
-                                <th>Eliminar</th>
-                            </tr>
-                            <!-- Row Estudiantes -->
-                            {% for ciclo in pciclos %}
-                            <tr>
-                                <td>{{ciclo.año}}</td>
-                                <td>Semestre {{ciclo.semestre}}</td>
-                                <td>{{ciclo.fecha_ini}}</td>
-                                <td>{{ciclo.fecha_fin}}</td>
-                                <td>
-                                    <a href="/get_update_ciclo/{{ciclo.id}}" class="btn btn-warning btn-sm"><i class="fas fa-edit mr-2"></i>Editar</a>
-                                </td>
-                                <td>
-                                    <a href="/delete_ciclo/{{ciclo.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro deseas eliminar el usuario?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="col-12 my-4">
-                    <nav class="row">
-                        <div class="col-12">
-                            {% if page == 1 %}
-                            <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
-                            {% else %}
-                            <a class="btn btn-primary mr-3" href="/panel_ciclos/{{page - 1}}">Anterior</a>
-                            {% endif %}
-                            {% if lastpage == 1 %}
-                            <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
-                            {% else %}
-                            <a class="btn btn-primary mr-3" href="/panel_ciclos/{{page + 1}}">Siguiente</a>
-                            {% endif %}
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
         <div class="col-12 col-md-5 mb-3">
             <div class="card p-3">
             <h1 class="h4 w400">Agregar ciclo lectivo</h1>
             <hr>
-                <form action="{{ url_for('insert_ciclo') }}" method="POST"> 
+                <form action="{{ url_for('update_ciclo') }}" method="POST"> 
                    <div class="form-group row">
                        <div class="col-12 my-3">
+                           <input type="hidden" value="{{ciclo.id}}" name="id_data">
                            <label>Semestre</label>
                             <select name="semestre" class="browser-default custom-select" required>
                                 <option selected disabled>Seleccionar</option>
-                                <option value="1">Semestre I</option>
-                                <option value="2">Semestre II</option>
+                                {% if ciclo.semestre == 1 %}
+                                    <option value="1" selected>Semestre I</option>
+                                    <option value="2">Semestre II</option>
+                                {% else %}
+                                    <option value="1">Semestre I</option>
+                                    <option value="2" selected>Semestre II</option>
+                                {% endif %}
                             </select>
                         </div>
                         <div class="col-12 my-3">
                             <label>Fecha de inicio</label>
-                            <input type="date" class="form-control" name="fecha_ini" required="1">
+                            <input type="date" class="form-control" value="{{ciclo.fecha_ini}}" name="fecha_ini" required="1">
                         </div>
                         <div class="col-12 my-3">
                             <label>Fecha de fin</label>
-                            <input type="date" class="form-control" name="fecha_fin" required="1">
+                            <input type="date" class="form-control" value="{{ciclo.fecha_fin}}" name="fecha_fin" required="1">
                         </div>
                         <div class="col-12 my-3">
-                           <label>Año que corresponde</label>
+                           <label>Año que corresponde | </label><label class="primary"> Actual: {{ciclo.año}}</label>
                             <select name="año" class="browser-default custom-select" required>
                                 <option selected disabled>Seleccionar</option>
                                 <option value="1990">1990</option>

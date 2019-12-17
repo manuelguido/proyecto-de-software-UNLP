@@ -24,13 +24,6 @@ Session(app)
 # Funciones que se exportan al contexto de Jinja2
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def get_dir(path):
-    categories = os.path.abspath(path)  # <--
-    return categories
-
 #url Inicio
 app.add_url_rule("/", 'home', site_controller.index)
 
@@ -71,11 +64,6 @@ app.add_url_rule("/panel_nucleos", 'panel_nucleos', panel.getNucleos, defaults={
 app.add_url_rule("/panel_nucleos/<int:page>", 'panel_nucleos', panel.getNucleos)
         #Muestra el nucleo
 app.add_url_rule("/panel_nucleo/<int:id_data>", 'panel_nucleo', panel.getNucleo, methods=['GET'])
-
-#---------------------------------------------------#
-#   Ciclos
-#---------------------------------------------------#
-app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos)
 
 #---------------------------------------------------#
 #   Configuración del sitio
@@ -152,12 +140,42 @@ app.add_url_rule("/update_instrument", 'update_instrument', instrumento.update, 
 #---------------------------------------------------#
 #   Ciclos lectivos
 #---------------------------------------------------#
+    #Panel ciclos
+app.add_url_rule("/panel_ciclos", 'panel_ciclos', panel.getPanelCiclos, defaults={'page': 1}) 
+app.add_url_rule("/panel_ciclos/<int:page>", 'panel_ciclos', panel.getPanelCiclos)
     #Alta de ciclo
 app.add_url_rule("/insert_ciclo", 'insert_ciclo', ciclo.store, methods=['POST', 'GET'])
+    #Baja de ciclo
+app.add_url_rule("/delete_ciclo/<string:id_data>", 'delete_ciclo', ciclo.delete, methods=['GET'])
+    #Modificacion de ciclo
+app.add_url_rule("/get_update_ciclo/<int:id_data>", 'get_update_ciclo', panel.getUpdateCiclo, methods=['GET'])
+app.add_url_rule("/update_ciclo", 'update_ciclo', ciclo.update, methods=['POST'])
+
+#---------------------------------------------------#
+#   Talleres a ciclos
+#---------------------------------------------------#
     #Alta de taller a ciclo
 app.add_url_rule("/ciclo_taller", 'ciclo_taller', ciclo.ciclo_taller, methods=['POST', 'GET'])
+    #Baja de taller a ciclo 
+
+#---------------------------------------------------#
+#   Docentes a talleres
+#---------------------------------------------------#
     #Alta de docente a taller
 app.add_url_rule("/taller_docente", 'taller_docente', ciclo.taller_docente, methods=['POST', 'GET'])
+    #Baja de docente a taller
+
+#---------------------------------------------------#
+#   Alumnos a talleres
+#---------------------------------------------------#
+    #Alta de alumno a taller
+
+    #Baja de alumno en taller
+
+#---------------------------------------------------#
+#   Asistencia
+#---------------------------------------------------#
+    #Guardar asistencia
 
 #---------------------------------------------------#
 #   Error views

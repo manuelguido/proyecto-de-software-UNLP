@@ -46,6 +46,9 @@ body {
     box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
 }
 
+input, textarea {
+    background: #f9f9f9 !important;
+}
 /*--------------------------------------------------------------
     Text
 --------------------------------------------------------------*/
@@ -279,7 +282,7 @@ h1, h2, h3, h4, h5, h6, p {
     }
 }
 .panel {
-    background: #fff;
+    background: #f5f7f9;
 }
 .nav-link-panel , .nav-link-nombre {
     color: #353535 !important;
@@ -295,7 +298,7 @@ h1, h2, h3, h4, h5, h6, p {
     z-index: 10;
     border-radius: 0 !important;
     box-shadow: 0 .07em .18em 0 rgba(0,0,0,.22) !important;
-    background: #f3f3f3;
+    background: #fff;
 }
 .navbar-static-top {
     margin-bottom: 0px;
@@ -319,12 +322,12 @@ h1, h2, h3, h4, h5, h6, p {
     color: #555 !important;
     border: 0 none !important;
     width: 100% !important;
-    padding: .9em 2.3em !important;
+    padding: .7em 2.3em !important;
     background: none !important;
 }
 .menuItem a, .menuItem a i {
     color: #555;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 .menuItem a:hover {
     color: #0971d9 !important;

@@ -14,12 +14,15 @@ def store():
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
-            Ciclo.db = get_db()
-            if Ciclo.semestreNoExiste(request.form):
-                Ciclo.store(request.form)
-                flash("Ciclo lectivo agregado correctamente" ,'success')
+            if int(request.form['año']) < int(1990) or int(request.form['año']) > int(2025):
+                flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
             else:
-                flash("El semestre ya tiene un ciclo lectivo asignado", 'error')
+                Ciclo.db = get_db()
+                if not Ciclo.semestreExiste(request.form):
+                    Ciclo.store(request.form)
+                    flash("Ciclo lectivo agregado correctamente" ,'success')
+                else:
+                    flash("El semestre ya tiene un ciclo lectivo asignado", 'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_ciclos'))
@@ -38,6 +41,25 @@ def delete(id_data):
         return redirect(url_for('panel_ciclos'))
     else:
         abort(401)
+
+def update():
+    if not authenticated(session):
+        abort(401)
+
+    #Chequea permiso
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_update')):
+        if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
+            Ciclo.db = get_db()
+            Ciclo.update(request.form)
+            flash("Se actualizó el ciclo lectivo correctamente" ,'success')
+        else:
+            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
+            return redirect(url_for("get_update_ciclo", id_data=request.form.get("id_data")))
+        return redirect(url_for('panel_ciclos'))
+    else:
+        abort(401)
+
 
 def ciclo_taller():
     if not authenticated(session):
