@@ -36,6 +36,26 @@ class Student(object):
         return paginas
 
     @classmethod
+    def total_paginas_taller(cls,paginacion):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT *
+            FROM estudiante_taller
+        """
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        count = 0
+        for i in result:
+            count += 1
+            i = i
+        paginas = count / paginacion
+        if (paginas == 0):
+            paginas = 1
+        elif not (count % paginacion == 0):
+            paginas += 1
+        return paginas
+
+    @classmethod
     def allPaginated(cls,pagination,page):
         cursor = cls.db.cursor()
         sql = """
@@ -44,6 +64,21 @@ class Student(object):
             INNER JOIN genero ON estudiante.genero_id = genero.id
             INNER JOIN escuela ON estudiante.escuela_id = escuela.id
             INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            LIMIT {limit} offset {offset}
+        """
+        cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
+        return cursor.fetchall()
+
+    @classmethod
+    def allEstudianteTallerPaginated(cls,pagination,page):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT *, estudiante.nombre AS nombreestudiante, estudiante.apellido AS apellidoestudiante, docente.nombre AS nombredocente, docente.apellido AS apellidodocente, taller.nombre AS nombretaller FROM estudiante_taller
+            INNER JOIN estudiante ON estudiante.id = estudiante_taller.estudiante_id
+            INNER JOIN docente ON docente.id = estudiante_taller.docente_id
+            INNER JOIN ciclo_lectivo_taller ON estudiante_taller.ciclo_lectivo_taller_id = ciclo_lectivo_taller.id
+            INNER JOIN taller ON estudiante_taller.taller_id = taller.id
+            INNER JOIN ciclo_lectivo ON estudiante_taller.ciclo_lectivo_id = ciclo_lectivo.id
             LIMIT {limit} offset {offset}
         """
         cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
@@ -104,6 +139,18 @@ class Student(object):
             return 0
 
     @classmethod
+    def getLastPageTaller(cls,pagination,page):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM estudiante_taller
+            COUNT
+        """
+        if ((cursor.execute(sql) / pagination) <= page):
+            return 1
+        else:
+            return 0
+
+    @classmethod
     def store(cls, data):
         sql = """
             INSERT INTO estudiante (apellido, nombre, fecha_nac, localidad_id, nivel_id, domicilio, genero_id, escuela_id, tipo_doc_id, numero, tel, barrio_id, responsable, pmt)
@@ -132,3 +179,35 @@ class Student(object):
         cls.db.commit()
         return True
         
+    @classmethod
+    def estudianteNoEnTaller(cls, data):
+        cursor = cls.db.cursor() 
+        sql = """
+               SELECT *
+               FROM estudiante_taller
+               WHERE estudiante_taller.estudiante_id=%s and estudiante_taller.docente_responsable_taller_id=%s
+            """
+        a = cursor.execute(sql, (data['estudiante_id'], data['docente_responsable_taller_id']))
+        cls.db.commit()
+        if (a>0):
+            return False
+        else:
+            return True
+
+    @classmethod
+    def storeEstudianteTaller(cls, data):
+        cursor = cls.db.cursor() 
+        sql = """
+                SELECT *
+                FROM docente_responsable_taller
+                WHERE docente_responsable_taller.id=%s 
+        """
+        cursor.execute(sql, (data['docente_responsable_taller_id']))
+        taller = cursor.fetchone()
+        sql2 = """
+                INSERT INTO estudiante_taller (estudiante_id, docente_id, taller_id, ciclo_lectivo_id, ciclo_lectivo_taller_id, docente_responsable_taller_id)
+                VALUES (%s, %s, %s, %s, %s, %s)
+            """
+        cursor.execute(sql2, (data['estudiante_id'], taller['docente_id'], taller['taller_id'], taller['ciclo_lectivo_id'], taller['ciclo_lectivo_taller_id'], data['docente_responsable_taller_id']))
+        cls.db.commit()
+        return True

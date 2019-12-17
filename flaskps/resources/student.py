@@ -53,3 +53,38 @@ def update():
         return redirect(url_for('panel_estudiantes'))
     else:
         abort(401)
+
+def deleteEstudianteDocente():
+    if not authenticated(session):
+        abort(401)
+    #Chequea permiso
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_destroy')):
+        if request.method == "POST" and forms.ValidateDocenteTallerDelete(request.form).validate():
+            Docente.db = get_db()
+            Docente.deleteDocenteTaller(request.form)
+            flash("Se desasigno el docente del taller correctamente" ,'success')
+        else:
+            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
+        return redirect(url_for('panel_estudiantes_docentes'))
+    else:
+        abort(401)
+
+def storeEstudianteDocente():
+    if not authenticated(session):
+        abort(401)
+    #Chequea permiso
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_new')):
+        if request.method == "POST" and forms.ValidateEstudianteDocenteTaller(request.form).validate():
+            Student.db = get_db()
+            if Student.estudianteNoEnTaller(request.form):
+                Student.storeEstudianteTaller(request.form)
+                flash("Se agrego el estudiante al al taller correctamente" ,'success')
+            else:
+                flash("El estudiante ya esta asignado al taller", 'error')
+        else:
+            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
+        return redirect(url_for('panel_estudiantes_docentes'))
+    else:
+        abort(401)

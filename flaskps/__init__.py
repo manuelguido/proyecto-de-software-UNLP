@@ -166,28 +166,24 @@ app.add_url_rule("/delete_taller_ciclo/", 'delete_taller_ciclo', taller.deleteTa
 #---------------------------------------------------#
 #   Docentes a talleres
 #---------------------------------------------------#
-    #Alta de docente a taller
-#app.add_url_rule("/taller_docente", 'taller_docente', ciclo.taller_docente, methods=['POST', 'GET'])
     #Panel de docentes taller
-app.add_url_rule("/panel_docentes_taller", 'panel_docentes_taller', panel.getPanelTalleres, defaults={'page': 1}) 
-app.add_url_rule("/panel_docentes_taller/<int:page>", 'panel_docentes_taller', panel.getPanelTalleres)
+app.add_url_rule("/panel_docentes_taller", 'panel_docentes_taller', panel.getPanelDocentesTaller, defaults={'page': 1}) 
+app.add_url_rule("/panel_docentes_taller/<int:page>", 'panel_docentes_taller', panel.getPanelDocentesTaller)
     #Alta de docente a taller
-app.add_url_rule("/insert_taller_ciclo", 'insert_taller_ciclo', taller.storeTallerCiclo, methods=['POST', 'GET'])
+app.add_url_rule("/insert_docente_taller", 'insert_docente_taller', docente.storeDocenteTaller, methods=['POST', 'GET'])
     #Baja de docente a taller
-app.add_url_rule("/delete_taller_ciclo/", 'delete_taller_ciclo', taller.deleteTallerCiclo, methods=['POST'])
-
-
-
-
-
-
+app.add_url_rule("/delete_docente_taller/", 'delete_docente_taller', docente.deleteDocenteTaller, methods=['POST'])
 
 #---------------------------------------------------#
-#   Alumnos a talleres
+#   Alumnos a Docentes en talleres
 #---------------------------------------------------#
-    #Alta de alumno a taller
-
-    #Baja de alumno en taller
+    #Panel de docentes taller
+app.add_url_rule("/panel_estudiantes_docentes", 'panel_estudiantes_docentes', panel.getPanelEstudiantesDocentes, defaults={'page': 1}) 
+app.add_url_rule("/panel_estudiantes_docentes/<int:page>", 'panel_estudiantes_docentes', panel.getPanelEstudiantesDocentes)
+    #Alta de docente a taller
+app.add_url_rule("/insert_estudiante_docente", 'insert_estudiante_docente', student.storeEstudianteDocente, methods=['POST', 'GET'])
+    #Baja de docente a taller
+app.add_url_rule("/delete_estudiante_docente/", 'delete_estudiante_docente', student.deleteEstudianteDocente, methods=['POST'])
 
 #---------------------------------------------------#
 #   Asistencia

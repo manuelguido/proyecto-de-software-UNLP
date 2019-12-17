@@ -31,27 +31,9 @@ def storeTallerCiclo():
     if (User.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateCicloTaller(request.form).validate():
             Ciclo.db = get_db()
-            if Ciclo.cicloNoTieneTaller(request.form):
-                Ciclo.storeConTaller(request.form)
-                flash("Se agrego el taller al ciclo lectivo correctamente" ,'success')
-            else:
-                flash("El taller ya esta asignado al ciclo lectivo seleccionado", 'error')
-        else:
-            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_talleres'))
-    else:
-        abort(401)
-
-def taller_docente():
-    if not authenticated(session):
-        abort(401)
-    #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_new')):
-        if request.method == "POST" and forms.ValidateTallerDocente(request.form).validate():
             Taller.db = get_db()
-            if Taller.tallerNoTieneDocente(request.form):
-                Taller.storeConDocente(request.form)
+            if Ciclo.cicloNoTieneTaller(request.form):
+                Taller.storeConTaller(request.form)
                 flash("Se agrego el taller al ciclo lectivo correctamente" ,'success')
             else:
                 flash("El taller ya esta asignado al ciclo lectivo seleccionado", 'error')

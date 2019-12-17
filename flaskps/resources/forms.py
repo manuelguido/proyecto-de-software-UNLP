@@ -120,6 +120,15 @@ class ValidateCicloTaller(Form):
     ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
     taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-class ValidateTallerDocente(Form):
+class ValidateDocenteTaller(Form):
+    docente_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    ciclo_lectivo_taller_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateDocenteTallerDelete(Form):
     taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
     docente_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateEstudianteDocenteTaller(Form):
+    docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])

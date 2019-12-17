@@ -390,14 +390,14 @@ def getPanelTalleres(page):
         #Obtiene permisos del usuario
         User.db = get_db()
         Ciclo.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        if (page > Ciclo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
-            abort (404)
-        lastpage = Ciclo.getLastPageCicloLectivo(site_controller.get_pagination(),int(page))
         Taller.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        if (page > Taller.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        lastpage = Taller.getLastPage(site_controller.get_pagination(),int(page))
         talleres = Taller.all()
         ciclos = Ciclo.all()
-        ciclotalleres = Ciclo.allCicloTaller()
+        ciclotalleres = Taller.allCicloTallerPaginated(site_controller.get_pagination(),int(page))
         return render_template(
             'auth/panel_components/talleres.html',
             permisos=permisos,
@@ -406,6 +406,56 @@ def getPanelTalleres(page):
             talleres=talleres,
             ciclos=ciclos,
             ciclotalleres=ciclotalleres
+        )
+    return redirect(url_for('auth_login'))
+
+#Modulos docentes talleres
+def getPanelDocentesTaller(page):
+    if auth.authenticated():# or not auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        Ciclo.db = get_db()
+        Docente.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        if (page > Docente.total_paginas_taller(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        lastpage = Docente.getLastPageDocenteTaller(site_controller.get_pagination(),int(page))
+        ciclotalleres = Ciclo.allCicloTaller()
+        docentes = Docente.all()
+        docente_responsable_taller = Docente.allDocenteTallerPaginated(site_controller.get_pagination(),int(page))
+        return render_template(
+            'auth/panel_components/docentes_taller.html',
+            permisos=permisos,
+            page=page,
+            lastpage=lastpage,
+            ciclotalleres=ciclotalleres,
+            docentes=docentes,
+            docente_responsable_taller=docente_responsable_taller
+        )
+    return redirect(url_for('auth_login'))
+
+#Modulos alumnos docentes
+def getPanelEstudiantesDocentes(page):
+    if auth.authenticated():# or not auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        Student.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        if (page > Student.total_paginas_taller(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        lastpage = Student.getLastPageTaller(site_controller.get_pagination(),int(page))
+        Docente.db = get_db()
+        docente_responsable_taller = Docente.allDocenteTaller()
+        estudiantes_talleres = Student.allEstudianteTallerPaginated(site_controller.get_pagination(),int(page))
+        estudiantes = Student.all()
+        return render_template(
+            'auth/panel_components/alumnos_docentes.html',
+            permisos=permisos,
+            page=page,
+            lastpage=lastpage,
+            docente_responsable_taller=docente_responsable_taller,
+            estudiantes_talleres=estudiantes_talleres,
+            estudiantes=estudiantes
         )
     return redirect(url_for('auth_login'))
 

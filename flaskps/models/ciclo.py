@@ -156,31 +156,6 @@ class Ciclo(object):
             return True
 
     @classmethod
-    def storeConTaller(cls, data):
-        cursor = cls.db.cursor() 
-        sql = """
-               SELECT taller.id
-               FROM taller
-               WHERE id=%s
-            """
-        cursor.execute(sql, (data['taller_id']))
-        taller_id = cursor.fetchone()
-        sql2 = """
-               SELECT ciclo_lectivo.id
-               FROM ciclo_lectivo
-               WHERE id=%s
-            """
-        cursor.execute(sql2, (data['ciclo_lectivo_id']))
-        ciclo_lectivo_id = cursor.fetchone()
-        sql3 = """
-            INSERT INTO ciclo_lectivo_taller (taller_id, ciclo_lectivo_id)
-            VALUES (%s, %s)
-        """
-        cursor.execute(sql3, (taller_id['id'], ciclo_lectivo_id['id']))
-        cls.db.commit()
-        return True
-
-    @classmethod
     def getCiclo(cls, id_data):
         sql = """
             SELECT * FROM ciclo_lectivo 
