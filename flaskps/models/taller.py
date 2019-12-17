@@ -41,6 +41,18 @@ class Taller(object):
             return True
 
     @classmethod
+    def deleteTallerCiclo(cls, request):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM ciclo_lectivo_taller WHERE ciclo_lectivo_id=%s", (request['ciclo_lectivo_id'],))
+        cls.db.commit()
+        cursor.execute("DELETE FROM docente_responsable_taller WHERE ciclo_lectivo_id=%s", (request['taller_id'],))
+        cls.db.commit()
+        cursor.execute("DELETE FROM estudiante_taller WHERE ciclo_lectivo_id=%s", (request['ciclo_lectivo_id'],))
+        cls.db.commit()
+        return True
+
+
+    @classmethod
     def storeConDocente(cls, data):
         cursor = cls.db.cursor() 
         sql = """

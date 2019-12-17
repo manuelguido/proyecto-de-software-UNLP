@@ -384,6 +384,30 @@ def getUpdateCiclo(id_data):
     else:
         return redirect(url_for('auth_login'))
 
+#Modulos talleres
+def getPanelTalleres(page):
+    if auth.authenticated():# or not auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        Ciclo.db = get_db()
+        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+        if (page > Ciclo.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+            abort (404)
+        lastpage = Ciclo.getLastPageCicloLectivo(site_controller.get_pagination(),int(page))
+        Taller.db = get_db()
+        talleres = Taller.all()
+        ciclos = Ciclo.all()
+        ciclotalleres = Ciclo.allCicloTaller()
+        return render_template(
+            'auth/panel_components/talleres.html',
+            permisos=permisos,
+            page=page,
+            lastpage=lastpage,
+            talleres=talleres,
+            ciclos=ciclos,
+            ciclotalleres=ciclotalleres
+        )
+    return redirect(url_for('auth_login'))
 
 #Modulo administracion del sitio
 def getPanelAdminSitio():

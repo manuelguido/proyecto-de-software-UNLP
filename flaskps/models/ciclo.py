@@ -54,6 +54,18 @@ class Ciclo(object):
             return 0
 
     @classmethod
+    def getLastPageCicloLectivo(cls,pagination,page):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM ciclo_lectivo_taller
+            COUNT
+        """
+        if ((cursor.execute(sql) / pagination) <= page):
+            return 1
+        else:
+            return 0
+
+    @classmethod
     def allCicloTaller(cls):
         cursor = cls.db.cursor()
         sql = """
@@ -112,6 +124,7 @@ class Ciclo(object):
             return True
         else:
             return False
+
     @classmethod
     def cicloNoTieneTaller(cls, data):
         cursor = cls.db.cursor() 

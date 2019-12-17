@@ -1,0 +1,101 @@
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-school black3 mr-2"></i>Talleres
+{% endblock %}
+{% block contentitem %}
+    <div class="row">
+        <div class="col-12 col-md-7 mb-3">
+            <h1 class="h4 w400">Listado de talleres con ciclos asignados</h1>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <!-- Row Titulos -->
+                            <tr>
+                                <th>Año</th>
+                                <th>Semestre</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha de fin</th>
+                                <th>Taller</th>
+                                <th>Eliminar</th>
+                            </tr>
+                            <!-- Row Estudiantes -->
+                            {% for ciclo in ciclotalleres %}
+                            <tr>
+                                <td>{{ciclo.año}}</td>
+                                <td>Semestre {{ciclo.semestre}}</td>
+                                <td>{{ciclo.fecha_ini}}</td>
+                                <td>{{ciclo.fecha_fin}}</td>
+                                <td>{{ciclo.nombre}}</td>
+                                <td>
+                                    <form action="{{ url_for('delete_taller_ciclo') }}" method="POST" onsubmit="return confirm('¿Seguro deseas eliminar el ciclo taller?')"> 
+                                        <input type="hidden" name="ciclo_lectivo_id" value="{{ciclo.ciclo_lectivo_id}}">
+                                        <input type="hidden" name="taller_id" value="{{ciclo.taller_id}}">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-user-minus mr-2"></i>Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-12 my-4">
+                    <nav class="row">
+                        <div class="col-12">
+                            {% if page == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_ciclos/{{page - 1}}">Anterior</a>
+                            {% endif %}
+                            {% if lastpage == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_ciclos/{{page + 1}}">Siguiente</a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mb-3">
+            <div class="card p-3">
+            <h1 class="h4 w400">Asignar taller a ciclo lectivo</h1>
+            <hr>
+                <form action="{{ url_for('insert_taller_ciclo') }}" method="POST"> 
+                   <div class="form-group row">
+                       <div class="col-12 my-3">
+                           <label>Semestre</label>
+                            <select name="ciclo_lectivo_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for ciclo in ciclos %}
+                                <option value="{{ciclo.id}}">Semestre: {{ciclo.semestre}}, año: {{ciclo.año}}, fechas: año: {{ciclo.fecha_ini}} - {{ciclo.fecha_fin}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-12 my-3">
+                           <label>Año que corresponde</label>
+                            <select name="taller_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for taller in talleres %}
+                                <option value="{{taller.id}}">{{taller.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-6 text-left">
+                            <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-primary" type="submit">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

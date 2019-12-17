@@ -11,6 +11,7 @@ from flaskps.resources import student
 from flaskps.resources import docente
 from flaskps.resources import panel
 from flaskps.resources import ciclo
+from flaskps.resources import taller
 from flaskps.config import Config
 from flaskps.helpers import handler
 from flaskps.helpers import auth as helper_auth
@@ -154,16 +155,32 @@ app.add_url_rule("/update_ciclo", 'update_ciclo', ciclo.update, methods=['POST']
 #---------------------------------------------------#
 #   Talleres a ciclos
 #---------------------------------------------------#
+    #Panel de tallers 
+app.add_url_rule("/panel_talleres", 'panel_talleres', panel.getPanelTalleres, defaults={'page': 1}) 
+app.add_url_rule("/panel_talleres/<int:page>", 'panel_talleres', panel.getPanelTalleres)
     #Alta de taller a ciclo
-app.add_url_rule("/ciclo_taller", 'ciclo_taller', ciclo.ciclo_taller, methods=['POST', 'GET'])
-    #Baja de taller a ciclo 
+app.add_url_rule("/insert_taller_ciclo", 'insert_taller_ciclo', taller.storeTallerCiclo, methods=['POST', 'GET'])
+    #Baja de taller a ciclo
+app.add_url_rule("/delete_taller_ciclo/", 'delete_taller_ciclo', taller.deleteTallerCiclo, methods=['POST'])
 
 #---------------------------------------------------#
 #   Docentes a talleres
 #---------------------------------------------------#
     #Alta de docente a taller
-app.add_url_rule("/taller_docente", 'taller_docente', ciclo.taller_docente, methods=['POST', 'GET'])
+#app.add_url_rule("/taller_docente", 'taller_docente', ciclo.taller_docente, methods=['POST', 'GET'])
+    #Panel de docentes taller
+app.add_url_rule("/panel_docentes_taller", 'panel_docentes_taller', panel.getPanelTalleres, defaults={'page': 1}) 
+app.add_url_rule("/panel_docentes_taller/<int:page>", 'panel_docentes_taller', panel.getPanelTalleres)
+    #Alta de docente a taller
+app.add_url_rule("/insert_taller_ciclo", 'insert_taller_ciclo', taller.storeTallerCiclo, methods=['POST', 'GET'])
     #Baja de docente a taller
+app.add_url_rule("/delete_taller_ciclo/", 'delete_taller_ciclo', taller.deleteTallerCiclo, methods=['POST'])
+
+
+
+
+
+
 
 #---------------------------------------------------#
 #   Alumnos a talleres
