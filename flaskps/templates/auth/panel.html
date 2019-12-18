@@ -26,7 +26,17 @@
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_talleres"><i class="fas fa-school mr-2"></i>Ciclos talleres</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_docentes_taller"><i class="fas fa-user-friends mr-2"></i>Docentes talleres</a></li>
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_estudiantes_docentes"><i class="fas fa-user-friends mr-2"></i>Estudiantes talleres</a></li>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'horario_index' %}
+                                <li class="list-group-item menuItem" role="button"><a href="/panel_horario"><i class="far fa-clock mr-2"></i>Horarios</a></li>
+                                {% endif %}
+                                {% endfor %}
+                                <li class="list-group-item menuItem" role="button"><a href="/panel_asistencia"><i class="fas fa-calendar-day mr-2"></i>Asistencia</a></li>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_index' %}
                                 <li class="list-group-item menuItem" role="button"><a href="/panel_adminsitio"><i class="fas fa-cog mr-2"></i>Configuracion</a></li>
+                                {% endif %}
+                                {% endfor %}
                             </ul>
                             <hr>
                             <ul class="list-group list-group-flush">
@@ -76,7 +86,13 @@
                                     fechas[index].setAttribute("max", today);
                                 }
                             </script>
-
+                            <script>
+                                $('.input').keydown(function(e) {
+                                    if (e.keyCode == 32) {
+                                        return false;
+                                    }
+                                });
+                            </script>
                         </div>
                         <!-- /.Container Fluid -->
                     </div>

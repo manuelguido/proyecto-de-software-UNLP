@@ -46,9 +46,6 @@ body {
     box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
 }
 
-input, textarea {
-    background: #f9f9f9 !important;
-}
 /*--------------------------------------------------------------
     Text
 --------------------------------------------------------------*/
@@ -304,8 +301,8 @@ h1, h2, h3, h4, h5, h6, p {
     margin-bottom: 0px;
 }
 .panel-logo {
-    margin: 50px auto;
-    width: 40%;
+    margin: 25px auto;
+    width: 35%;
     display: none;
 }
 .panel-main {

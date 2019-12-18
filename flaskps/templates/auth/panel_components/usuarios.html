@@ -159,7 +159,7 @@
             <div id="usuarioCreate" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="{{ url_for('insert_user') }}" method="POST" id="sectionForm" onSubmit = "return checkPassword(this)"> 
+                        <form action="{{ url_for('insert_user') }}" method="POST" id="sectionForm" name="form1" onSubmit = "ValidateEmail(document.form1.email); return checkPassword(this)"> 
                             <div class="modal-header">
                                 <h4 class="modal-title">Ingresar datos</h4>
                                 <button type="button" class="close" onclick="this.form.reset();" data-dismiss="modal">&times;</button>
@@ -177,11 +177,11 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label>Nombre de usuario</label>
-                                        <input type="text" class="form-control" placeholder="Ingrese nombre de usuario" name="username" required>
+                                        <input type="text" class="form-control input" placeholder="Ingrese nombre de usuario" name="username" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" name="email" placeholder="Ingrese email" required>
+                                        <input type="email" class="form-control input" name="email" placeholder="Ingrese email" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label>Contraseña</label>
@@ -232,9 +232,22 @@
 
                                                 init();
                                             })();
-
-
-                                                function checkPassword(form) { 
+                                            function ValidateEmail(inputText)
+                                            {
+                                                var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                                                if(inputText.value.match(mailformat))
+                                                {
+                                                document.form1.text1.focus();
+                                                return true;
+                                                }
+                                                else
+                                                {
+                                                alert("Email inválido");
+                                                    document.form1.text1.focus();
+                                                    return false;
+                                                }
+                                            } 
+                                            function checkPassword(form) { 
                                                     password1 = form.password.value; 
                                                     password2 = form.password_repeat.value; 
  
@@ -243,6 +256,7 @@
                                                         return false; 
                                                     }
                                                 }
+
                                         </script>
                                     </div>
                                 </div>
@@ -252,7 +266,7 @@
                                         <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <button class="btn btn-primary" type="submit">Crear usuario</button>
+                                        <button class="btn btn-primary" type="submit" onclick="ValidateEmail(document.form1.email)">Crear usuario</button>
                                     </div>
                                 </div>
                             </form>

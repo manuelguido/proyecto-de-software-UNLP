@@ -70,6 +70,20 @@ class Student(object):
         return cursor.fetchall()
 
     @classmethod
+    def allEstudianteTaller(cls):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT *, estudiante.nombre AS nombreestudiante, estudiante.apellido AS apellidoestudiante, docente.nombre AS nombredocente, docente.apellido AS apellidodocente, taller.nombre AS nombretaller FROM estudiante_taller
+            INNER JOIN estudiante ON estudiante.id = estudiante_taller.estudiante_id
+            INNER JOIN docente ON docente.id = estudiante_taller.docente_id
+            INNER JOIN ciclo_lectivo_taller ON estudiante_taller.ciclo_lectivo_taller_id = ciclo_lectivo_taller.id
+            INNER JOIN taller ON estudiante_taller.taller_id = taller.id
+            INNER JOIN ciclo_lectivo ON estudiante_taller.ciclo_lectivo_id = ciclo_lectivo.id
+        """
+        cursor.execute(sql)
+        return cursor.fetchall()
+
+    @classmethod
     def allEstudianteTallerPaginated(cls,pagination,page):
         cursor = cls.db.cursor()
         sql = """
@@ -211,3 +225,25 @@ class Student(object):
         cursor.execute(sql2, (data['estudiante_id'], taller['docente_id'], taller['taller_id'], taller['ciclo_lectivo_id'], taller['ciclo_lectivo_taller_id'], data['docente_responsable_taller_id']))
         cls.db.commit()
         return True
+
+    @classmethod
+    def deleteEstudianteTaller(cls, request):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM estudiante_taller WHERE estudiante_id=%s and docente_responsable_taller_id=%s", (request['estudiante_id'],request['docente_responsable_taller_id']))
+        cls.db.commit()
+        return True
+
+
+    @classmethod
+    def findByClass(cls, id_data):
+        sql = """
+            SELECT *, clase.id AS clase_id FROM estudiante
+            INNER JOIN estudiante_taller ON estudiante_taller.estudiante_id=estudiante.id
+            INNER JOIN docente_responsable_taller ON estudiante_taller.docente_responsable_taller_id=docente_responsable_taller.id
+            INNER JOIN clase ON clase.docente_responsable_taller_id=docente_responsable_taller.id
+            WHERE clase.id=%s
+        """
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (id_data))
+        return cursor.fetchall()
+        

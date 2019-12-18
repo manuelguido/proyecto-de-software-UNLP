@@ -4,7 +4,7 @@
 {% endblock %}
 {% block contentitem %}
     <div class="row">
-        <div class="col-12 col-md-7 mb-3">
+        <div class="col-12 col-lg mb-3">
             <h1 class="h4 w400">Listado de docentes asignados a taller</h1>
             <hr>
             <div class="row">
@@ -19,7 +19,11 @@
                                 <th>Fin</th>
                                 <th>Taller</th>
                                 <th>Docente</th>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <th>Eliminar</th>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             <!-- Row Estudiantes -->
                             {% for drt in docente_responsable_taller %}
@@ -30,6 +34,8 @@
                                 <td>{{drt.fecha_fin}}</td>
                                 <td>{{drt.nombretaller}}</td>
                                 <td>{{drt.nombredocente}} {{drt.apellidodocente}}</td>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <td>
                                     <form action="{{ url_for('delete_docente_taller') }}" method="POST" onsubmit="return confirm('¿Seguro deseas desasignar el docente del taller?')"> 
                                         <input type="hidden" name="ciclo_lectivo_id" value="{{drt.ciclo_lectivo_id}}">
@@ -38,6 +44,8 @@
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-user-minus mr-2"></i>Eliminar</button>
                                     </form>
                                 </td>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -63,14 +71,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-5 mb-3">
+        {% for p in permisos %}
+        {% if p.nombre == 'administrativo_new' %}
+        <div class="col-12 col-lg-5 mb-3">
             <div class="card p-3">
             <h1 class="h4 w400">Asignar docente a taller</h1>
             <hr>
                 <form action="{{ url_for('insert_docente_taller') }}" method="POST"> 
                    <div class="form-group row">
                        <div class="col-12 my-3">
-                           <label>Semestre</label>
+                           <label>Taller</label>
                             <select name="ciclo_lectivo_taller_id" class="browser-default custom-select" required>
                                 <option selected disabled>Seleccionar</option>
                                 {% for ciclotaller in ciclotalleres %}
@@ -100,5 +110,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

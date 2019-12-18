@@ -4,7 +4,7 @@
 {% endblock %}
 {% block contentitem %}
     <div class="row">
-        <div class="col-12 col-md-7 mb-3">
+        <div class="col-12 col-lg mb-3">
             <h1 class="h4 w400">Listado de talleres con ciclos asignados</h1>
             <hr>
             <div class="row">
@@ -18,7 +18,11 @@
                                 <th>Inicio</th>
                                 <th>Fin</th>
                                 <th>Taller</th>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <th>Eliminar</th>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             <!-- Row Estudiantes -->
                             {% for ciclo in ciclotalleres %}
@@ -28,6 +32,8 @@
                                 <td>{{ciclo.fecha_ini}}</td>
                                 <td>{{ciclo.fecha_fin}}</td>
                                 <td>{{ciclo.nombre}}</td>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <td>
                                     <form action="{{ url_for('delete_taller_ciclo') }}" method="POST" onsubmit="return confirm('¿Seguro deseas eliminar el ciclo taller?')"> 
                                         <input type="hidden" name="ciclo_lectivo_id" value="{{ciclo.ciclo_lectivo_id}}">
@@ -35,6 +41,8 @@
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-user-minus mr-2"></i>Eliminar</button>
                                     </form>
                                 </td>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -60,7 +68,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-5 mb-3">
+        {% for p in permisos %}
+        {% if p.nombre == 'administrativo_new' %}
+        <div class="col-12 col-lg-5 mb-3">
             <div class="card p-3">
             <h1 class="h4 w400">Asignar taller a ciclo lectivo</h1>
             <hr>
@@ -97,5 +107,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

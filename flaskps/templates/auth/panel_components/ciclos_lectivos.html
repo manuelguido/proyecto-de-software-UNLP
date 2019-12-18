@@ -4,7 +4,7 @@
 {% endblock %}
 {% block contentitem %}
     <div class="row">
-        <div class="col-12 col-md-7 mb-3">
+        <div class="col-12 col-lg mb-3">
             <h1 class="h4 w400">Listado</h1>
             <hr>
             <div class="row">
@@ -17,8 +17,14 @@
                                 <th>Semestre</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de fin</th>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_update' %}
                                 <th>Modificar</th>
+                                {% endif %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <th>Eliminar</th>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             <!-- Row Estudiantes -->
                             {% for ciclo in pciclos %}
@@ -27,12 +33,18 @@
                                 <td>Semestre {{ciclo.semestre}}</td>
                                 <td>{{ciclo.fecha_ini}}</td>
                                 <td>{{ciclo.fecha_fin}}</td>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_update' %}
                                 <td>
                                     <a href="/get_update_ciclo/{{ciclo.id}}" class="btn btn-warning btn-sm"><i class="fas fa-edit mr-2"></i>Editar</a>
                                 </td>
+                                {% endif %}
+                                {% if p.nombre == 'administrativo_destroy' %}
                                 <td>
                                     <a href="/delete_ciclo/{{ciclo.id}}" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro deseas eliminar el usuario?')"><i class="fas fa-user-minus mr-2"></i>Eliminar</a>
                                 </td>
+                                {% endif %}
+                                {% endfor %}
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -58,7 +70,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-5 mb-3">
+        {% for p in permisos %}
+        {% if p.nombre == 'administrativo_new' %}
+        <div class="col-12 col-lg-5 mb-3">
             <div class="card p-3">
             <h1 class="h4 w400">Agregar ciclo lectivo</h1>
             <hr>
@@ -135,5 +149,7 @@
                 </form>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
 {% endblock %}

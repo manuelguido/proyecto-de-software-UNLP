@@ -16,6 +16,9 @@ from flaskps.models.nucleo import Nucleo
 from flaskps.models.config_sitio import ConfigSitio
 from flaskps.models.rol import Rol
 from flaskps.models.taller import Taller
+from flaskps.models.horario import Horario
+from flaskps.models.clase import Clase
+from flaskps.models.asistencia import Asistencia
 from flaskps.models.responsable import Responsable
 from flaskps.models.ciclo import Ciclo
 from flaskps.resources import auth, site_controller, forms
@@ -149,7 +152,6 @@ def getPanelDocentes(page):
             page=page,
             lastpage=lastpage
         )
-
     return redirect(url_for('auth_login'))
 
 #Modulo usuarios
@@ -215,32 +217,35 @@ def getPanelInstrumentos(page):
     if auth.authenticated():
         #Obtiene permisos del usuario
         User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene estudiantes
-        Instrumento.db = get_db()
-        lastpage = 1
-        #Si se envia una pagina inexistente se aborta
-        if (page > Instrumento.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
-            abort (404)
-        #Chequea si hubo busquedas
-            #Se buscó instrumento
-        if forms.searchByFirstName(request.args).validate():
-            instrumentos = Instrumento.searchByName(request.args.get('solo_nombre'))
-            #No hubo busqueda
+        if (User.tiene_permiso(session['id'],'administrativo_index')):
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+            #Obtiene estudiantes
+            Instrumento.db = get_db()
+            lastpage = 1
+            #Si se envia una pagina inexistente se aborta
+            if (page > Instrumento.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+                abort (404)
+            #Chequea si hubo busquedas
+                #Se buscó instrumento
+            if forms.searchByFirstName(request.args).validate():
+                instrumentos = Instrumento.searchByName(request.args.get('solo_nombre'))
+                #No hubo busqueda
+            else:
+                instrumentos = Instrumento.allPaginated(site_controller.get_pagination(),int(page))
+                #Ultima pagina de paginado
+                lastpage = Instrumento.getLastPage(site_controller.get_pagination(),int(page))
+            #Retorna el template
+            return render_template(
+                'auth/panel_components/instrumentos.html',
+                permisos=permisos,
+                nombre=session['nombre'],
+                apellido=session['apellido'],
+                instrumentos=instrumentos,
+                page=page,
+                lastpage=lastpage
+            )
         else:
-            instrumentos = Instrumento.allPaginated(site_controller.get_pagination(),int(page))
-            #Ultima pagina de paginado
-            lastpage = Instrumento.getLastPage(site_controller.get_pagination(),int(page))
-        #Retorna el template
-        return render_template(
-            'auth/panel_components/instrumentos.html',
-            permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
-            instrumentos=instrumentos,
-            page=page,
-            lastpage=lastpage
-        )
+            abort(401)
     else:
         return redirect(url_for('auth_login'))
 
@@ -459,23 +464,97 @@ def getPanelEstudiantesDocentes(page):
         )
     return redirect(url_for('auth_login'))
 
+def getPanelHorario():
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'horario_index')):
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+            #Obtiene informacion del sitio (Estado y paginacion)
+            Horario.db = get_db()
+            horarios = Horario.all()
+            Clase.db = get_db()
+            clases = Clase.all()
+            Nucleo.db = get_db()
+            nucleos = Nucleo.all()
+            Docente.db = get_db()
+            docente_responsable_taller = Docente.allDocenteTaller()
+            return render_template(
+                'auth/panel_components/clases.html',
+                permisos=permisos,
+                horarios=horarios,
+                clases=clases,
+                nucleos=nucleos,
+                docente_responsable_taller=docente_responsable_taller
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
+
+def getPanelAsistencia():
+    if auth.authenticated():
+        #Obtiene permisos del usuario
+        User.db = get_db()
+        if (User.tiene_permiso(session['id'],'horario_index')):
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+            Clase.db = get_db()
+            clases = Clase.all()
+            Student.db = get_db()
+            estudiantes_talleres = Student.allEstudianteTaller()
+            return render_template(
+                'auth/panel_components/asistencia.html',
+                permisos=permisos,
+                clases=clases,
+                estudiantes_talleres=estudiantes_talleres,
+                #docente_responsable_taller=docente_responsable_taller,
+            )
+        else:
+            abort(401)
+    else:
+        return redirect(url_for('auth_login'))
+
+def getAsistencias(id_data):
+    if auth.authenticated():
+        Clase.db = get_db()
+        clase = Clase.findClass(id_data)
+        Student.db = get_db()
+        estudiantes = Student.findByClass(clase['id'])
+        Asistencia.db = get_db()
+        asistencias_estudiantes = Asistencia.getAsistencias(clase)
+        return render_template(
+            'auth/panel_components/asistencias.html',
+            clase=clase,
+            estudiantes=estudiantes,
+            asistencias_estudiantes=asistencias_estudiantes,
+        )
+    else:
+        return redirect(url_for('auth_login'))
+
+
 #Modulo administracion del sitio
 def getPanelAdminSitio():
     if auth.authenticated():
-        g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
-        #Obtiene permisos del usuario
         User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene informacion del sitio (Estado y paginacion)
-        ConfigSitio.db = get_db()
-        infositio = ConfigSitio.all()
+        if (User.tiene_permiso(session['id'],'administrativo_index')):
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
 
-        return render_template(
-            'auth/panel_components/administracion_sitio.html',
-            permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
-            infositio = infositio
-        )
+            g.user = session['user'] #En la documentación no detallaban el por qué de esta lína, pero sí que era necesaria para las paginas restringidas
+            #Obtiene permisos del usuario
+            User.db = get_db()
+            permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+            #Obtiene informacion del sitio (Estado y paginacion)
+            ConfigSitio.db = get_db()
+            infositio = ConfigSitio.all()
+
+            return render_template(
+                'auth/panel_components/administracion_sitio.html',
+                permisos=permisos,
+                nombre=session['nombre'],
+                apellido=session['apellido'],
+                infositio = infositio
+            )
+        else:
+            abort(401)
     else:
         return redirect(url_for('auth_login'))

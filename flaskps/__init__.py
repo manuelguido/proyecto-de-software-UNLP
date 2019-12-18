@@ -12,6 +12,8 @@ from flaskps.resources import docente
 from flaskps.resources import panel
 from flaskps.resources import ciclo
 from flaskps.resources import taller
+from flaskps.resources import clase
+from flaskps.resources import asistencia
 from flaskps.config import Config
 from flaskps.helpers import handler
 from flaskps.helpers import auth as helper_auth
@@ -186,9 +188,25 @@ app.add_url_rule("/insert_estudiante_docente", 'insert_estudiante_docente', stud
 app.add_url_rule("/delete_estudiante_docente/", 'delete_estudiante_docente', student.deleteEstudianteDocente, methods=['POST'])
 
 #---------------------------------------------------#
-#   Asistencia
+#   Horarios y Asistencia
 #---------------------------------------------------#
-    #Guardar asistencia
+    #Horarios
+app.add_url_rule("/panel_horario", 'panel_horario', panel.getPanelHorario)
+    #Alta de clase
+app.add_url_rule("/insert_clase", 'insert_clase', clase.store, methods=['POST', 'GET'])
+    #Baja de clase
+app.add_url_rule("/delete_clase/<string:id_data>", 'delete_clase', clase.delete, methods=['GET', 'POST'])
+
+    #Asistencia
+app.add_url_rule("/panel_asistencia", 'panel_asistencia', panel.getPanelAsistencia) 
+    #Ver asistencia
+app.add_url_rule("/ver_asistencias/<string:id_data>", 'ver_asistencias', panel.getAsistencias, methods=['POST', 'GET']) 
+
+    #Paasr asistencia
+app.add_url_rule("/marcar_asistencia", 'marcar_asistencia', asistencia.storeAsistencia, methods=['POST', 'GET'])
+app.add_url_rule("/marcar_inasistencia", 'marcar_inasistencia', asistencia.storeInasistencia, methods=['POST', 'GET'])
+
+
 
 #---------------------------------------------------#
 #   Error views

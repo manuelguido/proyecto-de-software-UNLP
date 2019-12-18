@@ -132,3 +132,17 @@ class ValidateDocenteTallerDelete(Form):
 class ValidateEstudianteDocenteTaller(Form):
     docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
     estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateEstudianteDocenteTallerDelete(Form):
+    docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateHorario(Form):
+    docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    nucleo_id = IntegerField('Nucleo', [validators.required(), validators.NumberRange(min=1, max=None)])
+    horario_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
+    dia = StringField(u'Dia', [validators.required(), validators.length(max=100)])
+
+class ValidateAsistencia(Form):
+    estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+    clase_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
