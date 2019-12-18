@@ -45,7 +45,8 @@ class ValidateUserWithOutPassword(Form):
     email = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
 
 class ValidateUserStatus(Form):
-    activo = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=0, max=1)])
+    user_id = IntegerField('Usuario', [validators.required(), validators.NumberRange(min=1, max=None)])
+    activo = IntegerField('Activo', [validators.required()])
 
 #---------------------------------------------------#
 #   Validacion Estudiantes
@@ -105,8 +106,7 @@ class searchByActive(Form):
     active = IntegerField('Activo', [validators.required(), validators.NumberRange(min=0, max=1)])
 
 class ValidateUserActive(Form):
-    user_id = IntegerField('Activo', [validators.required(), validators.NumberRange(min=0, max=None)])
-    active = IntegerField('Activo', [validators.required(), validators.NumberRange(min=0, max=1)])
+    active = SelectField(u'Activo', choices=[('0', 'Bloqueado'), ('1', 'Activo')])
 
 #---------------------------------------------------#
 #   

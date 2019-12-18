@@ -169,8 +169,8 @@ def getPanelUsuarios(page):
         if forms.searchByFirstName(request.args).validate():
             usuarios = User.searchByUserName(request.args.get('solo_nombre'))
             #Se buscó solo activo
-        #elif forms.searchByActive(request.args).validate():
-        #    usuarios = User.searchByActive(request.args.get('activo'))
+        elif forms.searchByActive(request.args).validate():
+            usuarios = User.searchByActive(request.args.get('activo'))
         else:
             usuarios = User.allPaginated(site_controller.get_pagination(),int(page))
             #Ultima pagina de paginado

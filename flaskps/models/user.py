@@ -53,16 +53,15 @@ class User(object):
         cursor.execute(sql.format(firstname = firstname))
         return cursor.fetchall()
 
-    #@classmethod
-    #def searchByActive(cls,ac):
-    #    cursor = cls.db.cursor()
-    #    sql = """
-    #        SELECT * FROM usuario
-    #        WHERE usuario.activo = %s
-    #    """
-    #    print(ac)
-    #    #cursor.execute(sql, (ac))
-    #    #return cursor.fetchall()
+    @classmethod
+    def searchByActive(cls,ac):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM usuario
+            WHERE usuario.activo = %s
+        """
+        cursor.execute(sql)
+        return cursor.fetchall()
 
     @classmethod
     def getLastPage(cls,pagination,page):

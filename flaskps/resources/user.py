@@ -11,7 +11,7 @@ def update_user_status():
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'usuario_update')):
-        if request.method == "POST" and forms.ValidateUserStatus(request.form).validate():
+        if request.method == "POST" and (request.form['activo'] == '0' or request.form['activo'] == '1'):
             User.update_user_status(request.form)
             flash("Estado cambiado correctamente" ,'success')
         else:
