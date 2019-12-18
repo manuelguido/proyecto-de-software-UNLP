@@ -38,10 +38,10 @@ class Asistencia(object):
         cursor = cls.db.cursor() 
         sql = """
                SELECT *
-               FROM clase
-               WHERE nucleo_id=%s and dia=%s and docente_responsable_taller_id=%s and horario_id=%s
+               FROM asistencia_estudiante_taller
+               WHERE clase_id=%s and fecha=%s and estudiante_id=%s
             """
-        a = cursor.execute(sql, (data['nucleo_id'], data['dia'], data['docente_responsable_taller_id'], data['horario_id'],))
+        a = cursor.execute(sql, (data['clase_id'], data['fecha'], data['estudiante_id'],))
         cls.db.commit()
         if (a>0):
             return False

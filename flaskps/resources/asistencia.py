@@ -14,8 +14,11 @@ def storeAsistencia():
     if (User.tiene_permiso(session['id'],'estudiante_new')):
         if request.method == "POST" and forms.ValidateAsistencia(request.form).validate():
             Asistencia.db = get_db()
-            Asistencia.storeAsistencia(request.form)
-            flash("Se guardó la asistencia" ,'success')
+            if Asistencia.noExiste(request.form):
+                Asistencia.storeAsistencia(request.form)
+                flash("Se guardó la asistencia" ,'success')
+            else:
+                flash('Ya se tomo esa asistencia', 'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for("ver_asistencias", id_data=request.form.get("clase_id")))
@@ -30,8 +33,11 @@ def storeInasistencia():
     if (User.tiene_permiso(session['id'],'estudiante_new')):
         if request.method == "POST" and forms.ValidateAsistencia(request.form).validate():
             Asistencia.db = get_db()
-            Asistencia.storeInasistencia(request.form)
-            flash("Se guardó la asistencia" ,'success')
+            if Asistencia.noExiste(request.form):
+                Asistencia.storeInasistencia(request.form)
+                flash("Se guardó la inasistencia" ,'success')
+            else:
+                flash('Ya se tomo esa asistencia', 'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for("ver_asistencias", id_data=request.form.get("clase_id")))
