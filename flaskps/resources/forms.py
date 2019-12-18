@@ -146,3 +146,4 @@ class ValidateHorario(Form):
 class ValidateAsistencia(Form):
     estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
     clase_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    fecha = DateField('Fecha', [validators.required()], format='%Y-%m-%d')
