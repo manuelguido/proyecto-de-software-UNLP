@@ -1,11 +1,11 @@
 {% extends "auth/panel.html" %}
 {% block contenttitle %}
-<i class="fas fa-school black3 mr-2"></i>Horarios
+<i class="far fa-clock mr-2"></i>Horarios
 {% endblock %}
 {% block contentitem %}
     <div class="row">
         <div class="col-12 col-lg mb-3">
-            <h1 class="h4 w400">Listado de clases</h1>
+            <h1 class="h4 w400">Listado de clases y sus horarios</h1>
             <hr>
             <div class="row">
                 <div class="col-12">
@@ -49,7 +49,7 @@
         {% if p.nombre == 'administrativo_new' %}
         <div class="col-12 col-lg-5 mb-3">
             <div class="card p-3">
-            <h1 class="h4 w400">Agregar ciclo lectivo</h1>
+            <h1 class="h4 w400">Generar horario para un taller en un nucleo</h1>
             <hr>
                 <form action="{{ url_for('insert_clase') }}" method="POST"> 
                    <div class="form-group row">
