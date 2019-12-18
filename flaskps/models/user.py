@@ -60,7 +60,7 @@ class User(object):
             SELECT * FROM usuario
             WHERE usuario.activo = %s
         """
-        cursor.execute(sql)
+        cursor.execute(sql, (ac))
         return cursor.fetchall()
 
     @classmethod

@@ -103,7 +103,7 @@ class searchByBoth(Form):
     ambos_apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
 
 class searchByActive(Form):
-    active = IntegerField('Activo', [validators.required(), validators.NumberRange(min=0, max=1)])
+    active = SelectField(u'Activo', choices=[('0', 'Bloqueado'), ('1', 'Activo')])
 
 class ValidateUserActive(Form):
     active = SelectField(u'Activo', choices=[('0', 'Bloqueado'), ('1', 'Activo')])
