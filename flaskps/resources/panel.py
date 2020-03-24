@@ -22,6 +22,7 @@ from flaskps.models.asistencia import Asistencia
 from flaskps.models.responsable import Responsable
 from flaskps.models.ciclo import Ciclo
 from flaskps.resources import auth, site_controller, forms
+from flaskps.helpers.auth import authenticated
 
 #---------------------------
 #-  El return [{}] se uso para que no se rompa el servidor. Si el servidor se rompe es por la falla de la api, no del codigo
@@ -41,7 +42,7 @@ def getDocumentos():
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
-    if auth.authenticated():
+    if auth.authenticated(session):
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
@@ -101,8 +102,8 @@ def getPanelEstudiantes(page):
             page=page,
             lastpage=lastpage
         )
-
-    return redirect(url_for('auth_login'))
+    else:
+        return redirect(url_for('auth_login'))
 
 #Modulo docentes
 def getPanelDocentes(page):

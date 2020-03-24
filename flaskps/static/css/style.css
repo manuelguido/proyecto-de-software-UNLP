@@ -1,13 +1,15 @@
 /*--------------------------------------------------------------
     Import fonts
 --------------------------------------------------------------*/
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 /*--------------------------------------------------------------
     General
 --------------------------------------------------------------*/
 * {
-    color: #333;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Muli', sans-serif;
+}
+html {
+    scroll-behavior: smooth !important;
 }
 body {
     background: #fff;
@@ -20,6 +22,7 @@ body {
     max-width: 0 !important;
     max-height: 0 !important;
 }
+
 .display-n { display: none !important;}
 .display-b { display: block !important;}
 .overflow-h { overflow: hidden !important; }
@@ -36,10 +39,29 @@ body {
           -ms-user-select: none;
               user-select: none;
 }
-.opacity-1:hover { opacity: 0.7 !important;}
-.opacity-2:hover { opacity: 0.5 !important;}
-.opacity-3:hover { opacity: 0.4 !important;}
+.op-hover1:hover {opacity: 0.7 !important;}
+.op-hover2:hover {opacity: 0.5 !important;}
+.op-hover3:hover {opacity: 0.4 !important;}
+.opacity1 {opacity: 0.1 !important;}
+.opacity2 {opacity: 0.2 !important;}
+.opacity3 {opacity: 0.3 !important;}
+.opacity4 {opacity: 0.4 !important;}
+.opacity5 {opacity: 0.5 !important;}
+.opacity6 {opacity: 0.6 !important;}
+.opacity7 {opacity: 0.7 !important;}
+.opacity8 {opacity: 0.8 !important;}
+.opacity9 {opacity: 0.9 !important;}
+.opacity10 {opacity: 1 !important;}
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
 .inner-shadow-1 {
     -webkit-box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
     -moz-box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
@@ -47,22 +69,26 @@ body {
 }
 
 /*--------------------------------------------------------------
+    Generic
+--------------------------------------------------------------*/
+@media(max-width: 992px){
+    .mobile-hide {
+        display: none;
+    }
+}
+@media(min-width: 992px){
+    .web-hide {
+        display: none;
+    }
+}
+
+/*--------------------------------------------------------------
     Text
 --------------------------------------------------------------*/
-.h1 { font-size: 2.0em !important; }
-.h2 { font-size: 1.9em !important; }
-.h3 { font-size: 1.8em !important; }
-.h4 { font-size: 1.5em !important; }
-.h5 { font-size: 1.04em !important; }
-.h6 { font-size: 0.88em !important; }
-p { font-size: 16px; }
-.p2 {
-    font-size: .9em;
-}
 h1, h2, h3, h4, h5, h6, p {
-    color: #444;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400 !important;
+    color: #41444b;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300 !important;
 }
 .color-gris {
     color: #676767 !important;
@@ -71,21 +97,37 @@ h1, h2, h3, h4, h5, h6, p {
     color: #206be3 !important;
 }
 
+.w200 { font-weight: 200 !important; }
+.w300 { font-weight: 300 !important; }
+.w400 { font-weight: 400 !important; }
+.w500 { font-weight: 500 !important; }
+.w600 { font-weight: 600 !important; }
+.w700 { font-weight: 700 !important; }
+.w800 { font-weight: 800 !important; }
+.w900 { font-weight: 900 !important; }
+.italic { font-style: italic !important; }
+.ls01{ letter-spacing: .01em; }
+.ls02{ letter-spacing: .02em; }
+.ls03{ letter-spacing: .03em; }
+.ls04{ letter-spacing: .04em; }
+.ls05{ letter-spacing: .05em; }
+.ls06{ letter-spacing: .06em; }
+.ls07{ letter-spacing: .07em; }
+.ls08{ letter-spacing: .08em; }
+.ls09{ letter-spacing: .09em; }
+
 /*--------------------------------------------------------------
     Buttons
 --------------------------------------------------------------*/
 .btn {
-    margin: 0px !important;
-    font-family: 'Open Sans', sans-serif !important;
-    font-weight: 700;
-    padding: 10px 20px;
-    border: 0 none;
-    letter-spacing: .1em;
-    box-shadow: 0 .07em .125em 0 rgba(0,0,0,.15) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
+
 .btn i {
     color: inherit !important;
 }
+
 .btn:hover {
     opacity: 0.9 !important;
 }
@@ -104,12 +146,8 @@ h1, h2, h3, h4, h5, h6, p {
 /*--------------------------------------------------------------
     Cards
 --------------------------------------------------------------*/
-.card {
-    border-radius: 3px;
-    border: 0 none !important;
-}
 .card-header {
-    background: #fbfbfb !important;
+    border: 0 none;
 }
 .card-radius-16 {
     border-radius: 16px !important;
@@ -279,7 +317,7 @@ h1, h2, h3, h4, h5, h6, p {
     }
 }
 .panel {
-    background: #f5f7f9;
+    background: #fff;
 }
 .nav-link-panel , .nav-link-nombre {
     color: #353535 !important;
@@ -293,9 +331,11 @@ h1, h2, h3, h4, h5, h6, p {
 }
 #panel-menu {
     z-index: 10;
-    border-radius: 0 !important;
-    box-shadow: 0 .07em .18em 0 rgba(0,0,0,.22) !important;
-    background: #fff;
+    border-radius: 0;
+    background: #f0f3fa;
+}
+.panel-banner {
+    background: #f0f3fa;
 }
 .navbar-static-top {
     margin-bottom: 0px;
@@ -375,7 +415,7 @@ h1, h2, h3, h4, h5, h6, p {
     display: inline-block !important;
 }
 #bigmapid {
-    height: 40vh;
+    height: 60vh;
     width: 100%;
 }
 #minmapid {

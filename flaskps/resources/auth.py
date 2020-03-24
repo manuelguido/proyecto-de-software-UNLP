@@ -6,8 +6,9 @@ from flaskps.resources import forms
 def login():
     #Si esta autenticado, va derecho al panel
     if authenticated():
-        return redirect(url_for('panel_estudiantes'))    
-    return render_template('auth/login.html')
+        return redirect(url_for('panel_estudiantes'))
+    else:
+        return render_template('auth/login.html')
 
 def authenticate():
     params = request.form
