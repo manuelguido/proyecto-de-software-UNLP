@@ -42,7 +42,7 @@ def getDocumentos():
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
-    if auth.authenticated(session):
+    if auth.authenticated():
         #Obtiene permisos del usuario
         User.db = get_db()
         permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
