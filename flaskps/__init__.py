@@ -7,9 +7,7 @@ from flaskps.config import Config
 from flaskps.helpers import handler, auth as helper_auth
 
 #Nombre de la aplicación
-app = Flask(__name__,
-            static_folder = "./dist/static",
-            template_folder = "./dist")
+app = Flask(__name__)
 
 #Configuracion inicial de la app
 app.config.from_object(Config)
