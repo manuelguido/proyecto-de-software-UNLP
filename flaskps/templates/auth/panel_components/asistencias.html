@@ -1,0 +1,102 @@
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-calendar-day mr-2"></i>Asistencia
+{% endblock %}
+{% block contentitem %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <h1 class="h4">Clase: {{clase.nombretaller}}, {{clase.año}}, semestre {{clase.semestre}}</h1>
+        <p class="h5">Profesor: {{clase.nombredocente}} {{clase.apellidodocente}}</p>
+        <p class="h5">Día: {{clase.dia}} {{clase.horario}}</p>
+    </div>
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <!-- Row Titulos -->
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Asistencia</th>
+                        <th>Inasistencia</th>
+                    </tr>
+                    <!-- Row Docentes -->
+                    {% for row in estudiantes %}
+                    <tr>
+                        <td>{{row.apellido}}</td>
+                        <td>{{row.nombre}}</td>
+                        <td>{{row.numero}}</td>
+                        <td>
+                            <form method="POST" action="/marcar_asistencia">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <input type="date" class="datefield form-control" name="fecha" required>  
+                                        <input type="hidden" name="estudiante_id" value="{{row.id}}">
+                                        <input type="hidden" name="clase_id" value="{{row.clase_id}}">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-user-plus mr-2"></i>Asiste</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="/marcar_inasistencia">
+                                <div class="row form-group">
+                                    <div class="col-12 col-md-6">
+                                        <input type="date" class="datefield form-control" name="fecha" required>  
+                                        <input type="hidden" name="estudiante_id" value="{{row.id}}">
+                                        <input type="hidden" name="clase_id" value="{{row.clase_id}}">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-user-minus mr-2"></i>No asiste</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-12 my-4">
+        <h1 class="h4">Asistencias tomadas</h1>
+    </div>
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <tbody>
+                    <!-- Row Titulos -->
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Documento</th>
+                        <th>Fecha</th>
+                        <th>Asistencia</th>
+                    </tr>
+                    <!-- Row Docentes -->
+                    {% for row in asistencias_estudiantes %}
+                    <tr>
+                        <td>{{row.apellido}}</td>
+                        <td>{{row.nombre}}</td>
+                        <td>{{row.numero}}</td>
+                        <td>{{row.fecha}}</td>
+                        <td>
+                            {% if row.presente == 1 %}
+                            Presente
+                            {% else %}
+                            Ausente
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

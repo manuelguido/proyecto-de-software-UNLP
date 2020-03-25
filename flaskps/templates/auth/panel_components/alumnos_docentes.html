@@ -1,0 +1,120 @@
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-school black3 mr-2"></i>Alumnos en talleres
+{% endblock %}
+{% block contentitem %}
+    <div class="row">
+        <div class="col-12 col-lg mb-3">
+            <h1 class="h4 w400">Listado de estudiantes asiganos a docentes para talleres</h1>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <!-- Row Titulos -->
+                                <tr>
+                                    <th>Año</th>
+                                    <th>Semestre</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Taller</th>
+                                    <th>Docente</th>
+                                    <th>Estudiante</th>
+                                    {% for p in permisos %}
+                                    {% if p.nombre == 'administrativo_destroy' %}
+                                    <th>Eliminar</th>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row Estudiantes -->
+                                {% for es in estudiantes_talleres %}
+                                <tr>
+                                    <td>{{es.año}}</td>
+                                    <td>Semestre {{es.semestre}}</td>
+                                    <td>{{es.fecha_ini}}</td>
+                                    <td>{{es.fecha_fin}}</td>
+                                    <td>{{es.nombretaller}}</td>
+                                    <td>{{es.nombredocente}} {{es.apellidodocente}}</td>
+                                    <td>{{es.nombreestudiante}} {{es.apellidoestudiante}}</td>
+                                    {% for p in permisos %}
+                                    {% if p.nombre == 'administrativo_destroy' %}
+                                    <td>
+                                        <form action="{{ url_for('delete_estudiante_docente') }}" method="POST" onsubmit="return confirm('¿Seguro deseas desasignar el estudiante del taller y docente?')"> 
+                                            <input type="hidden" name="estudiante_id" value="{{es.estudiante_id}}">
+                                            <input type="hidden" name="docente_responsable_taller_id" value="{{es.docente_responsable_taller_id}}">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-user-minus mr-2"></i>Eliminar</button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-12 my-4">
+                    <nav class="row">
+                        <div class="col-12">
+                            {% if page == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_estudiantes_docentes/{{page - 1}}">Anterior</a>
+                            {% endif %}
+                            {% if lastpage == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_estudiantes_docentes/{{page + 1}}">Siguiente</a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% for p in permisos %}
+        {% if p.nombre == 'administrativo_new' %}                        
+        <div class="col-12 col-lg-5 mb-3">
+            <div class="card p-3">
+            <h1 class="h4 w400">Asignar alumno a taller para un docente</h1>
+            <hr>
+                <form action="{{ url_for('insert_estudiante_docente') }}" method="POST"> 
+                   <div class="form-group row">
+                       <div class="col-12 my-3">
+                           <label>Taller</label>
+                            <select name="docente_responsable_taller_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for drt in docente_responsable_taller %}
+                                <option value="{{drt.id}}">Semestre: {{drt.semestre}}, {{drt.año}}, Fecha: {{drt.fecha_ini}} / {{drt.fecha_fin}}, {{drt.nombretaller}}, {{drt.nombredocente}} {{drt.apellidodocente}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-12 my-3">
+                           <label>Estudiante</label>
+                            <select name="estudiante_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for estudiante in estudiantes %}
+                                <option value="{{estudiante.id}}">{{estudiante.nombre}} {{estudiante.apellido}}, Doc: {{estudiante.numero}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-6 text-left">
+                            <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-primary" type="submit">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

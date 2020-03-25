@@ -108,3 +108,4 @@ db/db.sqlite
 
 flask_session
 entornoProyecto
+.vscode

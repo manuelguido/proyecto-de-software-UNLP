@@ -8,8 +8,8 @@ from flaskps.helpers import handler, auth as helper_auth
 
 #Nombre de la aplicación
 app = Flask(__name__,
-            static_folder = "frontend/dist/static",
-            template_folder = "frontend/dist")
+            static_folder = "./frontend/dist/static",
+            template_folder = "./frontend/dist")
 
 #Configuracion inicial de la app
 app.config.from_object(Config)

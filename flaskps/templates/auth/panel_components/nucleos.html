@@ -1,0 +1,86 @@
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-map-marked-alt black3 mr-2"></i>Núcleos
+{% endblock %}
+{% block contentitem %}
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="h4 my-4">Listado</h1>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <!-- Row Titulos -->
+                                <tr>
+                                    <th>Núcleo</th>
+                                    <th>Telefono</th>
+                                    <th>Dirección</th>
+                                    <th>Ubicación</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row Nucleos -->
+                                {% for row in nucleos %}
+                                <tr>
+                                    <td>{{row.nombre}}</td>
+                                    <td>{{row.telefono}}</td>
+                                    <td>{{row.direccion}}</td>
+                                    <td>
+                                    <a href="/panel_nucleo/{{row.id}}" class="btn btn-primary btn-sm mb-3"><i class="fas fa-map-marker-alt mr-2"></i>Ver</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-12 my-4">
+                    <nav class="row">
+                        <div class="col-12">
+                            {% if page == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_nucleos/{{page - 1}}">Anterior</a>
+                            {% endif %}
+                            {% if lastpage == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_nucleos/{{page + 1}}">Siguiente</a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="black5 h5"><i class="fas fa-map-marker-alt mr-2"></i>Ubicación de todos los núcleos</h1>
+                    <hr>
+                    <div id="bigmapid"></div>
+                    <script>
+                        var mymap = L.map('bigmapid').setView([-34.9060, -57.89], 12.1);
+
+                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            maxZoom: 18,
+                            id: 'mapbox/streets-v11',
+                            accessToken: 'pk.eyJ1IjoibnVtZXJhIiwiYSI6ImNrNDF0bnQ2ejAxZmwzZHB0aTNta3FrZmgifQ.72Hy10HV07lVW5VjaQr9sA'
+                        }).addTo(mymap);
+
+                    </script>
+                    {% for row in fullnucleos %}
+                    <script>
+                        var latitude = {{row.latitude}}
+                        var longitude = {{row.longitude}}
+                        var marker = L.marker([latitude, longitude]).addTo(mymap);
+                    </script>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{{url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename = 'js/bootstrap.min.js')}}"></script>
+    </div>
+{% endblock %}

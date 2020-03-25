@@ -1,0 +1,116 @@
+{% extends "auth/panel.html" %}
+{% block contenttitle %}
+<i class="fas fa-school black3 mr-2"></i>Docentes en talleres
+{% endblock %}
+{% block contentitem %}
+    <div class="row">
+        <div class="col-12 col-lg mb-3">
+            <h1 class="h4 w400">Listado de docentes asignados a taller</h1>
+            <hr>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <!-- Row Titulos -->
+                            <tr>
+                                <th>Año</th>
+                                <th>Semestre</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Taller</th>
+                                <th>Docente</th>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
+                                <th>Eliminar</th>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                            <!-- Row Estudiantes -->
+                            {% for drt in docente_responsable_taller %}
+                            <tr>
+                                <td>{{drt.año}}</td>
+                                <td>Semestre {{drt.semestre}}</td>
+                                <td>{{drt.fecha_ini}}</td>
+                                <td>{{drt.fecha_fin}}</td>
+                                <td>{{drt.nombretaller}}</td>
+                                <td>{{drt.nombredocente}} {{drt.apellidodocente}}</td>
+                                {% for p in permisos %}
+                                {% if p.nombre == 'administrativo_destroy' %}
+                                <td>
+                                    <form action="{{ url_for('delete_docente_taller') }}" method="POST" onsubmit="return confirm('¿Seguro deseas desasignar el docente del taller?')"> 
+                                        <input type="hidden" name="ciclo_lectivo_id" value="{{drt.ciclo_lectivo_id}}">
+                                        <input type="hidden" name="taller_id" value="{{drt.taller_id}}">
+                                        <input type="hidden" name="docente_id" value="{{drt.docente_id}}">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-user-minus mr-2"></i>Eliminar</button>
+                                    </form>
+                                </td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-12 my-4">
+                    <nav class="row">
+                        <div class="col-12">
+                            {% if page == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Anterior</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_docentes_taller/{{page - 1}}">Anterior</a>
+                            {% endif %}
+                            {% if lastpage == 1 %}
+                            <a class="btn btn-primary mr-3 disabled" href="/">Siguiente</a>
+                            {% else %}
+                            <a class="btn btn-primary mr-3" href="/panel_docentes_taller/{{page + 1}}">Siguiente</a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        {% for p in permisos %}
+        {% if p.nombre == 'administrativo_new' %}
+        <div class="col-12 col-lg-5 mb-3">
+            <div class="card p-3">
+            <h1 class="h4 w400">Asignar docente a taller</h1>
+            <hr>
+                <form action="{{ url_for('insert_docente_taller') }}" method="POST"> 
+                   <div class="form-group row">
+                       <div class="col-12 my-3">
+                           <label>Taller</label>
+                            <select name="ciclo_lectivo_taller_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for ciclotaller in ciclotalleres %}
+                                <option value="{{ciclotaller.id}}">Semestre: {{ciclotaller.semestre}}, {{ciclotaller.año}}, Fecha: {{ciclotaller.fecha_ini}} / {{ciclotaller.fecha_fin}}, {{ciclotaller.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-12 my-3">
+                           <label>Docente</label>
+                            <select name="docente_id" class="browser-default custom-select" required>
+                                <option selected disabled>Seleccionar</option>
+                                {% for docente in docentes %}
+                                <option value="{{docente.id}}">{{docente.nombre}} {{docente.apellido}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <div class="col-6 text-left">
+                            <button class="btn btn-light black2" onclick="this.form.reset();" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-primary" type="submit">Agregar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

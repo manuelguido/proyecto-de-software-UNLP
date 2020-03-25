@@ -1,0 +1,108 @@
+{% extends "layout.html" %}    
+{% block content %}
+<div class="container-fluid w-100">
+    {% include 'auth/panel_components/mensajes_alertas.html' %}
+</div>
+    <!-- Contenido Principal -->
+    <main class="panel">
+        <!-- Row-->
+        <div class="row m-0 p-0">
+
+            <!-- Menu-->
+            <aside id="panel-menu" class="p-0 uns mobile-hide">
+                <div id="panel-menu-inner" class="p-0 panel-menu navbar-light">
+                    <div class="row justify-content-center">
+                        <img src="{{ url_for('static', filename='img/logo-dark.png') }}" class="panel-logo" alt="logo-de-orquesta-escuela-berisso">
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_estudiantes"><i class="fas fa-user-graduate mr-2"></i>Estudiantes</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_docentes"><i class="fas fa-user-friends mr-2"></i>Docentes</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_instrumentos"><i class="fas fa-guitar mr-2"></i>Instrumentos</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_usuarios"><i class="fas fa-users mr-2"></i>Usuarios</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_nucleos"><i class="fas fa-map-marked-alt mr-2"></i>Núcleos</a></li>
+                    </ul>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_ciclos"><i class="fas fa-calendar-plus mr-2"></i>Agregar ciclos</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_talleres"><i class="fas fa-school mr-2"></i>Ciclos talleres</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_docentes_taller"><i class="fas fa-user-friends mr-2"></i>Docentes talleres</a></li>
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_estudiantes_docentes"><i class="fas fa-user-friends mr-2"></i>Estudiantes talleres</a></li>
+                        {% for p in permisos %}
+                        {% if p.nombre == 'horario_index' %}
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_horario"><i class="far fa-clock mr-2"></i>Horarios</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_asistencia"><i class="fas fa-calendar-day mr-2"></i>Asistencia</a></li>
+                        {% for p in permisos %}
+                        {% if p.nombre == 'administrativo_index' %}
+                        <li class="list-group-item menuItem" role="button"><a href="/panel_adminsitio"><i class="fas fa-cog mr-2"></i>Configuracion</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item menuItem mt-auto" role="button"><a href="/cerrar_sesion"><i class="fas fa-sign-out-alt black5 mr-2 my-0"></i>Salir</a>
+                    </ul>
+                </div>
+                
+            </aside>
+            <!-- /.Menu -->
+            
+            <!-- Columna full width -->
+            <div id="panel-content" class="col p-0">
+
+                <div class="container-fluid w-100 m-0 panel-banner">
+                    <div class="row">
+                        <div class="col-12 py-4 px-5 my-lg-2">
+                            <h1 class="h4-responsive w600 ls02 m-0" id="panel-title">
+                                {% block contenttitle %}
+                                {% endblock %}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Container Fluid -->
+                <div class="container-fluid w-100 p-4 m-0">
+
+                    <!-- Block Contenido -->
+                    {% block contentitem %}
+                    {% endblock %}
+                    <!-- /.Block Contenido -->
+                    
+                    <script>
+                        var today = new Date();
+                        var dd = today.getDate();
+                        var mm = today.getMonth()+1; //January is 0!
+                        var yyyy = today.getFullYear();
+                        if(dd<10){
+                            dd='0'+dd
+                        } 
+                        if(mm<10){
+                            mm='0'+mm
+                        } 
+
+                        today = yyyy+'-'+mm+'-'+dd;
+                        fechas = document.getElementsByClassName("datefield"); 
+                        for (index = 0; index < fechas.length; index++) {
+                            fechas[index].setAttribute("max", today);
+                        }
+                    </script>
+
+                    <script>
+                        $('.input').keydown(function(e) {
+                            if (e.keyCode == 32) {
+                                return false;
+                            }
+                        });
+                    </script>
+                    
+                </div>
+                <!-- /.Container Fluid -->
+            </div>
+            <!--/.Columna full width -->
+        </div>
+        <!-- /.Row-->
+    </main>
+    <!-- /Main -->
+{% endblock %}
