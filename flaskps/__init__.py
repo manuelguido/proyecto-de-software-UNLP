@@ -1,4 +1,4 @@
-from flask import Flask, escape, request, session, jsonify, render_template, g, url_for, flash, redirect
+from flask import Flask, escape, request, session, jsonify, render_template, url_for, flash, redirect
 from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
@@ -7,9 +7,16 @@ from flaskps.config import Config
 from flaskps.helpers import handler, auth as helper_auth
 
 #Nombre de la aplicación
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder = "./frontend/dist/static",
+            template_folder = "./frontend/dist")
+
+#Configuracion inicial de la app
+app.config.from_object(Config)
+
 #Permite responder cualquier petición por parte de Vue a la API. 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 
 #Server Side session
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -20,6 +27,11 @@ app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
 #url Inicio
 app.add_url_rule("/", 'home', site_controller.index)
+
+#@app.route('/', defaults={'path': ''})
+#@app.route('/<path:path>')
+#def render_vue(path):
+#    return render_template("index.html")
 
 #---------------------------------------------------#
 #   Panel de administracion
@@ -79,13 +91,15 @@ app.add_url_rule("/change_site_pagination", 'change_site_pagination', site_contr
 #---------------------------------------------------#
 #   Autenticacion
 #---------------------------------------------------#
-    #Mostrar pagina de login
+# Autenticación
 app.add_url_rule("/iniciar_sesion", 'auth_login', auth.login)
-    #Cerrar sesión
 app.add_url_rule("/cerrar_sesion", 'auth_logout', auth.logout)
-    #Autenticar usuario
-app.add_url_rule("/autenticacion", 'auth_authenticate', auth.authenticate, methods=['POST'])
-
+app.add_url_rule(
+    "/autenticacion",
+    'auth_authenticate',
+    auth.authenticate,
+    methods=['POST']
+)
 
 #---------------------------------------------------#
 #   ABM Usuarios

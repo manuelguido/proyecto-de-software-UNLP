@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash, g
+from flask import session, redirect, render_template, request, url_for, abort, flash
 import requests
 import json
 #Modelos
@@ -21,7 +21,7 @@ from flaskps.models.clase import Clase
 from flaskps.models.asistencia import Asistencia
 from flaskps.models.responsable import Responsable
 from flaskps.models.ciclo import Ciclo
-from flaskps.resources import auth, site_controller, forms
+from flaskps.resources import site_controller, forms
 from flaskps.helpers.auth import authenticated
 
 #---------------------------
@@ -42,68 +42,67 @@ def getDocumentos():
 
 #Modulo estudiantes
 def getPanelEstudiantes(page):
-    if auth.authenticated():
-        #Obtiene permisos del usuario
-        User.db = get_db()
-        permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
-        #Obtiene estudiantes
-        Student.db = get_db()
-        lastpage = 1
-        #Si se envia una pagina inexistente se aborta
-        if (page > Student.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
-            abort (404)
-        #Chequea si hubo busquedas
-            #Se buscó solo nombre
-        if forms.searchByFirstName(request.args).validate():
-            students = Student.searchByFirstName(request.args.get('solo_nombre'))
-            #Se buscó solo apellido
-        elif forms.searchByLastName(request.args).validate():
-            students = Student.searchByLastName(request.args.get('solo_apellido'))
-        elif forms.searchByBoth(request.args).validate():
-            #Se buscó ambos
-            students = Student.searchByBoth(request.args.get('ambos_nombre'), request.args.get('ambos_apellido'))
-            #No hubo busqueda
-        else:
-            students = Student.allPaginated(site_controller.get_pagination(),int(page))
-            #Ultima pagina de paginado
-            lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
-        #Obtiene niveles
-        Nivel.db = get_db()
-        niveles = Nivel.all()
-        #Obtiene generos
-        Genero.db = get_db()
-        generos = Genero.all()
-        #Obtiene escuelas
-        Escuela.db = get_db()
-        escuelas = Escuela.all()
-        #Obtiene barrios
-        Barrio.db = get_db()
-        barrios = Barrio.all()
-        #Obtiene responsables
-        Responsable.db = get_db()
-        responsables = Responsable.all()
-        #Obtiene la información de las apis
-        localidades = getLocalidades()
-        tipo_docs = getDocumentos()
-        #Retorna el template
-        return render_template(
-            'auth/panel_components/alumnos.html',
-            permisos=permisos,
-            nombre=session['nombre'],
-            apellido=session['apellido'],
-            students=students,
-            localidades=localidades,
-            tipo_docs=tipo_docs,
-            niveles=niveles,
-            generos=generos,
-            escuelas=escuelas,
-            barrios=barrios,
-            responsables=responsables,
-            page=page,
-            lastpage=lastpage
-        )
+    if not authenticated(session):
+        abort(401)
+    #Obtiene permisos del usuario
+    User.db = get_db()
+    permisos = User.get_permisos(session['id']) #Session user es el email unico del usuario
+    #Obtiene estudiantes
+    Student.db = get_db()
+    lastpage = 1
+    #Si se envia una pagina inexistente se aborta
+    if (page > Student.total_paginas(site_controller.get_pagination())) or (not int(page) > 0):
+        abort (404)
+    #Chequea si hubo busquedas
+        #Se buscó solo nombre
+    if forms.searchByFirstName(request.args).validate():
+        students = Student.searchByFirstName(request.args.get('solo_nombre'))
+        #Se buscó solo apellido
+    elif forms.searchByLastName(request.args).validate():
+        students = Student.searchByLastName(request.args.get('solo_apellido'))
+    elif forms.searchByBoth(request.args).validate():
+        #Se buscó ambos
+        students = Student.searchByBoth(request.args.get('ambos_nombre'), request.args.get('ambos_apellido'))
+        #No hubo busqueda
     else:
-        return redirect(url_for('auth_login'))
+        students = Student.allPaginated(site_controller.get_pagination(),int(page))
+        #Ultima pagina de paginado
+        lastpage = Student.getLastPage(site_controller.get_pagination(),int(page))
+    #Obtiene niveles
+    Nivel.db = get_db()
+    niveles = Nivel.all()
+    #Obtiene generos
+    Genero.db = get_db()
+    generos = Genero.all()
+    #Obtiene escuelas
+    Escuela.db = get_db()
+    escuelas = Escuela.all()
+    #Obtiene barrios
+    Barrio.db = get_db()
+    barrios = Barrio.all()
+    #Obtiene responsables
+    Responsable.db = get_db()
+    responsables = Responsable.all()
+    #Obtiene la información de las apis
+    localidades = getLocalidades()
+    tipo_docs = getDocumentos()
+    #Retorna el template
+    return render_template(
+        'auth/panel_components/alumnos.html',
+        permisos=permisos,
+        nombre=session['nombre'],
+        apellido=session['apellido'],
+        students=students,
+        localidades=localidades,
+        tipo_docs=tipo_docs,
+        niveles=niveles,
+        generos=generos,
+        escuelas=escuelas,
+        barrios=barrios,
+        responsables=responsables,
+        page=page,
+        lastpage=lastpage
+    )
 
 #Modulo docentes
 def getPanelDocentes(page):

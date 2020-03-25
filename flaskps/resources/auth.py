@@ -1,14 +1,15 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash, g
+from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.resources import forms
+from flaskps.helpers.auth import authenticated
 
 def login():
     #Si esta autenticado, va derecho al panel
-    if authenticated():
-        return redirect(url_for('panel_estudiantes'))
-    else:
+    if not authenticated(session):
         return render_template('auth/login.html')
+    else:
+        return redirect(url_for('panel_estudiantes'))
 
 def authenticate():
     params = request.form
@@ -41,21 +42,17 @@ def authenticate():
 
     return redirect(url_for('panel_estudiantes'))
 
-def authenticated():
-    #Si el usuario esta autenticado retora 1(verdadero), sino retorna 0
-    g.user = None
-    if 'user' in session:
-        g.user = session['user']
-        return 1
-    return 0
+#def authenticated():
+#    #Si el usuario esta autenticado retora 1(verdadero), sino retorna 0
+#    g.user = None
+#    if 'user' in session:
+#        g.user = session['user']
+#        return 1
+#    return 0
 
 def logout():
-    if authenticated():
-        del session['id']
-        del session['user']
-        del session['email']
-        del session['nombre']
-        del session['apellido']
-        session.clear()
+    del session['user']
+    session.clear()
+    flash("La sesión se cerró correctamente.")
 
     return redirect(url_for('auth_login'))
