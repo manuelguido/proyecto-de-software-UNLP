@@ -26,12 +26,12 @@ Session(app)
 app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 
 #url Inicio
-app.add_url_rule("/", 'home', site_controller.index)
+#app.add_url_rule("/", 'home', site_controller.index)
 
-#@app.route('/', defaults={'path': ''})
-#@app.route('/<path:path>')
-#def render_vue(path):
-#    return render_template("index.html")
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def render_vue(path):
+    return render_template("home.html")
 
 #---------------------------------------------------#
 #   Panel de administracion
