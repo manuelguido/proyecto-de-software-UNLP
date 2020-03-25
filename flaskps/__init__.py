@@ -8,8 +8,8 @@ from flaskps.helpers import handler, auth as helper_auth
 
 #Nombre de la aplicación
 app = Flask(__name__,
-            static_folder = "./frontend/dist/static",
-            template_folder = "./frontend/dist")
+            static_folder = "./dist/static",
+            template_folder = "./dist")
 
 #Configuracion inicial de la app
 app.config.from_object(Config)
@@ -31,7 +31,7 @@ app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def render_vue(path):
-    return render_template("home.html")
+    return render_template("index.html")
 
 #---------------------------------------------------#
 #   Panel de administracion
