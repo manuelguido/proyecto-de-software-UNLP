@@ -19,9 +19,9 @@ export default {
       axios.get(path).then((respuesta) => {
         this.mensaje = respuesta.data
       })
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   },
   created () {
