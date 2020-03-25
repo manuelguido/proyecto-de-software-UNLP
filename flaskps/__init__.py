@@ -1,24 +1,15 @@
-from flask import Flask, escape, request, session
-from flask import render_template, g, url_for
-from flask import flash, redirect
+from flask import Flask, escape, request, session, jsonify, render_template, g, url_for, flash, redirect
+from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import site_controller
-from flaskps.resources import auth
-from flaskps.resources import user
-from flaskps.resources import instrumento
-from flaskps.resources import student
-from flaskps.resources import docente
-from flaskps.resources import panel
-from flaskps.resources import ciclo
-from flaskps.resources import taller
-from flaskps.resources import clase
-from flaskps.resources import asistencia
+from flaskps.resources import site_controller, auth, user, instrumento, student, docente, panel, ciclo, taller, clase, asistencia
 from flaskps.config import Config
-from flaskps.helpers import handler
-from flaskps.helpers import auth as helper_auth
+from flaskps.helpers import handler, auth as helper_auth
 
+#Nombre de la aplicación
 app = Flask(__name__)
+#Permite responder cualquier petición por parte de Vue a la API. 
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 #Server Side session
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -206,6 +197,10 @@ app.add_url_rule("/ver_asistencias/<string:id_data>", 'ver_asistencias', panel.g
 app.add_url_rule("/marcar_asistencia", 'marcar_asistencia', asistencia.storeAsistencia, methods=['POST', 'GET'])
 app.add_url_rule("/marcar_inasistencia", 'marcar_inasistencia', asistencia.storeInasistencia, methods=['POST', 'GET'])
 
+
+@app.route('/api/v1.0/mensaje')
+def create_task():
+    return jsonify('Hola mundo desde Flask')
 
 
 #---------------------------------------------------#
