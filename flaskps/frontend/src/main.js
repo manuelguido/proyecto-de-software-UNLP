@@ -1,15 +1,20 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import 'bootstrap-css-only/css/bootstrap.min.css'
+import 'mdbvue/lib/css/mdb.min.css'
+
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router'
+import store from './store'
+import ComponentA from './components/Card.vue'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  components: { App },
-  template: '<App/>'
-})
+  store,
+  components: {
+    'component-a': ComponentA,
+  },
+  render: h => h(App)
+}).$mount('#app')

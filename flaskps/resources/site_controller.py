@@ -12,13 +12,13 @@ def index():
     if (estadositio):
         infositio = ConfigSitio.all()
         return render_template(
-            'home/index.html',
+            'index.html',
             estadositio=estadositio,
             infositio=infositio
             )
     else:
         return render_template(
-            'home/site_down.html',
+            'site_down.html',
             estadositio=estadositio
             )
 

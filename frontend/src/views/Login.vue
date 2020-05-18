@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{ mensaje }}</p>
+    <p>Login</p>
   </div>
 </template>
 
@@ -10,18 +10,18 @@ export default {
   name: 'Main',
   data () {
     return {
-      mensaje: 'Sin mensaje!'
+      message: 'Sin mensaje!'
     }
   },
   methods: {
     getMensaje () {
       const path = 'http://localhost:5000/api/v1.0/mensaje'
       axios.get(path).then((respuesta) => {
-        this.mensaje = respuesta.data
+        this.message = respuesta.data
       })
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
     }
   },
   created () {
