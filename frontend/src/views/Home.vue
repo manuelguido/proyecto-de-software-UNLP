@@ -64,7 +64,7 @@
       <div v-else class="container-fluid pt-5">
           <div class="row justify-content-center pt-5">
               <div class="col-md-8 py-5">
-                  <img src="./assets/error_wallpaper.png" class="w-100 card" alt="el sitio se encuentra en mantenimiento">
+                  <!-- <img src="./assets/error_wallpaper.png" class="w-100 card" alt="el sitio se encuentra en mantenimiento"> -->
               </div>
           </div>
       </div>
