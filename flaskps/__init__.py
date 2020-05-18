@@ -1,24 +1,32 @@
-from flask import Flask, escape, request, session
-from flask import render_template, g, url_for
-from flask import flash, redirect
+from flask import Flask, jsonify, render_template
+#from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import site_controller
-from flaskps.resources import auth
-from flaskps.resources import user
-from flaskps.resources import instrumento
-from flaskps.resources import student
-from flaskps.resources import docente
-from flaskps.resources import panel
-from flaskps.resources import ciclo
-from flaskps.resources import taller
-from flaskps.resources import clase
-from flaskps.resources import asistencia
+from flaskps.resources import site_controller, auth, user, instrumento, student, docente, panel, ciclo, taller, clase, asistencia
 from flaskps.config import Config
-from flaskps.helpers import handler
-from flaskps.helpers import auth as helper_auth
+from flaskps.helpers import handler, auth as helper_auth
+from flaskps.models.config_sitio import ConfigSitio
 
 app = Flask(__name__)
+#cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+#Server Side session
+app.config['SESSION_TYPE'] = 'filesystem'
+#Session(app)
+
+app = Flask(__name__,
+            static_folder = "./frontend/dist/static",
+            template_folder = "./frontend/dist")
+
+@app.route('/api/v1.0/infositio')
+def create_task():
+    ConfigSitio.db = get_db()
+    return jsonify(ConfigSitio.all())
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def render_vue(path):
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
