@@ -6,3 +6,7 @@ from flaskps.resources import site_controller, auth, user, instrumento, student,
 from flaskps.config import Config
 from flaskps.helpers import handler, auth as helper_auth
 from flaskps.models.config_sitio import ConfigSitio
+
+app = Flask(__name__,
+            static_folder = "./frontend/dist/static",
+            template_folder = "./frontend/dist")
