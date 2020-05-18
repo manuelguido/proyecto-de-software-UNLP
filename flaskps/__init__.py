@@ -9,6 +9,10 @@ from flaskps.models.config_sitio import ConfigSitio
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    
+app = Flask(__name__,
+            static_folder = "../frontend/dist/static",
+            template_folder = "../frontend/dist")
 
 #Server Side session
 app.config['SESSION_TYPE'] = 'filesystem'
