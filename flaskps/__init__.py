@@ -15,8 +15,8 @@ app.config['SESSION_TYPE'] = 'filesystem'
 #Session(app)
 
 app = Flask(__name__,
-            static_folder = "./frontend/dist/static",
-            template_folder = "./frontend/dist")
+            static_folder = "././frontend/dist/static",
+            template_folder = "././frontend/dist")
 
 @app.route('/api/v1.0/infositio')
 def create_task():
