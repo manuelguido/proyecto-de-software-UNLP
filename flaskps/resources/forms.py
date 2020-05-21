@@ -6,10 +6,9 @@ from wtforms import validators
 #---------------------------------------------------#
 #   Inicio de sesión
 #---------------------------------------------------#
-class Login(Form):
-    email = StringField(u'Email', [validators.required(), validators.length(min=1)])
-    password = StringField(u'Email', [validators.required(), validators.length(min=1)])
-
+class ValidateLogin(Form):
+    email = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    password = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
 #---------------------------------------------------#
 #   Informacion del sitio
 #---------------------------------------------------#

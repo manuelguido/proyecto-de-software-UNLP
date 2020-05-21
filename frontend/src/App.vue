@@ -18,26 +18,23 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #41444b;
+  margin: 0;
+  padding: 0;
 }
 
 html {
     scroll-behavior: smooth !important;
 }
 body {
-    background: #fff;
-}
-#app {
-    min-height: 100vh;
-    background: none;
+    background: #f9f9f9;
 }
 .hide {
     max-width: 0 !important;
     max-height: 0 !important;
 }
 
-.display-n { display: none !important;}
+/* .display-n { display: none !important;}
 .display-b { display: block !important;}
 .overflow-h { overflow: hidden !important; }
 .no-shadow { box-shadow: none !important; }
@@ -65,7 +62,7 @@ body {
 .opacity7 {opacity: 0.7 !important;}
 .opacity8 {opacity: 0.8 !important;}
 .opacity9 {opacity: 0.9 !important;}
-.opacity10 {opacity: 1 !important;}
+.opacity10 {opacity: 1 !important;} */
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -76,41 +73,21 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
-.inner-shadow-1 {
+/* .inner-shadow-1 {
     -webkit-box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
     -moz-box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
     box-shadow: inset 0px 0px 20px 8px rgba(112,112,112,0.2);
-}
+} */
 
 /*--------------------------------------------------------------
     Generic
 --------------------------------------------------------------*/
-@media(max-width: 992px){
-    .mobile-hide {
-        display: none;
-    }
-}
-@media(min-width: 992px){
-    .web-hide {
-        display: none;
-    }
-}
+@media(max-width: 992px){ .mobile-hide { display: none; }}
+@media(min-width: 992px){ .web-hide { display: none; }}
 
 /*--------------------------------------------------------------
     Text
---------------------------------------------------------------*/
-h1, h2, h3, h4, h5, h6, p {
-    color: #41444b;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 300 !important;
-}
-.color-gris {
-    color: #676767 !important;
-}
-.color20 {
-    color: #206be3 !important;
-}
-
+--------------------------------------------------------------*/s
 .w200 { font-weight: 200 !important; }
 .w300 { font-weight: 300 !important; }
 .w400 { font-weight: 400 !important; }
@@ -137,185 +114,20 @@ h1, h2, h3, h4, h5, h6, p {
     margin-left: 0 !important;
     margin-right: 0 !important;
 }
-
-.btn i {
-    color: inherit !important;
-}
-
-.btn:hover {
-    opacity: 0.9 !important;
-}
-    /* Rounded */
-.btn-rounded {
-    border-radius: 50px !important;
-}
-
-/*--------------------------------------------------------------
-    Icons
---------------------------------------------------------------*/
-.icon-sm { font-size: 1.2em !important; }
-.icon-md { font-size: 1.5em !important; }
-.icon-lg { font-size: 1.9em !important; }
+/* Icon */
+.btn i { color: inherit !important; }
+/* Rounded */
+.btn-rounded { border-radius: 50px !important; }
 
 /*--------------------------------------------------------------
     Cards
 --------------------------------------------------------------*/
-.card-header {
+/* .card-header {
     border: 0 none;
 }
 .card-radius-16 {
     border-radius: 16px !important;
-}
-
-/*--------------------------------------------------------------
-    <navbar>
---------------------------------------------------------------*/
-.home-navbar .nav-item a {
-    color: #707070;
-    font-weight: 400;
-    font-size: 1.3em;
-    margin: 0 50px;
-    letter-spacing: .1em;
-}
-.nav-logo {
-    height: 8em;
-    opacity: 0.5 !important;
-    margin-right: 8em;
-}
-.home-login-button {
-    margin-left: 5em;
-}
-
-@media (max-width: 1400px) {
-    .nav-logo {
-        height: 4em !important;
-        margin: 0 !important;
-    }
-    .home-navbar .nav-item a {
-        font-size: 1em;
-        margin: .7em 2em !important;
-    }
-    .home-login-button {
-        margin-left: 1.6em !important;
-    }
-    .home-login-button button {
-        font-size: .7em !important;
-    }
-}
-
-@media (max-width: 992px) {
-    .home-navbar {
-        background: #fcfcfc !important;
-        box-shadow: 0 .07em .155em 0 rgba(0,0,0,.22) !important;
-        padding: 1em !important;
-    }
-    .nav-logo {
-        height: 4em !important;
-        margin: 0 !important;
-    }
-    .home-navbar .nav-item a {
-        font-size: 1em;
-        margin: .7em 2em !important;
-    }
-    .home-login-button {
-        margin-left: 1.6em !important;
-    }
-}
-
-/*--------------------------------------------------------------
-    Página de inicio
---------------------------------------------------------------*/
-.home-row {
-    padding-top: 45vh;
-}
-.home-title {
-    font-weight: 700;
-    font-size: 45px;
-    color: #454545;
-}
-.home-text {
-    font-size: 26px;
-}
-
-/*--------------------------------------------------------------
-    Página de login
---------------------------------------------------------------*/
-.login-main {
-    background: #134153;
-    min-height: 100vh;
-    max-height: 200vh;
-}
-.back-card {
-    padding: 0 !important;
-    background: rgba(255,255,255,0.2);
-}
-.login-card {
-    background: #fcfcfc !important;
-    height: 120% !important;
-}
-
-@media (min-width: 576px) {
-    .login-card {
-        position: relative;
-        width: 100%;
-        margin: 0;
-        height: 100%;
-    }
-    .login-logo {
-        margin: 20px auto;
-        width: 100px;
-    }
-    .back-card {
-        margin: 1em auto 0 auto;
-    }
-}
-
-@media (min-width: 768px) {
-    .login-card {
-        position: absolute;
-        height: 120% !important;
-        max-width: 100% !important;
-        margin-top: -10%;
-    }
-    .login-logo {
-        width: auto;
-        margin: 120px auto !important;
-    }
-    .back-card {
-        margin: 6em auto 0 auto;
-    }
-}
-
-@media (min-width: 992px) {
-    .login-card {
-        width: 80%;
-    }
-}
-
-.login-header {
-    background: none !important;
-    border: 0 none !important;
-    text-align: center;
-    padding: 40px !important;
-}
-.login-header h1 {
-    font-weight: 400;
-    font-size: 30px;
-    color: #333 !important;
-}
-.login-body {
-    padding: 20px;
-    background: none !important;
-}
-.btn-new-green {
-    background: #7ed4c9;
-    padding-left: 100px;
-    padding-right: 100px;
-}
-.btn-back {
-    background: #2c7695;
-    border-radius: 8px;
-}
+} */
 
 /*--------------------------------------------------------------
     Panel de docente

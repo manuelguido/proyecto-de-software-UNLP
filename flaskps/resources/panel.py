@@ -24,6 +24,12 @@ from flaskps.models.ciclo import Ciclo
 from flaskps.resources import site_controller, forms
 from flaskps.helpers.auth import authenticated
 
+
+
+
+
+
+
 #---------------------------
 #-  El return [{}] se uso para que no se rompa el servidor. Si el servidor se rompe es por la falla de la api, no del codigo
 #--------------------------
