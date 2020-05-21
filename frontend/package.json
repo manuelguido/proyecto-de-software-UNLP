@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "leaflet": "^1.6.0",
     "mdbvue": "^6.7.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

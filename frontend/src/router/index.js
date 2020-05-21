@@ -5,6 +5,7 @@ import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Logout from '@/views/Logout'
 import Dashboard from '@/views/Dashboard'
+import Nucleos from '@/views/dashboard/Nucleos'
 
 Vue.use(Router)
 
@@ -54,6 +55,23 @@ export default new Router({
       path: '/dashboard',
       name: 'Dashboard',
       component: Dashboard,
+      beforeEnter (to, from, next) {
+        const path = '/user/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/nucleos',
+      name: 'Nucleos',
+      component: Nucleos,
       beforeEnter (to, from, next) {
         const path = '/user/authenticated'
         axios.get(path).then((respuesta) => {

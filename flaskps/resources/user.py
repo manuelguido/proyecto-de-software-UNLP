@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
+from flask import redirect, render_template, request, url_for, session, abort, flash, jsonify
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.helpers.auth import authenticated
@@ -109,3 +109,34 @@ def delete(id_data):
         return redirect(url_for('panel_usuarios'))
     else:
         abort(401)
+
+def routes():
+    if not authenticated(session):
+        abort(401)
+    my_objects = [] #Listado de rutas
+    nucleos = {'name': 'Núcleos', 'url': '/dashboard/nucleos', 'icon': 'fas fa-map-marked-alt'}
+    my_objects.append(nucleos)
+    #User
+    User.db = get_db()
+    
+    if (User.tiene_permiso(session['id'],'estudiante_index')):
+        new = {'name': 'Estudiantes', 'url': '/dashboard/estudiantes', 'icon': 'fas fa-user-graduate'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'docente_index')):
+        new = {'name': 'Docentes', 'url': '/dashboard/docentes', 'icon': 'fas fa-user-friends'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'instrumento_index')):
+        new = {'name': 'Instrumentos', 'url': '/dashboard/instrumentos', 'icon': 'fas fa-guitar'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'usuario_index')):
+        new = {'name': 'Usuarios', 'url': '/dashboard/usuarios', 'icon': 'fas fa-user'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'administrativo_index')):
+        new = {'name': 'Administrativo', 'url': '/dashboard/administrativo', 'icon': 'fas fa-cog'}
+        my_objects.append(new)
+    #Returning data
+    return jsonify(my_objects)
