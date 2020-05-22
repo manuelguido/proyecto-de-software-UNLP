@@ -1,10 +1,10 @@
 :root {
     /* Main Pallete */
-    --color-a: #f2713d;
-    --color-a-light: #ffecd7;
+    --color-a: #0da084;
+    --color-a-light: #e3f5f3;
 
-    --color-b: #ffbc6d;
-    --color-b-light: #ffecd7;
+    --color-b: rgb(38, 92, 173);
+    --color-b-light: rgba(38, 92, 173, 0.2);
     
     --color-c: #5ca34a;
     --color-c-light: #d1ebd0;
@@ -16,16 +16,16 @@
     --color-e-light: #0b0f40;
 
     /* White */
-    --white-a: #fff;
-    --white-b: #eceef8;
+    --white-a: #fdfeff;
+    --white-b: #e6e8ef;
     --white-c: #d0d2d6;
-    --white-d: #ddd;
+    --white-d: #ccc;
 
     /* Black */
-    --black-a: #353535;
-    --black-b: #505565;
-    --black-c: #8c92a6;
-    --black-d: #ccc;
+    --black-a: #212224;
+    --black-b: #363728;
+    --black-c: #505565;
+    --black-d: #8c92a6;
 
     /* Traditional */
     --seed-primary: #444BF8;

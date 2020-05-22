@@ -19,7 +19,7 @@ app.config['SECRET_KEY'] = b'6hc/_gsh,./;2ZZx3c6_s,1//'
 #---------------------------------------------------#
 #   API
 #---------------------------------------------------#
-@app.route('/api/v1.0/infositio')
+@app.route('/api/info_sitio')
 def create_task():
     config_sitio.ConfigSitio.db = get_db()
     return jsonify(config_sitio.ConfigSitio.all())
@@ -28,7 +28,7 @@ def create_task():
 #   Private API
 #---------------------------------------------------#
 app.add_url_rule("/api/nucleos", 'api_nucleos', nucleo.get_all, methods=['GET'])
-
+app.add_url_rule("/api/nucleo/<int:id_data>", 'api_nucleo', nucleo.get_nucleo, methods=['GET'])
 
 #---------------------------------------------------#
 #   Autenticacion
@@ -41,10 +41,12 @@ app.add_url_rule("/auth_authenticate", 'auth_authenticate', auth.authenticate, m
 app.add_url_rule("/user/authenticated", 'auth_authenticated', auth.authenticated, methods=['GET'])
 
 #---------------------------------------------------#
-#   Roles
+#   Usuario
 #---------------------------------------------------#
-    #Cerrar sesión
-app.add_url_rule("/user/routes", 'user_routes', user.routes)
+    #Obtener perfil de usuario
+app.add_url_rule("/api/user/profile", 'api_profile', user.get_profile, methods=['GET'])
+    #Obtener roles de usuario
+app.add_url_rule("/api/user/routes", 'user_routes', user.routes)
 
 #---------------------------------------------------#
 #   Inicio

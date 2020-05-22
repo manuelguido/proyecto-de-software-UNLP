@@ -1,26 +1,83 @@
 <template>
-  <l-map ref="myMap"> </l-map>
+  <div style="height: 500px; width: 100%">
+    <l-map
+      :zoom="zoom"
+      :center="center"
+      :options="mapOptions"
+      style="height: 100%"
+      @update:center="centerUpdate"
+      @update:zoom="zoomUpdate"
+    >
+      <l-tile-layer
+        :url="url"
+        :attribution="attribution"
+      />
+      <l-marker v-for="place in places" :key="place.id" :lat-lng="coord(place)">
+        <l-popup>
+          <div @click="innerClick">
+            <p>{{place.nombre}}</p>
+            <p>{{place.direccion}}</p>
+          </div>
+        </l-popup>
+      </l-marker>
+    </l-map>
+  </div>
 </template>
 
 <script>
-// If you need to reference 'L', such as in 'L.icon', then be sure to
-// explicitly import 'leaflet' into your component
-import L from 'leaflet';
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
-import 'leaflet/dist/leaflet.css';
+import { latLng, Icon } from 'leaflet'
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from 'vue2-leaflet'
+
+delete Icon.Default.prototype._getIconUrl
+Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
 
 export default {
-  name: 'MyAwesomeMap',
+  name: 'Map',
   components: {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup,
+    LTooltip
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.$refs.myMap.mapObject.ANY_LEAFLET_MAP_METHOD();
-    });
+  props: {
+    places: null
   },
+  data () {
+    return {
+      zoom: 12,
+      center: latLng(-34.9060, -57.89),
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      currentZoom: 12,
+      currentCenter: latLng(-34.9060, -57.89),
+      showParagraph: false,
+      mapOptions: {
+        zoomSnap: 0.5
+      }
+    }
+  },
+  methods: {
+    zoomUpdate (zoom) {
+      this.currentZoom = zoom
+    },
+    centerUpdate (center) {
+      this.currentCenter = center
+    },
+    showLongText () {
+      this.showParagraph = !this.showParagraph
+    },
+    innerClick () {
+      alert('Click!')
+    },
+    coord (place) {
+      return latLng(place.latitude, place.longitude)
+    }
+  }
 }
-
 </script>

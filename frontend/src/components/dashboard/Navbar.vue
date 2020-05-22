@@ -1,9 +1,13 @@
 <template>
-  <mdb-navbar class="dashboard-navbar shadow-none" light>
-    <mdb-navbar-brand class="brand black-c">{{title}}</mdb-navbar-brand>
-    <mdb-navbar-toggler>
-      <mdb-navbar-nav class="web-hide text-left">
-        <mdb-nav-item v-for="link in links" :key="link.name" :href="link.url" class="black-c"><i :class="link.icon" class="mr-2 black-d"></i>{{link.name}}</mdb-nav-item>
+  <mdb-navbar class="sticky-top shadow-none bg-color-a-light" light>
+    <mdb-navbar-brand>
+      <p id="current-title" class="m-1 color-a">Dashboard</p>
+    </mdb-navbar-brand>
+    <mdb-navbar-toggler class="web-hide color-a">
+      <mdb-navbar-nav class="web-hide">
+        <router-link to="/dashboard" class="nav-item web-hide"><i class="fas fa-home mr-2"></i>Inicio</router-link>
+        <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide"><i :class="link.icon" class="mr-2"></i>{{link.name}}</router-link>
+        <router-link to="/logout" class="nav-item web-hide"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
@@ -13,10 +17,6 @@
 import { mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem, mdbDropdown, mdbDropdownMenu, mdbDropdownToggle, mdbInput, mdbDropdownItem } from 'mdbvue'
 export default {
   name: 'NavbarPage',
-  props: {
-    title: String,
-    links: null
-  },
   components: {
     mdbNavbar,
     mdbNavbarBrand,
@@ -28,16 +28,29 @@ export default {
     mdbDropdownToggle,
     mdbDropdownItem,
     mdbInput
+  },
+  props: {
+    links: null
   }
 }
 </script>
 
 <style scoped>
-.dashboard-navbar {
-  background-color: #f0f3fa;
+.nav-item {
+  padding: .5em 1em;
+  background: var(--color-a-light);
 }
-.brand {
-  font-size: .7em !important;
-  font-weight: 400 !important;
+.nav-item {
+  border-radius: 6.2px !important;
+  border: 0 none !important;
+  background: none;
+  color: var(--color-a);
+  transition: 0.2s all !important;
+}
+.nav-item:hover,
+.nav-item:active,
+.nav-item.active {
+  background: var(--color-a);
+  color: var(--white-a);
 }
 </style>

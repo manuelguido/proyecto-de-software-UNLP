@@ -1,39 +1,34 @@
 <template>
-<div>
-  <!-- Contenido Principal -->
-    <main class="panel">
-      <!-- Row-->
-      <div class="row m-0 p-0">
-        <!-- Menu-->
-        <aside id="panel-menu" class="p-0 uns mobile-hide">
-          <div id="panel-menu-inner" class="p-0 panel-menu navbar-light pt-5">
-            <a href="/dashboard" class="btn btn-primary my-3 mx-0"><i class="fas fa-home mr-3"></i>Inicio</a>
-            <ul class="list-group list-group-flush text-left">
-              <menu-item v-for="link in links" :key="link.name" :item=link></menu-item>
-            </ul>
-            <hr>
-            <ul class="list-group list-group-flush text-left">
-              <menu-item :item=logout_link></menu-item>
-            </ul>
-          </div>
-        </aside>
-        <!-- /.Menu -->
-
-        <!-- Columna full width -->
-        <div id="panel-content" class="col p-0">
-          <navbar title="Dashboard" :links="links"></navbar>
-          <!-- Container Fluid -->
-          <div class="container-fluid w-100 p-xl-5 p-4 m-0 text-left">
-            <slot></slot>
-          </div>
-          <!-- /.Container Fluid -->
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+        <!-- Left panel menu -->
+        <div class="panel-sidebar mobile-hide">
+            <!--Header-->
+            <div class="mb-2 navbar shadow-none">
+              <p class="navbar-brand black-d w600">Dashboard</p>
+            </div>
+            <!--/.Header -->
+            <div class="container py-1 px-4">
+                <ul class="list-group">
+                  <menu-item :item=home_link></menu-item>
+                  <menu-item v-for="link in links" :key="link.name" :item=link></menu-item>
+                  <menu-item :item=logout_link></menu-item>
+                </ul>
+            </div>
         </div>
-      <!--/.Columna full width -->
+        <!-- /.Left panel menu -->
+
+        <!-- Panel content -->
+        <div id="panel-container" class="col px-0">
+            <navbar title="Dashboard" :links="links"></navbar>
+            <!-- All content -->
+            <div class="p-3 p-lg-5 w-100">
+                <slot></slot>
+            </div>
+        </div>
+        <!-- /.Panel content -->
     </div>
-    <!-- /.Row-->
-  </main>
-  <!-- /Main -->
-</div>
+  </div>
 </template>
 
 <script>
@@ -45,6 +40,12 @@ export default {
   data () {
     return {
       links: '',
+      user: null,
+      home_link: {
+        'name': 'Inicio',
+        'url': '/dashboard',
+        'icon': 'fas fa-home'
+      },
       logout_link: {
         'name': 'Cerrar sesión',
         'url': '/logout',
@@ -58,7 +59,7 @@ export default {
   },
   methods: {
     getRoutes () {
-      const path = '/user/routes'
+      const path = '/api/user/routes'
       axios.get(path).then((respuesta) => {
         this.links = respuesta.data
       })
@@ -66,113 +67,59 @@ export default {
           console.log(error)
         })
     }
+    // getUser () {
+    //   const path = '/api/user/profile'
+    //   axios.get(path).then((respuesta) => {
+    //     this.user = respuesta.data
+    //   })
+    //     .catch((error) => {
+    //       console.log(error)
+    //     })
+    // }
   },
   created () {
     this.getRoutes()
+    // this.getUser()
   }
 }
 </script>
 
 <style scoped>
-@media (min-width: 702px) {#panel-menu { min-height: 100vh;}}
-@media (min-width: 992px) {.panel-logo {display: block !important;}}
-.panel {
-    background: #fff;
-}
-.nav-link-panel , .nav-link-nombre {
-    color: var(--black-a) !important;
-    font-weight: 500;
-}
-.nav-link-panel {
-    font-size: 1.2em;
-}
-.nav-link-nombre {
-    font-size: .9em;
-}
-#panel-menu {
-    z-index: 10;
-    border-radius: 0;
-    background: #f0f3fa;
-}
-.panel-banner {
-    background: #f0f3fa;
-}
-.navbar-static-top {
-    margin-bottom: 0px;
-}
-.panel-logo {
-    margin: 25px auto;
-    width: 35%;
-    display: none;
-}
-.panel-main {
-    background: #e6e6e4;
-    height: 100%;
-}
-.panel-main .container-fluid {
-    margin: 0 auto;
-    padding-top: 10vh;
-}
-
-.subItem {
-    display: none;
-}
-.icon-rounded {
-    padding: 10px;
-    margin-right: 4px;
-    border-radius: 50px;
-}
-.full-height {
-    height: 100% !important;
-}
-.navbar-brand {
-    color: #444 !important;
-    cursor: default !important;
-}
-.btn-note-detail {
-    background: #7ed4c9;
-    font-weight: bold;
-}
-.alert-fixed {
+/* Sidebar */
+.panel-sidebar {
+    height: 100vh !important;
     position: fixed;
-    bottom: 9vh;
-    top: auto;
-    left: 3vw;;
-    right: 3vw;
-    z-index:9999;
+    background: var(--color-a-light);
+    /* box-shadow: 0 .07em .125em 0 rgba(0,0,0,.15) !important; */
+    box-shadow: none;
+    width: 240px;
+    left: 0;
+    z-index: 1070;
 }
-
-.page-buttons {
-    display: inline-block !important;
+/* Panel container */
+@media(min-width: 992px) {
+    #panel-container {
+        padding-left: 240px !important;
+    }
 }
-#bigmapid {
-    height: 60vh;
-    width: 100%;
+/*Header*/
+.panel-header {
+    background: var(--color-a-light);
 }
-#minmapid {
-    height: 65vh;
-    width: 100%;
+.panel-header .breadcrumb {
+    margin: 0 !important;
+    background: none;
 }
-
-th, td {
-    padding-bottom: 10px !important;
-    padding-top: 10px !important;
+.panel-header .breadcrumb * {
+    color: var(--black-a);
 }
-.table-selected {
-    background: rgba(44, 118, 149, 0.5) !important;
+.panel-header #panel-title {
+    font-size: 1.14em;
+    color: var(--color-a);
+    font-weight: 600;
+    letter-spacing: 1px;
 }
-.table-select {
-    transition: 0.08s all !important;
-}
-.table-select:hover {
-    background: rgba(44, 118, 149, 0.6) !important;
-}
-.table-select:active {
-    background: rgba(44, 118, 149, 0.8) !important;
-}
-
-.instrumento {
-    max-height: 300px;
-    max-width: 200px;
+.panel-header .active {
+    color: var(--color-a) !important;
 }
 </style>

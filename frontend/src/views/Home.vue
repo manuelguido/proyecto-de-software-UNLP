@@ -1,11 +1,11 @@
 <template>
-<div class="home-container peach-gradient color-block-5">
+<div class="home-container">
   <homenav></homenav>
   <!-- Container -->
   <div class="container-fluid">
     <div class="row justify-content-center py-5 my-5">
       <div class="col-12 col-xl-5 py-xl-5">
-        <div class="card p-xl-5">
+        <div class="card home-card p-xl-5">
           <div class="card-body p-xl-5">
             <div v-if="estado_sitio.activo">
               <h1 class="h3 w600 mb-4">{{ estado_sitio.titulo }}</h1>
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     getInfo () {
-      const path = '/api/v1.0/infositio'
+      const path = '/api/info_sitio'
       axios.get(path).then((respuesta) => {
         this.estado_sitio = respuesta.data
       })
@@ -57,5 +57,9 @@ export default {
 <style scoped>
 .home-container {
   min-height: 100vh;
+}
+.home-card {
+  border-radius: 40px;
+  box-shadow: -5px -5px 20px 20% #efeeee;
 }
 </style>

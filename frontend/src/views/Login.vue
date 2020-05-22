@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="col-12 py-4">
-          <a href="/" class="btn btn-blue-grey my-5"><i class="fas fa-arrow-left mr-3 white1"></i>Volver al inicio</a>
+          <router-link to="/" class="btn btn-blue-grey my-5"><i class="fas fa-arrow-left mr-3 white1"></i>Volver al inicio</router-link>
         </div>
       </div>
     </div>

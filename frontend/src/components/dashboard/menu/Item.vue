@@ -1,7 +1,7 @@
 <template>
-  <a :href="item.url" class="list-group-item panel-item waves-effect pl-4 py-2">
-    <i :class="item.icon" class="mr-3"></i>{{ item.name }}
-  </a>
+  <router-link :to="item.url" class="list-group-item px-4 py-2 waves-effect">
+    <div class="md-v-line"></div><i :class="item.icon" class="mr-2"></i>{{ item.name }}
+  </router-link>
 </template>
 
 <script>
@@ -13,25 +13,22 @@ export default {
 </script>
 
 <style scoped>
-.panel-item {
-  background: none;
-  border: 0 none;
-  border-top-right-radius: 50px !important;
-  border-bottom-right-radius: 50px !important;
-  margin-right: 1.1em;
-  color: var(--black-a);
+.list-group {
+    padding: 0 1em;
 }
-.panel-item, .panel-item * {
-  transition: 0.22s all !important;
+.list-group-item {
+    border-radius: 6.2px !important;
 }
-.panel-item:hover {
-  color: var(--seed-primary-dark);
-  background: var(--black-d);
+.list-group, .list-group-item {
+    border: 0 none !important;
+    background: none;
+    color: var(--black-d);
+    transition: 0.1s all !important;
 }
-.panel-item i {
-  color: var(--black-c);
-}
-.panel-item:hover i {
-  color: var(--seed-primary-dark);
+.list-group-item:hover,
+.list-group-item:active,
+.list-group-item.active {
+    background: var(--color-a);
+    color: var(--white-a);
 }
 </style>

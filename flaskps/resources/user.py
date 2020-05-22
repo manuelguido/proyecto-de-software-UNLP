@@ -140,3 +140,9 @@ def routes():
         my_objects.append(new)
     #Returning data
     return jsonify(my_objects)
+
+def get_profile():
+    if not authenticated(session):
+        abort(401)
+    user_object = {'name': session['nombre'], 'lastname': session['apellido']}
+    return jsonify(user_object)

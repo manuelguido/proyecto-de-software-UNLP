@@ -5,7 +5,7 @@
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
-        <a class="btn btn-primary" href="login"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</a>
+        <router-link to="/login" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
