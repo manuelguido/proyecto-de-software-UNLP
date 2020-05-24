@@ -28,6 +28,7 @@ def create_task():
 #   Private API
 #---------------------------------------------------#
 app.add_url_rule("/api/nucleos", 'api_nucleos', nucleo.get_all, methods=['GET'])
+# app.add_url_rule("/api/nucleos2", 'api_nucleos2', nucleo.get_all2, methods=['GET'])
 app.add_url_rule("/api/nucleo/<int:id_data>", 'api_nucleo', nucleo.get_nucleo, methods=['GET'])
 
 #---------------------------------------------------#

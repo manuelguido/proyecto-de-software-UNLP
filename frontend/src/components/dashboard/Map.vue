@@ -14,9 +14,10 @@
       />
       <l-marker v-for="place in places" :key="place.id" :lat-lng="coord(place)">
         <l-popup>
-          <div @click="innerClick">
-            <p>{{place.nombre}}</p>
-            <p>{{place.direccion}}</p>
+          <div class="marker-popup">
+            <h3 class="w400 mb-2">{{place.nombre}}</h3>
+            <p class="w300 my-0"><i class="fas fa-phone-alt seed-primary mr-2"></i>{{place.telefono}}</p>
+            <p class="w300 my-0"><i class="fas fa-map-marker-alt seed-primary mr-2"></i>{{place.direccion}}</p>
           </div>
         </l-popup>
       </l-marker>
@@ -72,12 +73,18 @@ export default {
     showLongText () {
       this.showParagraph = !this.showParagraph
     },
-    innerClick () {
-      alert('Click!')
-    },
     coord (place) {
       return latLng(place.latitude, place.longitude)
     }
   }
 }
 </script>
+
+<style scoped>
+.marker-popup {
+  font-family: 'Nunito', sans-serif;
+}
+.marker-popup h3 {
+  font-size: 17px !important;
+}
+</style>

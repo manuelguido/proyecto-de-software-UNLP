@@ -1,26 +1,21 @@
 <template>
-  <div>
-    <dashboard>
-      <template v-slot:page_title>
-        Núcleos
-      </template>
-      <template v-slot:dashboard_content>
-        <div class="row">
-          <div class="col-12 col-xl-6">
-            <dashboard-title title="Núcleos"></dashboard-title>
-            <dashboard-table
-              :columnas=columns
-              :filas=rows
-            ></dashboard-table>
-          </div>
-          <div class="col-12 col-xl-6">
-            <dashboard-title title="Ubicación"></dashboard-title>
-            <v-map :places="nucleos"></v-map>
-          </div>
-        </div>
-      </template>
-    </dashboard>
-  </div>
+<div>
+  <dashboard>
+    <div class="row">
+      <div class="col-12 col-xl-6">
+        <dashboard-title title="Núcleos"></dashboard-title>
+        <dashboard-table
+          :columnas=columns
+          :filas=rows
+        ></dashboard-table>
+      </div>
+      <div class="col-12 col-xl-6">
+        <dashboard-title title="Ubicación"></dashboard-title>
+        <v-map :places="nucleos"></v-map>
+      </div>
+    </div>
+  </dashboard>
+</div>
 </template>
 
 <script>
@@ -37,7 +32,7 @@ export default {
       nucleo_path: '/dashboard/nucleo/',
       columns: [
         {
-          label: 'Núcleo',
+          label: 'Nucleo',
           field: 'nombre',
           sort: 'asc'
         },

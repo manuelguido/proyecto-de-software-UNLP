@@ -1,7 +1,7 @@
 <template>
-  <mdb-navbar class="sticky-top shadow-none bg-color-a-light" light>
+  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none bg-color-a-light" light>
     <mdb-navbar-brand>
-      <p id="current-title" class="m-1 color-a">Dashboard</p>
+      <p id="current-title" class="m-1 color-a">{{page_title}}</p>
     </mdb-navbar-brand>
     <mdb-navbar-toggler class="web-hide color-a">
       <mdb-navbar-nav class="web-hide">
@@ -30,12 +30,16 @@ export default {
     mdbInput
   },
   props: {
-    links: null
+    links: null,
+    page_title: String
   }
 }
 </script>
 
 <style scoped>
+#dashboard-navbar {
+  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.12) !important;
+}
 .nav-item {
   padding: .5em 1em;
   background: var(--color-a-light);

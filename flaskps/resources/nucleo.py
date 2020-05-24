@@ -2,6 +2,9 @@ from flask import redirect, render_template, request, url_for, session, abort, f
 from flaskps.db import get_db
 from flaskps.models.nucleo import Nucleo
 from flaskps.helpers.auth import authenticated
+from bson.json_util import dumps, CANONICAL_JSON_OPTIONS
+import json
+import re
 
 def get_all():
     if not authenticated(session):
