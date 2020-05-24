@@ -1,5 +1,5 @@
 <template>
-    <h1 class="h4 black-a mb-4">{{title}}</h1>
+    <h1 class="h5 black-c mb-4">{{title}}</h1>
 </template>
 
 <script>

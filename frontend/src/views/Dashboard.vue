@@ -1,14 +1,22 @@
-<template slot-scope="page_title">
+<template>
   <div class="container-fluid">
     <div class="row justify-content-center">
       <!-- Sidebar -->
       <sidebar :links="links"></sidebar>
       <!-- /.Sidebar -->
       <!-- Panel content -->
-      <div id="dashboard-container" class="col px-0">
-        <navbar :page_title="page_title" :links="links"></navbar>
+      <div id="dashboard-container" class="col">
+        <navbar :links="links"></navbar>
         <!-- All content -->
-        <div id="dashboard-content" class="mt-5 py-5 px-xl-5 px-3 w-100">
+        <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 px-3 w-100">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="h4 w600 black-c m-0">
+                <slot name="page_title">{{page_title}}</slot>
+              </h1>
+              <hr class="mt-1 mb-5">
+            </div>
+          </div>
           <slot name="dashboard_content"></slot>
         </div>
       </div>
@@ -50,41 +58,10 @@ export default {
 </script>
 
 <style scoped>
-/* Sidebar */
-.panel-sidebar {
-  height: 100vh !important;
-  position: fixed;
-  background: var(--color-a-light);
-  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.12) !important;
-  box-shadow: none;
-  width: 240px;
-  left: 0;
-  z-index: 1070;
-}
-/* Panel container */
+/* Dashboard container */
 @media(min-width: 992px) {
   #dashboard-container {
     padding-left: 240px !important;
   }
-}
-/*Header*/
-.panel-header {
-  background: var(--color-a-light);
-}
-.panel-header .breadcrumb {
-  margin: 0 !important;
-  background: none;
-}
-.panel-header .breadcrumb * {
-  color: var(--black-a);
-}
-.panel-header #panel-title {
-  font-size: 1.14em;
-  color: var(--color-a);
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-.panel-header .active {
-  color: var(--color-a) !important;
 }
 </style>

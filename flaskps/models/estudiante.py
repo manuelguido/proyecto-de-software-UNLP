@@ -1,4 +1,4 @@
-class Student(object):
+class Estudiante(object):
 
     db = None
 
@@ -247,3 +247,12 @@ class Student(object):
         cursor.execute(sql, (id_data))
         return cursor.fetchall()
         
+    @classmethod
+    def get_estudiante(cls, id_data):
+        sql = """
+            SELECT * FROM estudiante 
+            WHERE estudiante.id=%s
+        """
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()

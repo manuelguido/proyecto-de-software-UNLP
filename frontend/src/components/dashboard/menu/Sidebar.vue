@@ -1,10 +1,7 @@
 <template>
-  <div class="panel-sidebar mobile-hide">
-    <!--Header-->
-    <div class="mb-2 navbar shadow-none">
-      <p class="navbar-brand black-d w600">Dashboard</p>
-    </div>
-    <div class="container py-1 px-4">
+  <div id="panel-sidebar" class="mobile-hide">
+    <div class="container px-4">
+      <img id="sidebar-logo" class="uns" src="../../../assets/logo-green.png" />
       <ul class="list-group">
         <menu-item :item=home_link></menu-item>
         <menu-item v-on:click="panelSwitch" v-for="link in links" :key="link.name" :item=link></menu-item>
@@ -41,3 +38,21 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#panel-sidebar {
+  height: 100vh !important;
+  position: fixed;
+  background: var(--color-a-light);
+  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.12) !important;
+  box-shadow: none;
+  width: 240px;
+  left: 0;
+  z-index: 1070;
+}
+#sidebar-logo {
+  display: inline-block;
+  margin: 0 auto 20px auto !important;
+  width: 100%;
+}
+</style>

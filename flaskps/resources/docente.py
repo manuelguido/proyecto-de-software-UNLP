@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.docente import Docente
@@ -83,3 +83,15 @@ def storeDocenteTaller():
         return redirect(url_for('panel_docentes_taller'))
     else:
         abort(401)
+
+def get_all():
+    if not authenticated(session):
+        abort(401)
+    Docente.db = get_db()
+    return jsonify(Docente.all())
+
+def get_docente(id_data):
+    if not authenticated(session):
+        abort(401)
+    Docente.db = get_db()
+    return jsonify(Docente.get_docente(id_data))

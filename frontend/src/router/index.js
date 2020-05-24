@@ -6,6 +6,9 @@ import Login from '@/views/Login'
 import Logout from '@/views/Logout'
 import Dashboard from '@/views/Dashboard'
 import Nucleos from '@/views/dashboard/Nucleos'
+import Estudiantes from '@/views/dashboard/Estudiantes'
+import Docentes from '@/views/dashboard/Docentes'
+import Instrumentos from '@/views/dashboard/Instrumentos'
 
 Vue.use(Router)
 
@@ -80,6 +83,55 @@ export default new Router({
           } else {
             next({ name: 'Login' })
           }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/estudiantes',
+      name: 'Estudiantes',
+      component: Estudiantes,
+      beforeEnter (to, from, next) {
+        const path = '/user/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/docentes',
+      name: 'Docentes',
+      component: Docentes,
+      beforeEnter (to, from, next) {
+        const path = '/user/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated)
+            next()
+          else
+            next({ name: 'Login' })
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/instrumentos',
+      name: 'Instrumentos',
+      component: Instrumentos,
+      beforeEnter (to, from, next) {
+        const path = '/user/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated)
+            next()
+          else
+            next({ name: 'Login' })
         }).catch((error) => {
           console.log(error)
         })

@@ -1,13 +1,15 @@
 <template>
   <div>
     <dashboard>
+      <!-- Title -->
       <template v-slot:page_title>
-        Núcleos
+        {{page_title}}
       </template>
+      <!-- Content -->
       <template v-slot:dashboard_content>
         <div class="row">
           <div class="col-12 col-xl-6">
-            <dashboard-title title="Núcleos"></dashboard-title>
+            <dashboard-title title="Listado de núcleos"></dashboard-title>
             <dashboard-table
               :columnas=columns
               :filas=rows
@@ -33,6 +35,7 @@ import vMap from '@/components/dashboard/Map'
 export default {
   data () {
     return {
+      page_title: 'Núcleos',
       nucleos: '',
       nucleo_path: '/dashboard/nucleo/',
       columns: [

@@ -1,5 +1,5 @@
 import os
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.instrumento import Instrumento
@@ -62,3 +62,15 @@ def update():
         return redirect(url_for("get_update_instrumento", id_data=request.form.get("id_data")))
     else:
         abort(401)
+
+def get_all():
+    if not authenticated(session):
+        abort(401)
+    Instrumento.db = get_db()
+    return jsonify(Instrumento.all())
+
+def get_instrumento(id_data):
+    if not authenticated(session):
+        abort(401)
+    Instrumento.db = get_db()
+    return jsonify(Instrumento.get_instrumento(id_data))

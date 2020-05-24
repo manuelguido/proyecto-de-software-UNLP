@@ -240,3 +240,13 @@ class Docente(object):
             return 1
         else:
             return 0
+
+    @classmethod
+    def get_docente(cls, id_data):
+        sql = """
+            SELECT * FROM docente 
+            WHERE docente.id=%s
+        """
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()

@@ -113,3 +113,12 @@ class Instrumento(object):
         cls.db.commit()
         return True
         
+    @classmethod
+    def get_instrumento(cls, id_data):
+        sql = """
+            SELECT * FROM instrumento 
+            WHERE instrumento.id=%s
+        """
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()

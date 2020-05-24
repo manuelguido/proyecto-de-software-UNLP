@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
 from flaskps.models.user import User
-from flaskps.models.student import Student
+from flaskps.models.estudiante import Estudiante
 from flaskps.models.clase import Clase
 from flaskps.models.responsable import Responsable
 from flaskps.helpers.auth import authenticated

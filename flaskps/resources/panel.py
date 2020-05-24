@@ -4,7 +4,7 @@ import json
 #Modelos
 from flaskps.db import get_db
 from flaskps.models.user import User
-from flaskps.models.student import Student
+from flaskps.models.estudiante import Estudiante
 from flaskps.models.docente import Docente
 from flaskps.models.instrumento import Instrumento
 from flaskps.models.tipo_instrumento import TipoInstrumento
