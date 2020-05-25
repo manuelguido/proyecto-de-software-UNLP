@@ -1,7 +1,8 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.usuario import Usuario
+from flaskps.models.user import User
 from flaskps.resources import forms
+from flaskps.helpers import auth
 
 #Forms & validation
 from wtforms import Form
@@ -40,17 +41,17 @@ def authenticate():
 def login(user):
     #Variables de sesion
     session['id'] = user['id']
-    session['user'] = user['username']
+    session['username'] = user['username']
     session['email'] = user['email']
-    session['nombre'] = user['first_name']
-    session['apellido'] = user['last_name']
+    session['name'] = user['name']
+    session['lastname'] = user['lastname']
     return True
 
 def authenticated():
-    response_object = {'authenticated': False}
-    if 'id' in session:
-        response_object = {'authenticated': True}
-    return jsonify(response_object)
+    authenticated_object = {'authenticated': False}
+    if auth.authenticated():
+        authenticated_object = {'authenticated': True}
+    return jsonify(authenticated_object)
 
 def unauthenticate():
     session.clear()

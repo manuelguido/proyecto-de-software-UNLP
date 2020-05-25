@@ -23,11 +23,6 @@ class User(object):
     @classmethod
     def create(cls, data):
         cursor = cls.db.cursor()
-        #Incremento el id en 1 porque la base no es autoincremental
-        #cursor.execute("SELECT MAX(id) AS maximum FROM usuario")
-        #result = cursor.fetchall()
-        #for i in result:
-        #    sqlid = i['maximum'] + 1
         sql = """
             INSERT INTO usuario (email, username, password, activo, first_name, last_name)
             VALUES (%s, %s, %s, %s, %s, %s)
@@ -45,7 +40,7 @@ class User(object):
             WHERE users.user_id=%s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql), (request['last_name'], request['first_name'], request['username'], request['email'], request['id_data']))
+        cursor.execute(sql, (request['last_name'], request['first_name'], request['username'], request['email'], request['id_data']))
         cls.db.commit()
         return True
 

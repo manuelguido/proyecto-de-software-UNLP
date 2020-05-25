@@ -1,4 +1,4 @@
-class Cicle(object):
+class Cycle(object):
 
     db = None
 

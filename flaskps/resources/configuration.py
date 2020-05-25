@@ -1,26 +1,12 @@
-from flask import redirect, render_template, request, url_for, flash, session, abort
+from flask import redirect, render_template, request, url_for, flash, session, abort, jsonify
 from flaskps.db import get_db
-from flaskps.models.config_sitio import ConfigSitio
-from flaskps.models.usuario import Usuario
-from flaskps.helpers.auth import authenticated
+from flaskps.models.configuration import Configuration
+from flaskps.models.user import User
 from flaskps.resources import forms
 
-#Mostrar el index del sitio
-def index():
-    ConfigSitio.db = get_db()
-    estadositio = ConfigSitio.index() 
-    if (estadositio):
-        infositio = ConfigSitio.all()
-        return render_template(
-            'index.html',
-            estadositio=estadositio,
-            infositio=infositio
-            )
-    else:
-        return render_template(
-            'site_down.html',
-            estadositio=estadositio
-            )
+def all():
+    Configuration.db = get_db()
+    return jsonify(Configuration.all())
 
 #Cambiar el estado del sitio a inactivo
 def change_site_status():
