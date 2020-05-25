@@ -4,6 +4,59 @@ from flaskps.models.user import User
 from flaskps.helpers import auth
 from flaskps.resources import forms
 
+def all():
+    #Auth check
+    auth.authenticated_or_401()
+
+    User.db = get_db()
+    return jsonify(User.all())
+
+def get(id_data):
+    #Auth check
+    auth.authenticated_or_401()
+
+    User.db = get_db()
+    return jsonify(User.get(id_data))
+
+def profile():
+    #Auth check
+    auth.authenticated_or_401()
+
+    user_object = {'name': session['name'], 'lastname': session['lastname']}
+    return jsonify(user_object)
+
+def routes():
+    #Auth check
+    auth.authenticated_or_401()
+
+    my_objects = [] #Listado de rutas
+    nucleos = {'name': 'Núcleos', 'url': '/dashboard/nucleos', 'icon': 'fas fa-map-marked-alt'}
+    my_objects.append(nucleos)
+    #User
+    User.db = get_db()
+    
+    if (User.tiene_permiso(session['id'],'estudiante_index')):
+        new = {'name': 'Estudiantes', 'url': '/dashboard/estudiantes', 'icon': 'fas fa-user-graduate'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'docente_index')):
+        new = {'name': 'Docentes', 'url': '/dashboard/docentes', 'icon': 'fas fa-user-friends'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'instrumento_index')):
+        new = {'name': 'Instrumentos', 'url': '/dashboard/instrumentos', 'icon': 'fas fa-guitar'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'usuario_index')):
+        new = {'name': 'Usuarios', 'url': '/dashboard/usuarios', 'icon': 'fas fa-user'}
+        my_objects.append(new)
+    
+    if (User.tiene_permiso(session['id'],'administrativo_index')):
+        new = {'name': 'Administrativo', 'url': '/dashboard/administrativo', 'icon': 'fas fa-cog'}
+        my_objects.append(new)
+    #Returning data
+    return jsonify(my_objects)
+
 def update_user_status():
     #Auth check
     auth.authenticated_or_401()
@@ -112,56 +165,3 @@ def delete(id_data):
         return redirect(url_for('panel_usuarios'))
     else:
         abort(401)
-
-def routes():
-    #Auth check
-    auth.authenticated_or_401()
-
-    my_objects = [] #Listado de rutas
-    nucleos = {'name': 'Núcleos', 'url': '/dashboard/nucleos', 'icon': 'fas fa-map-marked-alt'}
-    my_objects.append(nucleos)
-    #User
-    User.db = get_db()
-    
-    if (User.tiene_permiso(session['id'],'estudiante_index')):
-        new = {'name': 'Estudiantes', 'url': '/dashboard/estudiantes', 'icon': 'fas fa-user-graduate'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'docente_index')):
-        new = {'name': 'Docentes', 'url': '/dashboard/docentes', 'icon': 'fas fa-user-friends'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'instrumento_index')):
-        new = {'name': 'Instrumentos', 'url': '/dashboard/instrumentos', 'icon': 'fas fa-guitar'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'usuario_index')):
-        new = {'name': 'Usuarios', 'url': '/dashboard/usuarios', 'icon': 'fas fa-user'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'administrativo_index')):
-        new = {'name': 'Administrativo', 'url': '/dashboard/administrativo', 'icon': 'fas fa-cog'}
-        my_objects.append(new)
-    #Returning data
-    return jsonify(my_objects)
-
-def get_perfil():
-    #Auth check
-    auth.authenticated_or_401()
-
-    user_object = {'name': session['name'], 'lastname': session['lastname']}
-    return jsonify(user_object)
-
-def all():
-    #Auth check
-    auth.authenticated_or_401()
-
-    User.db = get_db()
-    return jsonify(User.all())
-
-def get(id_data):
-    #Auth check
-    auth.authenticated_or_401()
-
-    User.db = get_db()
-    return jsonify(User.get(id_data))
