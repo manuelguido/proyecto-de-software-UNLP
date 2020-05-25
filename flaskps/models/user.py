@@ -4,76 +4,21 @@ class User(object):
 
     @classmethod
     def all(cls):
-        sql = """SELECT * FROM usuario
-                INNER JOIN usuario_tiene_rol on usuario_tiene_rol.usuario_id = usuario.id
-                INNER JOIN rol on usuario_tiene_rol.rol_id = rol.id
-                """
+        sql = """
+            SELECT * FROM users
+            INNER JOIN user_role on user_role.user_id = users.user_id
+            INNER JOIN role on user_role.role_id = roles.role_id
+        """
         cursor = cls.db.cursor()
         cursor.execute(sql)
-
         return cursor.fetchall()
-
+    
     @classmethod
-    def total_paginas(cls,paginacion):
+    def get(cls, id_data):
+        sql = "SELECT * FROM users WHERE users.user_id = %s"
         cursor = cls.db.cursor()
-        sql = """
-            SELECT usuario.first_name
-            FROM usuario
-        """
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        count = 0
-        for i in result:
-            count += 1
-            i = i
-        paginas = count / paginacion 
-        if not (count % paginacion == 0):
-            paginas += 1
-        return paginas
-
-    @classmethod
-    def allPaginated(cls,pagination,page):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT * FROM usuario
-            INNER JOIN usuario_tiene_rol on usuario_tiene_rol.usuario_id = usuario.id
-            INNER JOIN rol on usuario_tiene_rol.rol_id = rol.id
-            LIMIT {limit} offset {offset}
-        """
-        cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
-        return cursor.fetchall()
-
-    @classmethod
-    def searchByUserName(cls,firstname):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT * FROM usuario
-            WHERE usuario.username LIKE '%{firstname}%'
-        """
-        cursor.execute(sql.format(firstname = firstname))
-        return cursor.fetchall()
-
-    @classmethod
-    def searchByActive(cls,ac):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT * FROM usuario
-            WHERE usuario.activo = %s
-        """
-        cursor.execute(sql, (ac))
-        return cursor.fetchall()
-
-    @classmethod
-    def getLastPage(cls,pagination,page):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT * FROM usuario
-            COUNT
-        """
-        if ((cursor.execute(sql) / pagination) <= page):
-            return 1
-        else:
-            return 0
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()
 
     @classmethod
     def create(cls, data):
@@ -94,12 +39,20 @@ class User(object):
 
     @classmethod
     def update(cls, request):
+        sql = """
+            UPDATE users
+            SET lastname=%s, name=%s, username=%s, email=%s
+            WHERE users.user_id=%s
+        """
         cursor = cls.db.cursor()
-        cursor.execute("""
-               UPDATE usuario
-               SET last_name=%s, first_name=%s, username=%s, email=%s
-               WHERE usuario.id=%s
-            """, (request['last_name'], request['first_name'], request['username'], request['email'], request['id_data']))
+        cursor.execute(sql), (request['last_name'], request['first_name'], request['username'], request['email'], request['id_data']))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def delete(cls, id_data):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM users WHERE user_id=%s", (id_data,))
         cls.db.commit()
         return True
 
@@ -148,14 +101,6 @@ class User(object):
                SET activo=%s
                WHERE id=%s
             """, (activo, user_id))
-        cls.db.commit()
-
-        return True
-
-    @classmethod
-    def delete(cls, id_data):
-        cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM usuario WHERE id=%s", (id_data,))
         cls.db.commit()
 
         return True

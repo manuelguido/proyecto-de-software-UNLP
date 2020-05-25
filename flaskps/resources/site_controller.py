@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for, flash, session, abort
 from flaskps.db import get_db
 from flaskps.models.config_sitio import ConfigSitio
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.helpers.auth import authenticated
 from flaskps.resources import forms
 

@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.models.docente import Docente
 from flaskps.helpers.auth import authenticated
 from flaskps.resources import forms
@@ -9,8 +9,8 @@ def store():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'docente_new')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'docente_new')):
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
             Docente.db = get_db()
             Docente.store(request.form)
@@ -26,8 +26,8 @@ def delete(id_data):
         abort(401)
 
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'docente_destroy')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'docente_destroy')):
         Docente.db = get_db()
         Docente.delete(id_data)
         flash("Se eliminó el docente correctamente" ,'success')
@@ -39,8 +39,8 @@ def update():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'docente_update')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'docente_update')):
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
             Docente.db = get_db()
             Docente.update(request.form)
@@ -53,8 +53,8 @@ def deleteDocenteTaller():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_destroy')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'administrativo_destroy')):
         if request.method == "POST" and forms.ValidateDocenteTallerDelete(request.form).validate():
             Docente.db = get_db()
             Docente.deleteDocenteTaller(request.form)
@@ -69,8 +69,8 @@ def storeDocenteTaller():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_new')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateDocenteTaller(request.form).validate():
             Docente.db = get_db()
             if Docente.tallerNoTieneDocente(request.form):

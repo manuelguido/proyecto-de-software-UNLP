@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.models.estudiante import Estudiante
 from flaskps.models.clase import Clase
 from flaskps.models.responsable import Responsable
@@ -12,8 +12,8 @@ def store():
         abort(401)
 
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'horario_new')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'horario_new')):
         if request.method == "POST" and forms.ValidateHorario(request.form).validate():
             Clase.db = get_db()
             if Clase.noExiste(request.form):
@@ -32,8 +32,8 @@ def delete(id_data):
         abort(401)
 
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'horario_destroy')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'horario_destroy')):
         Clase.db = get_db()
         Clase.delete(id_data)
         flash("Se eliminó la clase correctamente" ,'success')

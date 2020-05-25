@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash
 from flaskps.db import get_db
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.models.ciclo import Ciclo
 from flaskps.models.taller import Taller
 from flaskps.models.responsable import Responsable
@@ -11,8 +11,8 @@ def store():
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_new')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
             if int(request.form['año']) < int(1990) or int(request.form['año']) > int(2025):
                 flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
@@ -33,8 +33,8 @@ def delete(id_data):
     if not authenticated(session):
         abort(401)
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_destroy')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'administrativo_destroy')):
         Ciclo.db = get_db()
         Ciclo.delete(id_data)
         flash("Se eliminó el ciclo lectivo correctamente" ,'success')
@@ -47,8 +47,8 @@ def update():
         abort(401)
 
     #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_update')):
+    Usuario.db = get_db()
+    if (Usuario.tiene_permiso(session['id'],'administrativo_update')):
         if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
             Ciclo.db = get_db()
             Ciclo.update(request.form)

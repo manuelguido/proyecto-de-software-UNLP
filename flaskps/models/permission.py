@@ -1,10 +1,10 @@
-class Rol(object):
+class Permission(object):
 
     db = None
 
     @classmethod
     def all(cls):
-        sql = 'SELECT * FROM rol'
+        sql = 'SELECT * FROM permissions'
         cursor = cls.db.cursor()
         cursor.execute(sql)
 

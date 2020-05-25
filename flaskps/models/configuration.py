@@ -1,17 +1,6 @@
-class ConfigSitio(object):
+class Configuration(object):
 
     db = None
-
-    #retorna el estado del sitio 1 = activo, 0 = inactivo
-    @classmethod
-    def index(cls):
-        cursor = cls.db.cursor()
-        cursor.execute("select * from configuracion")
-        results = cursor.fetchall()        
-        for r in results:
-            y = r['activo']
-            break
-        return y
 
     @classmethod
     def all(cls):

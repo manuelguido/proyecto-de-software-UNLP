@@ -1,4 +1,4 @@
-class Clase(object):
+class Assistance(object):
 
     db = None
 
@@ -6,11 +6,9 @@ class Clase(object):
     def all(cls):
         cursor = cls.db.cursor()
         sql = """
-            SELECT *, taller.nombre AS nombretaller, nucleo.nombre AS nombrenucleo, docente.nombre AS nombredocente, docente.apellido AS apellidodocente FROM clase
+            SELECT *, taller.nombre AS nombretaller, nucleo.nombre AS nombrenucleo FROM asistencia
             INNER JOIN horario ON horario.id=clase.horario_id
             INNER JOIN docente_responsable_taller ON docente_responsable_taller.id=clase.docente_responsable_taller_id
-            INNER JOIN docente ON docente_responsable_taller.docente_id=docente.id
-            INNER JOIN ciclo_lectivo ON ciclo_lectivo.id=docente_responsable_taller.ciclo_lectivo_id
             INNER JOIN taller ON docente_responsable_taller.taller_id = taller.id
             INNER JOIN nucleo ON nucleo.id=clase.nucleo_id
         """
@@ -40,10 +38,10 @@ class Clase(object):
         cursor = cls.db.cursor() 
         sql = """
                SELECT *
-               FROM clase
-               WHERE nucleo_id=%s and dia=%s and docente_responsable_taller_id=%s and horario_id=%s
+               FROM asistencia_estudiante_taller
+               WHERE clase_id=%s and fecha=%s and estudiante_id=%s
             """
-        a = cursor.execute(sql, (data['nucleo_id'], data['dia'], data['docente_responsable_taller_id'], data['horario_id'],))
+        a = cursor.execute(sql, (data['clase_id'], data['fecha'], data['estudiante_id'],))
         cls.db.commit()
         if (a>0):
             return False
@@ -76,17 +74,52 @@ class Clase(object):
         return True
 
     @classmethod
-    def findClass(cls, id_data):
+    def getAsistencias(cls, data):
         sql = """
-            SELECT *, taller.nombre AS nombretaller, nucleo.nombre AS nombrenucleo, docente.nombre AS nombredocente, docente.apellido AS apellidodocente FROM clase
+            SELECT * FROM asistencia_estudiante_taller
+            INNER JOIN estudiante ON estudiante.id=asistencia_estudiante_taller.estudiante_id
+            INNER JOIN clase ON clase.id=asistencia_estudiante_taller.clase_id
             INNER JOIN horario ON horario.id=clase.horario_id
-            INNER JOIN docente_responsable_taller ON docente_responsable_taller.id=clase.docente_responsable_taller_id
-            INNER JOIN docente ON docente_responsable_taller.docente_id=docente.id
-            INNER JOIN ciclo_lectivo ON ciclo_lectivo.id=docente_responsable_taller.ciclo_lectivo_id
-            INNER JOIN taller ON docente_responsable_taller.taller_id = taller.id
-            INNER JOIN nucleo ON nucleo.id=clase.nucleo_id
-            WHERE clase.id=%s
+            WHERE clase.id=%s and clase.horario_id=%s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (id_data))
-        return cursor.fetchone()
+        cursor.execute(sql, (data['id'], data['horario_id']))
+        return cursor.fetchall()
+
+    @classmethod
+    def storeAsistencia(cls, data):
+        cursor = cls.db.cursor() 
+        sql = """
+            SELECT * FROM clase
+            INNER JOIN docente_responsable_taller ON docente_responsable_taller.id=clase.docente_responsable_taller_id
+            INNER JOIN estudiante_taller ON estudiante_taller.docente_responsable_taller_id=docente_responsable_taller.id and docente_responsable_taller.ciclo_lectivo_taller_id=estudiante_taller.ciclo_lectivo_taller_id
+            WHERE clase.id=%s
+        """
+        cursor.execute(sql, (data['clase_id']))
+        clase = cursor.fetchone()
+        sql2 = """
+            INSERT INTO asistencia_estudiante_taller (estudiante_id, clase_id, fecha, docente_responsable_taller_id, ciclo_lectivo_id, presente)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(sql2, (data['estudiante_id'], data['clase_id'], data['fecha'], clase['docente_responsable_taller_id'], clase['ciclo_lectivo_id'], '1'))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def storeInasistencia(cls, data):
+        cursor = cls.db.cursor() 
+        sql = """
+            SELECT * FROM clase
+            INNER JOIN docente_responsable_taller ON docente_responsable_taller.id=clase.docente_responsable_taller_id
+            INNER JOIN estudiante_taller ON estudiante_taller.docente_responsable_taller_id=docente_responsable_taller.id and docente_responsable_taller.ciclo_lectivo_taller_id=estudiante_taller.ciclo_lectivo_taller_id
+            WHERE clase.id=%s
+        """
+        cursor.execute(sql, (data['clase_id']))
+        clase = cursor.fetchone()
+        sql2 = """
+            INSERT INTO asistencia_estudiante_taller (estudiante_id, clase_id, fecha, docente_responsable_taller_id, ciclo_lectivo_id, presente)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        cursor.execute(sql2, (data['estudiante_id'], data['clase_id'], data['fecha'], clase['docente_responsable_taller_id'], clase['ciclo_lectivo_id'], '0'))
+        cls.db.commit()
+        return True

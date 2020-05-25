@@ -1,11 +1,11 @@
-class Barrio(object):
+class Level(object):
 
     db = None
 
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM barrio")
+        cursor.execute("SELECT  * FROM nivel")
         data = cursor.fetchall()
         return data
     

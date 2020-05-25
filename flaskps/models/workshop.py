@@ -1,14 +1,20 @@
-class Taller(object):
+class Workshop(object):
 
     db = None
 
     @classmethod
     def all(cls):
-        sql = 'SELECT * FROM taller'
         cursor = cls.db.cursor()
+        sql = 'SELECT * FROM workshops'
         cursor.execute(sql)
-
         return cursor.fetchall()
+
+    @classmethod
+    def get(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = "SELECT * FROM workshops WHERE workshop_id=%s"
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()
 
     @classmethod
     def allCicloTallerPaginated(cls,pagination,page):

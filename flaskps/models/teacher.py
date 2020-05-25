@@ -1,4 +1,4 @@
-class Docente(object):
+class Teacher(object):
 
     db = None
 
@@ -6,12 +6,24 @@ class Docente(object):
     def all(cls):
         cursor = cls.db.cursor()
         sql = """
-            SELECT *, genero.nombre as genero FROM docente
-            INNER JOIN genero ON docente.genero_id = genero.id
+            SELECT * FROM teachers
+            INNER JOIN genders ON teachers.gender_id = genders.gender_id
         """
         cursor.execute(sql)
         data = cursor.fetchall()
         return data
+
+    @classmethod
+    def get(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM teachers
+            INNER JOIN genders ON teachers.gender_id = genders.gender_id
+            WHERE teachers.teacher_id=%s
+        """
+        cursor.execute(sql, (id_data))
+        return cursor.fetchone()
+
 
     @classmethod
     def getAllConTalleres(cls):

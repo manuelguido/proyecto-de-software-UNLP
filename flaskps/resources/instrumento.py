@@ -1,7 +1,7 @@
 import os
 from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.models.instrumento import Instrumento
 from flaskps.helpers.auth import authenticated
 from flaskps.resources import forms

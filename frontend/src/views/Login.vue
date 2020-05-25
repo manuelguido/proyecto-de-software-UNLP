@@ -65,7 +65,7 @@ export default {
   methods: {
     login () {
       this.message = ''
-      const path = '/auth_authenticate'
+      const path = '/auth/authenticate'
       axios.post(path, {
         email: this.email,
         password: this.password

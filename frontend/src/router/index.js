@@ -5,10 +5,11 @@ import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Logout from '@/views/Logout'
 import Dashboard from '@/views/Dashboard'
-import Nucleos from '@/views/dashboard/Nucleos'
-import Estudiantes from '@/views/dashboard/Estudiantes'
-import Docentes from '@/views/dashboard/Docentes'
-import Instrumentos from '@/views/dashboard/Instrumentos'
+import Cores from '@/views/dashboard/Cores'
+import Students from '@/views/dashboard/Students'
+import Teachers from '@/views/dashboard/Teachers'
+import Instruments from '@/views/dashboard/Instruments'
+import Users from '@/views/dashboard/Users'
 
 Vue.use(Router)
 
@@ -73,8 +74,8 @@ export default new Router({
     },
     {
       path: '/dashboard/nucleos',
-      name: 'Nucleos',
-      component: Nucleos,
+      name: 'Cores',
+      component: Cores,
       beforeEnter (to, from, next) {
         const path = '/user/authenticated'
         axios.get(path).then((respuesta) => {
@@ -90,8 +91,8 @@ export default new Router({
     },
     {
       path: '/dashboard/estudiantes',
-      name: 'Estudiantes',
-      component: Estudiantes,
+      name: 'Students',
+      component: Students,
       beforeEnter (to, from, next) {
         const path = '/user/authenticated'
         axios.get(path).then((respuesta) => {
@@ -107,8 +108,8 @@ export default new Router({
     },
     {
       path: '/dashboard/docentes',
-      name: 'Docentes',
-      component: Docentes,
+      name: 'Teachers',
+      component: Teachers,
       beforeEnter (to, from, next) {
         const path = '/user/authenticated'
         axios.get(path).then((respuesta) => {
@@ -123,8 +124,24 @@ export default new Router({
     },
     {
       path: '/dashboard/instrumentos',
-      name: 'Instrumentos',
-      component: Instrumentos,
+      name: 'Instruments',
+      component: Instruments,
+      beforeEnter (to, from, next) {
+        const path = '/user/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated)
+            next()
+          else
+            next({ name: 'Login' })
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/usuarios',
+      name: 'Users',
+      component: Users,
       beforeEnter (to, from, next) {
         const path = '/user/authenticated'
         axios.get(path).then((respuesta) => {

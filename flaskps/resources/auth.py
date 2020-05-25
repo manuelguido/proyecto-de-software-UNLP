@@ -1,6 +1,6 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.user import User
+from flaskps.models.usuario import Usuario
 from flaskps.resources import forms
 
 #Forms & validation

@@ -1,4 +1,4 @@
-class Estudiante(object):
+class Student(object):
 
     db = None
 
@@ -6,67 +6,13 @@ class Estudiante(object):
     def all(cls):
         cursor = cls.db.cursor()
         sql = """
-            SELECT  * , nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio  FROM estudiante
-            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
-            INNER JOIN genero ON estudiante.genero_id = genero.id
-            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
-            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
+            SELECT * FROM students
+            INNER JOIN levels ON .level_id = levels.level_id
+            INNER JOIN genders ON students.gender_id = genders.gender_id
+            INNER JOIN schools ON students.school_id = schools.school_id
+            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_ id
         """
         cursor.execute(sql)
-        return cursor.fetchall()
-    
-    @classmethod
-    def total_paginas(cls,paginacion):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT estudiante.nombre
-            FROM estudiante
-        """
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        count = 0
-        for i in result:
-            count += 1
-            i = i
-        paginas = count / paginacion
-        if (paginas == 0):
-            paginas = 1
-        elif not (count % paginacion == 0):
-            paginas += 1
-        return paginas
-
-    @classmethod
-    def total_paginas_taller(cls,paginacion):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT *
-            FROM estudiante_taller
-        """
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        count = 0
-        for i in result:
-            count += 1
-            i = i
-        paginas = count / paginacion
-        if (paginas == 0):
-            paginas = 1
-        elif not (count % paginacion == 0):
-            paginas += 1
-        return paginas
-
-    @classmethod
-    def allPaginated(cls,pagination,page):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT  *, nivel.nombre as nivel, genero.nombre as genero, escuela.nombre as escuela, barrio.nombre as barrio FROM estudiante
-            INNER JOIN nivel ON estudiante.nivel_id = nivel.id
-            INNER JOIN genero ON estudiante.genero_id = genero.id
-            INNER JOIN escuela ON estudiante.escuela_id = escuela.id
-            INNER JOIN barrio ON estudiante.barrio_id = barrio.id
-            LIMIT {limit} offset {offset}
-        """
-        cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
         return cursor.fetchall()
 
     @classmethod
