@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.student import Student
@@ -6,9 +6,23 @@ from flaskps.models.responsable import Responsable
 from flaskps.helpers import auth
 from flaskps.resources import forms
 
+def all():
+    #Auth check
+    auth.authenticated_or_401()
+
+    Student.db = get_db()
+    return jsonify(Student.all())
+
+def get(id_data):
+    #Auth check
+    auth.authenticated_or_401()
+
+    Student.db = get_db()
+    return jsonify(Student.get(id_data))
+
 def store():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
     User.db = get_db()
@@ -24,8 +38,8 @@ def store():
         abort(401)
 
 def delete(id_data):
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
     User.db = get_db()
@@ -38,8 +52,8 @@ def delete(id_data):
         abort(401)
 
 def update():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
     User.db = get_db()
@@ -55,8 +69,9 @@ def update():
         abort(401)
 
 def deleteEstudianteDocente():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_destroy')):
@@ -71,8 +86,9 @@ def deleteEstudianteDocente():
         abort(401)
 
 def storeEstudianteDocente():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
     User.db = get_db()
     if (User.tiene_permiso(session['id'],'administrativo_new')):

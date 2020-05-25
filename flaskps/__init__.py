@@ -2,9 +2,9 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance
+from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance, auth
 from flaskps.config import Config
-from flaskps.helpers import handler, auth
+from flaskps.helpers import handler
 
 #---------------------------------------------------#
 #   Configuración de app
@@ -23,60 +23,56 @@ app.config['SECRET_KEY'] = b'6hc/_gsh,./;2ZZx3c6_s,1//'
 #---------------------------------------------------#
 #   API
 #---------------------------------------------------#
+# Configuración y estado de sitio
 app.add_url_rule("/api/configuration", 'api_configuration', configuration.all, methods=['GET'])
 
 #---------------------------------------------------#
-#   API Privada (Regulada con permisos)
+#   API Privada (Regulada con permisos y sesión)
 #---------------------------------------------------#
-
 # Nucleos
-app.add_url_rule("/api/nucleos", 'api_nucleos', core.all, methods=['GET'])
-app.add_url_rule("/api/nucleo/<int:id_data>", 'api_nucleo', core.get, methods=['GET'])
+app.add_url_rule("/api/cores", 'api_nucleos', core.all, methods=['GET'])
+app.add_url_rule("/api/core/<int:id_data>", 'api_nucleo', core.get, methods=['GET'])
 
 # Estudiantes
-app.add_url_rule("/api/estudiantes", 'api_estudiantes', student.all, methods=['GET'])
-app.add_url_rule("/api/estudiante/<int:id_data>", 'api_estudiante', student.get, methods=['GET'])
+app.add_url_rule("/api/students", 'api_estudiantes', student.all, methods=['GET'])
+app.add_url_rule("/api/student/<int:id_data>", 'api_estudiante', student.get, methods=['GET'])
 
 # Docentes
-app.add_url_rule("/api/docentes", 'api_docentes', teacher.all, methods=['GET'])
-app.add_url_rule("/api/docente/<int:id_data>", 'api_docente', teacher.get, methods=['GET'])
+app.add_url_rule("/api/teachers", 'api_teachers', teacher.all, methods=['GET'])
+app.add_url_rule("/api/teacher/<int:id_data>", 'api_teacher', teacher.get, methods=['GET'])
 
 # Instrumentos
-app.add_url_rule("/api/instrumentos", 'api_instrumentos', instrument.all, methods=['GET'])
-app.add_url_rule("/api/instrumento/<int:id_data>", 'api_instrumento', instrument.get, methods=['GET'])
+app.add_url_rule("/api/instruments", 'api_instruments', instrument.all, methods=['GET'])
+app.add_url_rule("/api/instrument/<int:id_data>", 'api_instrument', instrument.get, methods=['GET'])
 
 # Usuarios
-app.add_url_rule("/api/usuarios", 'api_usuarios', user.all, methods=['GET'])
-app.add_url_rule("/api/usuario/<int:id_data>", 'api_usuario', user.get, methods=['GET'])
-    # Obtener perfil de usuario loggead
-app.add_url_rule("/api/usuario/perfil", 'api_profile', user.profile, methods=['GET'])
-    # Obtener roles de usuario loggead
-app.add_url_rule("/api/usuario/rutas", 'user_routes', user.routes, methods=['GET'])
+app.add_url_rule("/api/users", 'api_users', user.all, methods=['GET'])
+app.add_url_rule("/api/user/<int:id_data>", 'api_user', user.get, methods=['GET'])
+    # Obtener perfil de usuario loggeado
+app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET'])
+    # Obtener roles y rutas de usuario loggeado
+app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET'])
 
 #---------------------------------------------------#
 #   Autenticacion
 #---------------------------------------------------#
-
 #Cerrar sesión
 app.add_url_rule("/auth/unauthenticate", 'auth_unauthenticate', auth.unauthenticate, methods=['GET'])
 #Autenticar usuario
 app.add_url_rule("/auth/authenticate", 'auth_authenticate', auth.authenticate, methods=['GET', 'POST'])
-#Usuario ya autenticado
+#Chequea si el usuario está autenticado
 app.add_url_rule("/auth/authenticated", 'auth_authenticated', auth.authenticated, methods=['GET'])
 
 #---------------------------------------------------#
 #   Inicio (Vista única)
 #---------------------------------------------------#
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def render_vue(path):
     return render_template("index.html")
 
 #---------------------------------------------------#
-#   Inicio (Vista única)
+#   App run
 #---------------------------------------------------#
-
-
 if __name__ == '__main__':
     app.run(debug=True)
