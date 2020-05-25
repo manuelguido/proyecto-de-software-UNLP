@@ -15,3 +15,15 @@ class Lesson(object):
         sql = "SELECT * FROM lessons WHERE lessons.lesson_id=%s"
         cursor.execute(sql, (id_data))
         return cursor.fetchone()
+
+    @classmethod
+    def store(cls):
+        return True
+
+    @classmethod
+    def delete(cls):
+        return True
+
+    @classmethod
+    def update(cls):
+        return True

@@ -1,16 +1,18 @@
 from flask import redirect, render_template, request, url_for, session, abort, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.nucleo import Nucleo
-from flaskps.helpers.auth import authenticated
+from flaskps.models.core import Core
+from flaskps.helpers import auth
 
-def get_all():
-    if not authenticated(session):
-        abort(401)
-    Nucleo.db = get_db()
-    return jsonify(Nucleo.all())
+def all():
+    #Auth check
+    auth.authenticated_or_401()
 
-def get_nucleo(id_data):
-    if not authenticated(session):
-        abort(401)
-    Nucleo.db = get_db()
-    return jsonify(Nucleo.getNucleo(id_data))
+    Core.db = get_db()
+    return jsonify(Core.all())
+
+def get(id_data):
+    #Auth check
+    auth.authenticated_or_401()
+
+    Core.db = get_db()
+    return jsonify(Core.get(id_data))

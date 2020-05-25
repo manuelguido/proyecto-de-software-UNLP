@@ -1,26 +1,40 @@
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.usuario import Usuario
-from flaskps.models.estudiante import Estudiante
-from flaskps.models.clase import Clase
+from flaskps.models.user import User
+from flaskps.models.student import Student
+from flaskps.models.lesson import Lesson
 from flaskps.models.responsable import Responsable
-from flaskps.helpers.auth import authenticated
+from flaskps.helpers import auth
 from flaskps.resources import forms
 
+def all():
+    #Auth check
+    auth.authenticated_or_401()
+
+    Lesson.db = get_db()
+    return jsonify(Lesson.all())
+
+def get(id_data):
+    #Auth check
+    auth.authenticated_or_401()
+
+    Lesson.db = get_db()
+    return jsonify(Lesson.get(id_data))
+
 def store():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'horario_new')):
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'horario_new')):
         if request.method == "POST" and forms.ValidateHorario(request.form).validate():
-            Clase.db = get_db()
-            if Clase.noExiste(request.form):
-                Clase.store(request.form)
-                flash("Clase agregado correctamente" ,'success')
-            else:
-                flash("Ya existe esa clase" ,'error')
+            Lesson.db = get_db()
+            # if Lesson.noExiste(request.form):
+                # Lesson.store(request.form)
+                # flash("Clase agregado correctamente" ,'success')
+            # else:
+                # flash("Ya existe esa clase" ,'error')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_horario'))
@@ -28,14 +42,14 @@ def store():
         abort(401)
 
 def delete(id_data):
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'horario_destroy')):
-        Clase.db = get_db()
-        Clase.delete(id_data)
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'horario_destroy')):
+        Lesson.db = get_db()
+        Lesson.delete(id_data)
         flash("Se eliminó la clase correctamente" ,'success')
         return redirect(url_for('panel_horario'))
     else:
