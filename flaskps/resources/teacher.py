@@ -1,19 +1,35 @@
 from flask import redirect, render_template, request, url_for, abort, session, flash, jsonify
 from flaskps.db import get_db
-from flaskps.models.usuario import Usuario
-from flaskps.models.docente import Docente
-from flaskps.helpers.auth import authenticated
+from flaskps.models.user import User
+from flaskps.models.teacher import Teacher
+from flaskps.helpers import auth
 from flaskps.resources import forms
 
+def all():
+    #Auth check
+    auth.authenticated_or_401()
+
+    Teacher.db = get_db()
+    return jsonify(Teacher.all())
+
+def get(id_data):
+    #Auth check
+    auth.authenticated_or_401()
+
+    Teacher.db = get_db()
+    return jsonify(Teacher.get(id_data))
+
+
 def store():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'docente_new')):
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'docente_new')):
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
-            Docente.db = get_db()
-            Docente.store(request.form)
+            Teacher.db = get_db()
+            Teacher.store(request.form)
             flash("Docente agregado correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
@@ -22,42 +38,44 @@ def store():
         abort(401)
 
 def delete(id_data):
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
 
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'docente_destroy')):
-        Docente.db = get_db()
-        Docente.delete(id_data)
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'docente_destroy')):
+        Teacher.db = get_db()
+        Teacher.delete(id_data)
         flash("Se eliminó el docente correctamente" ,'success')
         return redirect(url_for('panel_docentes'))
     else:
         abort(401)
 
 def update():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'docente_update')):
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'docente_update')):
         if request.method == "POST" and forms.ValidateDocente(request.form).validate():
-            Docente.db = get_db()
-            Docente.update(request.form)
+            Teacher.db = get_db()
+            Teacher.update(request.form)
             flash("Se actualizó el docente correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
         return redirect(url_for('panel_docentes'))
 
 def deleteDocenteTaller():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'administrativo_destroy')):
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_destroy')):
         if request.method == "POST" and forms.ValidateDocenteTallerDelete(request.form).validate():
-            Docente.db = get_db()
-            Docente.deleteDocenteTaller(request.form)
+            Teacher.db = get_db()
+            Teacher.deleteDocenteTaller(request.form)
             flash("Se desasigno el docente del taller correctamente" ,'success')
         else:
             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
@@ -66,15 +84,16 @@ def deleteDocenteTaller():
         abort(401)
 
 def storeDocenteTaller():
-    if not authenticated(session):
-        abort(401)
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
-    Usuario.db = get_db()
-    if (Usuario.tiene_permiso(session['id'],'administrativo_new')):
+    User.db = get_db()
+    if (User.tiene_permiso(session['id'],'administrativo_new')):
         if request.method == "POST" and forms.ValidateDocenteTaller(request.form).validate():
-            Docente.db = get_db()
-            if Docente.tallerNoTieneDocente(request.form):
-                Docente.storeDocenteTaller(request.form)
+            Teacher.db = get_db()
+            if Teacher.tallerNoTieneDocente(request.form):
+                Teacher.storeDocenteTaller(request.form)
                 flash("Se agrego el taller al ciclo lectivo correctamente" ,'success')
             else:
                 flash("El docente ya esta asignado al taller para el ciclo lectivo seleccionado", 'error')
@@ -83,15 +102,3 @@ def storeDocenteTaller():
         return redirect(url_for('panel_docentes_taller'))
     else:
         abort(401)
-
-def get_all():
-    if not authenticated(session):
-        abort(401)
-    Docente.db = get_db()
-    return jsonify(Docente.all())
-
-def get_docente(id_data):
-    if not authenticated(session):
-        abort(401)
-    Docente.db = get_db()
-    return jsonify(Docente.get_docente(id_data))
