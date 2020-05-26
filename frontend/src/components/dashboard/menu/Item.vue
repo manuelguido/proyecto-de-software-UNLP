@@ -1,5 +1,5 @@
 <template>
-  <router-link v-on:click="panelSwitch" :to="item.url" class="list-group-item px-4 py-2 waves-effect">
+  <router-link :to="item.url" class="list-group-item px-4 py-2 waves-effect">
     <div class="md-v-line"></div><i :class="item.icon" class="mr-2"></i>{{ item.name }}
   </router-link>
 </template>
