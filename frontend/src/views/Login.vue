@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center pt-5">
         <div class="col-12 col-xl-5 pt-xl-5">
-          <div class="card">
+          <div class="card mt-xl-4">
             <div class="card-body p-xl-5 text-center">
               <h1 class="h4 my-4 mb-xl-5">Iniciar sesión</h1>
               <!-- Form -->
@@ -43,8 +43,8 @@
             </div>
           </div>
         </div>
-        <div class="col-12 py-4">
-          <router-link to="/" class="btn btn-blue-grey my-5"><i class="fas fa-arrow-left mr-3 white1"></i>Volver al inicio</router-link>
+        <div class="col-12 py-5 text-center">
+          <router-link to="/" class="btn btn-indigo my-xl-4"><i class="fas fa-arrow-left mr-3 white-a"></i>Volver al inicio</router-link>
         </div>
       </div>
     </div>

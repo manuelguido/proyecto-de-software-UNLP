@@ -1,10 +1,13 @@
 from flask import session, abort
 
-def authenticated():
+def authenticated ():
     if 'id' in session:
         return True
-    return False
+    else:
+        return False
 
-def authenticated_or_401():
-    if not authenticated:
+def authenticated_or_401 ():
+    if 'id' in session:
+        return True
+    else:
         abort(401)

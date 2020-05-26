@@ -22,8 +22,8 @@ import Dashboard from '@/views/Dashboard'
 export default {
   data () {
     return {
-      page_title: 'Estudiantes',
-      estudiante_path: '/dashboard/estudiante/',
+      page_title: 'Usuarios',
+      user_path: '/dashboard/user/',
       columns: [
         {
           label: 'Nucleo',

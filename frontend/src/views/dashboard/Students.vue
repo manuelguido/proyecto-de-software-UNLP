@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       page_title: 'Estudiantes',
-      estudiante_path: '/dashboard/estudiante/',
+      student_path: '/dashboard/student/',
       columns: [
         {
           label: 'Nucleo',

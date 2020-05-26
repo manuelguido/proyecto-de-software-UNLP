@@ -11,7 +11,7 @@
       </div>
       <div class="col-12 col-xl-6">
         <dashboard-title title="Ubicación"></dashboard-title>
-        <v-map :places="nucleos"></v-map>
+        <v-map :places="teachers"></v-map>
       </div>
     </div>
   </dashboard>
@@ -28,8 +28,8 @@ import vMap from '@/components/dashboard/Map'
 export default {
   data () {
     return {
-      nucleos: '',
-      nucleo_path: '/dashboard/nucleo/',
+      teachers: '',
+      teacher_path: '/dashboard/teacher/',
       columns: [
         {
           label: 'Nucleo',
@@ -58,20 +58,20 @@ export default {
   },
   methods: {
     getNucleos () {
-      const path = '/api/nucleos'
+      const path = '/api/teachers'
       axios.get(path).then((respuesta) => {
-        this.nucleos = respuesta.data
-        this.loadNucleos()
+        this.teachers = respuesta.data
+        this.loadTeachers()
       })
         .catch((error) => {
           console.log(error)
         })
     },
-    loadNucleos () {
-      let nuevo = {}
-      for (let i = 0; i < this.nucleos.length; i++) {
-        nuevo = {nombre: this.nucleos[i].nombre, direccion: this.nucleos[i].direccion, telefono: this.nucleos[i].telefono}
-        this.rows.push(nuevo)
+    loadTeachers () {
+      let newrow = {}
+      for (let i = 0; i < this.teachers.length; i++) {
+        newrow = {nombre: this.teachers[i].nombre, direccion: this.teachers[i].direccion, telefono: this.teachers[i].telefono}
+        this.rows.push(newrow)
       }
     }
   },

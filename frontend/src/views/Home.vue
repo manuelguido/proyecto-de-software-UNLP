@@ -7,10 +7,10 @@
       <div class="col-12 col-xl-5 py-xl-5">
         <div class="card home-card p-xl-5">
           <div class="card-body p-xl-5">
-            <div v-if="estado_sitio.activo">
-              <h1 class="h3 w600 mb-4">{{ estado_sitio.titulo }}</h1>
-              <p class="h4 mb-2">{{ estado_sitio.descripcion }}</p>
-              <p class="h5 mt-5">{{ estado_sitio.email }}</p>
+            <div v-if="configuration.active">
+              <h1 class="h3 w600 mb-4">{{ configuration.title }}</h1>
+              <p class="h4 mb-2">{{ configuration.description }}</p>
+              <p class="h5 mt-5">{{ configuration.email }}</p>
             </div>
             <div v-else>
               <p class="h5">El sitio se encuentra en mantenimiento</p>
@@ -31,7 +31,7 @@ export default {
   name: 'Main',
   data () {
     return {
-      estado_sitio: ' '
+      configuration: ' '
     }
   },
   components: {
@@ -39,9 +39,9 @@ export default {
   },
   methods: {
     getInfo () {
-      const path = '/api/info_sitio'
+      const path = '/api/configuration'
       axios.get(path).then((respuesta) => {
-        this.estado_sitio = respuesta.data
+        this.configuration = respuesta.data
       })
         .catch((error) => {
           console.log(error)

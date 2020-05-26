@@ -17,7 +17,7 @@
           </div>
           <div class="col-12 col-xl-6">
             <dashboard-title title="Ubicación"></dashboard-title>
-            <v-map :places="nucleos"></v-map>
+            <v-map :places="cores"></v-map>
           </div>
         </div>
       </template>
@@ -36,22 +36,22 @@ export default {
   data () {
     return {
       page_title: 'Núcleos',
-      nucleos: '',
-      nucleo_path: '/dashboard/nucleo/',
+      cores: '',
+      core_path: '/dashboard/core/',
       columns: [
         {
           label: 'Núcleo',
-          field: 'nombre',
+          field: 'name',
           sort: 'asc'
         },
         {
           label: 'Dirección',
-          field: 'direccion',
+          field: 'address',
           sort: 'asc'
         },
         {
           label: 'Teléfono',
-          field: 'telefono',
+          field: 'phone',
           sort: 'asc'
         }
       ],
@@ -65,26 +65,26 @@ export default {
     'dashboard-table': dashboardTable
   },
   methods: {
-    getNucleos () {
-      const path = '/api/nucleos'
+    getCores () {
+      const path = '/api/cores'
       axios.get(path).then((respuesta) => {
-        this.nucleos = respuesta.data
-        this.loadNucleos()
+        this.cores = respuesta.data
+        this.loadCores()
       })
         .catch((error) => {
           console.log(error)
         })
     },
-    loadNucleos () {
-      let nuevo = {}
-      for (let i = 0; i < this.nucleos.length; i++) {
-        nuevo = {nombre: this.nucleos[i].nombre, direccion: this.nucleos[i].direccion, telefono: this.nucleos[i].telefono}
-        this.rows.push(nuevo)
+    loadCores () {
+      let newrow = {}
+      for (let i = 0; i < this.cores.length; i++) {
+        newrow = {name: this.cores[i].name, address: this.cores[i].address, phone: this.cores[i].phone}
+        this.rows.push(newrow)
       }
     }
   },
   created () {
-    this.getNucleos()
+    this.getCores()
   }
 }
 </script>

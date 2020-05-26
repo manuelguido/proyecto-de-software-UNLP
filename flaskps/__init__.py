@@ -30,12 +30,12 @@ app.add_url_rule("/api/configuration", 'api_configuration', configuration.all, m
 #   API Privada (Regulada con permisos y sesión)
 #---------------------------------------------------#
 # Nucleos
-app.add_url_rule("/api/cores", 'api_nucleos', core.all, methods=['GET'])
-app.add_url_rule("/api/core/<int:id_data>", 'api_nucleo', core.get, methods=['GET'])
+app.add_url_rule("/api/cores", 'api_cores', core.all, methods=['GET'])
+app.add_url_rule("/api/core/<int:id_data>", 'api_core', core.get, methods=['GET'])
 
 # Estudiantes
-app.add_url_rule("/api/students", 'api_estudiantes', student.all, methods=['GET'])
-app.add_url_rule("/api/student/<int:id_data>", 'api_estudiante', student.get, methods=['GET'])
+app.add_url_rule("/api/students", 'api_students', student.all, methods=['GET'])
+app.add_url_rule("/api/student/<int:id_data>", 'api_student', student.get, methods=['GET'])
 
 # Docentes
 app.add_url_rule("/api/teachers", 'api_teachers', teacher.all, methods=['GET'])

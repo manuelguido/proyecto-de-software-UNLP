@@ -5,7 +5,7 @@ class Core(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM cores")
+        cursor.execute("SELECT * FROM cores")
         data = cursor.fetchall()
         return data
 

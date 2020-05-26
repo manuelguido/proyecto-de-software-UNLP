@@ -26,7 +26,7 @@ export default new Router({
       name: 'Login',
       component: Login,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
           if (!respuesta.data.authenticated) {
             next()
@@ -43,7 +43,7 @@ export default new Router({
       name: 'Logout',
       component: Logout,
       beforeEnter (to, from, next) {
-        const path = '/user/unauthenticate'
+        const path = '/auth/unauthenticate'
         axios.get(path).then((respuesta) => {
           if (respuesta.data.success) {
             next()
@@ -60,7 +60,7 @@ export default new Router({
       name: 'Dashboard',
       component: Dashboard,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
           if (respuesta.data.authenticated) {
             next()
@@ -73,11 +73,11 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/nucleos',
+      path: '/dashboard/cores',
       name: 'Cores',
       component: Cores,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
           if (respuesta.data.authenticated) {
             next()
@@ -90,11 +90,11 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/estudiantes',
+      path: '/dashboard/students',
       name: 'Students',
       component: Students,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
           if (respuesta.data.authenticated) {
             next()
@@ -107,48 +107,51 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/docentes',
+      path: '/dashboard/teachers',
       name: 'Teachers',
       component: Teachers,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
-          if (respuesta.data.authenticated)
+          if (respuesta.data.authenticated) {
             next()
-          else
+          } else {
             next({ name: 'Login' })
+          }
         }).catch((error) => {
           console.log(error)
         })
       }
     },
     {
-      path: '/dashboard/instrumentos',
+      path: '/dashboard/instruments',
       name: 'Instruments',
       component: Instruments,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
-          if (respuesta.data.authenticated)
+          if (respuesta.data.authenticated) {
             next()
-          else
+          } else {
             next({ name: 'Login' })
+          }
         }).catch((error) => {
           console.log(error)
         })
       }
     },
     {
-      path: '/dashboard/usuarios',
+      path: '/dashboard/users',
       name: 'Users',
       component: Users,
       beforeEnter (to, from, next) {
-        const path = '/user/authenticated'
+        const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {
-          if (respuesta.data.authenticated)
+          if (respuesta.data.authenticated) {
             next()
-          else
+          } else {
             next({ name: 'Login' })
+          }
         }).catch((error) => {
           console.log(error)
         })

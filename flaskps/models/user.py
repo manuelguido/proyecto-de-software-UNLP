@@ -2,6 +2,7 @@ class User(object):
 
     db = None
 
+    #Retorna todos los usuarios
     @classmethod
     def all(cls):
         sql = """
@@ -13,6 +14,7 @@ class User(object):
         cursor.execute(sql)
         return cursor.fetchall()
     
+    #Retorna el usuario
     @classmethod
     def get(cls, id_data):
         sql = "SELECT * FROM users WHERE users.user_id = %s"
@@ -20,36 +22,62 @@ class User(object):
         cursor.execute(sql, (id_data))
         return cursor.fetchone()
 
+    #Crea un usuario
     @classmethod
     def create(cls, data):
         cursor = cls.db.cursor()
         sql = """
-            INSERT INTO usuario (email, username, password, activo, first_name, last_name)
-            VALUES (%s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(sql, (data['email'], data['username'], data['password'], 1, data['first_name'], data['last_name']))
+             INSERT INTO users (name, lastname, username, email, password, active)
+             VALUES (%s, %s, %s, %s, %s, %s)
+         """
+        cursor.execute(sql, (data['name'], data['lastname'], data['username'], data['email'], data['password'], 1))
         cls.db.commit()
-
         return True
 
+    #Actualiza un usuario
     @classmethod
     def update(cls, request):
         sql = """
             UPDATE users
-            SET lastname=%s, name=%s, username=%s, email=%s
+            SET name=%s, lastname=%s, username=%s, email=%s
             WHERE users.user_id=%s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (request['last_name'], request['first_name'], request['username'], request['email'], request['id_data']))
+        cursor.execute(sql, (request['name'], request['lastname'], request['username'], request['email'], request['user_id']))
         cls.db.commit()
         return True
 
+    #Elimina un usuario
     @classmethod
     def delete(cls, id_data):
         cursor = cls.db.cursor()
         cursor.execute("DELETE FROM users WHERE user_id=%s", (id_data,))
         cls.db.commit()
         return True
+
+    #Retorna los pemisos del usuario
+    @classmethod
+    def permissions(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT permissions.name FROM permissions
+            INNER JOIN role_permission ON role_permission.permission_id = permissions.permission_id
+            INNER JOIN roles ON roles.role_id = role_permission.role_id
+            INNER JOIN user_role ON user_role.role_id = roles.role_id
+            WHERE user_role.user_id = %s
+        """
+        cursor.execute(sql, (id_data))
+        data = cursor.fetchall()
+        return data
+
+    @classmethod
+    def has_permission(cls, id_data, perm):
+        permissions = cls.permissions(id_data)
+        for permission in permissions:
+            if permission['name'] == perm:
+                return True
+        return False
+
 
     @classmethod
     def set_role(cls, usuario_id, rol_id):
@@ -77,10 +105,9 @@ class User(object):
     @classmethod
     def find_by_email_and_pass(cls, email, password):
         sql = """
-            SELECT * FROM usuario AS u
-            WHERE u.email = %s AND u.password = %s
+            SELECT * FROM users
+            WHERE users.email = %s AND users.password = %s
         """
-
         cursor = cls.db.cursor()
         cursor.execute(sql, (email, password))
 
@@ -107,27 +134,7 @@ class User(object):
         cls.db.commit()
         return True
 
-    @classmethod
-    def get_permisos(cls, id_data):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT permiso.nombre FROM usuario_tiene_rol
-            INNER JOIN rol ON usuario_tiene_rol.rol_id = rol.id
-            INNER JOIN rol_tiene_permiso ON rol_tiene_permiso.rol_id = rol.id
-            INNER JOIN permiso ON rol_tiene_permiso.permiso_id = permiso.id
-            WHERE usuario_tiene_rol.usuario_id = %s
-        """
-        cursor.execute(sql, (id_data))
-        data = cursor.fetchall()
-        return data
 
-    @classmethod
-    def tiene_permiso(cls, id_data, permiso):
-        data = cls.get_permisos(id_data)
-        for permisos in data:
-            if permisos['nombre'] == permiso:
-                return True
-        return False
 
     @classmethod
     def get_rol(cls, id_data):

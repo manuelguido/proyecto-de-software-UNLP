@@ -24,7 +24,7 @@ def authenticate():
             if not user:
                 response_object = {'status': 'warning', 'message': 'Email o contraseña incorrectos', 'success': False}
             #Usuario no activo
-            elif not user['activo']:
+            elif not user['active']:
                 response_object = {'status': 'warning', 'message': 'Usuario inactivo', 'success': False}
             #Inicio de sesión
             else:
@@ -40,7 +40,7 @@ def authenticate():
 #Inicia la sesión
 def login(user):
     #Variables de sesion
-    session['id'] = user['id']
+    session['id'] = user['user_id']
     session['username'] = user['username']
     session['email'] = user['email']
     session['name'] = user['name']

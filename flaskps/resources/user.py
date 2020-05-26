@@ -4,67 +4,72 @@ from flaskps.models.user import User
 from flaskps.helpers import auth
 from flaskps.resources import forms
 
+#Retorna todos los usuarios
 def all():
     #Auth check
     auth.authenticated_or_401()
-
+    #Retorno de data
     User.db = get_db()
     return jsonify(User.all())
 
+#Retorna el usuario by id
 def get(id_data):
     #Auth check
     auth.authenticated_or_401()
-
+    #Retorno de data
     User.db = get_db()
     return jsonify(User.get(id_data))
 
+#Retorna el perfil del usuario loggeado
 def profile():
     #Auth check
     auth.authenticated_or_401()
-
+    #Retorno de data
     user_object = {'name': session['name'], 'lastname': session['lastname']}
     return jsonify(user_object)
 
+#Retorna las rutas del usuario loggeado
 def routes():
     #Auth check
     auth.authenticated_or_401()
-
-    my_objects = [] #Listado de rutas
-    nucleos = {'name': 'Núcleos', 'url': '/dashboard/nucleos', 'icon': 'fas fa-map-marked-alt'}
-    my_objects.append(nucleos)
-    #User
+    #Listado de rutas
+    user_routes = []
+    #Cargado de información
     User.db = get_db()
-    
-    if (User.tiene_permiso(session['id'],'estudiante_index')):
-        new = {'name': 'Estudiantes', 'url': '/dashboard/estudiantes', 'icon': 'fas fa-user-graduate'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'docente_index')):
-        new = {'name': 'Docentes', 'url': '/dashboard/docentes', 'icon': 'fas fa-user-friends'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'instrumento_index')):
-        new = {'name': 'Instrumentos', 'url': '/dashboard/instrumentos', 'icon': 'fas fa-guitar'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'usuario_index')):
-        new = {'name': 'Usuarios', 'url': '/dashboard/usuarios', 'icon': 'fas fa-user'}
-        my_objects.append(new)
-    
-    if (User.tiene_permiso(session['id'],'administrativo_index')):
-        new = {'name': 'Administrativo', 'url': '/dashboard/administrativo', 'icon': 'fas fa-cog'}
-        my_objects.append(new)
-    #Returning data
-    return jsonify(my_objects)
+    nucleos = {'name': 'Núcleos', 'url': '/dashboard/cores', 'icon': 'fas fa-map-marked-alt'}
+    user_routes.append(nucleos)
 
+    if (User.has_permission(session['id'],'estudiante_index')):
+        new = {'name': 'Estudiantes', 'url': '/dashboard/students', 'icon': 'fas fa-user-graduate'}
+        user_routes.append(new)
+
+    if (User.has_permission(session['id'],'docente_index')):
+        new = {'name': 'Docentes', 'url': '/dashboard/teachers', 'icon': 'fas fa-user-friends'}
+        user_routes.append(new)
+    
+    if (User.has_permission(session['id'],'instrumento_index')):
+        new = {'name': 'Instrumentos', 'url': '/dashboard/instruments', 'icon': 'fas fa-guitar'}
+        user_routes.append(new)
+    
+    if (User.has_permission(session['id'],'usuario_index')):
+        new = {'name': 'Usuarios', 'url': '/dashboard/users', 'icon': 'fas fa-user'}
+        user_routes.append(new)
+    
+    if (User.has_permission(session['id'],'administrativo_index')):
+        new = {'name': 'Administrativo', 'url': '/dashboard/admin', 'icon': 'fas fa-cog'}
+        user_routes.append(new)
+    #Returning data
+    return jsonify(user_routes)
+
+#Actualiza el estado (active/inactive) del usuario
 def update_user_status():
     #Auth check
     auth.authenticated_or_401()
-    
-    #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'usuario_update')):
-        if request.method == "POST" and (request.form['activo'] == '0' or request.form['activo'] == '1'):
+    #Chequea permiso
+    if (User.has_permission(session['id'],'usuario_update')):
+        #Valida campos
+        if request.method == "POST" and (request.form['active'] == '0' or request.form['active'] == '1'):
             User.update_user_status(request.form)
             flash("Estado cambiado correctamente" ,'success')
         else:
@@ -73,13 +78,14 @@ def update_user_status():
     else:
         abort(401)
 
+#Actualiza la información de un usuario
 def update():
     #Auth check
     auth.authenticated_or_401()
 
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'usuario_update')):
+    if (User.has_permission(session['id'],'usuario_update')):
         if request.method == "POST" and forms.ValidateUserWithOutPassword(request.form).validate():
             #verifica los roles enviados
             if (request.form.get("rol1") == None) and (request.form.get("rol2") == None) and (request.form.get("rol3") == None):
@@ -118,13 +124,14 @@ def update():
     else:
         abort(401)
 
+#Almacena un usuario
 def store():
     #Auth check
     auth.authenticated_or_401()
 
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'usuario_new')):
+    if (User.has_permission(session['id'],'usuario_new')):
         if request.method == "POST" and forms.ValidateUser(request.form).validate():
             if (request.form['password'] != request.form['password_repeat']):
                 flash('Las contraseñas no coinciden', 'error')
@@ -158,7 +165,7 @@ def delete(id_data):
 
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'usuario_destroy')):
+    if (User.has_permission(session['id'],'usuario_destroy')):
         User.delete_roles(id_data)
         User.delete(id_data)
         flash("Se eliminó el usuario correctamente" ,'success')

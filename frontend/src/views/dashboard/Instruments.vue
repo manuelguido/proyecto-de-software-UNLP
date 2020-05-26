@@ -22,22 +22,12 @@ import Dashboard from '@/views/Dashboard'
 export default {
   data () {
     return {
-      page_title: 'Estudiantes',
-      estudiante_path: '/dashboard/estudiante/',
+      page_title: 'Instrumentos',
+      instrument_path: '/dashboard/instruments/',
       columns: [
         {
-          label: 'Nucleo',
-          field: 'nombre',
-          sort: 'asc'
-        },
-        {
-          label: 'Dirección',
-          field: 'direccion',
-          sort: 'asc'
-        },
-        {
-          label: 'Teléfono',
-          field: 'telefono',
+          label: 'Instrumento',
+          field: 'instrument',
           sort: 'asc'
         }
       ],
