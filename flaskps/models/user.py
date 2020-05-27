@@ -67,8 +67,7 @@ class User(object):
             WHERE user_role.user_id = %s
         """
         cursor.execute(sql, (id_data))
-        data = cursor.fetchall()
-        return data
+        return cursor.fetchall()
 
     @classmethod
     def has_permission(cls, id_data, perm):
@@ -77,7 +76,6 @@ class User(object):
             if permission['name'] == perm:
                 return True
         return False
-
 
     @classmethod
     def set_role(cls, usuario_id, rol_id):

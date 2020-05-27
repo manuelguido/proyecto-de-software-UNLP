@@ -7,10 +7,25 @@ class Student(object):
         cursor = cls.db.cursor()
         sql = """
             SELECT * FROM students
-            INNER JOIN levels ON .level_id = levels.level_id
+            INNER JOIN levels ON students.level_id = levels.level_id
             INNER JOIN genders ON students.gender_id = genders.gender_id
             INNER JOIN schools ON students.school_id = schools.school_id
-            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_ id
+            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_id
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
+        """
+        cursor.execute(sql)
+        return cursor.fetchall()
+
+    @classmethod
+    def all_reduced(cls):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT students.student_id, students.name, students.lastname, students.document_number, document_types.name as document_type FROM students
+            INNER JOIN levels ON students.level_id = levels.level_id
+            INNER JOIN genders ON students.gender_id = genders.gender_id
+            INNER JOIN schools ON students.school_id = schools.school_id
+            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_id
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
         """
         cursor.execute(sql)
         return cursor.fetchall()
@@ -18,7 +33,12 @@ class Student(object):
     @classmethod
     def get(cls, id_data):
         sql = """
-            SELECT * FROM students 
+            SELECT students.*, levels.name as level, genders.name as gender, schools.name as school, neighborhoods.name as neighborhood, document_types.name as document_type FROM students
+            INNER JOIN levels ON students.level_id = levels.level_id
+            INNER JOIN genders ON students.gender_id = genders.gender_id
+            INNER JOIN schools ON students.school_id = schools.school_id
+            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_id
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
             WHERE students.student_id=%s
         """
         cursor = cls.db.cursor()

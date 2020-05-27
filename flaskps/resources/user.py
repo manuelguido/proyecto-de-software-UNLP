@@ -56,7 +56,7 @@ def routes():
         user_routes.append(new)
     
     if (User.has_permission(session['id'],'administrativo_index')):
-        new = {'name': 'Administrativo', 'url': '/dashboard/admin', 'icon': 'fas fa-cog'}
+        new = {'name': 'Administrativo', 'url': '/dashboard/configuration', 'icon': 'fas fa-cog'}
         user_routes.append(new)
     #Returning data
     return jsonify(user_routes)

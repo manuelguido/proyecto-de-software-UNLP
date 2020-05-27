@@ -1,11 +1,11 @@
 <template>
-  <mdb-navbar class="bg-white px-5" light>
-    <mdb-navbar-brand href="/" class="w600">
+  <mdb-navbar class="bg-white py-3 px-5" light>
+    <router-link class="navbar-brand w600" to="/">
       Escuela Orquesta Berisso
-    </mdb-navbar-brand>
+    </router-link>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
-        <router-link to="/login" class="btn btn-primary"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</router-link>
+        <router-link v-if="to_login" to="login" class="my-0 btn btn-primary seed-rounded"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>
@@ -26,6 +26,9 @@ export default {
     mdbDropdownToggle,
     mdbDropdownItem,
     mdbInput
+  },
+  props: {
+    to_login: Boolean
   }
 }
 </script>

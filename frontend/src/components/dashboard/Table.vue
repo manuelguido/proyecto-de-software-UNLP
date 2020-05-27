@@ -4,8 +4,7 @@
     striped
     bordered
     responsive
-    next="Anterior"
-    previous="Siguiente"
+    arrows
     defaultRow="No hay información"
     noFoundMessage="No hay resultados"
     searchPlaceholder="Buscar"

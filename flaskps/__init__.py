@@ -11,6 +11,7 @@ from flaskps.helpers import handler
 #---------------------------------------------------#
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+# cors = CORS(app)
 
 #---------------------------------------------------#
 #   Sessiones
@@ -59,7 +60,7 @@ app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET'])
 #Cerrar sesión
 app.add_url_rule("/auth/unauthenticate", 'auth_unauthenticate', auth.unauthenticate, methods=['GET'])
 #Autenticar usuario
-app.add_url_rule("/auth/authenticate", 'auth_authenticate', auth.authenticate, methods=['GET', 'POST'])
+app.add_url_rule("/auth/authenticate", 'auth_authenticate', auth.authenticate, methods=['POST'])
 #Chequea si el usuario está autenticado
 app.add_url_rule("/auth/authenticated", 'auth_authenticated', auth.authenticated, methods=['GET'])
 

@@ -1,11 +1,11 @@
 <template>
-  <div id="panel-sidebar" class="mobile-hide">
-    <div class="container px-4">
-      <img id="sidebar-logo" class="uns" src="../../../assets/logo-green.png" />
+  <div id="panel-sidebar" class="mobile-hide pt-5">
+    <div class="container">
+      <img id="sidebar-logo" class="uns" src="../../../assets/logo-green-empty.png" />
       <ul class="list-group">
         <menu-item :item=home_link></menu-item>
         <menu-item v-on:click="panelSwitch" v-for="link in links" :key="link.name" :item=link></menu-item>
-        <menu-item :item=logout_link></menu-item>
+        <menu-item :item=logout_link @onclick=con></menu-item>
       </ul>
     </div>
   </div>

@@ -9,16 +9,26 @@ from flaskps.resources import forms
 def all():
     #Auth check
     auth.authenticated_or_401()
-
-    Student.db = get_db()
-    return jsonify(Student.all())
+    
+    #Chequea permiso
+    User.db = get_db()
+    if (User.has_permission(session['id'],'estudiante_index')):
+        Student.db = get_db()
+        return jsonify(Student.all_reduced())
+    else:
+        return jsonify({})
 
 def get(id_data):
     #Auth check
     auth.authenticated_or_401()
-
-    Student.db = get_db()
-    return jsonify(Student.get(id_data))
+    
+    #Chequea permiso
+    User.db = get_db()
+    if (User.has_permission(session['id'],'estudiante_show')):
+        Student.db = get_db()
+        return jsonify(Student.get(id_data))
+    else:
+        return jsonify({})
 
 def store():
     #Auth check
@@ -26,7 +36,7 @@ def store():
 
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'estudiante_new')):
+    if (User.has_permission(session['id'],'estudiante_new')):
         if request.method == "POST" and forms.ValidateStudent(request.form).validate():
             Student.db = get_db()
             Student.store(request.form)
