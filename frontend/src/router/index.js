@@ -13,6 +13,7 @@ import Cores from '@/views/dashboard/cores/Cores'
 // Students
 import Students from '@/views/dashboard/students/Students'
 import Student from '@/views/dashboard/students/Student'
+import StudentEdit from '@/views/dashboard/students/StudentEdit'
 // Teachers
 import Teachers from '@/views/dashboard/teachers/Teachers'
 // Instruments
@@ -57,6 +58,7 @@ export default new Router({
         const path = '/auth/unauthenticate'
         axios.get(path).then((respuesta) => {
           if (respuesta.data.success) {
+            localStorage.clear() // Deletes all local storage
             next()
           } else {
             next({ name: 'Dashboard' })
@@ -121,6 +123,24 @@ export default new Router({
       path: '/dashboard/student/:student_id',
       name: 'Student',
       component: Student,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/student/edit/:student_id',
+      name: 'StudentEdit',
+      component: StudentEdit,
       props: true,
       beforeEnter (to, from, next) {
         const path = '/auth/authenticated'

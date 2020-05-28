@@ -2,11 +2,11 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <!-- Sidebar -->
-      <sidebar :links="links"></sidebar>
+      <sidebar :links="routes"></sidebar>
       <!-- /.Sidebar -->
       <!-- Panel content -->
       <div id="dashboard-container" class="col">
-        <navbar :links="links"></navbar>
+        <navbar :links="routes"></navbar>
         <!-- All content -->
         <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 px-3 w-100">
           <div class="row">
@@ -21,7 +21,7 @@
             </div>
           </div>
           <slot name="dashboard_content">
-            <dashboard-items :items="links"></dashboard-items>
+            <dashboard-items :items="routes"></dashboard-items>
           </slot>
         </div>
       </div>
@@ -35,6 +35,7 @@ import axios from 'axios'
 import sidebar from '@/components/dashboard/menu/Sidebar'
 import navbar from '@/components/dashboard/Navbar'
 import dashboardItems from '@/components/dashboard/items/DashboardItems'
+
 export default {
   name: 'Dashboard',
   components: {
@@ -44,22 +45,27 @@ export default {
   },
   data () {
     return {
-      links: ''
+      routes: ''
     }
   },
   methods: {
-    getRoutes: function () {
+    getUserRoutes: function () {
       const path = '/api/user/routes'
-      axios.get(path).then((respuesta) => {
-        this.links = respuesta.data
+      axios.get(path).then((res) => {
+        this.routes = res.data
+        localStorage.setItem('routes', JSON.stringify(this.routes))
+      }).catch((error) => {
+        console.log(error)
       })
-        .catch((error) => {
-          console.log(error)
-        })
     }
   },
   mounted () {
-    this.getRoutes()
+    if (localStorage.routes) {
+      var routes = localStorage.getItem('routes')
+      this.routes = JSON.parse(routes)
+    } else {
+      this.getUserRoutes()
+    }
   }
 }
 </script>

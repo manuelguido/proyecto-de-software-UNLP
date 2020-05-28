@@ -8,14 +8,33 @@
       <!-- Content -->
       <template v-slot:dashboard_content>
         <div class="row">
+          <div class="col-12 col-lg-5 text-right">
+            <router-link :to="editpath" class="btn btn-secondary btn-sm"><i class="far fa-edit mr-3"></i>Editar</router-link>
+            <router-link :to="deletepath" class="btn btn-warning btn-sm mr-0"><i class="fas fa-trash mr-3"></i>Eliminar</router-link>
+          </div>
+        </div>
+        <div class="row mt-3">
           <div class="col-12 col-lg-5">
-            <h1 class="h3">{{student.name}} {{student.lastname}}</h1>
-            <level-button :level="student.level"></level-button>
-            <p class="w600 my-2">Género: {{student.gender}}</p>
-            <p class="my-2">Fecha de nacimiento: {{student.birth_date | formatDateFull}}</p>
-            <p class="my-2">{{student.neighborhood}}</p>
-            <p class="my-2"></p>
-            <p class="my-2"></p>
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-xl-8">
+                    <h1 class="h5 w600 black-c">{{student.name}} {{student.lastname}}</h1>
+                  </div>
+                  <div class="col-12 col-xl-4 text-xl-right">
+                    <level-button :level="student.level"></level-button>
+                  </div>
+                  <div class="col-12">
+                    <p class="w600 my-2">Género: {{student.gender}}</p>
+                    <p class="w600 my-2">Documento: {{student.document_type}} {{student.document_number}}</p>
+                    <p class="w600 my-2">Teléfono: {{student.phone}}</p>
+                    <p class="my-2">Fecha de nacimiento: {{student.birth_date | formatDateFull}}</p>
+                    <p class="my-2">Barrio: {{student.neighborhood}}</p>
+                    <p class="my-2">Escuela: {{student.school}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </template>
@@ -32,9 +51,9 @@ import levelButton from '@/components/dashboard/buttons/LevelButton'
 export default {
   data () {
     return {
-      pagetitle: 'Información de estudiante',
-      // editpath: '/dashboard/student/',
-      // deletepath: '/dashboard/student/',
+      pagetitle: 'Información del estudiante',
+      editpath: '/dashboard/studente/edit' + this.student_id,
+      deletepath: '/dashboard/student/' + this.student_id,
       student: ''
     }
   },
