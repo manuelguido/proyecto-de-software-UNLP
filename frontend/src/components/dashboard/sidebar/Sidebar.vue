@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import menuItem from '@/components/dashboard/menu/Item'
+import menuItem from '@/components/dashboard/sidebar/Item'
 export default {
   name: 'ItemGroup',
   props: {
@@ -43,16 +43,16 @@ export default {
 #panel-sidebar {
   height: 100vh !important;
   position: fixed;
-  background: var(--color-a-light);
+  background: var(--white-b-light);
   box-shadow: 0 .07em .125em 0 rgba(0,0,0,.12) !important;
   box-shadow: none;
-  width: 240px;
+  width: 260px;
   left: 0;
   z-index: 1070;
 }
 #sidebar-logo {
-  display: inline-block;
-  margin: 0 auto 20px auto !important;
-  width: 100%;
+  display: block;
+  margin: 40px auto 30px auto !important;
+  width: 80%;
 }
 </style>

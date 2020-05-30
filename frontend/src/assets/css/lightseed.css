@@ -1,31 +1,27 @@
 :root {
     /* Main Pallete */
-    --color-a: #0da084;
-    --color-a-light: #e3f5f3;
+    --color-a: #26377c;
+    --color-a-light: #b7bbcb;
 
-    --color-b: #0da084;
-    --color-b-light: #bcf1eb;
+    --color-b: #2ac28c;
+    --color-b-light: #e4f3f2;
     
-    --color-c: #5ca34a;
-    --color-c-light: #d1ebd0;
-    
-    --color-d: #dbdee6;
-    --color-d-light: #dbdee631;
-    
-    --color-e: #1a202c;
-    --color-e-light: #0b0f40;
+    --color-c: #040613;
+    --color-c-light: #f5f6f8;
+
+    --green-strong: #05ffa3;
 
     /* White */
-    --white-a: #fdfeff;
-    --white-b: #e6e8ef;
-    --white-c: #d0d2d6;
-    --white-d: #ccc;
+    --white-a: #ffffff;
+    --white-b: #f5f6f8;
+    --white-c: #e6e8ef;
+    --white-d: #d0d2d6;
 
     /* Black */
-    --black-a: #212224;
+    --black-a: #0b0b15;
     --black-b: #41444b;
     --black-c: #505565;
-    --black-d: #8c92a6;
+    --black-d: #bfbec3;
 
     /* Traditional */
     --seed-primary: #444BF8;
@@ -242,16 +238,6 @@ a.link:hover {
     border-color: var(--color-c) !important;
     color: var(--white-a) !important;
 }
-.seed-btn-d {
-    background-color: var(--color-d) !important;
-    border-color: var(--color-d) !important;
-    color: var(--white-a) !important;
-}
-.seed-btn-e {
-    background-color: var(--color-e) !important;
-    border-color: var(--color-e) !important;
-    color: var(--white-a) !important;
-}
 .seed-btn-primary {
     background-color: var(--seed-primary) !important;
     border-color: var(--seed-primary) !important;
@@ -304,16 +290,6 @@ a.link:hover {
     border: 2px solid var(--color-c) !important;
     color: var(--color-c) !important;
 }
-.seed-btn-outline-d {
-    background-color: var(--color-d-light) !important;
-    border: 2px solid var(--color-d) !important;
-    color: var(--color-d) !important;
-}
-.seed-btn-outline-e {
-    background-color: var(--color-e-light) !important;
-    border: 2px solid var(--color-e) !important;
-    color: var(--color-e) !important;
-}
 .seed-btn-outline-primary {
     background-color: var(--seed-primary-light) !important;
     border: 2px solid var(--seed-primary) !important;
@@ -365,14 +341,6 @@ a.link:hover {
 .color-c-dark { color: var(--color-c-dark) !important;}
 .color-c-light { color: var(--color-c-light) !important;}
 
-.color-d { color: var(--color-d) !important;}
-.color-d-dark { color: var(--color-d-dark) !important;}
-.color-d-light { color: var(--color-d-light) !important;}
-
-.color-e { color: var(--color-e) !important;}
-.color-e-dark { color: var(--color-e-dark) !important;}
-.color-e-light { color: var(--color-e-light) !important;}
-
 /* White */
 .white-a { color: var(--white-a) !important; }
 .white-b { color: var(--white-b) !important; }
@@ -421,7 +389,7 @@ a.link:hover {
 /*--------------------------------------------------------------
     Background Colors
 --------------------------------------------------------------*/
-.bg-color-a { background-color: var(--color-b) !important;}
+.bg-color-a { background-color: var(--color-a) !important;}
 .bg-color-a-dark { background-color: var(--color-a-dark) !important;}
 .bg-color-a-light { background-color: var(--color-a-light) !important;}
 
@@ -432,14 +400,6 @@ a.link:hover {
 .bg-color-c { background-color: var(--color-c) !important;}
 .bg-color-c-dark { background-color: var(--color-c-dark) !important;}
 .bg-color-c-light { background-color: var(--color-c-light) !important;}
-
-.bg-color-d { background-color: var(--color-d) !important;}
-.bg-color-d-dark { background-color: var(--color-d-dark) !important;}
-.bg-color-d-light { background-color: var(--color-d-light) !important;}
-
-.bg-color-e { background-color: var(--color-e) !important;}
-.bg-color-e-dark { background-color: var(--color-e-dark) !important;}
-.bg-color-e-light { background-color: var(--color-e-light) !important;}
 
 /* White */
 .bg-white-a { background-color: var(--white-a) !important; }
@@ -585,8 +545,6 @@ a.link:hover {
 .color-a-bottom { border-bottom: 4px solid var(--color-a) !important; }
 .color-b-bottom { border-bottom: 4px solid var(--color-b) !important; }
 .color-c-bottom { border-bottom: 4px solid var(--color-c) !important; }
-.color-d-bottom { border-bottom: 4px solid var(--color-d) !important; }
-.color-e-bottom { border-bottom: 4px solid var(--color-e) !important; }
 .primary-bottom { border-bottom: 4px solid var(--seed-primary) !important; }
 .secondary-bottom { border-bottom: 5px solid var(--seed-secondary) !important; }
 .success-bottom { border-bottom: 4px solid var(--seed-success) !important; }

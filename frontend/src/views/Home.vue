@@ -18,8 +18,8 @@
                   <div v-if="configuration.active">
                     <h1 class="h3 w600 mb-5">{{ configuration.title }}</h1>
                     <p class="h5 w300 black-b mt-3 mb-5">{{ configuration.description }}</p>
-                    <span class="h6 w400 mx-0 py-2 px-4 color-a bg-color-a-light seed-rounded shadow">
-                      <i class="fas fa-envelope color-a mr-3"></i>{{ configuration.email }}
+                    <span class="h6 w400 mx-0 py-2 px-4 color-b bg-color-b-light seed-rounded shadow">
+                      <i class="fas fa-envelope color-b mr-3"></i>{{ configuration.email }}
                     </span>
                   </div>
                   <div v-else>
@@ -75,8 +75,7 @@ export default {
   min-height: 100vh;
 }
 .inner-home-container {
-  min-height:  100vh;
-  background-color: rgba(255,255,255,0.8);
+  min-height: 100vh;
 }
 .home-card {
   border-radius: 50px;

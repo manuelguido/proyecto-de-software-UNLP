@@ -47,6 +47,15 @@ def login(user):
     session['lastname'] = user['lastname']
     return True
 
+def login_by_google(user_info):
+    User.db = get_db()
+    user = User.get_by_email(user_info['email'])
+    if not user:
+        User.create_by_google(user_info)
+        user = User.get_by_email(user_info['email'])
+    login(user)
+    return True
+
 def authenticated():
     authenticated_object = {'authenticated': False}
     if auth.authenticated():
@@ -54,6 +63,13 @@ def authenticated():
     return jsonify(authenticated_object)
 
 def unauthenticate():
+    for key in list(session.keys()):
+        session.pop(key)
     session.clear()
     response_object = {'success': True}
     return jsonify(response_object)
+
+# def logout():
+#     for key in list(session.keys()):
+#         session.pop(key)
+#     return redirect('/')

@@ -13,13 +13,23 @@ import Cores from '@/views/dashboard/cores/Cores'
 // Students
 import Students from '@/views/dashboard/students/Students'
 import Student from '@/views/dashboard/students/Student'
+import StudentNew from '@/views/dashboard/students/StudentNew'
 import StudentEdit from '@/views/dashboard/students/StudentEdit'
 // Teachers
 import Teachers from '@/views/dashboard/teachers/Teachers'
+import Teacher from '@/views/dashboard/teachers/Teacher'
+import TeacherNew from '@/views/dashboard/teachers/TeacherNew'
+import TeacherEdit from '@/views/dashboard/teachers/TeacherEdit'
 // Instruments
 import Instruments from '@/views/dashboard/instruments/Instruments'
+import Instrument from '@/views/dashboard/instruments/Instrument'
+import InstrumentNew from '@/views/dashboard/instruments/InstrumentNew'
+import InstrumentEdit from '@/views/dashboard/instruments/InstrumentEdit'
 // Users
 import Users from '@/views/dashboard/users/Users'
+import User from '@/views/dashboard/users/User'
+import UserNew from '@/views/dashboard/users/UserNew'
+import UserEdit from '@/views/dashboard/users/UserEdit'
 // Configuration
 import Configuration from '@/views/dashboard/Configuration'
 
@@ -138,6 +148,23 @@ export default new Router({
       }
     },
     {
+      path: '/dashboard/new/student',
+      name: 'StudentNew',
+      component: StudentNew,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
       path: '/dashboard/student/edit/:student_id',
       name: 'StudentEdit',
       component: StudentEdit,
@@ -173,6 +200,59 @@ export default new Router({
       }
     },
     {
+      path: '/dashboard/teacher/:teacher_id',
+      name: 'Teacher',
+      component: Teacher,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/teacher/new',
+      name: 'TeacherNew',
+      component: TeacherNew,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/teacher/edit/:teacher_id',
+      name: 'TeacherEdit',
+      component: TeacherEdit,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
       path: '/dashboard/instruments',
       name: 'Instruments',
       component: Instruments,
@@ -190,9 +270,115 @@ export default new Router({
       }
     },
     {
+      path: '/dashboard/instrument/:student_id',
+      name: 'Instrument',
+      component: Instrument,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/instrument/new',
+      name: 'InstrumentNew',
+      component: InstrumentNew,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/instrument/edit/:instrument_id',
+      name: 'InstrumentEdit',
+      component: InstrumentEdit,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
       path: '/dashboard/users',
       name: 'Users',
       component: Users,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/user/:user_id',
+      name: 'User',
+      component: User,
+      props: true,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/user/new',
+      name: 'UserNew',
+      component: UserNew,
+      beforeEnter (to, from, next) {
+        const path = '/auth/authenticated'
+        axios.get(path).then((respuesta) => {
+          if (respuesta.data.authenticated) {
+            next()
+          } else {
+            next({ name: 'Login' })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    },
+    {
+      path: '/dashboard/user/edit/:user_id',
+      name: 'UserEdit',
+      component: UserEdit,
+      props: true,
       beforeEnter (to, from, next) {
         const path = '/auth/authenticated'
         axios.get(path).then((respuesta) => {

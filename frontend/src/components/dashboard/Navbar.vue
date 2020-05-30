@@ -1,7 +1,7 @@
 <template>
-  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none bg-white-a" light>
-    <mdb-navbar-brand class="w600">
-      <p id="navbar-title" class="color-a my-0">Escuela Orquesta Berisso</p>
+  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none bg-color-b" dark>
+    <mdb-navbar-brand>
+      <span class="h5 white-a w300 ls03 my-1">Escuela Orquesta Berisso</span>
     </mdb-navbar-brand>
     <mdb-navbar-toggler class="web-hide color-a">
       <mdb-navbar-nav class="web-hide">
@@ -39,11 +39,6 @@ export default {
 <style scoped>
 #dashboard-navbar {
   z-index: 10000;
-  border-bottom: 1px solid #ccc;
-}
-#navbar-title {
-  font-size: 14px;
-  font-weight: 300;
 }
 /* @media(min-width: 992px) {
   #dashboard-navbar {
@@ -64,13 +59,13 @@ export default {
   border-radius: 6.2px !important;
   border: 0 none !important;
   background: none;
-  color: var(--color-a);
+  color: var(--white-a);
   transition: 0.1s all !important;
 }
 .nav-item:hover,
 .nav-item:active,
 .nav-item.active {
-  background: var(--color-a);
+  background: var(--color-a-light);
   color: var(--white-a);
 }
 </style>

@@ -1,8 +1,11 @@
 <template>
   <div class="row">
-
-    <div v-for="item in items" :key="item.name" class="col-12 col-xl-3 mb-xl-5 mb-4">
-      <item :item="item"></item>
+    <div class="col-12 col-xl-8">
+      <div class="row">
+        <div v-for="item in items" :key="item.name" class="col-12 col-lg-3 col-xl-3 mb-4">
+          <item :item="item"></item>
+        </div>
+      </div>
     </div>
   </div>
 </template>

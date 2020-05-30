@@ -7,12 +7,14 @@
       </template>
       <!-- Content -->
       <template v-slot:dashboard_content>
+        <!-- Edition row -->
         <div class="row">
           <div class="col-12 col-lg-5 text-right">
-            <router-link :to="editpath" class="btn btn-secondary btn-sm"><i class="far fa-edit mr-3"></i>Editar</router-link>
-            <router-link :to="deletepath" class="btn btn-warning btn-sm mr-0"><i class="fas fa-trash mr-3"></i>Eliminar</router-link>
+            <router-link :to="editPath" class="btn btn-secondary btn-sm"><i class="far fa-edit mr-3"></i>Editar</router-link>
           </div>
         </div>
+        <!-- /.Edition row -->
+        <!-- Information row -->
         <div class="row mt-3">
           <div class="col-12 col-lg-5">
             <div class="card">
@@ -37,6 +39,7 @@
             </div>
           </div>
         </div>
+        <!-- /.Information row -->
       </template>
     </dashboard>
   </div>
@@ -52,8 +55,8 @@ export default {
   data () {
     return {
       pagetitle: 'Información del estudiante',
-      editpath: '/dashboard/studente/edit' + this.student_id,
-      deletepath: '/dashboard/student/' + this.student_id,
+      editPath: '/dashboard/studente/edit/' + this.student_id,
+      deletePath: '/dashboard/student/' + this.student_id,
       student: ''
     }
   },
@@ -73,7 +76,6 @@ export default {
       const path = '/api/student/' + this.student_id
       axios.get(path).then((respuesta) => {
         this.student = respuesta.data
-        console.log(path)
       }).catch((error) => {
         console.log(error)
       })

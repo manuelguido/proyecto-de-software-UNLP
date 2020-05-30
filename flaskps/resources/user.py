@@ -28,101 +28,45 @@ def profile():
     user_object = {'name': session['name'], 'lastname': session['lastname']}
     return jsonify(user_object)
 
+def has_role():
+    #Auth check
+    auth.authenticated_or_401()
+    #User routes
+    User.db = get_db()
+    roles_object = {'role_status': True}
+    if not User.has_roles(session['id']):
+        roles_object = {'role_status': False}
+    return jsonify(roles_object)
+
 #Retorna las rutas del usuario loggeado
 def routes():
     #Auth check
     auth.authenticated_or_401()
     #Listado de rutas
     user_routes = []
-    #Cargado de información
     User.db = get_db()
+    if (not User.has_roles(session['id'])):
+        return jsonify(user_routes)
+    #Cargado de información
     nucleos = {'name': 'Núcleos', 'url': '/dashboard/cores', 'icon': 'fas fa-map-marked-alt'}
     user_routes.append(nucleos)
-
     if (User.has_permission(session['id'],'estudiante_index')):
         new = {'name': 'Estudiantes', 'url': '/dashboard/students', 'icon': 'fas fa-user-graduate'}
         user_routes.append(new)
-
     if (User.has_permission(session['id'],'docente_index')):
-        new = {'name': 'Docentes', 'url': '/dashboard/teachers', 'icon': 'fas fa-user-friends'}
+        new = {'name': 'Docentes', 'url': '/dashboard/teachers', 'icon': 'fas fa-chalkboard-teacher'}
         user_routes.append(new)
-    
     if (User.has_permission(session['id'],'instrumento_index')):
         new = {'name': 'Instrumentos', 'url': '/dashboard/instruments', 'icon': 'fas fa-guitar'}
         user_routes.append(new)
-    
     if (User.has_permission(session['id'],'usuario_index')):
-        new = {'name': 'Usuarios', 'url': '/dashboard/users', 'icon': 'fas fa-user'}
+        new = {'name': 'Usuarios', 'url': '/dashboard/users', 'icon': 'fas fa-user-friends'}
         user_routes.append(new)
-    
     if (User.has_permission(session['id'],'administrativo_index')):
         new = {'name': 'Administrativo', 'url': '/dashboard/configuration', 'icon': 'fas fa-cog'}
         user_routes.append(new)
     #Returning data
     return jsonify(user_routes)
-
-#Actualiza el estado (active/inactive) del usuario
-def update_user_status():
-    #Auth check
-    auth.authenticated_or_401()
-    User.db = get_db()
-    #Chequea permiso
-    if (User.has_permission(session['id'],'usuario_update')):
-        #Valida campos
-        if request.method == "POST" and (request.form['active'] == '0' or request.form['active'] == '1'):
-            User.update_user_status(request.form)
-            flash("Estado cambiado correctamente" ,'success')
-        else:
-            flash('No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_usuarios'))
-    else:
-        abort(401)
-
-#Actualiza la información de un usuario
-def update():
-    #Auth check
-    auth.authenticated_or_401()
-
-    #Chequea permiso
-    User.db = get_db()
-    if (User.has_permission(session['id'],'usuario_update')):
-        if request.method == "POST" and forms.ValidateUserWithOutPassword(request.form).validate():
-            #verifica los roles enviados
-            if (request.form.get("rol1") == None) and (request.form.get("rol2") == None) and (request.form.get("rol3") == None):
-                flash('Debes elegir al menos un rol de usuario', 'error')
-            #Chequea la existencia del usuario
-            elif User.find_by_username_not_self(request.form['username'],request.form.get("id_data")):
-                flash("Ya existe un usuario con ese nombre de usuario" ,'error')
-            elif User.find_by_email_not_self(request.form['email'],request.form.get("id_data")):
-                flash("Ya existe un usuario con ese email" ,'error')
-            else:
-                User.update(request.form)
-                if request.form.get("rol1") != None:
-                    if not User.tiene_rol(request.form['id_data'], 'administrador'):
-                        a = '1'
-                        User.set_role(request.form.get("id_data"), a)
-                else:
-                    a = '1'
-                    if User.tiene_rol(request.form['id_data'], 'administrador'):
-                        User.unset_role(request.form.get("id_data"), a)
-                if request.form.get("rol2") != None:
-                    if not User.tiene_rol(request.form['id_data'], 'docente'):
-                        User.set_role(request.form.get("id_data"), 2)
-                else:
-                    if User.tiene_rol(request.form['id_data'], 'docente'):
-                        User.unset_role(request.form.get("id_data"), 2)
-                if request.form.get("rol3") != None:
-                    if not User.tiene_rol(request.form['id_data'], 'preceptor'):
-                        User.set_role(request.form.get("id_data"), 3)
-                else:
-                    if User.tiene_rol(request.form['id_data'], 'preceptor'):
-                        User.unset_role(request.form.get("id_data"), 3)
-                flash("Usuario modificado correctamente" ,'success')
-        else:
-            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for("get_update_user", id_data=request.form.get("id_data")))
-    else:
-        abort(401)
 
 #Almacena un usuario
 def store():
@@ -158,6 +102,69 @@ def store():
         return redirect(url_for('panel_usuarios'))
     else:
         abort(401)
+
+#Actualiza el estado (active/inactive) del usuario
+def update_user_status():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        User.db = get_db()        
+        #Chequea permiso
+        if (User.has_permission(session['id'],'usuario_update')):
+            #Valida campos
+            if (request.form['active'] == '0' or request.form['active'] == '1'):
+                User.update_user_status(request.form)
+                return {'status': 'success', 'message': 'Se actualizó el estado del usuario'}
+        else:
+            abort(401)
+
+#Actualiza la información de un usuario
+def update():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (User.has_permission(session['id'],'usuario_update')):
+            if forms.ValidateUserWithOutPassword(request.form).validate():
+                #verifica los roles enviados
+                if (request.form.get("rol1") == None) and (request.form.get("rol2") == None) and (request.form.get("rol3") == None):
+                    flash('Debes elegir al menos un rol de usuario', 'error')
+                #Chequea la existencia del usuario
+                elif User.find_by_username_not_self(request.form['username'],request.form.get("id_data")):
+                    flash("Ya existe un usuario con ese nombre de usuario" ,'error')
+                elif User.find_by_email_not_self(request.form['email'],request.form.get("id_data")):
+                    flash("Ya existe un usuario con ese email" ,'error')
+                else:
+                    User.update(request.form)
+                    if request.form.get("rol1") != None:
+                        if not User.tiene_rol(request.form['id_data'], 'administrador'):
+                            a = '1'
+                            User.set_role(request.form.get("id_data"), a)
+                    else:
+                        a = '1'
+                        if User.tiene_rol(request.form['id_data'], 'administrador'):
+                            User.unset_role(request.form.get("id_data"), a)
+                    if request.form.get("rol2") != None:
+                        if not User.tiene_rol(request.form['id_data'], 'docente'):
+                            User.set_role(request.form.get("id_data"), 2)
+                    else:
+                        if User.tiene_rol(request.form['id_data'], 'docente'):
+                            User.unset_role(request.form.get("id_data"), 2)
+                    if request.form.get("rol3") != None:
+                        if not User.tiene_rol(request.form['id_data'], 'preceptor'):
+                            User.set_role(request.form.get("id_data"), 3)
+                    else:
+                        if User.tiene_rol(request.form['id_data'], 'preceptor'):
+                            User.unset_role(request.form.get("id_data"), 3)
+                    flash("Usuario modificado correctamente" ,'success')
+            else:
+                flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
+            return redirect(url_for("get_update_user", id_data=request.form.get("id_data")))
+        else:
+            abort(401)
 
 def delete(id_data):
     #Auth check

@@ -1,9 +1,10 @@
 <template>
-  <router-link :to="item.url" class="py-2 card dashboard-item w-100">
+  <router-link :to="item.url" class="py-3 card dashboard-item w-100">
     <div class="card-body">
       <div class="media align-items-center">
-        <div class="media-body">
-          <h2 class="h5 w200 m-0"><i :class="item.icon" class="mr-3"></i>{{item.name}}</h2>
+        <div class="media-body text-center">
+          <i :class="item.icon" class="fa-2x mb-4"></i>
+          <h2 class="h6 w200 m-0">{{item.name}}</h2>
         </div>
       </div>
     </div>
@@ -20,20 +21,22 @@ export default {
 
 <style>
 .dashboard-item {
-  background: var(--color-a-light);
+  background: var(--white-a);
+  transition: 0s all !important;
 }
 .dashboard-item:hover {
-  background: var(--color-a);
+  background: var(--color-b-light);
   text-decoration: none !important;
   opacity: 0.7;
 }
 .dashboard-item h2 {
-  color: var(--black-c);
+  color: var(--black-a);
 }
 .dashboard-item i {
-  color: var(--color-a);
+  color: var(--black-d);
 }
-.dashboard-item:hover i, .dashboard-item:hover h2 {
-  color: var(--white-a);
+.dashboard-item:hover i,
+.dashboard-item:hover h2 {
+  color: var(--color-b);
 }
 </style>

@@ -4,16 +4,19 @@
       <homenav :to_login="nav_to_login"></homenav>
       <div class="container">
         <div class="row justify-content-center pt-5">
-          <div class="col-12 col-xl-5 pt-xl-5">
-            <div class="card mt-xl-4">
-              <div class="card-body p-xl-5 text-center">
-                <h1 class="h4 my-4 mb-xl-5">Iniciar sesión</h1>
+          <div class="col-12 col-lg-5 pt-lg-5">
+            <div class="card mt-lg-4">
+              <div class="card-body p-lg-5 text-center">
+                <h1 class="h4 mb-4 mb-lg-5">Iniciar sesión</h1>
                 <!-- Form -->
                 <form v-on:submit.prevent="login">
-                  <!-- Email -->
+                  <!-- Message -->
                   <div class="form-group">
                     <P class="text-warning">{{message}}</p>
                   </div>
+                  <!-- /.Message -->
+
+                  <!-- Email -->
                   <div class="form-group">
                     <label class="sr-only" for="email">Ingrese su email</label>
                     <div class="input-group mb-4">
@@ -26,6 +29,7 @@
                     </div>
                   </div>
                   <!-- /.Email -->
+
                   <!-- Password -->
                   <div class="form-group">
                     <label class="sr-only" for="password">Ingrese su contraseña</label>
@@ -36,17 +40,24 @@
                         </div>
                       </div>
                       <input type="password" v-model="password" name="password" id="password" class="form-control py-0"  placeholder="Ingrese su contraseña" required>
-                      </div>
+                    </div>
                   </div>
                   <!-- /.Password -->
-                  <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+
+                  <button type="submit" class="btn btn-primary btn-block waves-effect">Entrar</button>
                 </form>
                 <!-- /.Form -->
+                <div class="row my-4">
+                    <div class="col-12"><hr></div>
+                    <div class="col-12 w400 black-c">También podés</div>
+                </div>
+                <a href="/google_login" class="btn btn-danger btn-block waves-effect w600"><i class="fab fa-google mr-3"></i>Iniciar con google</a>
               </div>
+              <!-- /.Card Body -->
             </div>
           </div>
           <div class="col-12 py-5 text-center">
-            <router-link to="/" class="btn btn-default seed-rounded my-xl-4"><i class="fas fa-arrow-left mr-3 white-a"></i>Volver al inicio</router-link>
+            <router-link to="/" class="btn btn-indigo waves-effect my-lg-4"><i class="fas fa-arrow-left mr-3 white-a"></i>Volver al inicio</router-link>
           </div>
         </div>
       </div>
@@ -97,6 +108,6 @@ export default {
 }
 .inner-login-container {
   min-height:  100vh;
-  background-color: rgba(255,255,255,0.6);
+  /* background-co  lor: rgba(255,255,255,0.6); */
 }
 </style>

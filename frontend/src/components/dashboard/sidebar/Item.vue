@@ -8,11 +8,6 @@
 export default {
   props: {
     'item': null
-  },
-  methods: {
-    panelSwitch: function () {
-      alert('hola')
-    }
   }
 }
 </script>
@@ -20,20 +15,31 @@ export default {
 <style scoped>
 .list-group {
   padding: 0 1em;
-}
-.list-group-item {
-  border-radius: 8px !important;
+  transition: 0s all !important;
 }
 .list-group, .list-group-item {
   border: 0 none !important;
   background: none;
+  transition: 0s all !important;
+}
+.list-group-item {
+  font-size: 18px;
+  font-weight: 400;
+  border-radius: 50px !important;
+  color: var(--black-a);
+}
+.list-group-item i {
   color: var(--black-d);
-  transition: 0.1s all !important;
 }
 .list-group-item:hover,
 .list-group-item:active,
 .list-group-item.active {
-  background: var(--color-a);
+  background: var(--color-b);
+  color: var(--white-a);
+}
+.list-group-item:hover i,
+.list-group-item:active i,
+.list-group-item.active i {
   color: var(--white-a);
 }
 </style>

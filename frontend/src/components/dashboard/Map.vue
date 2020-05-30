@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 600px; width: 100%">
+  <div id="map">
     <l-map
       :zoom="zoom"
       :center="center"
@@ -81,6 +81,14 @@ export default {
 </script>
 
 <style scoped>
+#map {
+  width: 100%;
+}
+@media (min-width: 992px) {
+  #map {
+    height: 600px;
+  }
+}
 .marker-popup {
   font-family: 'Nunito', sans-serif;
 }

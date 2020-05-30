@@ -78,6 +78,74 @@ class User(object):
         return False
 
     @classmethod
+    def get_by_email(cls, email):
+        sql = """
+            SELECT * FROM users
+            WHERE users.email = %s
+        """
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (email))
+
+        return cursor.fetchone()
+
+    #Crea un usuario
+    @classmethod
+    def create_by_google(cls, data):
+        cursor = cls.db.cursor()
+        sql = """
+             INSERT INTO users (name, lastname, username, email, active, google_user)
+             VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(sql, (data['given_name'], data['family_name'], data['email'], data['email'], 1, 1))
+        cls.db.commit()
+        return True
+
+    #Retorna True si el usuario tiene al menos un rol, sino retorna False
+    @classmethod
+    def has_roles(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM user_role
+            INNER JOIN roles ON user_role.role_id = roles.role_id
+            WHERE user_role.user_id = %s
+        """
+        cursor.execute(sql, (id_data))
+        roles = cursor.fetchall()
+        count = 0
+        for i in roles:
+            count += 1
+        if (count > 0):
+            return True
+        else:
+            return False
+
+    #Retorna los roles del usuario
+    @classmethod
+    def get_roles(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT * FROM user_role
+            INNER JOIN role ON user_role.role_id = roles.role_id
+            WHERE user_role.user_id = %s
+        """
+        cursor.execute(sql, (id_data))
+        data = cursor.fetchall()
+        return data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @classmethod
     def set_role(cls, usuario_id, rol_id):
         cursor = cls.db.cursor()
         sql = """

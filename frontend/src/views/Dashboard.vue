@@ -9,20 +9,25 @@
         <navbar :links="routes"></navbar>
         <!-- All content -->
         <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 px-3 w-100">
-          <div class="row">
-            <div class="col-12">
-              <h1 class="h4 w600 black-c m-0">
+          <div class="row justify-content-center">
+            <div class="col-12 col-lg-11">
+              <h1 class="h3 w600 color-b mb-2">
                 <slot name="page_title">
                   Inicio
                   {{page_title}}
                 </slot>
               </h1>
-              <hr class="mt-1 mb-5">
+              <hr class="mb-5 white-d">
+              <slot name="dashboard_content">
+                <div v-if=user_has_role>
+                  <dashboard-items :items="routes"></dashboard-items>
+                </div>
+                <div v-else>
+                  <no-role-message></no-role-message>
+                </div>
+              </slot>
             </div>
           </div>
-          <slot name="dashboard_content">
-            <dashboard-items :items="routes"></dashboard-items>
-          </slot>
         </div>
       </div>
       <!-- /.Panel content -->
@@ -32,23 +37,27 @@
 
 <script>
 import axios from 'axios'
-import sidebar from '@/components/dashboard/menu/Sidebar'
+import sidebar from '@/components/dashboard/sidebar/Sidebar'
 import navbar from '@/components/dashboard/Navbar'
 import dashboardItems from '@/components/dashboard/items/DashboardItems'
+import noRoleMessage from '@/components/dashboard/NoRoleMessage'
 
 export default {
   name: 'Dashboard',
   components: {
     'sidebar': sidebar,
     'navbar': navbar,
-    'dashboard-items': dashboardItems
+    'dashboard-items': dashboardItems,
+    'no-role-message': noRoleMessage
   },
   data () {
     return {
-      routes: ''
+      routes: null,
+      user_has_role: false
     }
   },
   methods: {
+    // Obtener las rutas del usuario
     getUserRoutes: function () {
       const path = '/api/user/routes'
       axios.get(path).then((res) => {
@@ -57,9 +66,20 @@ export default {
       }).catch((error) => {
         console.log(error)
       })
+    },
+    // Obtener si el usuario tiene al menos un rol
+    userHasRole: function () {
+      const path = '/api/user/has_role'
+      axios.get(path).then((res) => {
+        this.user_has_role = res.data.role_status // Boolean
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   },
   mounted () {
+    this.userHasRole()
+    // Obtener rutas del usuario
     if (localStorage.routes) {
       var routes = localStorage.getItem('routes')
       this.routes = JSON.parse(routes)
@@ -74,7 +94,7 @@ export default {
 /* Dashboard container */
 @media(min-width: 992px) {
   #dashboard-container {
-    padding-left: 240px !important;
+    padding-left: 260px !important;
   }
 }
 </style>

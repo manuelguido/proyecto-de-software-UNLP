@@ -70,10 +70,9 @@ export default {
       axios.get(path).then((respuesta) => {
         this.cores = respuesta.data
         this.loadCores()
+      }).catch((error) => {
+        console.log(error)
       })
-        .catch((error) => {
-          console.log(error)
-        })
     },
     loadCores () {
       let newrow = {}
@@ -83,7 +82,7 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     this.getCores()
   }
 }
