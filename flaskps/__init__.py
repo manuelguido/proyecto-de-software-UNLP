@@ -34,7 +34,7 @@ app.config['SECRET_KEY'] = b'6hc/_gsh,./;2ZZx3c6_s,1//'
 # Session config
 app.secret_key = b'6hc/_gsh,./;2ZZx3c6_s,1//'
 app.config['SESSION_COOKIE_NAME'] = 'google-login-session'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
 
 #---------------------------------------------------#
