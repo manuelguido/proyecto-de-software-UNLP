@@ -94,7 +94,7 @@ class User(object):
         cursor = cls.db.cursor()
         sql = """
              INSERT INTO users (name, lastname, username, email, active, google_user)
-             VALUES (%s, %s, %s, %s, %s)
+             VALUES (%s, %s, %s, %s, %s, %s)
         """
         cursor.execute(sql, (data['given_name'], data['family_name'], data['email'], data['email'], 1, 1))
         cls.db.commit()
