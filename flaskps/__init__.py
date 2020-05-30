@@ -7,22 +7,15 @@ from flaskps.config import Config
 from flaskps.helpers import handler
 # Google auth (oAuth)
 from authlib.integrations.flask_client import OAuth
-import os
 from datetime import timedelta
 
 from flaskps.resources.auth_decorator import login_required
-
-
-
-
 
 #---------------------------------------------------#
 #   App Setup
 #---------------------------------------------------#
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-
-
 
 #---------------------------------------------------#
 #   Sessiones
