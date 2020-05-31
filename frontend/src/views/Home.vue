@@ -58,10 +58,10 @@ export default {
       const path = '/api/configuration'
       axios.get(path).then((respuesta) => {
         this.configuration = respuesta.data
+      }).catch((error) => {
+        this.getInfo()
+        console.log(error)
       })
-        .catch((error) => {
-          console.log(error)
-        })
     }
   },
   mounted () {
