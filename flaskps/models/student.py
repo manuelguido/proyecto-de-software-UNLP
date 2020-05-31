@@ -154,7 +154,7 @@ class Student(object):
     @classmethod
     def delete(cls, id_data):
         cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM estudiante WHERE id=%s", (id_data,))
+        cursor.execute("DELETE FROM students WHERE student_id=%s", (id_data,))
         cls.db.commit()
         return True
 

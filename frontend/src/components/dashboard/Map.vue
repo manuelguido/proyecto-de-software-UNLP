@@ -83,6 +83,7 @@ export default {
 <style scoped>
 #map {
   width: 100%;
+  height: 400px;
 }
 @media (min-width: 992px) {
   #map {

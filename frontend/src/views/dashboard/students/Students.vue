@@ -82,6 +82,7 @@ export default {
         this.loadStudents()
       }).catch((error) => {
         console.log(error)
+        this.fetchData()
       })
     },
     loadStudents () {

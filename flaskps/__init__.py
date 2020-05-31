@@ -47,13 +47,6 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'},
 )
 
-
-
-
-
-
-
-
 #---------------------------------------------------#
 #   API
 #---------------------------------------------------#
@@ -70,6 +63,7 @@ app.add_url_rule("/api/core/<int:id_data>", 'api_core', core.get, methods=['GET'
 # Estudiantes
 app.add_url_rule("/api/students", 'api_students', student.all, methods=['GET'])
 app.add_url_rule("/api/student/<int:id_data>", 'api_student', student.get, methods=['GET'])
+app.add_url_rule("/api/student/delete", 'api_student_delete', student.delete, methods=['POST'])
 
 # Docentes
 app.add_url_rule("/api/teachers", 'api_teachers', teacher.all, methods=['GET'])

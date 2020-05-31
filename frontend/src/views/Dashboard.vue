@@ -64,21 +64,30 @@ export default {
         this.routes = res.data
         localStorage.setItem('routes', JSON.stringify(this.routes))
       }).catch((error) => {
-        console.log(error)
+        console.log(error + 'Retring')
+        this.getUserRoutes()
       })
     },
     // Obtener si el usuario tiene al menos un rol
     userHasRole: function () {
       const path = '/api/user/has_role'
       axios.get(path).then((res) => {
-        this.user_has_role = res.data.role_status // Boolean
+        this.user_has_role = res.data.status // Boolean
+        localStorage.setItem('role', JSON.stringify(res.data))
       }).catch((error) => {
         console.log(error)
+        this.userHasRole()
       })
     }
   },
   mounted () {
-    this.userHasRole()
+    if (localStorage.role) {
+      var loc = localStorage.getItem('role')
+      var result = JSON.parse(loc)
+      this.user_has_role = result.status
+    } else {
+      this.userHasRole()
+    }
     // Obtener rutas del usuario
     if (localStorage.routes) {
       var routes = localStorage.getItem('routes')

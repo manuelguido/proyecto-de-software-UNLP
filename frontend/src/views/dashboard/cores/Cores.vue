@@ -72,6 +72,7 @@ export default {
         this.loadCores()
       }).catch((error) => {
         console.log(error)
+        this.getCores()
       })
     },
     loadCores () {

@@ -33,9 +33,9 @@ def has_role():
     auth.authenticated_or_401()
     #User routes
     User.db = get_db()
-    roles_object = {'role_status': True}
+    roles_object = {'status': True}
     if not User.has_roles(session['id']):
-        roles_object = {'role_status': False}
+        roles_object = {'status': False}
     return jsonify(roles_object)
 
 #Retorna las rutas del usuario loggeado

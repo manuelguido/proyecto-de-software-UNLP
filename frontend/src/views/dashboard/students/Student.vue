@@ -7,16 +7,25 @@
       </template>
       <!-- Content -->
       <template v-slot:dashboard_content>
+        <alert :alert="alertData"></alert>
         <!-- Edition row -->
         <div class="row">
-          <div class="col-12 col-lg-5 text-right">
-            <router-link :to="editPath" class="btn btn-secondary btn-sm"><i class="far fa-edit mr-3"></i>Editar</router-link>
+          <div class="col-12 col-lg-3 text-left">
+            <back-link :url="returnPath" text="Estudiantes"></back-link>
+          </div>
+          <div class="col-12 col-lg-4 text-right">
+            <router-link :to="editPath" title="Editar"><i class="far fa-edit black-d"></i></router-link>
+            <!-- Form -->
+            <form v-on:submit.prevent="deleteStudent" class="display-inline">
+              <input class="display-none" value="{{student.student_id}}" v-model="student_id">
+              <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash black-d"></i></button>
+            </form>
           </div>
         </div>
         <!-- /.Edition row -->
         <!-- Information row -->
         <div class="row mt-3">
-          <div class="col-12 col-lg-5">
+          <div class="col-12 col-lg-7">
             <div class="card">
               <div class="card-body">
                 <div class="row">
@@ -50,14 +59,18 @@ import axios from 'axios'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import levelButton from '@/components/dashboard/buttons/LevelButton'
+import backLink from '@/components/dashboard/buttons/BackLink'
+import alert from '@/components/alert'
 
 export default {
   data () {
     return {
       pagetitle: 'Información del estudiante',
-      editPath: '/dashboard/studente/edit/' + this.student_id,
+      returnPath: '/dashboard/students',
+      editPath: '/dashboard/student/edit/' + this.student_id,
       deletePath: '/dashboard/student/' + this.student_id,
-      student: ''
+      student: '',
+      alertData: {}
     }
   },
   created () {
@@ -69,13 +82,30 @@ export default {
   components: {
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
-    'level-button': levelButton
+    'level-button': levelButton,
+    'back-link': backLink,
+    'alert': alert
   },
   methods: {
     fetchData () {
       const path = '/api/student/' + this.student_id
-      axios.get(path).then((respuesta) => {
-        this.student = respuesta.data
+      axios.get(path).then((response) => {
+        this.student = response.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchData()
+      })
+    },
+    deleteStudent () {
+      this.message = ''
+      const path = '/api/student/delete'
+      axios.post(path, {
+        student_id: this.student_id
+      }).then((response) => {
+        this.alertData = response.data
+        setTimeout(function () {
+          window.location.href = '/dashboard/students'
+        }, 400)
       }).catch((error) => {
         console.log(error)
       })

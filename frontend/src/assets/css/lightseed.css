@@ -546,7 +546,7 @@ a.link:hover {
 .color-b-bottom { border-bottom: 4px solid var(--color-b) !important; }
 .color-c-bottom { border-bottom: 4px solid var(--color-c) !important; }
 .primary-bottom { border-bottom: 4px solid var(--seed-primary) !important; }
-.secondary-bottom { border-bottom: 5px solid var(--seed-secondary) !important; }
+.secondary-bottom { border-bottom: 4px solid var(--seed-secondary) !important; }
 .success-bottom { border-bottom: 4px solid var(--seed-success) !important; }
 .warning-bottom { border-bottom: 4px solid var(--seed-warning) !important; }
 .danger-bottom { border-bottom: 4px solid var(--seed-danger) !important; }

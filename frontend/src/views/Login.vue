@@ -1,18 +1,27 @@
 <template>
   <div class="login-container aqua-gradient color-block-5">
     <div class="inner-login-container">
-      <homenav :to_login="nav_to_login"></homenav>
+      <homenav :to_login="false"></homenav>
       <div class="container">
         <div class="row justify-content-center pt-5">
           <div class="col-12 col-lg-5 pt-lg-5">
             <div class="card mt-lg-4">
               <div class="card-body p-lg-5 text-center">
-                <h1 class="h4 mb-4 mb-lg-5">Iniciar sesión</h1>
+                <h1 class="h4 mb-4">Iniciar sesión</h1>
                 <!-- Form -->
                 <form v-on:submit.prevent="login">
+
+                  <!-- Loading Spinner -->
+                  <div v-if="success_login" class="d-flex justify-content-center mb-4">
+                    <div class="spinner-border color-b" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                  <!-- /.Loading Spinner -->
+
                   <!-- Message -->
-                  <div class="form-group">
-                    <P class="text-warning">{{message}}</p>
+                  <div v-if="status_message" class="form-group">
+                    <p class="h6" :class="message_class">{{status_message}}</p>
                   </div>
                   <!-- /.Message -->
 
@@ -45,6 +54,7 @@
                   <!-- /.Password -->
 
                   <button type="submit" class="btn btn-primary btn-block waves-effect">Entrar</button>
+
                 </form>
                 <!-- /.Form -->
                 <div class="row my-4">
@@ -74,8 +84,9 @@ export default {
     return {
       email: '',
       password: '',
-      message: '',
-      nav_to_login: false
+      success_login: false,
+      status_message: '',
+      message_class: 'text-warning'
     }
   },
   components: {
@@ -89,10 +100,14 @@ export default {
         email: this.email,
         password: this.password
       }).then((respuesta) => {
-        console.log(respuesta.data.status)
-        this.message = respuesta.data.message
+        this.status_message = ''
         if (respuesta.data.success) {
-          window.location.href = '/dashboard'
+          this.success_login = true
+          setTimeout(function () {
+            window.location.href = '/dashboard'
+          }, 700)
+        } else {
+          this.status_message = respuesta.data.message
         }
       }).catch((error) => {
         console.log(error)
@@ -108,6 +123,6 @@ export default {
 }
 .inner-login-container {
   min-height:  100vh;
-  /* background-co  lor: rgba(255,255,255,0.6); */
+  background-color: rgba(255,255,255,0.2);
 }
 </style>

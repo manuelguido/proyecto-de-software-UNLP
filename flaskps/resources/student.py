@@ -48,7 +48,7 @@ def store():
             abort(401)
         return jsonify(response_object)
 
-def delete(id_data):
+def delete():
     #Auth check
     auth.authenticated_or_401()
 
@@ -56,7 +56,7 @@ def delete(id_data):
     User.db = get_db()
     if (User.has_permission(session['id'],'estudiante_destroy')):
         Student.db = get_db()
-        Student.delete(id_data)
+        Student.delete(request.get_json()['student_id'])
         response_object = {'status': 'success', 'message': 'Se eliminó el estudiante'}
         return jsonify(response_object)
     else:
