@@ -42,6 +42,7 @@ export default {
       students: '',
       showStudentPath: '/dashboard/student/',
       newStudentPath: '/dashboard/new/student',
+      editStudentPath: '/dashboard/student/edit/',
       columns: [
         {
           label: 'Apellido',
@@ -61,6 +62,10 @@ export default {
         {
           label: 'Ver',
           field: 'show'
+        },
+        {
+          label: 'Editar',
+          field: 'edit'
         }
       ],
       rows: []
@@ -92,7 +97,8 @@ export default {
           lastname: this.students[i].lastname,
           name: this.students[i].name,
           document: this.students[i].document_type + ' ' + this.students[i].document_number,
-          show: '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>'
+          show: '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

@@ -6,8 +6,7 @@ class Day(object):
     def all(cls):
         cursor = cls.db.cursor()
         cursor.execute("SELECT  * FROM days")
-        data = cursor.fetchall()
-        return data
+        return cursor.fetchall()
 
     @classmethod
     def get_day(cls, id_data):

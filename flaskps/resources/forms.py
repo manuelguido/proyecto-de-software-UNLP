@@ -7,30 +7,31 @@ from wtforms import validators
 #   Inicio de sesión
 #---------------------------------------------------#
 class ValidateLogin(Form):
-    email = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
-    password = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
+    email = StringField(u'Email', [validators.required(), validators.length(max=100)])
+    password = StringField(u'Contraseña', [validators.required(), validators.length(max=100)])
 #---------------------------------------------------#
 #   Informacion del sitio
 #---------------------------------------------------#
-    #Cambiar paginacion
-class ChangePagination(Form):
-    paginacion = IntegerField('Paginacion', [validators.required(), validators.NumberRange(min=1, max=20)])
+#     #Cambiar paginacion
+# class ChangePagination(Form):
+#     paginacion = IntegerField('Paginacion', [validators.required(), validators.NumberRange(min=1, max=20)])
 
     #Cambiar información del sitio
-class ChangeSiteInfo(Form):
-    titulo = StringField(u'Titulo', [validators.required(), validators.length(max=255)])
-    descripcion = TextAreaField(u'Descripcion', [validators.required(), validators.length(max=255)])
+class UpdateConfiguration(Form):
+    active = SelectField(u'Active', choices=[('0', 'Inactivo'), ('1', 'Activo')])
+    title = StringField(u'Titulo', [validators.required(), validators.length(max=255)])
     email = StringField(u'Email', [validators.required(), validators.length(max=255)])
+    description = TextAreaField(u'Descripcion', [validators.required()])
 
-    #Cambiar estado del sitio
-class ChangeSiteStatus(Form):
-    estado_sitio = SelectField(u'Estado sitio', choices=[('0', 'Inactivo'), ('1', 'Activo')])
+#     #Cambiar estado del sitio
+# class ChangeSiteStatus(Form):
+#     estado_sitio = SelectField(u'Estado sitio', choices=[('0', 'Inactivo'), ('1', 'Activo')])
 
 #---------------------------------------------------#
 #   Validacion Usuarios
 #---------------------------------------------------#
 class ValidateUser(Form):
-    first_name = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    name = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
     last_name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
     username = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
     email = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
@@ -51,20 +52,28 @@ class ValidateUserStatus(Form):
 #   Validacion Estudiantes
 #---------------------------------------------------#
 class ValidateStudent(Form):
-    apellido = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
-    nombre = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
-    fecha_nac = DateField('Fecha de nacimiento', [validators.required()], format='%Y-%m-%d')
-    localidad_id = IntegerField('Fecha de nacimiento', [validators.required(), validators.NumberRange(min=1, max=None)])
-    nivel_id = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=1, max=None)])
-    domicilio = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
-    genero_id = IntegerField('Genero', [validators.required(), validators.NumberRange(min=1, max=None)])
-    escuela_id = IntegerField('Escuela', [validators.required(), validators.NumberRange(min=1, max=None)])
-    tipo_doc_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
-    numero = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=99999, max=None)])
-    tel = IntegerField('Telefono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
-    barrio_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
-    responsable = SelectField(u'Responsable', choices=[('Padre', 'Padre'), ('Madre', 'Madre'), ('Tutor', 'Tutor')])
-    pmt = StringField(u'Pmt', [validators.required(), validators.length(max=100)])
+    lastname = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
+    name = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    birth_date = DateField('Fecha de nacimiento', [validators.required()], format='%Y-%m-%d')
+    location_id = IntegerField('Fecha de nacimiento', [validators.required(), validators.NumberRange(min=1, max=None)])
+    level_id = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=1, max=None)])
+    address = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
+    gender_id = IntegerField('Genero', [validators.required(), validators.NumberRange(min=1, max=None)])
+    schools_id = IntegerField('Escuela', [validators.required(), validators.NumberRange(min=1, max=None)])
+    document_type_id = IntegerField('Tipo de documento', [validators.required(), validators.NumberRange(min=1, max=None)])
+    document_number = IntegerField('Numero de documento', [validators.required(), validators.NumberRange(min=99999, max=None)])
+    phone = IntegerField('Telefono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
+    neighborhood_id = IntegerField('Barrio', [validators.required(), validators.NumberRange(min=1, max=None)])
+    responsable_id = IntegerField('Responsable Id', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+#---------------------------------------------------#
+#   Validacion Estudiantes
+#---------------------------------------------------#
+class ValidateResponsable(Form):
+    lastname = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
+    name = StringField(u'Nombre', [validators.required(), validators.length(max=50)])
+    phone = IntegerField('Teléfono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
+    responsable_type_id = IntegerField('Tipo de Responsable', [validators.required(), validators.NumberRange(min=1, max=3)])
 
 #---------------------------------------------------#
 #   Validacion Docentes

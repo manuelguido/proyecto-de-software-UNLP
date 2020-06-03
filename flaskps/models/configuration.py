@@ -4,11 +4,9 @@ class Configuration(object):
 
     @classmethod
     def all(cls):
-        sql = 'SELECT * FROM configurations'
         cursor = cls.db.cursor()
-        cursor.execute(sql)
-
-        return cursor.fetchone()
+        cursor.execute("SELECT  * FROM configurations")
+        return cursor.fetchall()
 
     # @classmethod
     # def change_site_status(cls, estado_sitio):
@@ -22,17 +20,16 @@ class Configuration(object):
 
     #     return True
 
-    # @classmethod
-    # def update_info_sitio(cls, request):
-    #     cursor = cls.db.cursor()
-    #     cursor.execute("""
-    #            UPDATE configuracion
-    #            SET titulo=%s, descripcion=%s, email=%s
-    #            WHERE id=1
-    #         """, (request['titulo'], request['descripcion'], request['email']))
-    #     cls.db.commit()
-
-    #     return True
+    @classmethod
+    def update(cls, data):
+        cursor = cls.db.cursor()
+        sql = """
+               UPDATE configurations
+               SET active=%s, title=%s, description=%s, email=%s
+            """
+        cursor.execute(sql, (data['active'], data['title'], data['description'], data['email']))
+        cls.db.commit()
+        return True
 
     # @classmethod
     # def change_site_pagination(cls, paginacion):

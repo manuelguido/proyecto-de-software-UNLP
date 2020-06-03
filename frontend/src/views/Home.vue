@@ -42,11 +42,12 @@
 <script>
 import axios from 'axios'
 import homenav from '@/components/HomeNav'
+
 export default {
   name: 'Main',
   data () {
     return {
-      configuration: ' ',
+      configuration: '',
       nav_to_login: true
     }
   },
@@ -54,18 +55,18 @@ export default {
     'homenav': homenav
   },
   methods: {
-    getInfo () {
+    fetchData () {
       const path = '/api/configuration'
-      axios.get(path).then((respuesta) => {
-        this.configuration = respuesta.data
+      axios.get(path).then((res) => {
+        this.configuration = res.data[0]
       }).catch((error) => {
-        this.getInfo()
+        this.fetchData()
         console.log(error)
       })
     }
   },
-  mounted () {
-    this.getInfo()
+  created () {
+    this.fetchData()
   }
 }
 </script>

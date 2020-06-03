@@ -32,6 +32,12 @@ Vue.filter('formatDateFull', function (value) {
     return moment(String(value)).format('LL')
   }
 })
+Vue.filter('formatDateForm', function (value) {
+  if (value) {
+    moment.locale('en')
+    return moment().subtract(10, 'days').calendar() // 05/23/2020
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

@@ -52,6 +52,7 @@ google = oauth.register(
 #---------------------------------------------------#
 # Configuración y estado de sitio
 app.add_url_rule("/api/configuration", 'api_configuration', configuration.all, methods=['GET'])
+app.add_url_rule("/api/configuration/update", 'api_configuration_update', configuration.update, methods=['POST'])
 
 #---------------------------------------------------#
 #   API Privada (Regulada con permisos y sesión)
@@ -63,7 +64,10 @@ app.add_url_rule("/api/core/<int:id_data>", 'api_core', core.get, methods=['GET'
 # Estudiantes
 app.add_url_rule("/api/students", 'api_students', student.all, methods=['GET'])
 app.add_url_rule("/api/student/<int:id_data>", 'api_student', student.get, methods=['GET'])
+app.add_url_rule("/api/student/create", 'api_student_create', student.create, methods=['POST'])
+app.add_url_rule("/api/student/update", 'api_student_update', student.update, methods=['POST'])
 app.add_url_rule("/api/student/delete", 'api_student_delete', student.delete, methods=['POST'])
+app.add_url_rule("/api/student/form_data", 'api_student_form_data', student.getFormData, methods=['GET'])
 
 # Docentes
 app.add_url_rule("/api/teachers", 'api_teachers', teacher.all, methods=['GET'])

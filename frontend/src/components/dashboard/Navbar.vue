@@ -1,7 +1,7 @@
 <template>
   <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none bg-color-b" dark>
     <mdb-navbar-brand>
-      <span class="h5 white-a w300 ls03 my-1">Escuela Orquesta Berisso</span>
+      <span class="h5 white-a w600 ls03 my-1">Panel</span>
     </mdb-navbar-brand>
     <mdb-navbar-toggler class="web-hide color-a">
       <mdb-navbar-nav class="web-hide">
@@ -30,8 +30,7 @@ export default {
     mdbInput
   },
   props: {
-    links: null,
-    page_title: String
+    links: null
   }
 }
 </script>

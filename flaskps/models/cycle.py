@@ -5,8 +5,7 @@ class Cycle(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        sql = "SELECT * FROM cycles"
-        cursor.execute(sql)
+        cursor.execute("SELECT  * FROM cycles")
         return cursor.fetchall()
 
     @classmethod

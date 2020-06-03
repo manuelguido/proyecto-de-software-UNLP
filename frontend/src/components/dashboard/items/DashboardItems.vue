@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12">
       <div class="row">
-        <div v-for="item in items" :key="item.name" class="col-12 col-lg-3 mb-4">
+        <div v-for="item in items" :key="item.name" class="col-6 col-lg-3 mb-4">
           <item :item="item"></item>
         </div>
       </div>

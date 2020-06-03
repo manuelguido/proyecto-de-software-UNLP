@@ -5,7 +5,7 @@
     </router-link>
     <mdb-navbar-toggler>
       <mdb-navbar-nav right>
-        <router-link v-if="to_login" to="login" class="m-0 btn btn-primary py-2 px-4"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</router-link>
+        <router-link v-if="to_login" to="login" class="m-0 btn btn-primary seed-rounded py-2 px-4"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar Sesión</router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>

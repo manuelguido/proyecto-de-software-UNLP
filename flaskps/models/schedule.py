@@ -5,10 +5,7 @@ class Schedule(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        sql = """
-            SELECT * FROM schedules
-        """
-        cursor.execute(sql)
+        cursor.execute("SELECT  * FROM schedules")
         return cursor.fetchall()
 
     @classmethod

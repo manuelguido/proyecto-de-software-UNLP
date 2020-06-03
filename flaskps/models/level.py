@@ -5,7 +5,7 @@ class Level(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM nivel")
-        data = cursor.fetchall()
-        return data
+        cursor.execute("SELECT  * FROM levels")
+        return cursor.fetchall()
+
     

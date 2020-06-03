@@ -4,8 +4,6 @@ class Permission(object):
 
     @classmethod
     def all(cls):
-        sql = 'SELECT * FROM permissions'
         cursor = cls.db.cursor()
-        cursor.execute(sql)
-
+        cursor.execute("SELECT  * FROM permissions")
         return cursor.fetchall()

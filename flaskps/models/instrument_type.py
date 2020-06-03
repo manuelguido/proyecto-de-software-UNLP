@@ -6,8 +6,7 @@ class InstrumentType(object):
     def all(cls):
         cursor = cls.db.cursor()
         cursor.execute("SELECT  * FROM instrument_types")
-        data = cursor.fetchall()
-        return data
+        return cursor.fetchall()
 
     @classmethod
     def get_day(cls, id_data):

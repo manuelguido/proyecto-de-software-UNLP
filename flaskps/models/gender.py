@@ -6,8 +6,7 @@ class Gender(object):
     def all(cls):
         cursor = cls.db.cursor()
         cursor.execute("SELECT  * FROM genders")
-        data = cursor.fetchall()
-        return data
+        return cursor.fetchall()
 
     @classmethod
     def get_day(cls, id_data):

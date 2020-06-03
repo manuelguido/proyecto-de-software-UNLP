@@ -7,7 +7,7 @@
       </template>
       <!-- Content -->
       <template v-slot:dashboard_content>
-        <alert :alert="alertData"></alert>
+        <alert :message="messageData"></alert>
         <!-- Edition row -->
         <div class="row">
           <div class="col-12 col-lg-3 text-left">
@@ -60,7 +60,7 @@ import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import levelButton from '@/components/dashboard/buttons/LevelButton'
 import backLink from '@/components/dashboard/buttons/BackLink'
-import alert from '@/components/alert'
+import alert from '@/components/Alert'
 
 export default {
   data () {
@@ -70,7 +70,8 @@ export default {
       editPath: '/dashboard/student/edit/' + this.student_id,
       deletePath: '/dashboard/student/' + this.student_id,
       student: '',
-      alertData: {}
+      confirmDeleteMsg: '¿Estás seguro de eliminar al estudiante? Esta accion no se puede deshacer',
+      messageData: {}
     }
   },
   created () {
@@ -97,18 +98,20 @@ export default {
       })
     },
     deleteStudent () {
-      this.message = ''
-      const path = '/api/student/delete'
-      axios.post(path, {
-        student_id: this.student_id
-      }).then((response) => {
-        this.alertData = response.data
-        setTimeout(function () {
-          window.location.href = '/dashboard/students'
-        }, 400)
-      }).catch((error) => {
-        console.log(error)
-      })
+      if (confirm(this.confirmDeleteMsg)) {
+        this.message = ''
+        const path = '/api/student/delete'
+        axios.post(path, {
+          student_id: this.student_id
+        }).then((response) => {
+          this.messageData = response.data
+          setTimeout(function () {
+            window.location.href = '/dashboard/students'
+          }, 400)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
     }
   }
 }
