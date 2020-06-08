@@ -1,31 +1,42 @@
 <template>
   <div class="container-fluid">
+    <navbar :links="routes"></navbar>
     <div class="row justify-content-center">
       <!-- Sidebar -->
       <sidebar :links="routes"></sidebar>
       <!-- /.Sidebar -->
       <!-- Panel content -->
-      <div id="dashboard-container" class="col">
-        <navbar :links="routes"></navbar>
+      <div id="dashboard-container" class="col bg-color-b-light">
         <!-- All content -->
-        <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 px-3 w-100">
+        <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 w-100">
           <div class="row justify-content-center">
-            <div class="col-12 col-lg-11">
-              <h1 class="h3 w600 color-b mb-2">
-                <slot name="page_title">
-                  Inicio
-                  {{page_title}}
-                </slot>
-              </h1>
-              <hr class="mb-5 white-d">
-              <slot name="dashboard_content">
-                <div v-if=user_has_role>
-                  <dashboard-items :items="routes"></dashboard-items>
+            <div class="col-12 col-lg-12">
+              <div class="card dashboard-card p-lg-4">
+                <div class="card-body p-lg-4">
+
+                  <!-- Titulo -->
+                  <h1 class="h3 w600 color-b mb-2">
+                    <slot name="page_title">
+                      Inicio
+                      {{page_title}}
+                    </slot>
+                  </h1>
+                  <hr class="mb-5 white-d">
+                  <!-- /.Titulo -->
+
+                  <!-- Contenido -->
+                  <slot name="dashboard_content">
+                    <div v-if=user_has_role>
+                      <dashboard-items :items="routes"></dashboard-items>
+                    </div>
+                    <div v-else>
+                      <no-role-message></no-role-message>
+                    </div>
+                  </slot>
+                  <!-- /.Contenido -->
+
                 </div>
-                <div v-else>
-                  <no-role-message></no-role-message>
-                </div>
-              </slot>
+              </div>
             </div>
           </div>
         </div>
@@ -100,10 +111,16 @@ export default {
 </script>
 
 <style scoped>
+#dashboard-container {
+  min-height: 100vh;
+}
 /* Dashboard container */
 @media(min-width: 992px) {
   #dashboard-container {
-    padding-left: 260px !important;
+    margin-left: 270px !important;
   }
+}
+.dashboard-card {
+  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.11) !important;
 }
 </style>

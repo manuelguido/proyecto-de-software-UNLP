@@ -72,14 +72,26 @@ app.add_url_rule("/api/student/form_data", 'api_student_form_data', student.getF
 # Docentes
 app.add_url_rule("/api/teachers", 'api_teachers', teacher.all, methods=['GET'])
 app.add_url_rule("/api/teacher/<int:id_data>", 'api_teacher', teacher.get, methods=['GET'])
+app.add_url_rule("/api/teacher/create", 'api_teacher_create', teacher.create, methods=['POST'])
+app.add_url_rule("/api/teacher/update", 'api_teacher_update', teacher.update, methods=['POST'])
+app.add_url_rule("/api/teacher/delete", 'api_teacher_delete', teacher.delete, methods=['POST'])
+app.add_url_rule("/api/teacher/form_data", 'api_teacher_form_data', teacher.getFormData, methods=['GET'])
 
 # Instrumentos
 app.add_url_rule("/api/instruments", 'api_instruments', instrument.all, methods=['GET'])
-app.add_url_rule("/api/instrument/<int:id_data>", 'api_instrument', instrument.get, methods=['GET'])
+app.add_url_rule("/api/instrument/<int:instrument_id>", 'api_instrument', instrument.get, methods=['GET'])
+app.add_url_rule("/api/instrument/create", 'api_instrument_create', instrument.create, methods=['POST'])
+app.add_url_rule("/api/instrument/update", 'api_instrument_update', instrument.update, methods=['POST'])
+app.add_url_rule("/api/instrument/delete", 'api_instrument_delete', instrument.delete, methods=['POST'])
+app.add_url_rule("/api/instrument/form_data", 'api_instrument_form_data', instrument.getFormData, methods=['GET'])
 
 # Usuarios
 app.add_url_rule("/api/users", 'api_users', user.all, methods=['GET'])
 app.add_url_rule("/api/user/<int:id_data>", 'api_user', user.get, methods=['GET'])
+app.add_url_rule("/api/user/create", 'api_user_create', user.create, methods=['POST'])
+app.add_url_rule("/api/user/update", 'api_user_update', user.update, methods=['POST'])
+app.add_url_rule("/api/user/delete", 'api_user_delete', user.delete, methods=['POST'])
+
     # Obtener perfil de usuario loggeado
 app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET'])
     # Obtener roles y rutas de usuario loggeado

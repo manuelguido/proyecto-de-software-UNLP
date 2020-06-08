@@ -23,6 +23,7 @@ export default {
 .dashboard-item {
   background: var(--white-a);
   transition: 0s all !important;
+  box-shadow: 0 .07em .145em 0 rgba(0,0,0,.14) !important;
 }
 .dashboard-item:hover {
   background: var(--color-b-light);

@@ -6,50 +6,45 @@ class Instrument(object):
     def all(cls):
         cursor = cls.db.cursor()
         sql = """
-            SELECT * FROM instrument
-            INNER JOIN instrument_types ON instrument_types.instrument_type_id = instrument_types.instrument_type_id
+            SELECT instruments.*, instrument_types.name AS type FROM instruments
+            INNER JOIN instrument_types ON instruments.instrument_type_id = instrument_types.instrument_type_id
         """
         cursor.execute(sql)
         return cursor.fetchall()
 
     @classmethod
-    def get(cls, id_data):
+    def get(cls, instrument_id):
         cursor = cls.db.cursor()
-        sql = "SELECT * FROM instruments WHERE instruments.instrument_id=%s"
-        cursor.execute(sql, (id_data))
+        sql = """
+            SELECT instruments.*, instrument_types.name AS type FROM instruments
+            INNER JOIN instrument_types ON instruments.instrument_type_id = instrument_types.instrument_type_id
+            WHERE instruments.instrument_id=%s
+        """
+        cursor.execute(sql, (instrument_id))
         return cursor.fetchone()
 
     @classmethod
-    def store(cls, data):
+    def create(cls, instrument, filename):
+        cursor = cls.db.cursor()
         sql = """
-            INSERT INTO instrumento (nombre, tipo_id, codigo)
-            VALUES (%s, %s, %s)
+            INSERT INTO instruments (name, code, instrument_type_id, image) VALUES (%s, %s, %s, %s)
         """
-        cursor = cls.db.cursor()
-        cursor.execute(sql, (data['nombre'], data['tipo_instrumento'], data['codigo']))
+        cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], filename))
         cls.db.commit()
         return True
 
     @classmethod
-    def delete(cls, id_data):
-        cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM instrumento WHERE id=%s", (id_data,))
-        cls.db.commit()
-        return True
-
-    @classmethod
-    def update(cls, request):
-        id_data = request['id_data']
-        nombre = request['nombre']
-        codigo = request['codigo']
-        tipo_id = request['tipo_instrumento']
+    def update(cls, instrument, filename):
         #img = request['img']
         cursor = cls.db.cursor()
-        cursor.execute("""
-               UPDATE instrumento
-               SET nombre=%s, codigo=%s, tipo_id=%s
-               WHERE id=%s
-            """, (nombre, codigo, tipo_id, id_data))
+        sql= "UPDATE instruments SET name=%s, code=%s, instrument_type_id=%s, image=%s WHERE instrument_id=%s"
+        cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], filename, instrument['instrument_id']))
         cls.db.commit()
         return True
-        
+
+    @classmethod
+    def delete(cls, instrument_id):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM instruments WHERE instrument_id=%s", (instrument_id))
+        cls.db.commit()
+        return True

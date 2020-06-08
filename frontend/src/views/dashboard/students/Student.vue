@@ -13,12 +13,12 @@
           <div class="col-12 col-lg-3 text-left">
             <back-link :url="returnPath" text="Estudiantes"></back-link>
           </div>
-          <div class="col-12 col-lg-4 text-right">
-            <router-link :to="editPath" title="Editar"><i class="far fa-edit black-d"></i></router-link>
+          <div class="col-12 col-lg-4 text-right pt-3">
+            <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
             <form v-on:submit.prevent="deleteStudent" class="display-inline">
               <input class="display-none" value="{{student.student_id}}" v-model="student_id">
-              <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash black-d"></i></button>
+              <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
           </div>
         </div>
@@ -26,7 +26,7 @@
         <!-- Information row -->
         <div class="row mt-3">
           <div class="col-12 col-lg-7">
-            <div class="card">
+            <div class="card seed-shadow seed-s-rounded">
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 col-xl-8">
@@ -68,7 +68,6 @@ export default {
       pagetitle: 'Información del estudiante',
       returnPath: '/dashboard/students',
       editPath: '/dashboard/student/edit/' + this.student_id,
-      deletePath: '/dashboard/student/' + this.student_id,
       student: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar al estudiante? Esta accion no se puede deshacer',
       messageData: {}

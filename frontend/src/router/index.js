@@ -218,7 +218,7 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/teacher/new',
+      path: '/dashboard/new/teacher',
       name: 'TeacherNew',
       component: TeacherNew,
       beforeEnter (to, from, next) {
@@ -270,7 +270,7 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/instrument/:student_id',
+      path: '/dashboard/instrument/:instrument_id',
       name: 'Instrument',
       component: Instrument,
       props: true,
@@ -288,7 +288,7 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/instrument/new',
+      path: '/dashboard/new/instrument',
       name: 'InstrumentNew',
       component: InstrumentNew,
       beforeEnter (to, from, next) {
@@ -358,7 +358,7 @@ export default new Router({
       }
     },
     {
-      path: '/dashboard/user/new',
+      path: '/dashboard/new/user',
       name: 'UserNew',
       component: UserNew,
       beforeEnter (to, from, next) {

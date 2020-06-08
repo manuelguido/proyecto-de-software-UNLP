@@ -43,10 +43,10 @@ export default {
 #panel-sidebar {
   height: 100vh !important;
   position: fixed;
-  background: var(--white-b-light);
-  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.12) !important;
+  background: var(--white-a) !important;
+  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.11) !important;
   box-shadow: none;
-  width: 260px;
+  width: 270px;
   left: 0;
   z-index: 1070;
 }

@@ -45,10 +45,16 @@
                   <mdb-input label="Descripción del sitio" v-model="description" type="textarea" :rows="5"/>
                 </div>
 
-                <!-- Submit -->
-                <div class="col-12 my-3">
-                  <button type="submit" class="btn btn-primary btn-block waves-effect">Guardar</button>
+              </div>
+
+              <!-- Row -->
+              <div class="row justify-content-end">
+
+                <!-- Col 12 -->
+                <div class="col-12 col-lg-5 mt-4">
+                  <button type="submit" class="btn seed-btn-b btn-block waves-effect mx-0">Guardar</button>
                 </div>
+                <!-- /.Col 12 -->
 
               </div>
               <!-- /.Row -->

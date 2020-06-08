@@ -11,7 +11,7 @@
         <!-- Form -->
         <form v-on:submit.prevent="updateStudent">
           <!-- Row -->
-          <div class="row mt-3">
+          <div class="row mt-3 justify-content-end">
             <!-- Información del estudiante -->
             <div class="col-12 col-lg-6 border-right">
               <dashboard-title title="Informacion del estudiante"></dashboard-title>
@@ -28,7 +28,7 @@
                 <!-- Tipo de documento -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Tipo de documento</label>
+                    <form-label name="Tipo de documento"></form-label>
                     <select class="browser-default custom-select" v-model="document_type_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="d in document_types" :key="d.document_type_id" :value="d.document_type_id">{{d.name}}</option>
@@ -43,7 +43,7 @@
                 <!-- Género -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Género</label>
+                    <form-label name="Género"></form-label>
                     <select class="browser-default custom-select" v-model="gender_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="g in genders" :key="g.gender_id" :value="g.gender_id">{{g.name}}</option>
@@ -67,7 +67,7 @@
                 <!-- Escuela -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Escuela</label>
+                    <form-label name="Escuela"></form-label>
                     <select class="browser-default custom-select" v-model="school_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="s in schools" :key="s.school_id" :value="s.school_id">{{s.name}}</option>
@@ -77,7 +77,7 @@
                 <!-- Nivel -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Nivel</label>
+                    <form-label name="Nivel"></form-label>
                     <select class="browser-default custom-select" v-model="level_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="l in levels" :key="l.level_id" :value="l.level_id">{{l.name}}</option>
@@ -88,7 +88,7 @@
                 <!-- Barrio -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Barrio</label>
+                    <form-label name="Barrio"></form-label>
                     <select class="browser-default custom-select" v-model="neighborhood_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="n in neighborhoods" :key="n.neighborhood_id" :value="n.neighborhood_id">{{n.name}}</option>
@@ -98,7 +98,7 @@
                 <!-- Localidad -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Localidad</label>
+                    <form-label name="Localidad"></form-label>
                     <select class="browser-default custom-select" v-model="location_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="l in locations" :key="l.location_id" :value="l.location_id">{{l.name}}</option>
@@ -130,7 +130,7 @@
                 <!-- Madre/Padre o Tutor -->
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Madre/Padre/Tutor</label>
+                    <form-label name="Madre/Padre/Tutor"></form-label>
                     <select class="browser-default custom-select" v-model="responsable_type_id" required>
                       <option selected disabled>Elegir</option>
                       <option v-for="r in responsable_types" :key="r.responsable_type_id" :value="r.responsable_type_id">{{r.name}}</option>
@@ -142,8 +142,8 @@
               <!-- /.Row -->
             </div>
             <!-- /.Información de persona responsable -->
-            <div class="col-12 my-4">
-              <button type="submit" class="btn btn-primary btn-block waves-effect">Actualizar</button>
+            <div class="col-12 col-lg-2 mt-4">
+              <button type="submit" class="btn seed-btn-b btn-block waves-effect mx-0">Actualizar</button>
             </div>
           </div>
           <!-- Row -->
@@ -159,6 +159,7 @@ import axios from 'axios'
 import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
+import formLabel from '@/components/Label'
 import alert from '@/components/Alert'
 // Moment JS
 // import moment from 'moment'
@@ -208,6 +209,7 @@ export default {
     mdbInput,
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
+    'form-label': formLabel,
     'alert': alert
   },
   methods: {
@@ -279,7 +281,11 @@ export default {
         responsable_type_id: this.responsable_type_id
       }).then((res) => {
         this.messageData = res.data
-        console.log(res.data)
+        var $this = this
+        setTimeout(function () {
+          $this.messageData = false
+          console.log($this.messageData)
+        }, 4000)
       }).catch((error) => {
         console.log(error)
       })

@@ -2,60 +2,73 @@ class User(object):
 
     db = None
 
-    #Retorna todos los usuarios
+    #---------------------------------------------------#
+    #   Retorna todos los usuarios
+    #---------------------------------------------------#
     @classmethod
     def all(cls):
         sql = """
-            SELECT * FROM users
-            INNER JOIN user_role on user_role.user_id = users.user_id
-            INNER JOIN role on user_role.role_id = roles.role_id
+            SELECT users.user_id, users.name, users.lastname, users.username, users.email, users.active
+            FROM users
         """
         cursor = cls.db.cursor()
         cursor.execute(sql)
         return cursor.fetchall()
     
-    #Retorna el usuario
+    #---------------------------------------------------#
+    #   Retorna un usuario por user_id
+    #---------------------------------------------------#
     @classmethod
-    def get(cls, id_data):
-        sql = "SELECT * FROM users WHERE users.user_id = %s"
+    def get(cls, user_id):
+        sql = """
+            SELECT * FROM users WHERE users.user_id = %s
+        """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (id_data))
+        cursor.execute(sql, (user_id))
         return cursor.fetchone()
 
-    #Crea un usuario
+    #---------------------------------------------------#
+    #   Crea un usuario
+    #---------------------------------------------------#
     @classmethod
-    def create(cls, data):
+    def create(cls, user):
         cursor = cls.db.cursor()
         sql = """
              INSERT INTO users (name, lastname, username, email, password, active)
              VALUES (%s, %s, %s, %s, %s, %s)
          """
-        cursor.execute(sql, (data['name'], data['lastname'], data['username'], data['email'], data['password'], 1))
+        cursor.execute(sql, (user['name'], user['lastname'], user['username'], user['email'], user['password'], user['active']))
         cls.db.commit()
         return True
 
-    #Actualiza un usuario
+    #---------------------------------------------------#
+    #   Actualiza un usuario
+    #---------------------------------------------------#
     @classmethod
-    def update(cls, request):
+    def update(cls, user):
         sql = """
             UPDATE users
-            SET name=%s, lastname=%s, username=%s, email=%s
+            SET name=%s, lastname=%s, username=%s, email=%s, active=%s 
             WHERE users.user_id=%s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (request['name'], request['lastname'], request['username'], request['email'], request['user_id']))
+        cursor.execute(sql, (user['name'], user['lastname'], user['username'], user['email'], user['active'], user['user_id']))
         cls.db.commit()
         return True
 
-    #Elimina un usuario
+    #---------------------------------------------------#
+    #   Elimina un usuario
+    #---------------------------------------------------#
     @classmethod
-    def delete(cls, id_data):
+    def delete(cls, user_id):
         cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM users WHERE user_id=%s", (id_data,))
+        cursor.execute("DELETE FROM users WHERE user_id=%s", (user_id))
         cls.db.commit()
         return True
 
-    #Retorna los pemisos del usuario
+    #---------------------------------------------------#
+    #   Retorna todos los permisos del usuario
+    #---------------------------------------------------#
     @classmethod
     def permissions(cls, id_data):
         cursor = cls.db.cursor()
@@ -69,6 +82,9 @@ class User(object):
         cursor.execute(sql, (id_data))
         return cursor.fetchall()
 
+    #---------------------------------------------------#
+    #   Chequea que un usuario tenga un determinado permiso
+    #---------------------------------------------------#
     @classmethod
     def has_permission(cls, id_data, perm):
         permissions = cls.permissions(id_data)
@@ -77,18 +93,9 @@ class User(object):
                 return True
         return False
 
-    @classmethod
-    def get_by_email(cls, email):
-        sql = """
-            SELECT * FROM users
-            WHERE users.email = %s
-        """
-        cursor = cls.db.cursor()
-        cursor.execute(sql, (email))
-
-        return cursor.fetchone()
-
-    #Crea un usuario
+    #---------------------------------------------------#
+    #   Crea un usuario loggeado mediante oAuth by Google
+    #---------------------------------------------------#
     @classmethod
     def create_by_google(cls, data):
         cursor = cls.db.cursor()
@@ -100,7 +107,9 @@ class User(object):
         cls.db.commit()
         return True
 
-    #Retorna True si el usuario tiene al menos un rol, sino retorna False
+    #---------------------------------------------------#
+    #   Retorna true si el usuario tiene al menos un rol
+    #---------------------------------------------------#
     @classmethod
     def has_roles(cls, id_data):
         cursor = cls.db.cursor()
@@ -119,7 +128,9 @@ class User(object):
         else:
             return False
 
-    #Retorna los roles del usuario
+    #---------------------------------------------------#
+    #   Retorna todos los roles del usuario
+    #---------------------------------------------------#
     @classmethod
     def get_roles(cls, id_data):
         cursor = cls.db.cursor()
@@ -132,42 +143,79 @@ class User(object):
         data = cursor.fetchall()
         return data
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #---------------------------------------------------#
+    #   Chequea que un usuario tenga un determinado rol
+    #---------------------------------------------------#
     @classmethod
-    def set_role(cls, usuario_id, rol_id):
+    def has_role(cls, user_id, role_id):
         cursor = cls.db.cursor()
         sql = """
-            INSERT INTO usuario_tiene_rol (usuario_id, rol_id)
-            VALUES (%s, %s)
+            SELECT * FROM user_role
+            WHERE user_role.user_id = %s AND user_role.role_id = %s
         """
-        cursor.execute(sql, (usuario_id, rol_id))
-        cls.db.commit()
+        cursor.execute(sql, (user_id, role_id))
+        return cursor.fetchone()
 
-        return True
-
+    #---------------------------------------------------#
+    #   Agrega un rol a un usuario
+    #---------------------------------------------------#
     @classmethod
-    def unset_role(cls, usuario_id, rol_id):
+    def add_role(cls, user_id, role_id):
         cursor = cls.db.cursor()
-        cursor.execute("""
-               DELETE FROM usuario_tiene_rol
-               WHERE usuario_id = %s and rol_id = %s
-            """, (usuario_id, rol_id))
-        cursor.execute("DELETE FROM usuario_tiene_rol WHERE usuario_id = %s and rol_id = %s ", (usuario_id, rol_id))
+        sql = """
+            SELECT * FROM user_role
+            WHERE user_id=%s AND role_id=%s
+        """
+        cursor.execute(sql, (user_id, role_id))
+        result = cursor.fetchone()
+
+        if (not result):
+            sql = """
+                INSERT INTO user_role (user_id, role_id)
+                VALUES (%s, %s)
+            """
+            cursor.execute(sql, (user_id, role_id))
+            cls.db.commit()
+            return True
+
+    #---------------------------------------------------#
+    #   Elimina un rol de un usuario
+    #---------------------------------------------------#
+    @classmethod
+    def remove_role(cls, user_id, role_id):
+        cursor = cls.db.cursor()
+        sql = """
+               DELETE FROM user_role
+               WHERE user_id = %s and role_id = %s
+            """
+        cursor.execute(sql, (user_id, role_id))
         cls.db.commit()
         return True
 
+    #---------------------------------------------------#
+    #   Actualiza el estado de un usuario
+    #---------------------------------------------------#
+    @classmethod
+    def update_user_status(cls, user):
+        cursor = cls.db.cursor()
+        sql = "UPDATE users SET active=%s WHERE user_id=%s"
+        cursor.execute(sql, (user['active'], user['user_id']))
+        cls.db.commit()
+        return True
+
+    #---------------------------------------------------#
+    #   Elimina todos los roles de un usuario
+    #---------------------------------------------------#
+    @classmethod
+    def remove_roles(cls, user_id):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM user_role WHERE user_id=%s", (user_id))
+        cls.db.commit()
+        return True
+
+    #---------------------------------------------------#
+    #   Obtiene un usuario por email y contraseña
+    #---------------------------------------------------#
     @classmethod
     def find_by_email_and_pass(cls, email, password):
         sql = """
@@ -179,113 +227,54 @@ class User(object):
 
         return cursor.fetchone()
 
-    @classmethod
-    def update_user_status(cls, request):
-        user_id = request['user_id']
-        activo = request['activo']
-        cursor = cls.db.cursor()
-        cursor.execute("""
-               UPDATE usuario
-               SET activo=%s
-               WHERE id=%s
-            """, (activo, user_id))
-        cls.db.commit()
-
-        return True
-
-    @classmethod
-    def delete_roles(cls, id_data):
-        cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM usuario_tiene_rol WHERE usuario_id=%s", (id_data,))
-        cls.db.commit()
-        return True
-
-
-
-    @classmethod
-    def get_rol(cls, id_data):
-        cursor = cls.db.cursor()
-        sql = """
-            SELECT rol.id, rol.nombre FROM usuario_tiene_rol
-            INNER JOIN rol ON usuario_tiene_rol.rol_id = rol.id
-            WHERE usuario_tiene_rol.usuario_id = %s
-        """
-        cursor.execute(sql, (id_data))
-        data = cursor.fetchall()
-        return data
-
-    @classmethod
-    def set_rol(cls, id_data):
-        cursor = cls.db.cursor()
-        sql = """
-             rol.nombre FROM usuario_tiene_rol
-            INNER JOIN rol ON usuario_tSELECTiene_rol.rol_id = rol.id
-            WHERE usuario_tiene_rol.usuario_id = %s
-        """
-        cursor.execute(sql, (id_data))
-        data = cursor.fetchone()
-        return data
-
+    #---------------------------------------------------#
+    #   Encontrar usuario por username
+    #---------------------------------------------------#
     @classmethod
     def find_by_username(cls, username):
         sql = """
-            SELECT * FROM usuario AS u
-            WHERE u.username = %s
+            SELECT * FROM users
+            WHERE users.username = %s
         """
         cursor = cls.db.cursor()
         cursor.execute(sql, (username))
         return cursor.fetchone()
 
+    #---------------------------------------------------#
+    #   Chequear que el username no esté en uso
+    #---------------------------------------------------#
     @classmethod
-    def find_by_username_not_self(cls, username, id_data):
+    def find_by_username_not_self(cls, user):
         sql = """
-            SELECT * FROM usuario AS u
-            WHERE u.username = %s and u.id <> %s
+            SELECT * FROM users
+            WHERE username = %s and user_id <> %s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (username, id_data))
+        cursor.execute(sql, (user['username'], user['user_id']))
         return cursor.fetchone()
 
-
+    #---------------------------------------------------#
+    #   Encontrar usuario por email
+    #---------------------------------------------------#
     @classmethod
     def find_by_email(cls, username):
         sql = """
-            SELECT * FROM usuario
-            WHERE usuario.username = %s
+            SELECT * FROM users
+            WHERE users.email = %s
         """
-
         cursor = cls.db.cursor()
         cursor.execute(sql, (username))
-
         return cursor.fetchone()
 
+    #---------------------------------------------------#
+    #   Chequear que el email no esté en uso
+    #---------------------------------------------------#
     @classmethod
-    def find_by_email_not_self(cls, username, id_data):
+    def find_by_email_not_self(cls, user):
         sql = """
-            SELECT * FROM usuario AS u
-            WHERE u.username = %s and u.id <> %s
-        """
-
-        cursor = cls.db.cursor()
-        cursor.execute(sql, (username, id_data))
-
-        return cursor.fetchone()
-
-
-    @classmethod
-    def find_by_id(cls, id_data):
-        sql = """
-            SELECT * FROM usuario AS u
-            WHERE u.id = %s
+            SELECT * FROM users
+            WHERE email = %s and user_id <> %s
         """
         cursor = cls.db.cursor()
-        cursor.execute(sql, (id_data))
+        cursor.execute(sql, (user['username'], user['user_id']))
         return cursor.fetchone()
-    
-    @classmethod
-    def tiene_rol(cls, id_data, rol):
-        data = cls.get_rol(id_data)
-        for roles in data:
-            if roles['nombre'] == rol:
-                return True
-        return False

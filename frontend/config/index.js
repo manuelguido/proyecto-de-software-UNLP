@@ -48,7 +48,7 @@ module.exports = {
     index: path.resolve(__dirname, '../../flaskps/templates/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../../flaskps'),
+    assetsRoot: path.resolve(__dirname, '../../flaskps/'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
 

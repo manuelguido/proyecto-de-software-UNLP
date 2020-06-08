@@ -9,7 +9,9 @@ from wtforms import Form
 import wtforms_json
 wtforms_json.init()
 
-#Autentica el usuario
+#---------------------------------------------------#
+#   Autentica el usuario
+#---------------------------------------------------#
 def authenticate():
     if request.method == 'POST':
         #Obtención de información
@@ -37,7 +39,9 @@ def authenticate():
 
     return jsonify(response_object)
 
-#Inicia la sesión
+#---------------------------------------------------#
+#   Inicia la sesión
+#---------------------------------------------------#
 def login(user):
     #Variables de sesion
     session['id'] = user['user_id']
@@ -47,21 +51,30 @@ def login(user):
     session['lastname'] = user['lastname']
     return True
 
+#---------------------------------------------------#
+#   Loggea al usuario por google
+#---------------------------------------------------#
 def login_by_google(user_info):
     User.db = get_db()
-    user = User.get_by_email(user_info['email'])
+    user = User.find_by_email(user_info['email'])
     if not user:
         User.create_by_google(user_info)
-        user = User.get_by_email(user_info['email'])
+        user = User.find_by_username(user_info['email'])
     login(user)
     return True
 
+#---------------------------------------------------#
+#   Chequea que el usuario esté autenticado
+#---------------------------------------------------#
 def authenticated():
     authenticated_object = {'authenticated': False}
     if auth.authenticated():
         authenticated_object = {'authenticated': True}
     return jsonify(authenticated_object)
 
+#---------------------------------------------------#
+#   Desautentica al usuario
+#---------------------------------------------------#
 def unauthenticate():
     for key in list(session.keys()):
         session.pop(key)

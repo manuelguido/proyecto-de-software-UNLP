@@ -1,17 +1,16 @@
 <template>
-  <mdb-datatable
-    :data="my_data"
-    striped
-    bordered
-    responsive
-    arrows
-    defaultRow="No hay información"
-    noFoundMessage="No hay resultados"
-    searchPlaceholder="Buscar"
-    :tfoot="false"
-    showingText="Mostrando"
-    pagination="false"
-  ></mdb-datatable>
+      <mdb-datatable
+        class="my-3"
+        :data="my_data"
+        bordered
+        responsive
+        arrows
+        defaultRow="No hay información"
+        noFoundMessage="No hay resultados"
+        searchPlaceholder="Buscar"
+        :tfoot="false"
+        showingText="Mostrando"
+      ></mdb-datatable>
 </template>
 
 <script>
@@ -44,3 +43,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.pagination .page-item, .pagination .active, .pagination .page-item.active  {
+  background-color: var(--color-b) !important;
+}
+.page-item.active {
+  background-color: var(--color-b) !important;
+}
+</style>
