@@ -18,8 +18,8 @@ from wtforms import Form
 import wtforms_json
 wtforms_json.init()
 
-UPLOAD_FOLDER = "../grupo37/flaskps/static/img/"
-# UPLOAD_FOLDER2 = "../grupo37/frontend/src/assets/images/instruments/"
+# UPLOAD_FOLDER = "../grupo37/flaskps/static/img/instruments/"
+UPLOAD_FOLDER = "instrument_files/"
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 #---------------------------------------------------#
