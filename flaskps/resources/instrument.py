@@ -68,7 +68,7 @@ def create():
                 file = request.files['image']
                 if file: # and allowed_file(file.filename):
                     filename = new_file_name(file)
-                    file.save(os.path.abspath(UPLOAD_FOLDER+filename))
+                    file.save(os.path.abspath(filename))
                     # file.save(os.path.abspath(UPLOAD_FOLDER2+filename))
                     Instrument.db = get_db()
                     Instrument.create(request.form, filename)
