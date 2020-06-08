@@ -18,8 +18,7 @@ from wtforms import Form
 import wtforms_json
 wtforms_json.init()
 
-# UPLOAD_FOLDER = "../grupo37/flaskps/static/img/instruments/"
-UPLOAD_FOLDER = "instrument_files/"
+UPLOAD_FOLDER = "../grupo37/flaskps/static/img/instruments/"
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 #---------------------------------------------------#
@@ -68,7 +67,7 @@ def create():
                 file = request.files['image']
                 if file: # and allowed_file(file.filename):
                     filename = new_file_name(file)
-                    file.save(os.path.abspath(filename))
+                    file.save(os.path.abspath(UPLOAD_FOLDER+filename))
                     # file.save(os.path.abspath(UPLOAD_FOLDER2+filename))
                     Instrument.db = get_db()
                     Instrument.create(request.form, filename)
