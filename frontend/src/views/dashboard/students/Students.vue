@@ -40,9 +40,9 @@ export default {
     return {
       pagetitle: 'Estudiantes',
       students: '',
-      showStudentPath: '/dashboard/student/',
-      newStudentPath: '/dashboard/new/student',
-      editStudentPath: '/dashboard/student/edit/',
+      showStudentPath: '/student/',
+      newStudentPath: '/new/student',
+      editStudentPath: '/student/edit/',
       columns: [
         {
           label: 'Apellido',

@@ -40,9 +40,9 @@ export default {
     return {
       pagetitle: 'Instrumentos',
       instruments: '',
-      showInstrumentPath: '/dashboard/instrument/',
-      newInstrumentPath: '/dashboard/new/instrument',
-      editInstrumentPath: '/dashboard/instrument/edit/',
+      showInstrumentPath: '/instrument/',
+      newInstrumentPath: '/new/instrument',
+      editInstrumentPath: '/instrument/edit/',
       columns: [
         {
           label: 'Nombre',

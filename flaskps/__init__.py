@@ -92,12 +92,27 @@ app.add_url_rule("/api/user/create", 'api_user_create', user.create, methods=['P
 app.add_url_rule("/api/user/update", 'api_user_update', user.update, methods=['POST'])
 app.add_url_rule("/api/user/delete", 'api_user_delete', user.delete, methods=['POST'])
 
-    # Obtener perfil de usuario loggeado
-app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET'])
-    # Obtener roles y rutas de usuario loggeado
-app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET'])
-    # Obtener roles y rutas de usuario loggeado
-app.add_url_rule("/api/user/has_role", 'api_has_role', user.has_role, methods=['GET'])
+app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET']) # Obtener perfil de usuario loggeado
+app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET']) # Obtener roles y rutas de usuario loggeado
+app.add_url_rule("/api/user/has_role", 'api_has_role', user.has_role, methods=['GET']) # Obtener roles y rutas de usuario loggeado
+
+# Ciclos lectivos (Cycles)
+app.add_url_rule("/api/cycles", 'api_cycles', cycle.all, methods=['GET'])
+app.add_url_rule("/api/cycle/<int:cycle_id>", 'api_cycle', cycle.get, methods=['GET'])
+app.add_url_rule("/api/cycle/create", 'api_cycle_create', cycle.create, methods=['POST'])
+app.add_url_rule("/api/cycle/update", 'api_cycle_update', cycle.update, methods=['POST'])
+app.add_url_rule("/api/cycle/delete", 'api_cycle_delete', cycle.delete, methods=['POST'])
+app.add_url_rule("/api/cycle/form_data", 'api_cycle_form_data', cycle.getFormData, methods=['GET'])
+
+# Clases (Lessons)
+app.add_url_rule("/api/cycles", 'api_lessons', lesson.all, methods=['GET'])
+app.add_url_rule("/api/cycle/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
+app.add_url_rule("/api/cycle/create", 'api_lesson_create', lesson.create, methods=['POST'])
+app.add_url_rule("/api/cycle/update", 'api_lesson_update', lesson.update, methods=['POST'])
+app.add_url_rule("/api/cycle/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
+app.add_url_rule("/api/cycle/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
+
+
 
 #---------------------------------------------------#
 #   Autenticacion

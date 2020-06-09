@@ -40,9 +40,9 @@ export default {
     return {
       pagetitle: 'Usuarios',
       users: '',
-      showUserPath: '/dashboard/user/',
-      newUserPath: '/dashboard/new/user',
-      editUserPath: '/dashboard/user/edit/',
+      showUserPath: '/user/',
+      newUserPath: '/new/user',
+      editUserPath: '/user/edit/',
       columns: [
         {
           label: 'Apellido',

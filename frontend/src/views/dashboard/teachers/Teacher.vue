@@ -62,8 +62,8 @@ export default {
   data () {
     return {
       pagetitle: 'Información del docente',
-      returnPath: '/dashboard/teachers',
-      editPath: '/dashboard/teacher/edit/' + this.teacher_id,
+      returnPath: '/teachers',
+      editPath: '/teacher/edit/' + this.teacher_id,
       teacher: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar al docente? Esta accion no se puede deshacer',
       messageData: {}
@@ -100,7 +100,7 @@ export default {
         }).then((response) => {
           this.messageData = response.data
           setTimeout(function () {
-            window.location.href = '/dashboard/teachers'
+            window.location.href = '/teachers'
           }, 400)
         }).catch((error) => {
           console.log(error)

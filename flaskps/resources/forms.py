@@ -13,7 +13,7 @@ class ValidateLogin(Form):
 #---------------------------------------------------#
 #   Cambiar información del sitio
 #---------------------------------------------------#
-class UpdateConfiguration(Form):
+class ValidateConfiguration(Form):
     active = SelectField(u'Active', choices=[('0', 'Inactivo'), ('1', 'Activo')])
     title = StringField(u'Titulo', [validators.required(), validators.length(max=255)])
     email = StringField(u'Email', [validators.required(), validators.length(max=255)])
@@ -35,19 +35,24 @@ class ValidateUser(Form):
     # is_teacher = IntegerField('Activo', [validators.required()])
     # is_preceptor = IntegerField('Activo', [validators.required()])
 
+#---------------------------------------------------#
+#   Validar usuario sin password
+#---------------------------------------------------#
 class ValidateUserWithOutPassword(Form):
     name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
     lastname = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
     username = StringField(u'Username', [validators.required(), validators.length(max=100)])
     email = StringField(u'Email', [validators.required(), validators.length(max=100)])
 
+#---------------------------------------------------#
+#   Validar estado de usuario
+#---------------------------------------------------#
 class ValidateUserStatus(Form):
     user_id = IntegerField('Usuario', [validators.required(), validators.NumberRange(min=1, max=None)])
     active = IntegerField('Activo', [validators.required()])
 
-
 #---------------------------------------------------#
-#   Validacion de Estudiantes
+#   Validar Estudiantes
 #---------------------------------------------------#
 class ValidateStudent(Form):
     lastname = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
@@ -65,7 +70,7 @@ class ValidateStudent(Form):
     responsable_id = IntegerField('Responsable Id', [validators.required(), validators.NumberRange(min=1, max=None)])
 
 #---------------------------------------------------#
-#   Validacion de Persona responsable
+#   Validar Persona responsable
 #---------------------------------------------------#
 class ValidateResponsable(Form):
     lastname = StringField(u'Apellido', [validators.required(), validators.length(max=50)])
@@ -74,7 +79,7 @@ class ValidateResponsable(Form):
     responsable_type_id = IntegerField('Tipo de Responsable', [validators.required(), validators.NumberRange(min=1, max=3)])
 
 #---------------------------------------------------#
-#   Validacion de Docentes
+#   Validar Docentes
 #---------------------------------------------------#
 class ValidateDocente(Form):
     apellido = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
@@ -87,7 +92,7 @@ class ValidateDocente(Form):
     tel = IntegerField('Telefono', [validators.optional(), validators.NumberRange(min=99999, max=None)])
 
 #---------------------------------------------------#
-#   Validacion de instrumentos
+#   Validar instrumentos
 #---------------------------------------------------#
 class ValidateInstrument(Form):
     name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
@@ -95,41 +100,48 @@ class ValidateInstrument(Form):
     instrument_type_id = IntegerField('Tipo de instrumento', [validators.required(), validators.NumberRange(min=1, max=None)])
 
 #---------------------------------------------------#
-#   
+#   Validar ciclo lectivo
 #---------------------------------------------------#
-# class ValidateCiclo(Form):
-#     semestre = SelectField(u'Semestre', choices=[('1', 'Semestre I'), ('2', 'Semestre II')])
-#     fecha_ini = DateField('Fecha de inicio', [validators.required()], format='%Y-%m-%d')
-#     fecha_fin = DateField('Fecha de fin', [validators.required()], format='%Y-%m-%d')
+class ValidateCycle(Form):
+    semester_id = IntegerField('Semestre', [validators.required(), validators.NumberRange(min=1, max=2)])
+    year = IntegerField('Año', [validators.required(), validators.NumberRange(min=2000, max=None)])
+    date_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
+    date_to = StringField(u'Hasta', [validators.required(), validators.length(max=100)])
 
-# class ValidateCicloTaller(Form):
-#     ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+class ValidateCycleId(Form):
+    cycle_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-# class ValidateDocenteTaller(Form):
-#     docente_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     ciclo_lectivo_taller_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+#---------------------------------------------------#
+#   Validar taller-ciclo lectivo
+#---------------------------------------------------#
+class ValidateCycleWorkshop(Form):
+    cycle_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+    workshop_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-# class ValidateDocenteTallerDelete(Form):
-#     taller_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     docente_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     ciclo_lectivo_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+#---------------------------------------------------#
+#   Validar clase
+#---------------------------------------------------#
+class ValidateLesson(Form):
+    cycle_workshop_id = IntegerField('Ciclo Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    workshop_type_id = IntegerField('Tipo de taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    level_id = IntegerField('Tipo de taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-# class ValidateEstudianteDocenteTaller(Form):
-#     docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+#---------------------------------------------------#
+#   Validar horario
+#---------------------------------------------------#
+class ValidateSchedule(Form):
+    lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    core_id = IntegerField('Núcleo', [validators.required(), validators.NumberRange(min=1, max=None)])
+    day_id = IntegerField('Día', [validators.required(), validators.NumberRange(min=1, max=None)])
+    hour_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
+    hour_to = StringField(u'Hasta', [validators.required(), validators.length(max=100)])
 
-# class ValidateEstudianteDocenteTallerDelete(Form):
-#     docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
-
-# class ValidateHorario(Form):
-#     docente_responsable_taller_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     nucleo_id = IntegerField('Nucleo', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     horario_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     dia = StringField(u'Dia', [validators.required(), validators.length(max=100)])
-
-# class ValidateAsistencia(Form):
-#     estudiante_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     clase_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
-#     fecha = DateField('Fecha', [validators.required()], format='%Y-%m-%d')
+#---------------------------------------------------#
+#   Validar asistencia
+#---------------------------------------------------#
+class ValidateAssistance(Form):
+    teacher_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    student_id = IntegerField('Núcleo', [validators.required(), validators.NumberRange(min=1, max=None)])
+    schedule_id = IntegerField('Día', [validators.required(), validators.NumberRange(min=1, max=None)])
+    date = StringField(u'Desde', [validators.required(), validators.length(max=100)])
+    present = IntegerField('Taller', [validators.required(), validators.NumberRange(min=0, max=1)])

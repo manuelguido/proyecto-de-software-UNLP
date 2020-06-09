@@ -65,8 +65,8 @@ export default {
   data () {
     return {
       pagetitle: 'Información del instrumento',
-      returnPath: '/dashboard/instruments',
-      editPath: '/dashboard/instrument/edit/' + this.instrument_id,
+      returnPath: '/instruments',
+      editPath: '/instrument/edit/' + this.instrument_id,
       image_path: '/static/img/instruments/',
       instrument: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar el instrumento? Esta accion no se puede deshacer',
@@ -104,7 +104,7 @@ export default {
         }).then((res) => {
           this.messageData = res.data
           setTimeout(function () {
-            window.location.href = '/dashboard/instruments'
+            window.location.href = '/instruments'
           }, 400)
         }).catch((error) => {
           console.log(error)

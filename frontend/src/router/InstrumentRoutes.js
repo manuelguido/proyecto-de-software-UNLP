@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-import Students from '@/views/dashboard/students/Students'
-import Student from '@/views/dashboard/students/Student'
-import StudentNew from '@/views/dashboard/students/StudentNew'
-import StudentEdit from '@/views/dashboard/students/StudentEdit'
+import Instruments from '@/views/dashboard/instruments/Instruments'
+import Instrument from '@/views/dashboard/instruments/Instrument'
+import InstrumentNew from '@/views/dashboard/instruments/InstrumentNew'
+import InstrumentEdit from '@/views/dashboard/instruments/InstrumentEdit'
 
 const routes = [
   {
-    path: '/students',
-    name: 'Students',
-    component: Students,
+    path: '/instruments',
+    name: 'Instruments',
+    component: Instruments,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -24,9 +24,9 @@ const routes = [
     }
   },
   {
-    path: '/student/:student_id',
-    name: 'Student',
-    component: Student,
+    path: '/instrument/:instrument_id',
+    name: 'Instrument',
+    component: Instrument,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
@@ -42,9 +42,9 @@ const routes = [
     }
   },
   {
-    path: '/new/student',
-    name: 'StudentNew',
-    component: StudentNew,
+    path: '/new/instrument',
+    name: 'InstrumentNew',
+    component: InstrumentNew,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -59,9 +59,9 @@ const routes = [
     }
   },
   {
-    path: '/student/edit/:student_id',
-    name: 'StudentEdit',
-    component: StudentEdit,
+    path: '/instrument/edit/:instrument_id',
+    name: 'InstrumentEdit',
+    component: InstrumentEdit,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'

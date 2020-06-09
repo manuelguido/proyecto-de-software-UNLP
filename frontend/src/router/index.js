@@ -1,16 +1,29 @@
 import Vue from 'vue'
-import axios from 'axios'
 import Router from 'vue-router'
 
-import FullRoutes from '@/router/StudentRoutes'
-import StudentRoutes from '@/router/FullRoutes'
+import MainRoutes from '@/router/MainRoutes'
+import CoreRoutes from '@/router/CoreRoutes'
+import StudentRoutes from '@/router/StudentRoutes'
+import TeacherRoutes from '@/router/TeacherRoutes'
+import InstrumentRoutes from '@/router/InstrumentRoutes'
+import CycleRoutes from '@/router/CycleRoutes'
+import WorkshopRoutes from '@/router/WorkshopRoutes'
+import UserRoutes from '@/router/UserRoutes'
+import ConfigurationRoutes from '@/router/ConfigurationRoutes'
 
 Vue.use(Router)
 
 var allRoutes = []
 allRoutes = allRoutes.concat(
-  FullRoutes,
-  StudentRoutes
+  MainRoutes,
+  CoreRoutes,
+  StudentRoutes,
+  TeacherRoutes,
+  InstrumentRoutes,
+  CycleRoutes,
+  WorkshopRoutes,
+  UserRoutes,
+  ConfigurationRoutes
 )
 
 const routes = allRoutes

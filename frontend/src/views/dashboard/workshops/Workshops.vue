@@ -10,10 +10,10 @@
         <div class="row">
           <!-- /.Table Col -->
           <div class="col-12 col-md-8">
-            <dashboard-title title="Listado de docentes"></dashboard-title>
+            <dashboard-title title="Listado de instrumentos"></dashboard-title>
           </div>
           <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newTeacherPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo docente</router-link>
+            <router-link :to="newInstrumentPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo instrumento</router-link>
           </div>
           <div class="col-12">
             <dashboard-table
@@ -38,25 +38,25 @@ import dashboardTable from '@/components/dashboard/Table'
 export default {
   data () {
     return {
-      pagetitle: 'Docentes',
-      teachers: '',
-      showTeacherPath: '/teacher/',
-      newTeacherPath: '/new/teacher',
-      editTeacherPath: '/teacher/edit/',
+      pagetitle: 'Instrumentos',
+      instruments: '',
+      showInstrumentPath: '/dashboard/instrument/',
+      newInstrumentPath: '/dashboard/new/instrument',
+      editInstrumentPath: '/dashboard/instrument/edit/',
       columns: [
-        {
-          label: 'Apellido',
-          field: 'lastname',
-          sort: 'asc'
-        },
         {
           label: 'Nombre',
           field: 'name',
           sort: 'asc'
         },
         {
-          label: 'Teléfono',
-          field: 'phone',
+          label: 'Código',
+          field: 'code',
+          sort: 'asc'
+        },
+        {
+          label: 'Tipo',
+          field: 'type',
           sort: 'asc'
         },
         {
@@ -81,24 +81,24 @@ export default {
   },
   methods: {
     fetchData () {
-      const path = '/api/teachers'
-      axios.get(path).then((respuesta) => {
-        this.teachers = respuesta.data
-        this.loadTeachers()
+      const path = '/api/instruments'
+      axios.get(path).then((res) => {
+        this.instruments = res.data
+        this.loadInstruments()
       }).catch((error) => {
         console.log(error)
         this.fetchData()
       })
     },
-    loadTeachers () {
+    loadInstruments () {
       let newrow = {}
-      for (let i = 0; i < this.teachers.length; i++) {
+      for (let i = 0; i < this.instruments.length; i++) {
         newrow = {
-          lastname: this.teachers[i].lastname,
-          name: this.teachers[i].name,
-          phone: this.teachers[i].phone,
-          show: '<a href="' + this.showTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          name: this.instruments[i].name,
+          code: this.instruments[i].code,
+          type: this.instruments[i].type,
+          show: '<a href="' + this.showInstrumentPath + this.instruments[i].instrument_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editInstrumentPath + this.instruments[i].instrument_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

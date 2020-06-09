@@ -16,80 +16,78 @@ class Cycle(object):
         return cursor.fetchone()
 
     @classmethod
-    def store(cls, data):
+    def create(cls, cycle):
+        cursor = cls.db.cursor()
+        sql = "INSERT INTO cycles (semester_id, year, date_from, date_to) VALUES (%s, %s, %s, %s)"
+        cursor.execute(sql, (cycle['semester_id'], cycle['year'], cycle['date_from'], cycle['date_to']))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def update(cls, cycle):
+        cursor = cls.db.cursor()
+        sql= "UPDATE cycles SET semester_id=%s, year=%s, date_from=%s, date_to=%s WHERE cycle_id=%s"
+        cursor.execute(sql, (cycle['semester_id'], cycle['year'], cycle['date_from'], cycle['date_to'], cycle['cycle_id']))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def delete(cls, cycle_id):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM cycles WHERE cycle_id=%s", (cycle_id))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def semester_exists(cls, data):
+        cursor = cls.db.cursor()
         sql = """
-            INSERT INTO cycles (fecha_ini, fecha_fin, semestre, año)
-            VALUES (%s, %s, %s, %s)
+            SELECT cycles.cycle_id COUNT
+            FROM cycles
+            WHERE cycles.semester_id=%s and cycle.year=%s
         """
-        cursor = cls.db.cursor()
-        cursor.execute(sql, (data['fecha_ini'], data['fecha_fin'], data['semestre'], data['año']))
+        result = cursor.execute(sql, (data['semester_id'], data['year']))
         cls.db.commit()
-        return True
+        return (result > 0)
 
     @classmethod
-    def delete(cls, id_data):
-        cursor = cls.db.cursor()
-        cursor.execute("DELETE FROM cycles WHERE id=%s", (id_data,))
-        cls.db.commit()
-        cursor.execute("DELETE FROM cycles WHERE cycle_id=%s", (id_data,))
-        cls.db.commit()
-        cursor.execute("DELETE FROM docente_responsable_taller WHERE cycle_id=%s", (id_data,))
-        cls.db.commit()
-        cursor.execute("DELETE FROM estudiante_taller WHERE cycles_id=%s", (id_data,))
-        cls.db.commit()
-        return True
-
-    @classmethod
-    def update(cls, request):
-        cursor = cls.db.cursor()
-        cursor.execute("""
-               UPDATE ciclo_lectivo
-               SET fecha_ini=%s, fecha_fin=%s, semestre=%s, año=%s
-               WHERE id=%s
-            """, (request['fecha_ini'], request['fecha_fin'], request['semestre'], request['año'], request['id_data']))
-        cls.db.commit()
-        return True
-
-    @classmethod
-    def semestreExiste(cls, request):
-        cursor = cls.db.cursor()
-        a = cursor.execute("""
-               SELECT ciclo_lectivo.semestre COUNT
-               FROM ciclo_lectivo
-               WHERE ciclo_lectivo.semestre=%s and ciclo_lectivo.año=%s
-            """, (request['semestre'], request['año']))
-        cls.db.commit()
-        if (a>0):
-            return True
-        else:
-            return False
-
-    @classmethod
-    def cicloNoTieneTaller(cls, data):
-        cursor = cls.db.cursor() 
-        sql = """
-               SELECT taller.id
-               FROM taller
-               WHERE id=%s
-            """
-        cursor.execute(sql, (data['taller_id']))
-        taller_id = cursor.fetchone()
-        sql2 = """
-               SELECT ciclo_lectivo.id
-               FROM ciclo_lectivo
-               WHERE id=%s
-            """
-        cursor.execute(sql2, (data['ciclo_lectivo_id']))
-        ciclo_lectivo_id = cursor.fetchone()
+    def semester_exists_not_self(cls, data):
         cursor = cls.db.cursor()
         sql = """
-               SELECT ciclo_lectivo_taller.taller_id COUNT
-               FROM ciclo_lectivo_taller
-               WHERE taller_id=%s and ciclo_lectivo_id=%s
-            """
-        a = cursor.execute(sql, (taller_id['id'], ciclo_lectivo_id['id']))
+            SELECT cycles.cycle_id COUNT
+            FROM cycles
+            WHERE cycles.semester_id=%s and cycle.year=%s and cycle.cycle_id<>%s
+        """
+        result = cursor.execute(sql, (data['semester_id'], data['year'], data['cycle_id']))
         cls.db.commit()
-        if (a>0):
-            return False
-        else:
-            return True
+        return (result > 0)
+
+    # @classmethod
+    # def cicloNoTieneTaller(cls, data):
+    #     cursor = cls.db.cursor() 
+    #     sql = """
+    #            SELECT taller.id
+    #            FROM taller
+    #            WHERE id=%s
+    #         """
+    #     cursor.execute(sql, (data['taller_id']))
+    #     taller_id = cursor.fetchone()
+    #     sql2 = """
+    #            SELECT ciclo_lectivo.id
+    #            FROM ciclo_lectivo
+    #            WHERE id=%s
+    #         """
+    #     cursor.execute(sql2, (data['ciclo_lectivo_id']))
+    #     ciclo_lectivo_id = cursor.fetchone()
+    #     cursor = cls.db.cursor()
+    #     sql = """
+    #            SELECT ciclo_lectivo_taller.taller_id COUNT
+    #            FROM ciclo_lectivo_taller
+    #            WHERE taller_id=%s and ciclo_lectivo_id=%s
+    #         """
+    #     a = cursor.execute(sql, (taller_id['id'], ciclo_lectivo_id['id']))
+    #     cls.db.commit()
+    #     if (a>0):
+    #         return False
+    #     else:
+    #         return True

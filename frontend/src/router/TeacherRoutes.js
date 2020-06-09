@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-import Students from '@/views/dashboard/students/Students'
-import Student from '@/views/dashboard/students/Student'
-import StudentNew from '@/views/dashboard/students/StudentNew'
-import StudentEdit from '@/views/dashboard/students/StudentEdit'
+import Teachers from '@/views/dashboard/teachers/Teachers'
+import Teacher from '@/views/dashboard/teachers/Teacher'
+import TeacherNew from '@/views/dashboard/teachers/TeacherNew'
+import TeacherEdit from '@/views/dashboard/teachers/TeacherEdit'
 
 const routes = [
   {
-    path: '/students',
-    name: 'Students',
-    component: Students,
+    path: '/teachers',
+    name: 'Teachers',
+    component: Teachers,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -24,9 +24,9 @@ const routes = [
     }
   },
   {
-    path: '/student/:student_id',
-    name: 'Student',
-    component: Student,
+    path: '/teacher/:teacher_id',
+    name: 'Teacher',
+    component: Teacher,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
@@ -42,9 +42,9 @@ const routes = [
     }
   },
   {
-    path: '/new/student',
-    name: 'StudentNew',
-    component: StudentNew,
+    path: '/new/teacher',
+    name: 'TeacherNew',
+    component: TeacherNew,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -59,9 +59,9 @@ const routes = [
     }
   },
   {
-    path: '/student/edit/:student_id',
-    name: 'StudentEdit',
-    component: StudentEdit,
+    path: '/teacher/edit/:teacher_id',
+    name: 'TeacherEdit',
+    component: TeacherEdit,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'

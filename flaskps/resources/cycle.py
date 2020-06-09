@@ -3,75 +3,134 @@ from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.cycle import Cycle
 from flaskps.models.workshop import Workshop
-from flaskps.models.responsable import Responsable
+from flaskps.models.semester import Semester
 from flaskps.helpers import auth
 from flaskps.resources import forms
 
+
+#---------------------------------------------------#
+#   Retorna todos los ciclos lectivos
+#---------------------------------------------------#
 def all():
     #Auth check
     auth.authenticated_or_401()
-
-    Cycle.db = get_db()
-    return jsonify(Cycle.all())
-
-def get(id_data):
-    #Auth check
-    auth.authenticated_or_401()
-
-    Cycle.db = get_db()
-    return jsonify(Cycle.get(id_data))
-
-def store():
-    #Auth check
-    auth.authenticated_or_401()
-
+    
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_new')):
-        if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
-            if int(request.form['año']) < int(1990) or int(request.form['año']) > int(2025):
-                flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
+    if (not User.has_permission(session['id'],'administrativo_index')):
+        abort(401)
+    else:
+        Cycle.db = get_db()
+        return jsonify(Cycle.all())
+
+#---------------------------------------------------#
+#   Retorna el ciclo lectivo por su id
+#---------------------------------------------------#
+def get(cycle_id):
+    #Auth check
+    auth.authenticated_or_401()
+    
+    #Chequea permiso
+    User.db = get_db()
+    if (not User.has_permission(session['id'],'administrativo_show')):
+        abort(401)
+    else:
+
+        Cycle.db = get_db()
+        return jsonify(Cycle.get(cycle_id))
+
+#---------------------------------------------------#
+#   Crea un ciclo lectivo
+#---------------------------------------------------#
+def create():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (not User.has_permission(session['id'],'administrativo_new')):
+            abort(401)
+        else:
+            post_data = request.form
+            #Form validation
+            form = forms.ValidateCycle(post_data, skip_unknown_keys=True)
+            if not form.validate():
+                response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
                 Cycle.db = get_db()
-                if not Cycle.semestreExiste(request.form):
-                    Cycle.store(request.form)
-                    flash("Ciclo lectivo agregado correctamente" ,'success')
+                if Cycle.semester_exists(post_data):
+                    response_object = {'status': 'warning', 'message': 'El semestre ya tiene un ciclo lectivo asignado.'}
                 else:
-                    flash("El semestre ya tiene un ciclo lectivo asignado", 'error')
-        else:
-            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-        return redirect(url_for('panel_ciclos'))
-    else:
-        abort(401)
+                    Cycle.create(post_data)
+                    response_object = {'status': 'success', 'message': 'Creaste el ciclo lectivo correctamente.'}
+            return jsonify(response_object)
 
-def delete(id_data):
-    #Auth check
-    auth.authenticated_or_401()
-
-    #Chequea permiso
-    User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_destroy')):
-        Cycle.db = get_db()
-        Cycle.delete(id_data)
-        flash("Se eliminó el ciclo lectivo correctamente" ,'success')
-        return redirect(url_for('panel_ciclos'))
-    else:
-        abort(401)
-
+#---------------------------------------------------#
+#   Actualiza un ciclo lectivo
+#---------------------------------------------------#
 def update():
     #Auth check
     auth.authenticated_or_401()
 
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (not User.has_permission(session['id'],'administrativo_update')):
+            abort(401)
+        else:
+            post_data = request.form
+            #Form validation
+            form = forms.ValidateCycle(post_data, skip_unknown_keys=True)
+            if not form.validate():
+                response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
+            else:
+                Cycle.db = get_db()
+                if Cycle.semester_exists_not_self(post_data):
+                    response_object = {'status': 'warning', 'message': 'El semestre ya tiene un ciclo lectivo asignado.'}
+                else:
+                    Cycle.update(post_data)
+                    response_object = {'status': 'success', 'message': 'Actualizaste el ciclo lectivo correctamente.'}
+            return jsonify(response_object)
+
+#---------------------------------------------------#
+#   Elimina un ciclo lectivo
+#---------------------------------------------------#
+def delete():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (not User.has_permission(session['id'],'administrativo_destroy')):
+            abort(401)
+        else:
+            post_data = request.form
+            #Form validation
+            form = forms.ValidateCycleId(post_data, skip_unknown_keys=True)
+            if not form.validate():
+                response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
+            else:
+                Cycle.db = get_db()
+                Cycle.delete(post_data['cycle_id'])
+                response_object = {'status': 'success', 'message': 'Eliminaste el ciclo lectivo correctamente.'}
+                return jsonify(response_object)
+
+#---------------------------------------------------#
+#   Información para los formularios
+#---------------------------------------------------#
+def getFormData():
+    #Auth check
+    auth.authenticated_or_401()
+
     #Chequea permiso
     User.db = get_db()
-    if (User.tiene_permiso(session['id'],'administrativo_update')):
-        if request.method == "POST" and forms.ValidateCiclo(request.form).validate():
-            Cycle.db = get_db()
-            Cycle.update(request.form)
-            flash("Se actualizó el ciclo lectivo correctamente" ,'success')
-        else:
-            flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-            return redirect(url_for("get_update_ciclo", id_data=request.form.get("id_data")))
-        return redirect(url_for('panel_ciclos'))
-    else:
+    if (not User.has_permission(session['id'],'administrativo_new')):
         abort(401)
+    else:
+        Semester.db = get_db()
+        response_json = {
+            'semesters': Semester.all()
+            }
+        return response_json

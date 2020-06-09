@@ -66,8 +66,8 @@ export default {
   data () {
     return {
       pagetitle: 'Información del estudiante',
-      returnPath: '/dashboard/students',
-      editPath: '/dashboard/student/edit/' + this.student_id,
+      returnPath: '/students',
+      editPath: '/student/edit/' + this.student_id,
       student: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar al estudiante? Esta accion no se puede deshacer',
       messageData: {}
@@ -105,7 +105,7 @@ export default {
         }).then((response) => {
           this.messageData = response.data
           setTimeout(function () {
-            window.location.href = '/dashboard/students'
+            window.location.href = '/students'
           }, 400)
         }).catch((error) => {
           console.log(error)

@@ -71,8 +71,8 @@ export default {
   data () {
     return {
       pagetitle: 'Información del usuario',
-      returnPath: '/dashboard/users',
-      editPath: '/dashboard/user/edit/' + this.user_id,
+      returnPath: '/users',
+      editPath: '/user/edit/' + this.user_id,
       user: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar al usuario? Esta accion no se puede deshacer',
       messageData: {}
@@ -109,7 +109,7 @@ export default {
           this.messageData = res.data
           if (res.data.status === 'success') {
             setTimeout(function () {
-              window.location.href = '/dashboard/users'
+              window.location.href = '/users'
             }, 400)
           }
         }).catch((error) => {
