@@ -103,8 +103,9 @@ class ValidateInstrument(Form):
 #   Validar ciclo lectivo
 #---------------------------------------------------#
 class ValidateCycle(Form):
+    cycle_id = IntegerField('Cycle', [validators.NumberRange(min=1, max=None)])
     semester_id = IntegerField('Semestre', [validators.required(), validators.NumberRange(min=1, max=2)])
-    year = IntegerField('Año', [validators.required(), validators.NumberRange(min=2000, max=None)])
+    year = IntegerField('Año', [validators.required(), validators.NumberRange(min=2000, max=2050)])
     date_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
     date_to = StringField(u'Hasta', [validators.required(), validators.length(max=100)])
 

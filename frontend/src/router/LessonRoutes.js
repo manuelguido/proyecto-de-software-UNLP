@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-import Workshops from '@/views/dashboard/workshops/Workshops'
-import Workshop from '@/views/dashboard/workshops/Workshop'
-import WorkshopNew from '@/views/dashboard/workshops/WorkshopNew'
-import WorkshopEdit from '@/views/dashboard/workshops/WorkshopEdit'
+import Lessons from '@/views/dashboard/lessons/Lessons'
+import Lesson from '@/views/dashboard/lessons/Lesson'
+import LessonNew from '@/views/dashboard/lessons/LessonNew'
+import LessonEdit from '@/views/dashboard/lessons/LessonEdit'
 
 const routes = [
   {
-    path: '/workshops',
-    name: 'Workshops',
-    component: Workshops,
+    path: '/lessons',
+    name: 'Lessons',
+    component: Lessons,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -24,9 +24,9 @@ const routes = [
     }
   },
   {
-    path: '/workshop/:workshop_id',
-    name: 'Workshop',
-    component: Workshop,
+    path: '/lesson/:lesson_id',
+    name: 'Lesson',
+    component: Lesson,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
@@ -42,9 +42,9 @@ const routes = [
     }
   },
   {
-    path: '/new/workshop',
-    name: 'WorkshopNew',
-    component: WorkshopNew,
+    path: '/new/lesson',
+    name: 'LessonNew',
+    component: LessonNew,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
       axios.get(path).then((respuesta) => {
@@ -59,9 +59,9 @@ const routes = [
     }
   },
   {
-    path: '/workshop/edit/:workshop_id',
-    name: 'WorkshopEdit',
-    component: WorkshopEdit,
+    path: '/lesson/edit/:lesson_id',
+    name: 'LessonEdit',
+    component: LessonEdit,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'

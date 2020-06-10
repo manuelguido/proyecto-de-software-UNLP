@@ -7,6 +7,10 @@ from flaskps.models.semester import Semester
 from flaskps.helpers import auth
 from flaskps.resources import forms
 
+#Forms & validation
+from wtforms import Form
+import wtforms_json
+wtforms_json.init()
 
 #---------------------------------------------------#
 #   Retorna todos los ciclos lectivos
@@ -35,7 +39,6 @@ def get(cycle_id):
     if (not User.has_permission(session['id'],'administrativo_show')):
         abort(401)
     else:
-
         Cycle.db = get_db()
         return jsonify(Cycle.get(cycle_id))
 
@@ -52,14 +55,14 @@ def create():
         if (not User.has_permission(session['id'],'administrativo_new')):
             abort(401)
         else:
-            post_data = request.form
+            post_data = request.get_json()
             #Form validation
-            form = forms.ValidateCycle(post_data, skip_unknown_keys=True)
+            form = forms.ValidateCycle.from_json(post_data, skip_unknown_keys=False)
             if not form.validate():
                 response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
                 Cycle.db = get_db()
-                if Cycle.semester_exists(post_data):
+                if Cycle.cycle_exists(post_data):
                     response_object = {'status': 'warning', 'message': 'El semestre ya tiene un ciclo lectivo asignado.'}
                 else:
                     Cycle.create(post_data)
@@ -79,14 +82,14 @@ def update():
         if (not User.has_permission(session['id'],'administrativo_update')):
             abort(401)
         else:
-            post_data = request.form
+            post_data = request.get_json()
             #Form validation
-            form = forms.ValidateCycle(post_data, skip_unknown_keys=True)
+            form = forms.ValidateCycle.from_json(post_data, skip_unknown_keys=True)
             if not form.validate():
                 response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
                 Cycle.db = get_db()
-                if Cycle.semester_exists_not_self(post_data):
+                if Cycle.cycle_exists_not_self(post_data):
                     response_object = {'status': 'warning', 'message': 'El semestre ya tiene un ciclo lectivo asignado.'}
                 else:
                     Cycle.update(post_data)
@@ -106,9 +109,9 @@ def delete():
         if (not User.has_permission(session['id'],'administrativo_destroy')):
             abort(401)
         else:
-            post_data = request.form
+            post_data = request.get_json()
             #Form validation
-            form = forms.ValidateCycleId(post_data, skip_unknown_keys=True)
+            form = forms.ValidateCycleId.from_json(post_data, skip_unknown_keys=True)
             if not form.validate():
                 response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
@@ -130,7 +133,5 @@ def getFormData():
         abort(401)
     else:
         Semester.db = get_db()
-        response_json = {
-            'semesters': Semester.all()
-            }
+        response_json = {'semesters': Semester.all()}
         return response_json

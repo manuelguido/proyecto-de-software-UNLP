@@ -105,12 +105,12 @@ app.add_url_rule("/api/cycle/delete", 'api_cycle_delete', cycle.delete, methods=
 app.add_url_rule("/api/cycle/form_data", 'api_cycle_form_data', cycle.getFormData, methods=['GET'])
 
 # Clases (Lessons)
-app.add_url_rule("/api/cycles", 'api_lessons', lesson.all, methods=['GET'])
-app.add_url_rule("/api/cycle/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
-app.add_url_rule("/api/cycle/create", 'api_lesson_create', lesson.create, methods=['POST'])
-app.add_url_rule("/api/cycle/update", 'api_lesson_update', lesson.update, methods=['POST'])
-app.add_url_rule("/api/cycle/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
-app.add_url_rule("/api/cycle/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
+app.add_url_rule("/api/lesson", 'api_lessons', lesson.all, methods=['GET'])
+app.add_url_rule("/api/lesson/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
+app.add_url_rule("/api/lesson/create", 'api_lesson_create', lesson.create, methods=['POST'])
+app.add_url_rule("/api/lesson/update", 'api_lesson_update', lesson.update, methods=['POST'])
+app.add_url_rule("/api/lesson/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
+app.add_url_rule("/api/lesson/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
 
 
 

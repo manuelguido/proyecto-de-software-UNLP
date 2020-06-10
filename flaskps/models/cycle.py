@@ -5,14 +5,23 @@ class Cycle(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM cycles")
+        sql = """
+            SELECT cycles.*, semesters.name AS semester FROM cycles
+            INNER JOIN semesters ON cycles.semester_id = semesters.semester_id
+            ORDER BY cycles.year DESC
+        """
+        cursor.execute(sql)
         return cursor.fetchall()
 
     @classmethod
-    def get(cls, id_data):
+    def get(cls, cycle_id):
         cursor = cls.db.cursor()
-        sql = "SELECT * FROM cycles WHERE cycles.cycle.id=%s"
-        cursor.execute(sql, (id_data))
+        sql = """
+            SELECT cycles.*, semesters.name AS semester FROM cycles
+            INNER JOIN semesters ON cycles.semester_id = semesters.semester_id
+            WHERE cycles.cycle_id=%s
+            """
+        cursor.execute(sql, (cycle_id))
         return cursor.fetchone()
 
     @classmethod
@@ -39,24 +48,24 @@ class Cycle(object):
         return True
 
     @classmethod
-    def semester_exists(cls, data):
+    def cycle_exists(cls, data):
         cursor = cls.db.cursor()
         sql = """
             SELECT cycles.cycle_id COUNT
             FROM cycles
-            WHERE cycles.semester_id=%s and cycle.year=%s
+            WHERE cycles.semester_id=%s and cycles.year=%s
         """
         result = cursor.execute(sql, (data['semester_id'], data['year']))
         cls.db.commit()
         return (result > 0)
 
     @classmethod
-    def semester_exists_not_self(cls, data):
+    def cycle_exists_not_self(cls, data):
         cursor = cls.db.cursor()
         sql = """
             SELECT cycles.cycle_id COUNT
             FROM cycles
-            WHERE cycles.semester_id=%s and cycle.year=%s and cycle.cycle_id<>%s
+            WHERE cycles.semester_id=%s and cycles.year=%s and cycles.cycle_id<>%s
         """
         result = cursor.execute(sql, (data['semester_id'], data['year'], data['cycle_id']))
         cls.db.commit()

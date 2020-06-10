@@ -28,10 +28,10 @@ def update():
             #Chequea el metodo y valida el formulario
             post_data = request.get_json()
             form = forms.ValidateConfiguration.from_json(post_data, skip_unknown_keys=False)
-            if form.validate():
+            if not form.validate():
+                response_object = {'status': 'warning', 'message': 'Informacion inválida, solo puede ingresarse un titulo(máximo 255 char), email(máximo 255 char) y descripción(máximo 1000 char)'}
+            else:
                 Configuration.db = get_db()
                 Configuration.update(post_data)
                 response_object = {'status': 'success', 'message': 'Se actualizó la información del sitio correctamente'}
-            else:
-                response_object = {'status': 'error', 'message': 'Informacion inválida, solo puede ingresarse un titulo(máximo 255 char), email(máximo 255 char) y descripción(máximo 1000 char)'}
             return jsonify(response_object)

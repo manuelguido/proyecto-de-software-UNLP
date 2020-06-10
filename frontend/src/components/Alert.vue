@@ -1,36 +1,33 @@
 <template>
   <div>
     <!-- success -->
-    <div v-show="message.status == 'success'" class="alert-fixed">
-        <div class="card m-0 success-bottom shadow-lg">
-          <div class="card-body p-3">
-              <span class="black-c"><i class="fas fa-check-circle mr-3 fa-lg seed-success"></i>{{message.message}}</span>
-            <button type="button" class="close text-right pl-3" @click='closeMessage'>
-                <span>&times;</span>
-            </button>
-              <!-- <span class="ml-3 p-2 c-pointer" @click='closeMessage'></span> -->
-          </div>
+    <div v-show="message.status == 'success'" class="alert-fixed shadow">
+      <div class="card m-0 success-bottom shadow-lg">
+        <div class="card-body p-4">
+          <span class="black-c"><i class="fas fa-check-circle mr-3 fa-lg seed-success"></i>{{message.message}}</span>
+          <button type="button" class="close text-right pl-3" @click='closeMessage'><span>&times;</span></button>
         </div>
+      </div>
     </div>
     <!-- /.success -->
     <!-- warning -->
-    <div v-show="message.status == 'warning'" class="alert-fixed shadow p-0">
-        <div class="alert card alert-dismissible fade show m-0 warning-bottom" role="alert">
-            <strong class="black-c"><i class="fas fa-exclamation-circle mr-3 fa-lg seed-warning"></i>{{message.message}}</strong>
-            <button type="button" class="close text-right" @click='closeMessage'>
-                <span>&times;</span>
-            </button>
+    <div v-show="message.status == 'warning'" class="alert-fixed shadow">
+      <div class="card m-0 warning-bottom shadow-lg">
+        <div class="card-body p-4">
+          <span class="black-c"><i class="fas fa-exclamation-circle mr-3 fa-lg seed-warning"></i>{{message.message}}</span>
+          <button type="button" class="close text-right pl-3" @click='closeMessage'><span>&times;</span></button>
         </div>
+      </div>
     </div>
     <!-- /.warning -->
     <!-- error -->
-    <div v-show="message.status == 'error'" class="alert-fixed shadow p-0">
-        <div class="alert card alert-dismissible fade show m-0 bottom-danger" role="alert">
-            <strong class="black-c"><i class="fas fa-exclamation-circle mr-3 fa-lg seed-danger"></i>{{message.message}}</strong>
-            <button type="button" class="close text-right" @click='closeMessage'>
-                <span>&times;</span>
-            </button>
+    <div v-show="message.status == 'error'" class="alert-fixed shadow">
+      <div class="card m-0 danger-bottom shadow-lg">
+        <div class="card-body p-4">
+          <span class="black-c"><i class="fas fa-exclamation-circle mr-3 fa-lg seed-danger"></i>{{message.message}}</span>
+          <button type="button" class="close text-right pl-3" @click='closeMessage'><span>&times;</span></button>
         </div>
+      </div>
     </div>
     <!-- /.error -->
   </div>
@@ -46,7 +43,7 @@ export default {
       var $this = this
       setTimeout(function () {
         $this.message = false
-      }, 4000)
+      }, 2200)
     }
   },
   methods: {

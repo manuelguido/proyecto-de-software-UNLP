@@ -8,6 +8,7 @@ import TeacherRoutes from '@/router/TeacherRoutes'
 import InstrumentRoutes from '@/router/InstrumentRoutes'
 import CycleRoutes from '@/router/CycleRoutes'
 import WorkshopRoutes from '@/router/WorkshopRoutes'
+import LessonRoutes from '@/router/LessonRoutes'
 import UserRoutes from '@/router/UserRoutes'
 import ConfigurationRoutes from '@/router/ConfigurationRoutes'
 
@@ -22,6 +23,7 @@ allRoutes = allRoutes.concat(
   InstrumentRoutes,
   CycleRoutes,
   WorkshopRoutes,
+  LessonRoutes,
   UserRoutes,
   ConfigurationRoutes
 )
