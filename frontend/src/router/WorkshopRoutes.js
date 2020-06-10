@@ -4,6 +4,7 @@ import Workshops from '@/views/dashboard/workshops/Workshops'
 import Workshop from '@/views/dashboard/workshops/Workshop'
 import WorkshopNew from '@/views/dashboard/workshops/WorkshopNew'
 import WorkshopEdit from '@/views/dashboard/workshops/WorkshopEdit'
+import WorkshopCycles from '@/views/dashboard/workshops/WorkshopCycles'
 
 const routes = [
   {
@@ -12,8 +13,8 @@ const routes = [
     component: Workshops,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
-      axios.get(path).then((respuesta) => {
-        if (respuesta.data.authenticated) {
+      axios.get(path).then((res) => {
+        if (res.data.authenticated) {
           next()
         } else {
           next({ name: 'Login' })
@@ -30,8 +31,8 @@ const routes = [
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
-      axios.get(path).then((respuesta) => {
-        if (respuesta.data.authenticated) {
+      axios.get(path).then((res) => {
+        if (res.data.authenticated) {
           next()
         } else {
           next({ name: 'Login' })
@@ -47,8 +48,8 @@ const routes = [
     component: WorkshopNew,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
-      axios.get(path).then((respuesta) => {
-        if (respuesta.data.authenticated) {
+      axios.get(path).then((res) => {
+        if (res.data.authenticated) {
           next()
         } else {
           next({ name: 'Login' })
@@ -65,8 +66,25 @@ const routes = [
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'
-      axios.get(path).then((respuesta) => {
-        if (respuesta.data.authenticated) {
+      axios.get(path).then((res) => {
+        if (res.data.authenticated) {
+          next()
+        } else {
+          next({ name: 'Login' })
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  },
+  {
+    path: '/workshop_cycles',
+    name: 'WorkshopCycles',
+    component: WorkshopCycles,
+    beforeEnter (to, from, next) {
+      const path = '/auth/authenticated'
+      axios.get(path).then((res) => {
+        if (res.data.authenticated) {
           next()
         } else {
           next({ name: 'Login' })

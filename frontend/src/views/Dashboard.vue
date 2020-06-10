@@ -117,7 +117,7 @@ export default {
 /* Dashboard container */
 @media(min-width: 992px) {
   #dashboard-container {
-    margin-left: 270px !important;
+    margin-left: 275px !important;
   }
 }
 .dashboard-card {

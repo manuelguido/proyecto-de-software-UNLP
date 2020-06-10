@@ -10,85 +10,55 @@ class Workshop(object):
         return cursor.fetchall()
 
     @classmethod
-    def get(cls, id_data):
+    def get(cls, workshop_id):
         cursor = cls.db.cursor()
         sql = "SELECT * FROM workshops WHERE workshop_id=%s"
-        cursor.execute(sql, (id_data))
+        cursor.execute(sql, (workshop_id))
         return cursor.fetchone()
 
-    # @classmethod
-    # def allCicloTallerPaginated(cls,pagination,page):
-    #     cursor = cls.db.cursor()
-    #     sql = """
-    #         SELECT * FROM ciclo_lectivo_taller
-    #         INNER JOIN taller ON taller.id = ciclo_lectivo_taller.taller_id
-    #         INNER JOIN ciclo_lectivo ON ciclo_lectivo.id = ciclo_lectivo_taller.ciclo_lectivo_id
-    #         LIMIT {limit} offset {offset}
-    #     """
-    #     cursor.execute(sql.format(limit = pagination, offset = (pagination * int(page - 1)) ))
-    #     return cursor.fetchall()
+    @classmethod
+    def create(cls, cycle):
+        cursor = cls.db.cursor()
+        sql = "INSERT INTO workshops (name, short_name) VALUES (%s, %s)"
+        cursor.execute(sql, (cycle['name'], cycle['short_name']))
+        cls.db.commit()
+        return True
 
-    # @classmethod
-    # def total_paginas(cls,paginacion):
-    #     cursor = cls.db.cursor()
-    #     sql = """
-    #         SELECT *
-    #         FROM ciclo_lectivo_taller
-    #     """
-    #     cursor.execute(sql)
-    #     result = cursor.fetchall()
-    #     count = 0
-    #     for i in result:
-    #         count += 1
-    #         i = i
-    #     paginas = count / paginacion
-    #     if (paginas == 0):
-    #         paginas = 1
-    #     elif not (count % paginacion == 0):
-    #         paginas += 1
-    #     return paginas
+    @classmethod
+    def update(cls, workshop):
+        cursor = cls.db.cursor()
+        sql= "UPDATE workshops SET name=%s, short_name=%s WHERE workshop_id=%s"
+        cursor.execute(sql, (workshop['name'], workshop['short_name'], workshop['workshop_id']))
+        cls.db.commit()
+        return True
 
-    # @classmethod
-    # def storeConTaller(cls, data):
-    #     cursor = cls.db.cursor() 
-    #     sql = """
-    #            SELECT taller.id
-    #            FROM taller
-    #            WHERE id=%s
-    #         """
-    #     cursor.execute(sql, (data['taller_id']))
-    #     taller_id = cursor.fetchone()
-    #     sql2 = """
-    #            SELECT ciclo_lectivo.id
-    #            FROM ciclo_lectivo
-    #            WHERE id=%s
-    #         """
-    #     cursor.execute(sql2, (data['ciclo_lectivo_id']))
-    #     ciclo_lectivo_id = cursor.fetchone()
-    #     sql3 = """
-    #         INSERT INTO ciclo_lectivo_taller (taller_id, ciclo_lectivo_id)
-    #         VALUES (%s, %s)
-    #     """
-    #     cursor.execute(sql3, (taller_id['id'], ciclo_lectivo_id['id']))
-    #     cls.db.commit()
-    #     return True
+    @classmethod
+    def delete(cls, workshop_id):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM workshops WHERE workshop_id=%s", (workshop_id))
+        cls.db.commit()
+        return True
 
-    # @classmethod
-    # def deleteTallerCiclo(cls, request):
-    #     cursor = cls.db.cursor()
-    #     cursor.execute("DELETE FROM ciclo_lectivo_taller WHERE ciclo_lectivo_id=%s and taller_id=%s", (request['ciclo_lectivo_id'],request['taller_id']))
-    #     cls.db.commit()
-    #     cursor.execute("DELETE FROM docente_responsable_taller WHERE ciclo_lectivo_id=%s and taller_id=%s", (request['ciclo_lectivo_id'],request['taller_id']))
-    #     cls.db.commit()
-    #     cursor.execute("DELETE FROM estudiante_taller WHERE ciclo_lectivo_id=%s and taller_id=%s", (request['ciclo_lectivo_id'],request['taller_id']))
-    #     cls.db.commit()
-    #     return True
+    @classmethod
+    def workshop_exists(cls, workshop):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT workshops.workshop_id COUNT
+            FROM workshops
+            WHERE workshops.name=%s and workshops.short_name=%s
+        """
+        result = cursor.execute(sql, (workshop['name'], workshop['short_name']))
+        cls.db.commit()
+        return (result > 0)
 
-    # @classmethod
-    # def getLastPage(cls,pagination,page):
-    #     cursor = cls.db.cursor()
-    #     sql = "SELECT * FROM ciclo_lectivo_taller COUNT"
-    #     if ((cursor.execute(sql) / pagination) <= page):
-    #         return 1
-    #     else:
-    #         return 0
+    @classmethod
+    def workshop_exists_not_self(cls, workshop):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT workshops.workshop_id COUNT
+            FROM workshops
+            WHERE workshops.name=%s and workshops.short_name=%s and workshops.workshop_id<>%s
+        """
+        result = cursor.execute(sql, (workshop['name'], workshop['short_name'], workshop['workshop_id']))
+        cls.db.commit()
+        return (result > 0)

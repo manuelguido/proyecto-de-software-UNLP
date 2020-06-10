@@ -103,7 +103,7 @@ class ValidateInstrument(Form):
 #   Validar ciclo lectivo
 #---------------------------------------------------#
 class ValidateCycle(Form):
-    cycle_id = IntegerField('Cycle', [validators.NumberRange(min=1, max=None)])
+    # cycle_id = IntegerField('Ciclo', [validators.NumberRange(min=1, max=None)])
     semester_id = IntegerField('Semestre', [validators.required(), validators.NumberRange(min=1, max=2)])
     year = IntegerField('Año', [validators.required(), validators.NumberRange(min=2000, max=2050)])
     date_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
@@ -111,6 +111,17 @@ class ValidateCycle(Form):
 
 class ValidateCycleId(Form):
     cycle_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+#---------------------------------------------------#
+#   Validar Taller
+#---------------------------------------------------#
+class ValidateWorkshop(Form):
+    # workshop_id = IntegerField('Taller', [validators.NumberRange(min=1, max=None)])
+    name = StringField(u'Nombre', [validators.required(), validators.length(max=200)])
+    short_name = StringField(u'Nombre corto', [validators.required(), validators.length(max=200)])
+
+class ValidateWorkshopId(Form):
+    workshop_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
 #---------------------------------------------------#
 #   Validar taller-ciclo lectivo

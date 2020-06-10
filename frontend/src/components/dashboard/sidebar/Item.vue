@@ -1,6 +1,7 @@
 <template>
-  <router-link :to="item.url" class="list-group-item px-4 py-2 waves-effect">
-    <div class="md-v-line"></div><i :class="item.icon" class="mr-2"></i>{{ item.name }}
+  <router-link :to="item.url" class="list-group-item px-3 py-2 waves-effect">
+    <span class="icon"><i :class="item.icon" class="mx-auto"></i></span>
+    {{ item.name }}
   </router-link>
 </template>
 
@@ -13,17 +14,16 @@ export default {
 </script>
 
 <style scoped>
-.list-group {
-  padding: 0 1em;
-  transition: 0s all !important;
+.icon {
+  display: inline-block;
+  width: 34px !important;
+  text-align: center !important;
 }
-.list-group, .list-group-item {
+.list-group-item {
   border: 0 none !important;
   background: none;
   transition: 0s all !important;
-}
-.list-group-item {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   border-radius: 50px !important;
   color: var(--black-a);
@@ -33,13 +33,18 @@ export default {
 }
 .list-group-item:hover,
 .list-group-item:active,
-.list-group-item.active {
+.list-group-item.active,
+.list-group-item.router-link-active,
+.list-group-item.router-link-exact-active {
   background: var(--color-b);
   color: var(--white-a);
 }
+
 .list-group-item:hover i,
 .list-group-item:active i,
-.list-group-item.active i {
+.list-group-item.active i,
+.list-group-item.router-link-active i,
+.list-group-item.router-link-exact-active i {
   color: var(--white-a);
 }
 </style>

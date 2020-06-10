@@ -9,44 +9,28 @@
       <template v-slot:dashboard_content>
         <alert :message="messageData"></alert>
         <!-- Form -->
-        <form v-on:submit.prevent="createCycle">
+        <form v-on:submit.prevent="createWorkshop">
           <!-- Row -->
           <div class="row mt-3">
-            <!-- Información del ciclo lectivo -->
+            <!-- Información del taller -->
             <div class="col-12 col-lg-6">
               <!-- Row -->
               <div class="row justify-content-end">
                 <!-- Col 12 -->
                 <div class="col-12">
 
-                  <dashboard-title title="Informacion del ciclo lectivo"></dashboard-title>
+                  <dashboard-title title="Informacion del taller"></dashboard-title>
 
                   <!-- Row -->
                   <div class="row">
-                    <!-- Año -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Nombre" v-model="year" required />
+                    <!-- Nombre -->
+                    <div class="col-12">
+                      <mdb-input label="Nombre" v-model="name" required />
                     </div>
 
-                    <!-- Semestre -->
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <form-label name="Semestre"></form-label>
-                        <select class="browser-default custom-select" v-model="semester_id" required>
-                          <option selected disabled>Elegir</option>
-                          <option v-for="s in semesters" :key="s.semester_id" :value="s.semester_id">{{s.name}}</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <!-- Desde -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Desde" v-model="date_from" type="date" required />
-                    </div>
-
-                    <!-- Hasta -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Hasta" v-model="date_to" type="date" required />
+                    <!-- Nombre corto -->
+                    <div class="col-12">
+                      <mdb-input label="Nombre corto" v-model="short_name" required />
                     </div>
 
                   </div>
@@ -63,7 +47,7 @@
               </div>
               <!-- /.Row -->
             </div>
-            <!-- /.Información del ciclo lectivo -->
+            <!-- /.Información del taller -->
           </div>
           <!-- /.Row -->
         </form>
@@ -84,19 +68,12 @@ import alert from '@/components/Alert'
 export default {
   data () {
     return {
-      pagetitle: 'Cargar un nuevo ciclo lectivo',
+      pagetitle: 'Cargar un nuevo taller',
       messageData: {},
-      // Form values for select
-      semesters: {},
-      // Cycle form information
-      semester_id: '',
-      year: '',
-      date_from: '',
-      date_to: ''
+      // Workshop form information
+      name: '',
+      short_name: ''
     }
-  },
-  created () {
-    this.fetchFormData()
   },
   components: {
     mdbInput,
@@ -106,29 +83,16 @@ export default {
     'alert': alert
   },
   methods: {
-    fetchFormData () {
-      const path = '/api/cycle/form_data'
-      axios.get(path).then((res) => {
-        this.semesters = res.data.semesters
-      }).catch((error) => {
-        this.fetchFormData()
-        console.log(error)
-      })
-    },
     restoreValues () {
-      this.semester_id = ''
-      this.year = ''
-      this.date_from = ''
-      this.date_to = ''
+      this.name = ''
+      this.short_name = ''
     },
-    createCycle () {
+    createWorkshop () {
       this.messageData = ''
-      const path = '/api/cycle/create'
+      const path = '/api/workshop/create'
       axios.post(path, {
-        semester_id: this.semester_id,
-        year: this.year,
-        date_from: this.date_from,
-        date_to: this.date_to
+        name: this.name,
+        short_name: this.short_name
       }).then((res) => {
         if (res.data.status === 'success') {
           this.restoreValues()

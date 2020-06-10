@@ -46,13 +46,19 @@ export default {
   background: var(--white-a) !important;
   box-shadow: 0 .07em .125em 0 rgba(0,0,0,.11) !important;
   box-shadow: none;
-  width: 270px;
+  width: 275px;
   left: 0;
   z-index: 1070;
 }
 #sidebar-logo {
   display: block;
-  margin: 40px auto 30px auto !important;
-  width: 80%;
+  margin: 35px auto 20px auto !important;
+  width: 70%;
+}
+.list-group {
+  padding: 0 .2em;
+  border: 0 none !important;
+  background: none;
+  transition: 0s all !important;
 }
 </style>

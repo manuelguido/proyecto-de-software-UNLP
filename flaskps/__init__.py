@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for, session, render_template, jsonify
 from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance, auth
+from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance, auth, workshop
 from flaskps.config import Config
 from flaskps.helpers import handler
 # Google auth (oAuth)
@@ -91,7 +91,6 @@ app.add_url_rule("/api/user/<int:id_data>", 'api_user', user.get, methods=['GET'
 app.add_url_rule("/api/user/create", 'api_user_create', user.create, methods=['POST'])
 app.add_url_rule("/api/user/update", 'api_user_update', user.update, methods=['POST'])
 app.add_url_rule("/api/user/delete", 'api_user_delete', user.delete, methods=['POST'])
-
 app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET']) # Obtener perfil de usuario loggeado
 app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET']) # Obtener roles y rutas de usuario loggeado
 app.add_url_rule("/api/user/has_role", 'api_has_role', user.has_role, methods=['GET']) # Obtener roles y rutas de usuario loggeado
@@ -104,15 +103,26 @@ app.add_url_rule("/api/cycle/update", 'api_cycle_update', cycle.update, methods=
 app.add_url_rule("/api/cycle/delete", 'api_cycle_delete', cycle.delete, methods=['POST'])
 app.add_url_rule("/api/cycle/form_data", 'api_cycle_form_data', cycle.getFormData, methods=['GET'])
 
+# Talleres (Workshops)
+app.add_url_rule("/api/workshops", 'api_workshops', workshop.all, methods=['GET'])
+app.add_url_rule("/api/workshop/<int:workshop_id>", 'api_workshop', workshop.get, methods=['GET'])
+app.add_url_rule("/api/workshop/create", 'api_workshop_create', workshop.create, methods=['POST'])
+app.add_url_rule("/api/workshop/update", 'api_workshop_update', workshop.update, methods=['POST'])
+app.add_url_rule("/api/workshop/delete", 'api_workshop_delete', workshop.delete, methods=['POST'])
+
+# Talleres y ciclos lectivos (Workshop cycles) (Asignación)
+app.add_url_rule("/api/workshop_cycles", 'api_workshop_cycles', workshop.all_cycle_workshop, methods=['GET'])
+app.add_url_rule("/api/workshop/assign", 'api_workshop_assign', workshop.assign, methods=['POST'])
+app.add_url_rule("/api/workshop/unassign", 'api_workshop_unassign', workshop.unassign, methods=['POST'])
+app.add_url_rule("/api/workshop_cycles/form_data", 'api_workshop_cycles_form_data', workshop.getFormData, methods=['GET'])
+
 # Clases (Lessons)
-app.add_url_rule("/api/lesson", 'api_lessons', lesson.all, methods=['GET'])
-app.add_url_rule("/api/lesson/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
-app.add_url_rule("/api/lesson/create", 'api_lesson_create', lesson.create, methods=['POST'])
-app.add_url_rule("/api/lesson/update", 'api_lesson_update', lesson.update, methods=['POST'])
-app.add_url_rule("/api/lesson/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
-app.add_url_rule("/api/lesson/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
-
-
+app.add_url_rule("/api/cycles", 'api_lessons', lesson.all, methods=['GET'])
+app.add_url_rule("/api/cycle/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
+app.add_url_rule("/api/cycle/create", 'api_lesson_create', lesson.create, methods=['POST'])
+app.add_url_rule("/api/cycle/update", 'api_lesson_update', lesson.update, methods=['POST'])
+app.add_url_rule("/api/cycle/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
+app.add_url_rule("/api/cycle/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
 
 #---------------------------------------------------#
 #   Autenticacion

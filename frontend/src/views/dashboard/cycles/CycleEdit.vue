@@ -38,7 +38,7 @@
                         </select>
                       </div>
                     </div>
-                    
+
                     <!-- Desde -->
                     <div class="col-lg-6">
                       <mdb-input label="Desde" v-model="date_from" type="date" required />

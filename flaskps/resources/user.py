@@ -220,38 +220,53 @@ def has_role():
 #   Retorna las rutas del usuario loggeado
 #---------------------------------------------------#
 def routes():
+    def get_routes():
+        user_routes = []
+        #Cargado de información
+        nucleos = {'name': 'Núcleos', 'url': '/cores', 'icon': 'fas fa-map-marker-alt'}
+        user_routes.append(nucleos)
+
+        if (User.has_permission(session['id'],'estudiante_index')):
+            new = {'name': 'Estudiantes', 'url': '/students', 'icon': 'fas fa-user-graduate'}
+            user_routes.append(new)
+
+        if (User.has_permission(session['id'],'docente_index')):
+            new = {'name': 'Docentes', 'url': '/teachers', 'icon': 'fas fa-user'}
+            user_routes.append(new)
+
+        if (User.has_permission(session['id'],'instrumento_index')):
+            new = {'name': 'Instrumentos', 'url': '/instruments', 'icon': 'fas fa-guitar'}
+            user_routes.append(new)
+
+        if (User.has_permission(session['id'],'administrativo_index')):
+            new = {'name': 'Ciclos lectivos', 'url': '/cycles', 'icon': 'far fa-calendar-alt'}
+            user_routes.append(new)
+            new = {'name': 'Talleres', 'url': '/workshops', 'icon': 'fas fa-school'}
+            user_routes.append(new)
+            new = {'name': 'Clases', 'url': '/lessons', 'icon': 'fas fa-chalkboard-teacher'}
+            user_routes.append(new)
+
+        if (User.has_permission(session['id'],'usuario_index')):
+            new = {'name': 'Usuarios', 'url': '/users', 'icon': 'fas fa-user-friends'}
+            user_routes.append(new)
+
+        if (User.has_permission(session['id'],'configuration_all')):
+            new = {'name': 'Administrativo', 'url': '/configuration', 'icon': 'fas fa-cog'}
+            user_routes.append(new)
+        return user_routes
+
     #Auth check
     auth.authenticated_or_401()
     #Listado de rutas
-    user_routes = []
+    routes = []
     User.db = get_db()
     if (not User.has_roles(session['id'])):
-        return jsonify(user_routes)
-    #Cargado de información
-    nucleos = {'name': 'Núcleos', 'url': '/cores', 'icon': 'fas fa-map-marked-alt'}
-    user_routes.append(nucleos)
-    if (User.has_permission(session['id'],'estudiante_index')):
-        new = {'name': 'Estudiantes', 'url': '/students', 'icon': 'fas fa-user-graduate'}
-        user_routes.append(new)
-    if (User.has_permission(session['id'],'docente_index')):
-        new = {'name': 'Docentes', 'url': '/teachers', 'icon': 'fas fa-user-graduate'}
-        user_routes.append(new)
-    if (User.has_permission(session['id'],'instrumento_index')):
-        new = {'name': 'Instrumentos', 'url': '/instruments', 'icon': 'fas fa-guitar'}
-        user_routes.append(new)
-    if (User.has_permission(session['id'],'administrativo_index')):
-        new = {'name': 'Ciclos lectivos', 'url': '/cycles', 'icon': 'far fa-calendar-alt'}
-        user_routes.append(new)
-        new = {'name': 'Talleres', 'url': '/workshops', 'icon': 'fas fa-chalkboard-teacher'}
-        user_routes.append(new)
-    if (User.has_permission(session['id'],'usuario_index')):
-        new = {'name': 'Usuarios', 'url': '/users', 'icon': 'fas fa-user-friends'}
-        user_routes.append(new)
-    if (User.has_permission(session['id'],'configuration_all')):
-        new = {'name': 'Administrativo', 'url': '/configuration', 'icon': 'fas fa-cog'}
-        user_routes.append(new)
-    #Returning data
-    return jsonify(user_routes)
+        return jsonify(routes)
+    else:
+        routes = get_routes()
+
+        #Returning data
+        return jsonify(routes)
 
 #---------------------------------------------------#
 #   Actualiza el estado (active/inactive) del usuario

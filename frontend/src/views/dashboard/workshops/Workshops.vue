@@ -9,11 +9,12 @@
       <template v-slot:dashboard_content>
         <div class="row">
           <!-- /.Table Col -->
-          <div class="col-12 col-md-8">
-            <dashboard-title title="Listado de instrumentos"></dashboard-title>
+          <div class="col-12 col-md-5">
+            <dashboard-title title="Listado de talleres"></dashboard-title>
           </div>
-          <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newInstrumentPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo instrumento</router-link>
+          <div class="col-12 col-md-7 text-md-right">
+            <router-link :to="assignamentPath" class="btn btn-outline-secondary seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Asignación de talleres</router-link>
+            <router-link :to="newWorkshopPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo taller</router-link>
           </div>
           <div class="col-12">
             <dashboard-table
@@ -38,11 +39,12 @@ import dashboardTable from '@/components/dashboard/Table'
 export default {
   data () {
     return {
-      pagetitle: 'Instrumentos',
-      instruments: '',
-      showInstrumentPath: '/dashboard/instrument/',
-      newInstrumentPath: '/dashboard/new/instrument',
-      editInstrumentPath: '/dashboard/instrument/edit/',
+      pagetitle: 'Talleres',
+      workshops: '',
+      showWorkshopPath: '/workshop/',
+      newWorkshopPath: '/new/workshop',
+      editWorkshopPath: '/workshop/edit/',
+      assignamentPath: '/workshop_cycles/',
       columns: [
         {
           label: 'Nombre',
@@ -50,13 +52,8 @@ export default {
           sort: 'asc'
         },
         {
-          label: 'Código',
-          field: 'code',
-          sort: 'asc'
-        },
-        {
-          label: 'Tipo',
-          field: 'type',
+          label: 'Nombre corto',
+          field: 'short_name',
           sort: 'asc'
         },
         {
@@ -81,24 +78,23 @@ export default {
   },
   methods: {
     fetchData () {
-      const path = '/api/instruments'
+      const path = '/api/workshops'
       axios.get(path).then((res) => {
-        this.instruments = res.data
-        this.loadInstruments()
+        this.workshops = res.data
+        this.loadWorkshops()
       }).catch((error) => {
         console.log(error)
         this.fetchData()
       })
     },
-    loadInstruments () {
+    loadWorkshops () {
       let newrow = {}
-      for (let i = 0; i < this.instruments.length; i++) {
+      for (let i = 0; i < this.workshops.length; i++) {
         newrow = {
-          name: this.instruments[i].name,
-          code: this.instruments[i].code,
-          type: this.instruments[i].type,
-          show: '<a href="' + this.showInstrumentPath + this.instruments[i].instrument_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editInstrumentPath + this.instruments[i].instrument_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          name: this.workshops[i].name,
+          short_name: this.workshops[i].short_name,
+          show: '<a href="' + this.showWorkshopPath + this.workshops[i].workshop_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editWorkshopPath + this.workshops[i].workshop_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }
