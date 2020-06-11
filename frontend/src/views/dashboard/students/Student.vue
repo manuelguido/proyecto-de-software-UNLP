@@ -98,7 +98,6 @@ export default {
     },
     deleteStudent () {
       if (confirm(this.confirmDeleteMsg)) {
-        this.message = ''
         const path = '/api/student/delete'
         axios.post(path, {
           student_id: this.student_id
@@ -106,7 +105,7 @@ export default {
           this.messageData = response.data
           setTimeout(function () {
             window.location.href = '/students'
-          }, 400)
+          }, 800)
         }).catch((error) => {
           console.log(error)
         })

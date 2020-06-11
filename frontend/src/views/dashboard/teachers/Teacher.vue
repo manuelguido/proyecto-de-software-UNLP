@@ -101,7 +101,7 @@ export default {
           this.messageData = response.data
           setTimeout(function () {
             window.location.href = '/teachers'
-          }, 400)
+          }, 800)
         }).catch((error) => {
           console.log(error)
         })

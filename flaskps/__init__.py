@@ -111,10 +111,11 @@ app.add_url_rule("/api/workshop/update", 'api_workshop_update', workshop.update,
 app.add_url_rule("/api/workshop/delete", 'api_workshop_delete', workshop.delete, methods=['POST'])
 
 # Talleres y ciclos lectivos (Workshop cycles) (Asignación)
-app.add_url_rule("/api/workshop_cycles", 'api_workshop_cycles', workshop.all_cycle_workshop, methods=['GET'])
+app.add_url_rule("/api/cycle_workshops", 'api_cycle_workshops', workshop.all_cycle_workshop, methods=['GET'])
+app.add_url_rule("/api/cycle_workshop/<int:cycle_workshop_id>", 'api_cycle_workshop', workshop.get_cycle_workshop, methods=['GET'])
+app.add_url_rule("/api/cycle_workshops/form_data", 'api_cycle_workshops_form_data', workshop.getFormData, methods=['GET'])
 app.add_url_rule("/api/workshop/assign", 'api_workshop_assign', workshop.assign, methods=['POST'])
 app.add_url_rule("/api/workshop/unassign", 'api_workshop_unassign', workshop.unassign, methods=['POST'])
-app.add_url_rule("/api/workshop_cycles/form_data", 'api_workshop_cycles_form_data', workshop.getFormData, methods=['GET'])
 
 # Clases (Lessons)
 app.add_url_rule("/api/cycles", 'api_lessons', lesson.all, methods=['GET'])

@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="item.url" class="py-3 card dashboard-item w-100">
+  <router-link :to="item.url" class="py-3 card dashboard-item waves-effect w-100">
     <div class="card-body">
       <div class="media align-items-center">
         <div class="media-body text-center">

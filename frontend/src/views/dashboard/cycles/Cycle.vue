@@ -98,7 +98,7 @@ export default {
           this.messageData = response.data
           setTimeout(function () {
             window.location.href = '/cycles'
-          }, 400)
+          }, 800)
         }).catch((error) => {
           console.log(error)
         })

@@ -130,6 +130,27 @@ class ValidateCycleWorkshop(Form):
     cycle_id = IntegerField('Ciclo', [validators.required(), validators.NumberRange(min=1, max=None)])
     workshop_id = IntegerField('Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
+
+class ValidateCycleWorkshopId(Form):
+    cycle_workshop_id = IntegerField('Ciclo taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #---------------------------------------------------#
 #   Validar clase
 #---------------------------------------------------#

@@ -63,9 +63,6 @@
           <div class="col-12 col-md-8">
             <dashboard-title title="Listado de talleres asignados"></dashboard-title>
           </div>
-          <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newWorkshopPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo taller</router-link>
-          </div>
           <div class="col-12">
             <dashboard-table
               :columnas=columns
@@ -93,11 +90,10 @@ export default {
   data () {
     return {
       pagetitle: 'Talleres asignados',
-      workshopCycles: '',
+      cycle_workshops: {},
       returnPath: '/workshops',
-      showWorkshopPath: '/workshop_cycles/',
-      editWorkshopCyclePath: '/workshop_cycle/edit/',
-      messageData: '',
+      unassignCycleWorkshopPath: '/unassign/workshop/',
+      messageData: false,
       // From data
       cycles: {},
       workshops: {},
@@ -116,14 +112,14 @@ export default {
           sort: 'asc'
         },
         {
-          label: 'Eliminar',
-          field: 'delete'
+          label: 'Desasignar',
+          field: 'unassign'
         }
       ],
       rows: []
     }
   },
-  created () {
+  mounted () {
     this.fetchData()
     this.fetchFormData()
   },
@@ -137,17 +133,17 @@ export default {
   },
   methods: {
     fetchData () {
-      const path = '/api/workshop_cycles'
+      const path = '/api/cycle_workshops'
       axios.get(path).then((res) => {
-        this.workshopCycles = res.data
-        this.loadWorkshopCycles()
+        this.cycle_workshops = res.data
+        this.loadCycleWorkshops()
       }).catch((error) => {
         console.log(error)
         this.fetchData()
       })
     },
     fetchFormData () {
-      const path = '/api/workshop_cycles/form_data'
+      const path = '/api/cycle_workshops/form_data'
       axios.get(path).then((res) => {
         this.cycles = res.data.cycles
         this.workshops = res.data.workshops
@@ -156,17 +152,17 @@ export default {
         console.log(error)
       })
     },
-    addRow (workshopCycle) {
+    addRow (cycleWorkshop) {
       var newrow = {
-        cycle: workshopCycle.year + ' ' + workshopCycle.semester,
-        workshop: workshopCycle.name,
-        delete: '<a href="' + this.editWorkshopCyclePath + workshopCycle.workshop_cycle_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Desasignar</a>'
+        cycle: cycleWorkshop.year + ' ' + cycleWorkshop.semester,
+        workshop: cycleWorkshop.name,
+        unassign: '<a href="' + this.unassignCycleWorkshopPath + cycleWorkshop.cycle_workshop_id + '" class="btn btn-default btn-sm seed-rounded"><i class="fas fa-times mr-3"></i>Desasignar</a>'
       }
       this.rows.push(newrow)
     },
-    loadWorkshopCycles () {
-      for (let i = 0; i < this.workshopCycles.length; i++) {
-        this.addRow(this.workshopCycles[i])
+    loadCycleWorkshops () {
+      for (let i = 0; i < this.cycle_workshops.length; i++) {
+        this.addRow(this.cycle_workshops[i])
       }
     },
     restoreValues () {
@@ -182,7 +178,7 @@ export default {
       }).then((res) => {
         if (res.data.status === 'success') {
           this.restoreValues()
-          this.addRow(res.data.new_workshop_cylce)
+          this.addRow(res.data.new_cylce_workshop)
         }
         this.messageData = res.data
         var $this = this

@@ -44,7 +44,7 @@ export default {
       showWorkshopPath: '/workshop/',
       newWorkshopPath: '/new/workshop',
       editWorkshopPath: '/workshop/edit/',
-      assignamentPath: '/workshop_cycles/',
+      assignamentPath: '/cycle_workshops/',
       columns: [
         {
           label: 'Nombre',

@@ -58,6 +58,21 @@ def get(workshop_id):
         return jsonify(Workshop.get(workshop_id))
 
 #---------------------------------------------------#
+#   Retorna el taller por su id
+#---------------------------------------------------#
+def get_cycle_workshop(cycle_workshop_id):
+    #Auth check
+    auth.authenticated_or_401()
+    
+    #Chequea permiso
+    User.db = get_db()
+    if (not User.has_permission(session['id'],'administrativo_show')):
+        abort(401)
+    else:
+        CycleWorkshop.db = get_db()
+        return jsonify(CycleWorkshop.get(cycle_workshop_id))
+
+#---------------------------------------------------#
 #   Crea un taller
 #---------------------------------------------------#
 def create():
@@ -182,7 +197,7 @@ def assign():
                     response_object = {
                         'status': 'success',
                         'message': 'Asignaste el taller al ciclo lectivo correctamente.',
-                        'new_workshop_cylce': newone
+                        'new_cylce_workshop': newone
                         }
                 return jsonify(response_object)
 
@@ -202,11 +217,11 @@ def unassign():
         else:
             post_data = request.get_json()
             #Form validation
-            form = forms.ValidateCycleWorkshop.from_json(post_data, skip_unknown_keys=True)
+            form = forms.ValidateCycleWorkshopId.from_json(post_data, skip_unknown_keys=True)
             if not form.validate():
                 response_object = {'status': 'warning', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
-                Workshop.db = get_db()
-                Workshop.delete(post_data['workshop_id'])
-                response_object = {'status': 'success', 'message': 'Eliminaste el taller correctamente.'}
+                CycleWorkshop.db = get_db()
+                CycleWorkshop.delete(post_data['cycle_workshop_id'])
+                response_object = {'status': 'success', 'message': 'Desasignaste el taller correctamente.'}
                 return jsonify(response_object)

@@ -110,7 +110,7 @@ export default {
           if (res.data.status === 'success') {
             setTimeout(function () {
               window.location.href = '/users'
-            }, 400)
+            }, 800)
           }
         }).catch((error) => {
           console.log(error)

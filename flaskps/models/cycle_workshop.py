@@ -18,7 +18,13 @@ class CycleWorkshop(object):
     @classmethod
     def get(cls, id_data):
         cursor = cls.db.cursor()
-        sql = "SELECT * FROM cycle_workshop WHERE cycle_workshop_id=%s"
+        sql = """
+            SELECT *, semesters.name AS semester FROM workshops
+            INNER JOIN cycle_workshop ON cycle_workshop.workshop_id = workshops.workshop_id
+            INNER JOIN cycles ON cycles.cycle_id = cycle_workshop.cycle_id
+            INNER JOIN semesters ON semesters.semester_id = cycles.semester_id
+            WHERE cycle_workshop_id=%s
+            """
         cursor.execute(sql, (id_data))
         return cursor.fetchone()
 
@@ -61,3 +67,14 @@ class CycleWorkshop(object):
             """
         cursor.execute(sql, (data['workshop_id'], data['cycle_id']))
         return cursor.fetchone()
+
+    @classmethod
+    def delete(cls, id_data):
+        cursor = cls.db.cursor()
+        sql = """
+            DELETE FROM cycle_workshop
+            WHERE cycle_workshop_id=%s
+        """
+        cursor.execute(sql, (id_data))
+        cls.db.commit()
+        return True

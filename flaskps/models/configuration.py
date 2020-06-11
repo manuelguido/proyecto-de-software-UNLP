@@ -5,7 +5,7 @@ class Configuration(object):
     @classmethod
     def all(cls):
         cursor = cls.db.cursor()
-        cursor.execute("SELECT  * FROM configurations")
+        cursor.execute("SELECT  * FROM configuration")
         return cursor.fetchall()
 
     # @classmethod
@@ -24,7 +24,7 @@ class Configuration(object):
     def update(cls, data):
         cursor = cls.db.cursor()
         sql = """
-               UPDATE configurations
+               UPDATE configuration
                SET active=%s, title=%s, description=%s, email=%s
             """
         cursor.execute(sql, (data['active'], data['title'], data['description'], data['email']))

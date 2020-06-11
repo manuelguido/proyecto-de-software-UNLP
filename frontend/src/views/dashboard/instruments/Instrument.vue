@@ -105,7 +105,7 @@ export default {
           this.messageData = res.data
           setTimeout(function () {
             window.location.href = '/instruments'
-          }, 400)
+          }, 800)
         }).catch((error) => {
           console.log(error)
         })
