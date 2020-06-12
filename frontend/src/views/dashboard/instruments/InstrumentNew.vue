@@ -12,6 +12,13 @@
         <form v-on:submit.prevent="createInstrument" enctype=multipart/form-data>
           <!-- Row -->
           <div class="row mt-3">
+
+            <!-- Backlink -->
+            <div class="col-12 text-left">
+              <back-link :url="returnPath" text="Instrumentos"></back-link>
+            </div>
+            <!-- /.BackLink -->
+
             <!-- Información del instrumento -->
             <div class="col-12 col-lg-6">
               <!-- Row -->
@@ -91,12 +98,14 @@ import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import formLabel from '@/components/Label'
+import backLink from '@/components/dashboard/buttons/BackLink'
 import alert from '@/components/Alert'
 
 export default {
   data () {
     return {
       pagetitle: 'Cargar un nuevo instrumento',
+      returnPath: '/instruments',
       instrument: '',
       messageData: {},
       // Form values for select
@@ -115,6 +124,7 @@ export default {
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
     'form-label': formLabel,
+    'back-link': backLink,
     'alert': alert
   },
   methods: {

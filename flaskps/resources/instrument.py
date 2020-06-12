@@ -50,6 +50,20 @@ def get(instrument_id):
         return jsonify(Instrument.get(instrument_id))
 
 #---------------------------------------------------#
+#   Retorna el usuario por su id
+#---------------------------------------------------#
+def get_image(instrument_id):
+    #Auth check
+    auth.authenticated_or_401()
+    #Chequea permiso
+    User.db = get_db()
+    if (not User.has_permission(session['id'],'instrumento_show')):
+        abort(401)
+    else:
+        Instrument.db = get_db()
+        return Instrument.get_image(instrument_id)['image']
+
+#---------------------------------------------------#
 #   Crea un nuevo instrumento
 #---------------------------------------------------#
 def create():
@@ -66,11 +80,16 @@ def create():
             if form.validate():
                 file = request.files['image']
                 if file: # and allowed_file(file.filename):
-                    filename = new_file_name(file)
-                    file.save(os.path.abspath(UPLOAD_FOLDER+filename))
-                    # file.save(os.path.abspath(UPLOAD_FOLDER2+filename))
+                    # filename = new_file_name(file)
+                    # file.save(os.path.abspath(UPLOAD_FOLDER+filename))
+                    # # file.save(os.path.abspath(UPLOAD_FOLDER2+filename))
+                    # Instrument.db = get_db()
+                    # Instrument.create(request.form, filename)
+                    
+                    newfile = file.read()
                     Instrument.db = get_db()
-                    Instrument.create(request.form, filename)
+                    Instrument.create(request.form, newfile)
+
 
                     response_object = {'status': 'success', 'message': 'Se agregó el nuevo instrumento'}
                 else:

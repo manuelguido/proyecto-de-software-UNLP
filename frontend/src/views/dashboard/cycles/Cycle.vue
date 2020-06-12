@@ -10,9 +10,13 @@
         <alert :message="messageData"></alert>
         <!-- Edition row -->
         <div class="row">
+
+          <!-- Backlink -->
           <div class="col-12 col-lg-3 text-left">
-            <back-link :url="returnPath" text="Ciclos"></back-link>
+            <back-link :url="returnPath" text="Ciclos lectivos"></back-link>
           </div>
+          <!-- /.BackLink -->
+
           <div class="col-12 col-lg-4 text-right pt-3">
             <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->

@@ -97,8 +97,8 @@ export default {
           lastname: this.teachers[i].lastname,
           name: this.teachers[i].name,
           phone: this.teachers[i].phone,
-          show: '<a href="' + this.showTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          show: '<a href="' + this.showTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

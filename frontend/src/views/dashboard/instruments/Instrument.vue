@@ -15,9 +15,11 @@
             <!-- Row -->
             <div class="row">
 
-              <div class="col-12">
+              <!-- Backlink -->
+              <div class="col-12 text-left">
                 <back-link :url="returnPath" text="Instrumentos"></back-link>
               </div>
+              <!-- /.BackLink -->
 
               <div class="col-12 col-lg-9">
                 <h1 class="h5 w600 black-c">{{instrument.name}}</h1>
@@ -39,7 +41,8 @@
                 <p class="w400 my-2">Tipo: {{instrument.type}}</p>
               </div>
               <div class="col-12 col-lg-6">
-                <img :src="image_path+instrument.image" class="w-100">
+                <!-- <img :src="image_path+instrument.image" class="w-100"> -->
+                <img :src="image" class="w-100">
               </div>
 
             </div>
@@ -69,6 +72,7 @@ export default {
       editPath: '/instrument/edit/' + this.instrument_id,
       image_path: '/static/img/instruments/',
       instrument: '',
+      image: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar el instrumento? Esta accion no se puede deshacer',
       messageData: {}
     }
@@ -91,9 +95,19 @@ export default {
       const path = '/api/instrument/' + this.instrument_id
       axios.get(path).then((res) => {
         this.instrument = res.data
+        this.fetchImage()
       }).catch((error) => {
         console.log(error)
         this.fetchData()
+      })
+    },
+    fetchImage () {
+      axios({
+        url: '/api/instrument/image/' + this.instrument_id,
+        method: 'GET',
+        responseType: 'blob' // importante
+      }).then((response) => {
+        this.image = URL.createObjectURL(response.data)
       })
     },
     deleteInstrument () {

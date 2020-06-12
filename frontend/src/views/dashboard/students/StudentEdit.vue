@@ -12,6 +12,11 @@
         <form v-on:submit.prevent="updateStudent">
           <!-- Row -->
           <div class="row mt-3 justify-content-end">
+            <!-- Backlink -->
+            <div class="col-12 text-left">
+              <back-link :url="returnPath" text="Estudiantes"></back-link>
+            </div>
+            <!-- /.BackLink -->
             <!-- Información del estudiante -->
             <div class="col-12 col-lg-6 border-right">
               <dashboard-title title="Informacion del estudiante"></dashboard-title>
@@ -160,6 +165,7 @@ import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import formLabel from '@/components/Label'
+import backLink from '@/components/dashboard/buttons/BackLink'
 import alert from '@/components/Alert'
 // Moment JS
 // import moment from 'moment'
@@ -171,6 +177,7 @@ export default {
   data () {
     return {
       pagetitle: 'Editar estudiante',
+      returnPath: '/students',
       student: '',
       messageData: {},
       // Form values for select
@@ -210,6 +217,7 @@ export default {
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
     'form-label': formLabel,
+    'back-link': backLink,
     'alert': alert
   },
   methods: {

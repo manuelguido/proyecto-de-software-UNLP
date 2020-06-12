@@ -12,6 +12,11 @@
         <form v-on:submit.prevent="createUser">
           <!-- Row -->
           <div class="row mt-3">
+            <!-- Backlink -->
+            <div class="col-12 text-left">
+              <back-link :url="returnPath" text="Usuarios"></back-link>
+            </div>
+            <!-- /.BackLink -->
             <!-- Información del docente -->
             <div class="col-12 col-lg-6">
               <!-- Row -->
@@ -124,12 +129,14 @@ import axios from 'axios'
 import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
+import backLink from '@/components/dashboard/buttons/BackLink'
 import alert from '@/components/Alert'
 
 export default {
   data () {
     return {
       pagetitle: 'Cargar un nuevo usuario',
+      returnPath: '/users',
       user: '',
       messageData: false,
       errors: false,
@@ -150,6 +157,7 @@ export default {
     mdbInput,
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
+    'back-link': backLink,
     'alert': alert
   },
   methods: {

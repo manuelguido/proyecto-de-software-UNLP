@@ -80,6 +80,9 @@ app.add_url_rule("/api/teacher/form_data", 'api_teacher_form_data', teacher.getF
 # Instrumentos
 app.add_url_rule("/api/instruments", 'api_instruments', instrument.all, methods=['GET'])
 app.add_url_rule("/api/instrument/<int:instrument_id>", 'api_instrument', instrument.get, methods=['GET'])
+
+app.add_url_rule("/api/instrument/image/<int:instrument_id>", 'api_instrument_image', instrument.get_image, methods=['GET'])
+
 app.add_url_rule("/api/instrument/create", 'api_instrument_create', instrument.create, methods=['POST'])
 app.add_url_rule("/api/instrument/update", 'api_instrument_update', instrument.update, methods=['POST'])
 app.add_url_rule("/api/instrument/delete", 'api_instrument_delete', instrument.delete, methods=['POST'])
@@ -118,12 +121,12 @@ app.add_url_rule("/api/workshop/assign", 'api_workshop_assign', workshop.assign,
 app.add_url_rule("/api/workshop/unassign", 'api_workshop_unassign', workshop.unassign, methods=['POST'])
 
 # Clases (Lessons)
-app.add_url_rule("/api/cycles", 'api_lessons', lesson.all, methods=['GET'])
-app.add_url_rule("/api/cycle/<int:cycle_id>", 'api_lesson', lesson.get, methods=['GET'])
-app.add_url_rule("/api/cycle/create", 'api_lesson_create', lesson.create, methods=['POST'])
-app.add_url_rule("/api/cycle/update", 'api_lesson_update', lesson.update, methods=['POST'])
-app.add_url_rule("/api/cycle/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
-app.add_url_rule("/api/cycle/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
+app.add_url_rule("/api/lessons", 'api_lessons', lesson.all, methods=['GET'])
+app.add_url_rule("/api/lesson/<int:lesson_id>", 'api_lesson', lesson.get, methods=['GET'])
+app.add_url_rule("/api/lesson/create", 'api_lesson_create', lesson.create, methods=['POST'])
+app.add_url_rule("/api/lesson/update", 'api_lesson_update', lesson.update, methods=['POST'])
+app.add_url_rule("/api/lesson/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
+app.add_url_rule("/api/lesson/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
 
 #---------------------------------------------------#
 #   Autenticacion

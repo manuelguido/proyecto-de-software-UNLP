@@ -97,8 +97,8 @@ export default {
           lastname: this.students[i].lastname,
           name: this.students[i].name,
           document: this.students[i].document_type + ' ' + this.students[i].document_number,
-          show: '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn seed-btn-b btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          show: '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }
