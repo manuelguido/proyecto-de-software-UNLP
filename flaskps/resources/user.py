@@ -243,6 +243,8 @@ def routes():
             user_routes.append(new)
             new = {'name': 'Talleres', 'url': '/workshops', 'icon': 'fas fa-school'}
             user_routes.append(new)
+            new = {'name': 'Talleres asignados', 'url': '/cycle_workshops', 'icon': 'fas fa-school'}
+            user_routes.append(new)
             new = {'name': 'Clases', 'url': '/lessons', 'icon': 'fas fa-chalkboard-teacher'}
             user_routes.append(new)
 

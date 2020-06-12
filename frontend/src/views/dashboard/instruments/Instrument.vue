@@ -40,9 +40,13 @@
                 <p class="w600 my-2">Código: <span class="seed-primary">{{instrument.code}}</span></p>
                 <p class="w400 my-2">Tipo: {{instrument.type}}</p>
               </div>
-              <div class="col-12 col-lg-6">
-                <!-- <img :src="image_path+instrument.image" class="w-100"> -->
-                <img :src="image" class="w-100">
+              <div class="col-12 col-lg-6 text-center">
+                <img v-if="image" :src="image" class="w-100">
+
+                <div v-else class="spinner-border text-light mt-5" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+
               </div>
 
             </div>
@@ -72,7 +76,7 @@ export default {
       editPath: '/instrument/edit/' + this.instrument_id,
       image_path: '/static/img/instruments/',
       instrument: '',
-      image: '',
+      image: false,
       confirmDeleteMsg: '¿Estás seguro de eliminar el instrumento? Esta accion no se puede deshacer',
       messageData: {}
     }
