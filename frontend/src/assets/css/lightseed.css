@@ -5,7 +5,8 @@
 
     /* --color-b: #2ac28c; */
     /* --color-b: #1da783; */
-    --color-b: #00b894;
+    /* --color-b: #00b894; */
+    --color-b: #545cd8;
     --color-b-light: #f5f8fd;
       
     --color-c: #040613;
@@ -26,7 +27,7 @@
     --black-d: #bfbec3;
 
     /* Traditional */
-    --seed-primary: #47a1fc;
+    --seed-primary: #00cec9;
     --seed-primary-dark: #251f87;
     --seed-primary-light: #E9EAFD;
 
@@ -40,7 +41,7 @@
     --seed-success-light: #E5FDF4;
 
     /* --seed-warning: #ffd100; */
-    --seed-warning: #f8bc4d;
+    --seed-warning: #a29bfe;
     --seed-warning-dark: #ff8800;
     --seed-warning-light: #FDF8E9;
     

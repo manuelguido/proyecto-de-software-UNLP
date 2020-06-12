@@ -85,6 +85,20 @@ export default {
   },
   created () {
     this.getCores()
+  },
+  mounted () {
+    let recaptchaScript = document.createElement('style')
+    recaptchaScript.setAttribute('rel', 'stylesheet')
+    recaptchaScript.setAttribute('href', 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css')
+    recaptchaScript.setAttribute('integrity', 'sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==')
+    recaptchaScript.setAttribute('crossorigin', '')
+    document.head.appendChild(recaptchaScript)
+
+    recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.js')
+    recaptchaScript.setAttribute('integrity', 'sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==')
+    recaptchaScript.setAttribute('crossorigin', '')
+    document.head.appendChild(recaptchaScript)
   }
 }
 </script>
