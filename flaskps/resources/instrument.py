@@ -36,7 +36,7 @@ def all():
         return jsonify(Instrument.all())
 
 #---------------------------------------------------#
-#   Retorna el usuario por su id
+#   Retorna el instrumento por su id
 #---------------------------------------------------#
 def get(instrument_id):
     #Auth check
@@ -50,7 +50,7 @@ def get(instrument_id):
         return jsonify(Instrument.get(instrument_id))
 
 #---------------------------------------------------#
-#   Retorna el usuario por su id
+#   Retorna la imagen del instrumento
 #---------------------------------------------------#
 def get_image(instrument_id):
     #Auth check
@@ -90,7 +90,6 @@ def create():
                     Instrument.db = get_db()
                     Instrument.create(request.form, newfile)
 
-
                     response_object = {'status': 'success', 'message': 'Se agregó el nuevo instrumento'}
                 else:
                     response_object = {'status': 'warning', 'message': 'Debes subir una imagen para el instrumento.'}
@@ -118,24 +117,13 @@ def update():
             else:
                 file = request.files['image']
                 Instrument.db = get_db()
-                instrument = Instrument.get(post_data['instrument_id'])
 
                 if file: # and allowed_file(file.filename):    
-                    #Borrado de imagen anterior
-                    # try:
-                        #Borrado de imagen anterior y carga de nueva
-                    os.remove(os.path.abspath(UPLOAD_FOLDER+instrument['image']))
-                    filename = new_file_name(file)
-                    file.save(os.path.abspath(UPLOAD_FOLDER+filename))
-                    # except:
-                        #Solo carga de nueva
-                        # filename = new_file_name(file)
-                        # file.save(os.path.abspath(UPLOAD_FOLDER+filename))
-                    # post_data['image'] = filename
+                    newfile = file.read()
+                    Instrument.update_with_image(post_data, newfile)
+
                 else:
-                    filename = instrument['image']
-        
-                Instrument.update(post_data, filename)
+                    Instrument.update(post_data)
                 response_object = {'status': 'success', 'message': 'Se actualizó el instrumento'}
 
             return jsonify(response_object)

@@ -16,7 +16,7 @@ class Instrument(object):
     def get(cls, instrument_id):
         cursor = cls.db.cursor()
         sql = """
-            SELECT instruments.instrument_id, instruments.name, instruments.code, instrument_types.name AS type FROM instruments
+            SELECT instruments.instrument_id, instruments.name, instruments.code, instruments.instrument_type_id, instrument_types.name AS type FROM instruments
             INNER JOIN instrument_types ON instruments.instrument_type_id = instrument_types.instrument_type_id
             WHERE instruments.instrument_id=%s
         """
@@ -30,16 +30,6 @@ class Instrument(object):
         cursor.execute(sql, (instrument_id))
         return cursor.fetchone()
 
-    # @classmethod
-    # def create(cls, instrument, filename):
-    #     cursor = cls.db.cursor()
-    #     sql = """
-    #         INSERT INTO instruments (name, code, instrument_type_id, image) VALUES (%s, %s, %s, %s)
-    #     """
-    #     cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], filename))
-    #     cls.db.commit()
-    #     return True
-
     @classmethod
     def create(cls, instrument, file):
         cursor = cls.db.cursor()
@@ -51,11 +41,20 @@ class Instrument(object):
         return True
 
     @classmethod
-    def update(cls, instrument, filename):
+    def update(cls, instrument):
+        #img = request['img']
+        cursor = cls.db.cursor()
+        sql= "UPDATE instruments SET name=%s, code=%s, instrument_type_id=%s WHERE instrument_id=%s"
+        cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], instrument['instrument_id']))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def update_with_image(cls, instrument, image):
         #img = request['img']
         cursor = cls.db.cursor()
         sql= "UPDATE instruments SET name=%s, code=%s, instrument_type_id=%s, image=%s WHERE instrument_id=%s"
-        cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], filename, instrument['instrument_id']))
+        cursor.execute(sql, (instrument['name'], instrument['code'], instrument['instrument_type_id'], image, instrument['instrument_id']))
         cls.db.commit()
         return True
 
