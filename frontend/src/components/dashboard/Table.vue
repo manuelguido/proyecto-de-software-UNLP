@@ -39,6 +39,11 @@ export default {
   },
   created () {
     this.loadTableData()
+  },
+  mounted () {
+    var icons = document.querySelector('.fa-sort')
+    icons.classList.remove('float-right')
+    icons.classList.add('float-left mt-2')
   }
 }
 </script>
@@ -52,10 +57,12 @@ th.sorting {
   font-size: 16px;
   font-weight: 600 !important;
 }
-
 td div {
   color: var(--black-c);
   font-weight: 400 !important;
+}
+thead.table-header {
+  border: 1px solid #f3f3f3 !important;
 }
 
 @media (min-width: 1500px) {
