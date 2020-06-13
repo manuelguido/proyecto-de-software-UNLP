@@ -1,7 +1,7 @@
 <template>
       <mdb-datatable
-        class="my-3 black-b"
         :data="my_data"
+        class="mt-4"
         responsive
         arrows
         defaultRow="No hay información"
@@ -43,15 +43,29 @@ export default {
 }
 </script>
 
-<style scoped>
-thead th {
-  color: var(--black-b);
+<style>
+th,
+.th-sm,
+th.th-sm,
+th.sorting {
+  color: #818699 !important;
+  font-size: 16px;
   font-weight: 600 !important;
 }
-.pagination .page-item, .pagination .active, .pagination .page-item.active  {
-  background-color: var(--color-b) !important;
+
+td div {
+  color: var(--black-c);
+  font-weight: 400 !important;
 }
-.page-item.active {
-  background-color: var(--color-b) !important;
+
+@media (min-width: 1500px) {
+  .dataTables_filter input {
+    min-width: 300px !important;
+  }
+}
+@media (min-width: 992px) {
+  .dataTables_filter input {
+    min-width: 300px !important;
+  }
 }
 </style>

@@ -22,8 +22,14 @@ class Lesson(object):
     def get(cls, id_data):
         cursor = cls.db.cursor()
         sql = """
-            SELECT * 
+            SELECT lessons.lesson_id, cycles.year, levels.name AS level, semesters.name AS semester, workshops.name AS workshop, workshop_types.name AS workshop_type
             FROM lessons
+            INNER JOIN cycle_workshop ON cycle_workshop.cycle_workshop_id = lessons.cycle_workshop_id
+            INNER JOIN cycles ON cycles.cycle_id = cycle_workshop.cycle_id
+            INNER JOIN workshops ON workshops.workshop_id = cycle_workshop.workshop_id
+            INNER JOIN workshop_types ON workshop_types.workshop_type_id = lessons.workshop_type_id
+            INNER JOIN semesters ON semesters.semester_id = cycles.semester_id
+            INNER JOIN levels ON levels.level_id = lessons.level_id
             WHERE lessons.lesson_id=%s"""
         cursor.execute(sql, (id_data))
         return cursor.fetchone()

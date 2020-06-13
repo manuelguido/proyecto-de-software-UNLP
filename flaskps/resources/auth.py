@@ -21,6 +21,8 @@ def authenticate():
         if form.validate():
             #Busco usuario
             User.db = get_db()
+
+            
             user = User.find_by_email_and_pass(post_data['email'], post_data['password'])
             #Usuario no existe
             if not user:

@@ -13,7 +13,7 @@
           <!-- Row -->
           <div class="row mt-3">
             <!-- Información de persona responsable -->
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-lg-8">
               <dashboard-title title="Información del sitio"></dashboard-title>
 
               <!-- Row -->
@@ -52,7 +52,7 @@
 
                 <!-- Col 12 -->
                 <div class="col-12 col-lg-5 mt-4">
-                  <button type="submit" class="btn seed-btn-b btn-block waves-effect mx-0">Guardar</button>
+                  <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Guardar</button>
                 </div>
                 <!-- /.Col 12 -->
 

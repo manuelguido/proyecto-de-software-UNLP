@@ -60,11 +60,11 @@ export default {
           sort: 'asc'
         },
         {
-          label: 'Ver',
+          label: '',
           field: 'show'
         },
         {
-          label: 'Editar',
+          label: '',
           field: 'edit'
         }
       ],
@@ -97,8 +97,8 @@ export default {
           lastname: this.users[i].lastname,
           name: this.users[i].name,
           username: this.users[i].username,
-          show: '<a href="' + this.showUserPath + this.users[i].user_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editUserPath + this.users[i].user_id + '" class="btn btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          show: '<a href="' + this.showUserPath + this.users[i].user_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editUserPath + this.users[i].user_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

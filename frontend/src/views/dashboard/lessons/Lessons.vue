@@ -55,18 +55,20 @@ export default {
         },
         {
           label: 'Clase',
-          field: 'workshop_type'
+          field: 'workshop_type',
+          sort: 'asc'
         },
         {
           label: 'Nivel',
-          field: 'level'
+          field: 'level',
+          sort: 'asc'
         },
         {
-          label: 'Ver',
+          label: '',
           field: 'show'
         },
         {
-          label: 'Editar',
+          label: '',
           field: 'edit'
         }
       ],
@@ -98,8 +100,8 @@ export default {
         workshop: lesson.workshop,
         workshop_type: lesson.workshop_type,
         level: lesson.level,
-        show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-        edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+        show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+        edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
       }
       this.rows.push(newrow)
     },

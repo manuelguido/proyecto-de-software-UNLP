@@ -112,7 +112,7 @@ export default {
           sort: 'asc'
         },
         {
-          label: 'Desasignar',
+          label: '',
           field: 'unassign'
         }
       ],
@@ -156,7 +156,7 @@ export default {
       var newrow = {
         cycle: cycleWorkshop.year + ' ' + cycleWorkshop.semester,
         workshop: cycleWorkshop.name,
-        unassign: '<a href="' + this.unassignCycleWorkshopPath + cycleWorkshop.cycle_workshop_id + '" class="btn btn-default btn-sm seed-rounded"><i class="fas fa-times mr-3"></i>Desasignar</a>'
+        unassign: '<a href="' + this.unassignCycleWorkshopPath + cycleWorkshop.cycle_workshop_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-times mr-3"></i>Desasignar</a>'
       }
       this.rows.push(newrow)
     },

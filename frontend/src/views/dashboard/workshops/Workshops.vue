@@ -57,8 +57,12 @@ export default {
           sort: 'asc'
         },
         {
-          label: 'Acciones',
-          field: 'actions'
+          label: '',
+          field: 'show'
+        },
+        {
+          label: '',
+          field: 'edit'
         }
       ],
       rows: []
@@ -89,7 +93,8 @@ export default {
         newrow = {
           name: this.workshops[i].name,
           short_name: this.workshops[i].short_name,
-          actions: '<a class="display-inline-block" href="' + this.showWorkshopPath + this.workshops[i].workshop_id + '"><i class="far color-a fa-eye fa-lg"></i></a> <a class="display-inline-block" href="' + this.editWorkshopPath + this.workshops[i].workshop_id + '"><i class="far color-a fa-edit fa-lg"></i></a>'
+          show: '<a href="' + this.showWorkshopPath + this.workshops[i].workshop_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editWorkshopPath + this.workshops[i].workshop_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

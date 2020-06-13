@@ -1,7 +1,7 @@
 <template>
   <mdb-navbar id="topnav" class="shadow-none m-0" dark>
     <mdb-navbar-brand>
-      <span class="white-a w300 ls02 my-3">Manuel</span>
+      <span class="h6 white-a w300 ls02 my-3">Manuel</span>
     </mdb-navbar-brand>
   </mdb-navbar>
 </template>

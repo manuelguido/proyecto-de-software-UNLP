@@ -34,6 +34,7 @@ import axios from 'axios'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import dashboardTable from '@/components/dashboard/Table'
+import moment from 'moment'
 
 export default {
   data () {
@@ -89,15 +90,19 @@ export default {
         this.fetchData()
       })
     },
+    dateFormat (value) {
+      moment.locale('es')
+      return moment(String(value)).format('ll')
+    },
     loadCycles () {
       let newrow = {}
       for (let i = 0; i < this.cycles.length; i++) {
         newrow = {
           semester: this.cycles[i].semester,
           year: this.cycles[i].year,
-          period: 'Desde: ' + this.cycles[i].date_from + ', hasta: ' + this.cycles[i].date_to,
+          period: 'Desde: ' + this.dateFormat(this.cycles[i].date_from) + '<br>Hasta: &nbsp;' + this.dateFormat(this.cycles[i].date_to),
           show: '<a href="' + this.showCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+          edit: '<a href="' + this.editCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
         }
         this.rows.push(newrow)
       }

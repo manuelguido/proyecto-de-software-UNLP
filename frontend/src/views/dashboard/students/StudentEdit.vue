@@ -148,7 +148,7 @@
             </div>
             <!-- /.Información de persona responsable -->
             <div class="col-12 col-lg-2 mt-4">
-              <button type="submit" class="btn seed-btn-b btn-block waves-effect mx-0">Actualizar</button>
+              <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Actualizar</button>
             </div>
           </div>
           <!-- Row -->
