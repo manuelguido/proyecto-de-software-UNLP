@@ -4,6 +4,7 @@ from flaskps.models.user import User
 from flaskps.models.role import Role
 from flaskps.helpers import auth
 from flaskps.resources import forms
+from passlib.hash import sha256_crypt
 
 #Forms & validation
 from wtforms import Form
@@ -83,7 +84,10 @@ def create():
 
             form = forms.ValidateUser.from_json(post_data, skip_unknown_keys=True)
             if (form.validate() and len(errors) == 0):
-                User.create(post_data)
+                #Password hashing
+                password = sha256_crypt.encrypt(post_data['password'])
+                #Creacion de usuario
+                User.create(post_data, password)
                 new_user = User.find_by_email(post_data['email'])
                 update_roles(new_user['user_id'], post_data)
                 response_object = {'status': 'success', 'message': 'Se agregó el nuevo usuario'}

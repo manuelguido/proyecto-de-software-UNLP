@@ -3,6 +3,7 @@ from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.resources import forms
 from flaskps.helpers import auth
+from passlib.hash import sha256_crypt
 
 #Forms & validation
 from wtforms import Form
@@ -18,28 +19,35 @@ def authenticate():
         post_data = request.get_json()
         #Validacion de formulario
         form = forms.ValidateLogin.from_json(post_data, skip_unknown_keys=False)
-        if form.validate():
+        if not form.validate():
+            response_object = {'status': 'warning', 'message': 'Ingrese email y contraseña', 'success': False}
+        else:
             #Busco usuario
             User.db = get_db()
-
-            
-            user = User.find_by_email_and_pass(post_data['email'], post_data['password'])
+            user = User.find_by_email_or_username(post_data['email'])
             #Usuario no existe
             if not user:
-                response_object = {'status': 'warning', 'message': 'Email o contraseña incorrectos', 'success': False}
+                response_object = {'status': 'warning', 'message': 'Email o nombre de usuario incorrectos', 'success': False}
             #Usuario no activo
             elif not user['active']:
                 response_object = {'status': 'warning', 'message': 'Usuario inactivo', 'success': False}
+            #Google user
+            elif user['google_user']:
+                response_object = {'status': 'warning', 'message': 'Debes iniciar sesión desde el botón de google', 'success': False}
+            #Password incorrecto
+            elif not sha256_crypt.verify(post_data['password'], user['password']):
+                response_object = {'status': 'warning', 'message': 'Contraseña incorrecta', 'success': False}
             #Inicio de sesión
             else:
                 response_object = {'status': 'success', 'message': 'Inicio exitoso', 'success': True}
                 #Variable de sesion
                 login(user)
-        #Inputs invalidos
-        else:
-            response_object = {'status': 'warning', 'message': 'Ingrese email y contraseña', 'success': False}
-
-    return jsonify(response_object)
+            # passwd = post_data['password']
+            # password = sha256_crypt.encrypt("manuel")
+    
+            # return jsonify(sha256_crypt.verify("manuel", password))
+            # return print(password2)
+        return jsonify(response_object)
 
 #---------------------------------------------------#
 #   Inicia la sesión
@@ -56,7 +64,7 @@ def login(user):
 #---------------------------------------------------#
 #   Loggea al usuario por google
 #---------------------------------------------------#
-def login_by_google(user_info):
+def authenticate_by_google(user_info):
     User.db = get_db()
     user = User.find_by_email(user_info['email'])
     if not user:

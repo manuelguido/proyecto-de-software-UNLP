@@ -31,13 +31,13 @@ class User(object):
     #   Crea un usuario
     #---------------------------------------------------#
     @classmethod
-    def create(cls, user):
+    def create(cls, user, password):
         cursor = cls.db.cursor()
         sql = """
              INSERT INTO users (name, lastname, username, email, password, active)
              VALUES (%s, %s, %s, %s, %s, %s)
          """
-        cursor.execute(sql, (user['name'], user['lastname'], user['username'], user['email'], user['password'], user['active']))
+        cursor.execute(sql, (user['name'], user['lastname'], user['username'], user['email'], password, user['active']))
         cls.db.commit()
         return True
 
@@ -238,6 +238,16 @@ class User(object):
         """
         cursor = cls.db.cursor()
         cursor.execute(sql, (username))
+        return cursor.fetchone()
+
+    #---------------------------------------------------#
+    #   Obtiene un usuario por email o username
+    #---------------------------------------------------#
+    @classmethod
+    def find_by_email_or_username(cls, data):
+        sql = "SELECT * FROM users WHERE users.email = %s OR users.username = %s"
+        cursor = cls.db.cursor()
+        cursor.execute(sql, (data, data))
         return cursor.fetchone()
 
     #---------------------------------------------------#

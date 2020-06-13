@@ -23,7 +23,7 @@ class ValidateConfiguration(Form):
 #   Validacion Usuarios
 #---------------------------------------------------#
 class ValidateUser(Form):
-    user_id = IntegerField('Usuario', [validators.NumberRange(min=1, max=None)])
+    # user_id = IntegerField('Usuario', [validators.NumberRange(min=1, max=None)])
     name = StringField(u'Nombre', [validators.required(), validators.length(max=100)])
     lastname = StringField(u'Apellido', [validators.required(), validators.length(max=100)])
     username = StringField(u'Username', [validators.required(), validators.length(max=100)])

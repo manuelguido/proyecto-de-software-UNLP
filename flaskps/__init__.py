@@ -162,7 +162,7 @@ def authorize():
     # Here you use the profile/user data that you got and query your database find/register the user
     # and set ur own data in the session not the profile from google
     # session['profile'] = user_info
-    auth.login_by_google(user_info)
+    auth.authenticate_by_google(user_info)
     # session.permanent = True  # make the session permanant so it keeps existing after broweser gets closed
     return redirect('/dashboard')
 
