@@ -39,11 +39,6 @@ export default {
   },
   created () {
     this.loadTableData()
-  },
-  mounted () {
-    var icons = document.querySelector('.fa-sort')
-    icons.classList.remove('float-right')
-    icons.classList.add('float-left mt-2')
   }
 }
 </script>
@@ -63,6 +58,8 @@ td div {
 }
 thead.table-header {
   border: 1px solid #f3f3f3 !important;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 }
 
 @media (min-width: 1500px) {

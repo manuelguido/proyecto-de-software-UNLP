@@ -13,7 +13,7 @@
           <!-- Row -->
           <div class="row mt-3 justify-content-end">
             <!-- Backlink -->
-            <div class="col-12 col-lg-3 text-left">
+            <div class="col-12 text-left">
               <back-link :url="returnPath" text="Estudiantes"></back-link>
             </div>
             <!-- /.BackLink -->

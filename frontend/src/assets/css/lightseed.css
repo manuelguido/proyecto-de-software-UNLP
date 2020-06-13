@@ -1,7 +1,7 @@
 :root {
     /* Main Pallete */
     /* --color-a: #2699fb; */
-    --color-a: #009ee3  ;
+    --color-a: #009ee3;
     --color-b: #7fc4fd;
     --color-c: #bce0fd;
     --color-d: #f1f9ff;
@@ -25,11 +25,11 @@
     --black-d: #bfbec3;
 
     /* Traditional */
-    --seed-primary: #00cec9;
+    --seed-primary: #009ee3;
     --seed-primary-dark: #251f87;
     --seed-primary-light: #E9EAFD;
 
-    --seed-secondary: #a29bfe;
+    --seed-secondary: #ffc658;
     --seed-secondary-dark: #0a947d;
     --seed-secondary-light: #A1ECDB;
 
@@ -38,8 +38,8 @@
     --seed-success-dark: #07b536;
     --seed-success-light: #E5FDF4;
 
-    /* --seed-warning: #ffd100; */
-    --seed-warning: #a29bfe;
+    /* --seed-warning: #a29bfe; */
+    --seed-warning: #ffd100;
     --seed-warning-dark: #ff8800;
     --seed-warning-light: #FDF8E9;
     
@@ -450,20 +450,15 @@ a.link:hover {
 /*--------------------------------------------------------------
     Bootstrap override
 --------------------------------------------------------------*/
-/* .btn-primary {
-
-} */
+.btn-outline-success,
+.btn-outline-success:hover,
+.btn-outline-success:active {
+    color: var(--color-a) !important;
+    border-color: var(--color-a) !important;
+}
 .text-warning {
     color: var(--seed-warning);   
 }
 li.page-item.active {
     background-color: var(--color-b) !important;
 }
-
-/* th,
-.th-sm,
-th.th-sm,
-th.sorting {
-  color: var(--black-b) !important;
-  font-weight: 600 !important;
-} */

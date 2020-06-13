@@ -15,7 +15,12 @@
                   <img id="home-logo" class="uns" src="../assets/logo.png" />
                 </div>
                 <div class="col-12 py-0 col-md-8">
-                  <div v-if="configuration.active">
+                  <div v-if="loading" class="text-center">
+                    <div class="spinner-border color-c mt-5" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                  <div v-else-if="configuration.active">
                     <h1 class="h3 w600 mb-5">{{ configuration.title }}</h1>
                     <p class="w400 ls02 black-b mt-3 mb-5">{{ configuration.description }}</p>
                     <span class="h6 w400 mx-0 py-2 px-4 color-a bg-color-d seed-rounded shadow">
@@ -47,7 +52,8 @@ export default {
   name: 'Main',
   data () {
     return {
-      configuration: '',
+      configuration: {},
+      loading: true,
       nav_to_login: true
     }
   },
@@ -58,6 +64,7 @@ export default {
     fetchData () {
       const path = '/api/configuration'
       axios.get(path).then((res) => {
+        this.loading = false
         this.configuration = res.data[0]
       }).catch((error) => {
         this.fetchData()
