@@ -10,16 +10,15 @@
         <div class="row">
           <!-- /.Table Col -->
           <div class="col-12 col-md-8">
-            <dashboard-title title="Listado de ciclos lectivos"></dashboard-title>
+            <dashboard-title title="Listado de clases"></dashboard-title>
           </div>
           <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newCyclePath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo ciclo lectivo</router-link>
+            <router-link :to="newLessonPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nueva clase</router-link>
           </div>
           <div class="col-12">
-            <dashboard-table
-              :columnas=columns
-              :filas=rows
-            ></dashboard-table>
+            <!-- Tabla de información -->
+            <dashboard-table :columnas=columns :filas=rows></dashboard-table>
+            <!-- Tabla de información -->
           </div>
           <!-- /.Table Col -->
         </div>
@@ -38,25 +37,33 @@ import dashboardTable from '@/components/dashboard/Table'
 export default {
   data () {
     return {
-      pagetitle: 'Ciclos lectivos',
-      cycles: '',
-      showCyclePath: '/cycle/',
-      newCyclePath: '/new/cycle/',
-      editCyclePath: '/cycle/edit/',
+      pagetitle: 'Clases',
+      lessons: '',
+      showLessonPath: '/lesson/',
+      newLessonPath: '/new/lesson/',
+      editLessonPath: '/lesson/edit/',
       columns: [
         {
-          label: 'Año',
-          field: 'year',
+          label: 'Ciclo lectivo',
+          field: 'cycle',
           sort: 'asc'
         },
         {
-          label: 'Semestre',
-          field: 'semester',
+          label: 'Taller',
+          field: 'workshop',
           sort: 'asc'
         },
         {
-          label: 'Período',
-          field: 'period'
+          label: 'Clase',
+          field: 'workshop_type'
+        },
+        {
+          label: 'Nivel',
+          field: 'level'
+        },
+        {
+          label: 'Nivel',
+          field: 'core'
         },
         {
           label: 'Ver',
@@ -80,28 +87,32 @@ export default {
   },
   methods: {
     fetchData () {
-      const path = '/api/cycles'
+      const path = '/api/lessons'
       axios.get(path).then((res) => {
-        this.cycles = res.data
-        this.loadCycles()
+        this.lessons = res.data
+        this.loadLessons()
       }).catch((error) => {
         console.log(error)
         this.fetchData()
       })
     },
-    loadCycles () {
-      let newrow = {}
-      for (let i = 0; i < this.cycles.length; i++) {
-        newrow = {
-          semester: this.cycles[i].semester,
-          year: this.cycles[i].year,
-          period: 'Desde: ' + this.cycles[i].date_from + ', hasta: ' + this.cycles[i].date_to,
-          show: '<a href="' + this.showCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
-        }
-        this.rows.push(newrow)
+    addRow (lesson) {
+      var newrow = {
+          cycle: lesson.year + ' ' + lesson.semester,
+          workshop: lesson.workshop,
+          workshop_type: lesson.workshop_type,
+          level: lesson.level,
+          core: lesson.core,
+          show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+          edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
       }
-    }
+      this.rows.push(newrow)
+    },
+    loadLessons () {
+      for (let i = 0; i < this.lessons.length; i++) {
+        this.addRow(this.lessons[i])
+      }
+    },
   }
 }
 </script>

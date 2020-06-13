@@ -9,13 +9,12 @@
 @import './assets/css/lightseed.css';
 
 #app {
-    font-family: 'Nunito', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: left;
-    color: #41444b;
-    margin: 0;
-    padding: 0;
+  font-family: 'Nunito', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  color: #41444b;
+  margin: 0;
+  padding: 0;
 }
-
 </style>
