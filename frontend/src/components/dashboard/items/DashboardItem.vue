@@ -26,7 +26,7 @@ export default {
   box-shadow: 0 .07em .145em 0 rgba(0,0,0,.14) !important;
 }
 .dashboard-item:hover {
-  background: var(--color-b-light);
+  background: var(--color-d);
   text-decoration: none !important;
   opacity: 0.7;
 }
@@ -38,6 +38,6 @@ export default {
 }
 .dashboard-item:hover i,
 .dashboard-item:hover h2 {
-  color: var(--color-b);
+  color: var(--color-a);
 }
 </style>

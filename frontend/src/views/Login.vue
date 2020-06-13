@@ -105,7 +105,7 @@ export default {
           this.success_login = true
           setTimeout(function () {
             window.location.href = '/dashboard'
-          }, 700)
+          }, 350)
         } else {
           this.status_message = respuesta.data.message
         }

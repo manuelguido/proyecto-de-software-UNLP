@@ -35,7 +35,6 @@ def get(lesson_id):
     if (not User.has_permission(session['id'],'administrativo_show')):
         abort(401)
     else:
-
         Lesson.db = get_db()
         return jsonify(Lesson.get(lesson_id))
 

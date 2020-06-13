@@ -1,8 +1,9 @@
 <template>
-  <div id="panel-sidebar" class="mobile-hide pt-5">
+  <div id="panel-sidebar" class="mobile-hide p-0">
+    <topnav></topnav>
     <div class="container">
-      <img id="sidebar-logo" class="uns" src="../../../assets/logo-green-empty.png" />
-      <ul class="list-group">
+      <img id="sidebar-logo" class="uns" src="../../../assets/logo.png" />
+      <ul class="list-group px-2">
         <menu-item :item=home_link></menu-item>
         <menu-item v-on:click="panelSwitch" v-for="link in links" :key="link.name" :item=link></menu-item>
         <menu-item :item=logout_link @onclick=con></menu-item>
@@ -13,6 +14,8 @@
 
 <script>
 import menuItem from '@/components/dashboard/sidebar/Item'
+import topnav from '@/components/dashboard/sidebar/Topnav'
+
 export default {
   name: 'ItemGroup',
   props: {
@@ -34,7 +37,8 @@ export default {
     }
   },
   components: {
-    'menu-item': menuItem
+    'menu-item': menuItem,
+    'topnav': topnav
   }
 }
 </script>
@@ -44,7 +48,7 @@ export default {
   height: 100vh !important;
   position: fixed;
   background: var(--white-a) !important;
-  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.11) !important;
+  box-shadow: 0 .07em .225em 0 rgba(0,0,0,.15) !important;
   box-shadow: none;
   width: 275px;
   left: 0;
@@ -52,7 +56,7 @@ export default {
 }
 #sidebar-logo {
   display: block;
-  margin: 35px auto 20px auto !important;
+  margin: 15px auto !important;
   width: 70%;
 }
 .list-group {

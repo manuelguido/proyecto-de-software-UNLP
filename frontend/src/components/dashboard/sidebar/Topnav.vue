@@ -1,13 +1,8 @@
 <template>
-  <mdb-navbar class="bg-white py-2 px-5" light>
-    <router-link class="navbar-brand w600 color-a my-2" to="/">
-      Escuela Orquesta Berisso
-    </router-link>
-    <mdb-navbar-toggler>
-      <mdb-navbar-nav right>
-        <router-link v-if="to_login" to="login" class="btn btn-primary my-0"><i class="fas fa-sign-in-alt mr-3"></i>Iniciar sesión</router-link>
-      </mdb-navbar-nav>
-    </mdb-navbar-toggler>
+  <mdb-navbar id="topnav" class="shadow-none m-0" dark>
+    <mdb-navbar-brand>
+      <span class="white-a w300 ls02 my-3">Manuel</span>
+    </mdb-navbar-brand>
   </mdb-navbar>
 </template>
 
@@ -26,9 +21,13 @@ export default {
     mdbDropdownToggle,
     mdbDropdownItem,
     mdbInput
-  },
-  props: {
-    to_login: Boolean
   }
 }
 </script>
+
+<style scoped>
+#topnav {
+  border-bottom: 1px solid #e3e3e3;
+  background: #008ad6;
+}
+</style>

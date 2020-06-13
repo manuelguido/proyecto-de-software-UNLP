@@ -1,8 +1,7 @@
 <template>
       <mdb-datatable
-        class="my-3"
+        class="my-3 black-b"
         :data="my_data"
-        bordered
         responsive
         arrows
         defaultRow="No hay información"
@@ -45,6 +44,10 @@ export default {
 </script>
 
 <style scoped>
+thead th {
+  color: var(--black-b);
+  font-weight: 600 !important;
+}
 .pagination .page-item, .pagination .active, .pagination .page-item.active  {
   background-color: var(--color-b) !important;
 }

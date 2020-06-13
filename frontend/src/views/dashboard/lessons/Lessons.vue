@@ -62,10 +62,6 @@ export default {
           field: 'level'
         },
         {
-          label: 'Nivel',
-          field: 'core'
-        },
-        {
           label: 'Ver',
           field: 'show'
         },
@@ -98,13 +94,12 @@ export default {
     },
     addRow (lesson) {
       var newrow = {
-          cycle: lesson.year + ' ' + lesson.semester,
-          workshop: lesson.workshop,
-          workshop_type: lesson.workshop_type,
-          level: lesson.level,
-          core: lesson.core,
-          show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn seed-btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
+        cycle: lesson.year + ' ' + lesson.semester,
+        workshop: lesson.workshop,
+        workshop_type: lesson.workshop_type,
+        level: lesson.level,
+        show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+        edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn btn-warning btn-sm seed-rounded"><i class="far fa-edit mr-3"></i>Editar</a>'
       }
       this.rows.push(newrow)
     },
@@ -112,7 +107,7 @@ export default {
       for (let i = 0; i < this.lessons.length; i++) {
         this.addRow(this.lessons[i])
       }
-    },
+    }
   }
 }
 </script>

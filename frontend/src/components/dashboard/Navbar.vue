@@ -1,9 +1,9 @@
 <template>
-  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none bg-color-b" dark>
-    <mdb-navbar-brand>
-      <span class="h5 white-a w600 ls03 my-1">Panel</span>
+  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none px-3" togglerClass="text-white bg-color-b" dark>
+    <mdb-navbar-brand class="nav-brand">
+      <span class="white-a w600 ls03 my-3">Panel</span>
     </mdb-navbar-brand>
-    <mdb-navbar-toggler class="web-hide color-a">
+    <mdb-navbar-toggler>
       <mdb-navbar-nav class="web-hide">
         <router-link to="/dashboard" class="nav-item web-hide"><i class="fas fa-home mr-2"></i>Inicio</router-link>
         <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide"><i :class="link.icon" class="mr-2"></i>{{link.name}}</router-link>
@@ -37,34 +37,43 @@ export default {
 
 <style scoped>
 #dashboard-navbar {
-  z-index: 10000;
+  /* z-index: 10000; */
+  border-bottom: 1px solid #e3e3e3;
+  background: var(--color-a);
 }
-/* @media(min-width: 992px) {
-  #dashboard-navbar {
-    padding-left: 240px !important;
+/* Dashboard container */
+@media(min-width: 992px) {
+  .nav-brand {
+    margin-left: 275px !important;
   }
-} */
-/* @media(max-width: 992px) {
-  #dashboard-navbar {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-} */
+}
+
 .nav-item {
   padding: .5em 1em;
-  background: var(--color-a-light);
-}
-.nav-item {
   border-radius: 6.2px !important;
   border: 0 none !important;
   background: none;
-  color: var(--white-a);
+  color: var(--black-a);
   transition: 0.1s all !important;
 }
+.nav-item i {
+  color: var(--black-d);
+}
+
 .nav-item:hover,
 .nav-item:active,
 .nav-item.active {
-  background: var(--color-a-light);
+  background: var(--color-d-light);
+}
+
+.nav-item.router-link-active,
+.nav-item.router-link-exact-active {
+  background: var(--color-a);
   color: var(--white-a);
 }
+.nav-item.router-link-active i,
+.nav-item.router-link-exact-active i {
+  color: var(--white-a);
+}
+
 </style>

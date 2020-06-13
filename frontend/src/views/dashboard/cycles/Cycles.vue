@@ -9,10 +9,10 @@
       <template v-slot:dashboard_content>
         <div class="row">
           <!-- /.Table Col -->
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-6">
             <dashboard-title title="Listado de ciclos lectivos"></dashboard-title>
           </div>
-          <div class="col-12 col-md-4 text-md-right">
+          <div class="col-12 col-md-6 text-md-right">
             <router-link :to="newCyclePath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo ciclo lectivo</router-link>
           </div>
           <div class="col-12">
@@ -59,11 +59,11 @@ export default {
           field: 'period'
         },
         {
-          label: 'Ver',
+          label: '',
           field: 'show'
         },
         {
-          label: 'Editar',
+          label: '',
           field: 'edit'
         }
       ],

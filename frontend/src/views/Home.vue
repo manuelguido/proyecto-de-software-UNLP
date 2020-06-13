@@ -5,21 +5,21 @@
     <!-- Container -->
     <div class="container-fluid">
       <div class="row justify-content-center py-5 my-lg-5">
-        <div class="col-12 col-md-9 col-lg-6 py-md-5">
+        <div class="col-12 col-md-9 col-lg-7 py-md-5">
           <!-- Card -->
           <div class="card home-card py-4">
-            <div class="card-body">
+            <div class="card-body p-5">
               <!-- Row -->
               <div class="row">
                 <div class="col-12 col-md-4 py-0 text-center">
-                  <img id="home-logo" class="uns" src="../assets/logo-green-empty.png" />
+                  <img id="home-logo" class="uns" src="../assets/logo.png" />
                 </div>
                 <div class="col-12 py-0 col-md-8">
                   <div v-if="configuration.active">
                     <h1 class="h3 w600 mb-5">{{ configuration.title }}</h1>
-                    <p class="h5 w300 black-b mt-3 mb-5">{{ configuration.description }}</p>
-                    <span class="h6 w400 mx-0 py-2 px-4 color-b bg-color-b-light seed-rounded shadow">
-                      <i class="fas fa-envelope color-b mr-3"></i>{{ configuration.email }}
+                    <p class="w400 ls02 black-b mt-3 mb-5">{{ configuration.description }}</p>
+                    <span class="h6 w400 mx-0 py-2 px-4 color-a bg-color-d seed-rounded shadow">
+                      <i class="fas fa-envelope color-a mr-3"></i>{{ configuration.email }}
                     </span>
                   </div>
                   <div v-else>
@@ -79,7 +79,7 @@ export default {
   min-height: 100vh;
 }
 .home-card {
-  border-radius: 50px;
+  border-radius: 25px;
   background-color: var(--white-a);
   box-shadow:
     18px 18px 25px 0 rgba(0, 0, 0, 0.18),

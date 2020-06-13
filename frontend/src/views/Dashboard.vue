@@ -6,16 +6,16 @@
       <sidebar :links="routes"></sidebar>
       <!-- /.Sidebar -->
       <!-- Panel content -->
-      <div id="dashboard-container" class="col bg-color-b-light">
+      <div id="dashboard-container" class="col">
         <!-- All content -->
-        <div id="dashboard-content" class="container-fluid mt-5 py-5 px-lg-5 w-100">
+        <div id="dashboard-content" class="container-fluid mt-5 py-5 px-1 px-lg-5 w-100">
           <div class="row justify-content-center">
             <div class="col-12 col-lg-12">
-              <div class="card dashboard-card p-lg-4">
-                <div class="card-body p-lg-4">
+              <div class="p-lg-4">
+                <div class="p-lg-4">
 
                   <!-- Titulo -->
-                  <h1 class="h3 w600 color-b mb-2">
+                  <h1 class="h3 w600 color-a mb-2">
                     <slot name="page_title">
                       Inicio
                       {{page_title}}
@@ -110,9 +110,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+/* body {
+  background: #ededed !important;
+} */
 #dashboard-container {
   min-height: 100vh;
+  /* background-color: #ededed; */
+  background: #fff;
+}
+@media(min-width: 1500px) {
+  #dashboard-container {
+    margin-right: 275px !important;
+  }
 }
 /* Dashboard container */
 @media(min-width: 992px) {

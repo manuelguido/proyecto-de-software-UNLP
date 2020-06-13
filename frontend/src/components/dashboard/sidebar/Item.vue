@@ -33,18 +33,18 @@ export default {
 }
 .list-group-item:hover,
 .list-group-item:active,
-.list-group-item.active,
-.list-group-item.router-link-active,
-.list-group-item.router-link-exact-active {
-  background: var(--color-b);
+.list-group-item.active {
+  background: var(--color-c);
+}
+
+.list-group-item.router-link-active i,
+.list-group-item.router-link-exact-active i {
   color: var(--white-a);
 }
 
-.list-group-item:hover i,
-.list-group-item:active i,
-.list-group-item.active i,
-.list-group-item.router-link-active i,
-.list-group-item.router-link-exact-active i {
+.list-group-item.router-link-active,
+.list-group-item.router-link-exact-active {
+  background: var(--color-a);
   color: var(--white-a);
 }
 </style>
