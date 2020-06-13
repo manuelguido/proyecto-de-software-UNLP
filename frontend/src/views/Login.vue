@@ -12,8 +12,8 @@
                 <form v-on:submit.prevent="login">
 
                   <!-- Loading Spinner -->
-                  <div v-if="success_login" class="d-flex justify-content-center mb-4">
-                    <div class="spinner-border color-b" role="status">
+                  <div v-if="loading" class="d-flex justify-content-center mb-4">
+                    <div class="spinner-border color-c" role="status">
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
@@ -84,7 +84,7 @@ export default {
     return {
       email: '',
       password: '',
-      success_login: false,
+      loading: false,
       status_message: '',
       message_class: 'text-warning'
     }
@@ -94,19 +94,19 @@ export default {
   },
   methods: {
     login () {
-      this.message = ''
+      this.loading = true
+      this.status_message = ''
       const path = '/auth/authenticate'
       axios.post(path, {
         email: this.email,
         password: this.password
       }).then((respuesta) => {
-        this.status_message = ''
         if (respuesta.data.success) {
-          this.success_login = true
           setTimeout(function () {
             window.location.href = '/dashboard'
-          }, 350)
+          }, 300)
         } else {
+          this.loading = false
           this.status_message = respuesta.data.message
         }
       }).catch((error) => {

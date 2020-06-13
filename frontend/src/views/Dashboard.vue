@@ -26,7 +26,14 @@
 
                   <!-- Contenido -->
                   <slot name="dashboard_content">
-                    <div v-if=user_has_role>
+                    <!-- Loading Spinner -->
+                    <div v-if="loading" class="d-flex justify-content-center mb-4">
+                      <div class="spinner-border color-c" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                    <!-- /.Loading Spinner -->
+                    <div v-else-if=user_has_role>
                       <dashboard-items :items="routes"></dashboard-items>
                     </div>
                     <div v-else>
@@ -64,6 +71,7 @@ export default {
   data () {
     return {
       routes: null,
+      loading: true,
       user_has_role: false
     }
   },
@@ -74,6 +82,7 @@ export default {
       axios.get(path).then((res) => {
         this.routes = res.data
         localStorage.setItem('routes', JSON.stringify(this.routes))
+        this.loading = false
       }).catch((error) => {
         console.log(error + 'Retring')
         this.getUserRoutes()
@@ -85,6 +94,7 @@ export default {
       axios.get(path).then((res) => {
         this.user_has_role = res.data.status // Boolean
         localStorage.setItem('role', JSON.stringify(res.data))
+        this.loading = false
       }).catch((error) => {
         console.log(error)
         this.userHasRole()
@@ -96,6 +106,7 @@ export default {
       var loc = localStorage.getItem('role')
       var result = JSON.parse(loc)
       this.user_has_role = result.status
+      this.loading = false
     } else {
       this.userHasRole()
     }

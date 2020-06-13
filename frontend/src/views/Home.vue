@@ -15,7 +15,7 @@
                   <img id="home-logo" class="uns" src="../assets/logo.png" />
                 </div>
                 <div class="col-12 py-0 col-md-8">
-                  <div v-if="loading" class="text-center">
+                  <div v-if="loading">
                     <div class="spinner-border color-c mt-5" role="status">
                       <span class="sr-only">Loading...</span>
                     </div>
