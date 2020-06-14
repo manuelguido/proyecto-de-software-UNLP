@@ -134,30 +134,32 @@ class ValidateCycleWorkshop(Form):
 class ValidateCycleWorkshopId(Form):
     cycle_workshop_id = IntegerField('Ciclo taller', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------#
 #   Validar clase
 #---------------------------------------------------#
 class ValidateLesson(Form):
     cycle_workshop_id = IntegerField('Ciclo Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
     workshop_type_id = IntegerField('Tipo de taller', [validators.required(), validators.NumberRange(min=1, max=None)])
-    level_id = IntegerField('Tipo de taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    level_id = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateLessonWithId(Form):
+    lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    cycle_workshop_id = IntegerField('Ciclo Taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    workshop_type_id = IntegerField('Tipo de taller', [validators.required(), validators.NumberRange(min=1, max=None)])
+    level_id = IntegerField('Nivel', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+class ValidateLessonId(Form):
+    lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+
+
+
+
+
+
+
+
+
 
 #---------------------------------------------------#
 #   Validar horario

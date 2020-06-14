@@ -22,7 +22,7 @@ class Lesson(object):
     def get(cls, id_data):
         cursor = cls.db.cursor()
         sql = """
-            SELECT lessons.lesson_id, cycles.year, levels.name AS level, semesters.name AS semester, workshops.name AS workshop, workshop_types.name AS workshop_type
+            SELECT lessons.lesson_id, lessons.cycle_workshop_id, lessons.workshop_type_id, lessons.level_id, cycles.year, levels.name AS level, semesters.name AS semester, workshops.name AS workshop, workshop_types.name AS workshop_type
             FROM lessons
             INNER JOIN cycle_workshop ON cycle_workshop.cycle_workshop_id = lessons.cycle_workshop_id
             INNER JOIN cycles ON cycles.cycle_id = cycle_workshop.cycle_id
@@ -46,7 +46,7 @@ class Lesson(object):
     def update(cls, lesson):
         cursor = cls.db.cursor()
         sql= "UPDATE lessons SET cycle_workshop_id=%s, workshop_type_id=%s, level_id=%s WHERE lesson_id=%s"
-        cursor.execute(sql, (lesson['cycle_workshop_id'], lesson['workshop_type_id'], lesson['level_id']))
+        cursor.execute(sql, (lesson['cycle_workshop_id'], lesson['workshop_type_id'], lesson['level_id'], lesson['lesson_id']))
         cls.db.commit()
         return True
 

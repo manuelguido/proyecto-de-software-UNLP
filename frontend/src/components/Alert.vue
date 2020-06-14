@@ -38,14 +38,14 @@ export default {
   props: {
     message: ''
   },
-  watch: {
-    message: function () {
-      var $this = this
-      setTimeout(function () {
-        $this.message = false
-      }, 2200)
-    }
-  },
+  // watch: {
+  //   message: function () {
+  //     var $this = this
+  //     setTimeout(function () {
+  //       $this.message = false
+  //     }, 2200)
+  //   }
+  // },
   methods: {
     closeMessage () {
       this.message = ''

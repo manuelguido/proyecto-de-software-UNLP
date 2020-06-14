@@ -28,7 +28,7 @@
                 <!-- Ciclos -->
                 <div class="col-12 col-lg-6 mb-2">
                   <div class="form-group">
-                    <form-label name="Tipo de documento"></form-label>
+                    <form-label name="Ciclo lectivo"></form-label>
                     <select class="browser-default custom-select" v-model="new_cycle_id" required>
                       <option value="0" selected disabled>Elegir</option>
                       <option v-for="c in cycles" :key="c.cycle_id" :value="c.cycle_id">{{c.year}} {{c.semester}}</option>
@@ -39,7 +39,7 @@
                 <!-- Talleres -->
                 <div class="col-12 col-lg-6 mb-2">
                   <div class="form-group">
-                    <form-label name="Tipo de documento"></form-label>
+                    <form-label name="Taller"></form-label>
                     <select class="browser-default custom-select" v-model="new_workshop_id" required>
                       <option value="0" selected disabled>Elegir</option>
                       <option v-for="w in workshops" :key="w.workshop_id" :value="w.workshop_id">{{w.name}} ({{w.short_name}})</option>

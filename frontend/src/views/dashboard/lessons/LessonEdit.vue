@@ -9,74 +9,54 @@
       <template v-slot:dashboard_content>
         <alert :message=messageData></alert>
         <!-- Form -->
-        <form v-on:submit.prevent="updateTeacher">
+        <form v-on:submit.prevent="updateLesson">
           <!-- Row -->
           <div class="row mt-3">
-            <!-- Información del docente -->
+            <!-- Información de la clase -->
             <div class="col-12 col-lg-6">
               <!-- Row -->
               <div class="row justify-content-end">
+
+                <!-- Backlink -->
+                <div class="col-12 text-left">
+                  <back-link :url="returnPath" text="Clases"></back-link>
+                </div>
+
                 <!-- Col 12 -->
                 <div class="col-12">
 
-                  <dashboard-title title="Informacion del docente"></dashboard-title>
+                  <dashboard-title title="Informacion de la clase"></dashboard-title>
 
                   <div class="row">
-                    <!-- Nombre -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Nombre" v-model="name" required />
-                    </div>
-                    <!-- Apellido -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Apellido" v-model="lastname" required />
-                    </div>
-
-                    <!-- Tipo de documento -->
-                    <div class="col-lg-6">
+                    <!-- Nivel -->
+                    <div class="col-lg-12">
                       <div class="form-group">
-                        <form-label name="Tipo de documento"></form-label>
-                        <select class="browser-default custom-select" v-model="document_type_id" required>
+                        <form-label name="Taller a elegir"></form-label>
+                        <select class="browser-default custom-select" v-model="cycle_workshop_id" required>
                           <option selected disabled>Elegir</option>
-                          <option v-for="d in document_types" :key="d.document_type_id" :value="d.document_type_id">{{d.name}}</option>
+                          <option v-for="c in cycle_workshops" :key="c.cycle_workshop_id" :value="c.cycle_workshop_id">{{c.year}} {{c.semester}} - {{c.name}}</option>
                         </select>
                       </div>
                     </div>
-                    <!-- Numero de documento -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Número de documento" v-model="document_number" type="number" :min="0" required />
-                    </div>
 
-                    <!-- Género -->
+                    <!-- Nivel -->
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <form-label name="Género"></form-label>
-                        <select class="browser-default custom-select" v-model="gender_id" required>
+                        <form-label name="Tipo de taller"></form-label>
+                        <select class="browser-default custom-select" v-model="workshop_type_id" required>
                           <option selected disabled>Elegir</option>
-                          <option v-for="g in genders" :key="g.gender_id" :value="g.gender_id">{{g.name}}</option>
+                          <option v-for="w in workshop_types" :key="w.workshop_type_id" :value="w.workshop_type_id">{{w.name}}</option>
                         </select>
                       </div>
                     </div>
-                    <!-- Fecha de nacimiento -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Fecha de nacimiento" v-model="birth_date" type="date" required />
-                    </div>
 
-                    <!-- Dirección -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Dirección" v-model="address" required />
-                    </div>
-                    <!-- Teléfono -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Teléfono" v-model="phone" type="number" :min="0" required />
-                    </div>
-
-                    <!-- Localidad -->
+                    <!-- Nivel -->
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <form-label name="Localidad"></form-label>
-                        <select class="browser-default custom-select" v-model="location_id" required>
+                        <form-label name="Nivel"></form-label>
+                        <select class="browser-default custom-select" v-model="level_id" required>
                           <option selected disabled>Elegir</option>
-                          <option v-for="l in locations" :key="l.location_id" :value="l.location_id">{{l.name}}</option>
+                          <option v-for="l in levels" :key="l.level_id" :value="l.level_id">{{l.name}}</option>
                         </select>
                       </div>
                     </div>
@@ -93,7 +73,7 @@
               </div>
               <!-- /.Row -->
             </div>
-            <!-- /.Información del docente -->
+            <!-- /.Información de la clase -->
           </div>
           <!-- /.Row -->
         </form>
@@ -108,90 +88,73 @@ import axios from 'axios'
 import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
+import backLink from '@/components/dashboard/buttons/BackLink'
 import formLabel from '@/components/Label'
 import alert from '@/components/Alert'
 
 export default {
   props: {
-    teacher_id: Number
+    lesson_id: Number
   },
   data () {
     return {
-      pagetitle: 'Editar docente',
-      teacher: '',
-      messageData: false,
+      pagetitle: 'Editar clase',
+      returnPath: '/lessons',
+      messageData: {},
       // Form values for select
-      genders: {},
-      document_types: {},
-      locations: {},
-      // Teacher form information
-      name: '',
-      lastname: '',
-      document_type_id: '',
-      document_number: '',
-      gender_id: '',
-      birth_date: '',
-      address: '',
-      phone: '',
-      location_id: ''
+      cycle_workshops: {},
+      workshop_types: {},
+      levels: {},
+      // Lesson form information
+      cycle_workshop_id: '',
+      workshop_type_id: '',
+      level_id: ''
     }
   },
   created () {
     this.fetchFormData()
-    this.fetchTeacher()
+    this.fetchLesson()
   },
   components: {
     mdbInput,
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
+    'back-link': backLink,
     'form-label': formLabel,
     'alert': alert
   },
   methods: {
     fetchFormData () {
-      const path = '/api/teacher/form_data'
+      const path = '/api/lesson/form_data'
       axios.get(path).then((res) => {
-        this.genders = res.data.genders
-        this.document_types = res.data.document_types
-        this.locations = res.data.locations
+        this.cycle_workshops = res.data.cycle_workshops
+        this.workshop_types = res.data.workshop_types
+        this.levels = res.data.levels
       }).catch((error) => {
         this.fetchFormData()
         console.log(error)
       })
     },
-    fetchTeacher () {
-      const path = '/api/teacher/' + this.teacher_id
+    fetchLesson () {
+      const path = '/api/lesson/' + this.lesson_id
       axios.get(path).then((res) => {
-        this.teacher_id = res.data.teacher_id
-        this.name = res.data.name
-        this.lastname = res.data.lastname
-        this.birth_date = res.data.birth_date
-        this.neighborhood_id = res.data.neighborhood_id
-        this.address = res.data.address
-        this.gender_id = res.data.gender_id
-        this.document_type_id = res.data.document_type_id
-        this.document_number = res.data.document_number
-        this.phone = res.data.phone
-        this.location_id = res.data.location_id
+        this.lesson_id = res.data.lesson_id
+        this.cycle_workshop_id = res.data.cycle_workshop_id
+        this.workshop_type_id = res.data.workshop_type_id
+        this.level_id = res.data.level_id
       }).catch((error) => {
-        this.fetchTeacher()
+        this.fetchLesson()
         console.log(error)
       })
     },
-    updateTeacher () {
-      this.message = ''
-      const path = '/api/teacher/update'
+    updateLesson () {
+      this.messageData = ''
+      const path = '/api/lesson/update'
       axios.post(path, {
-        teacher_id: this.teacher_id,
-        name: this.name,
-        lastname: this.lastname,
-        birth_date: this.birth_date,
-        address: this.address,
-        gender_id: this.gender_id,
-        document_type_id: this.document_type_id,
-        document_number: this.document_number,
-        phone: this.phone,
-        location_id: this.location_id
+        lesson_id: this.lesson_id,
+        cycle_workshop_id: this.cycle_workshop_id,
+        workshop_type_id: this.workshop_type_id,
+        level_id: this.level_id
       }).then((res) => {
         this.messageData = res.data
         var $this = this

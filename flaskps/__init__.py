@@ -2,7 +2,7 @@ from flask import Flask, redirect, url_for, session, render_template, jsonify
 from flask_cors import CORS
 from flask_session import Session
 from flaskps.db import get_db
-from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance, auth, workshop
+from flaskps.resources import configuration, auth, user, instrument, student, teacher, cycle, core, lesson, assistance, auth, workshop, schedule
 from flaskps.config import Config
 from flaskps.helpers import handler
 # Google auth (oAuth)

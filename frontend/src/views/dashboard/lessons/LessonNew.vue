@@ -9,44 +9,56 @@
       <template v-slot:dashboard_content>
         <alert :message="messageData"></alert>
         <!-- Form -->
-        <form v-on:submit.prevent="createCycle">
+        <form v-on:submit.prevent="createLesson">
           <!-- Row -->
           <div class="row mt-3">
-            <!-- Información del ciclo lectivo -->
+            <!-- Información de la clase -->
             <div class="col-12 col-lg-6">
               <!-- Row -->
               <div class="row justify-content-end">
+                <!-- Backlink -->
+                <div class="col-12 text-left">
+                  <back-link :url="returnPath" text="Clases"></back-link>
+                </div>
                 <!-- Col 12 -->
                 <div class="col-12">
 
-                  <dashboard-title title="Informacion del ciclo lectivo"></dashboard-title>
+                  <dashboard-title title="Informacion de la nueva clase"></dashboard-title>
 
                   <!-- Row -->
                   <div class="row">
-                    <!-- Año -->
-                    <div class="col-lg-6">
-                      <mdb-input label="Nombre" v-model="year" required />
-                    </div>
 
-                    <!-- Semestre -->
-                    <div class="col-lg-6">
+                    <!-- Nivel -->
+                    <div class="col-lg-12">
                       <div class="form-group">
-                        <form-label name="Semestre"></form-label>
-                        <select class="browser-default custom-select" v-model="semester_id" required>
+                        <form-label name="Taller a elegir"></form-label>
+                        <select class="browser-default custom-select" v-model="cycle_workshop_id" required>
                           <option selected disabled>Elegir</option>
-                          <option v-for="s in semesters" :key="s.semester_id" :value="s.semester_id">{{s.name}}</option>
+                          <option v-for="c in cycle_workshops" :key="c.cycle_workshop_id" :value="c.cycle_workshop_id">{{c.year}} {{c.semester}} - {{c.name}}</option>
                         </select>
                       </div>
                     </div>
 
-                    <!-- Desde -->
+                    <!-- Nivel -->
                     <div class="col-lg-6">
-                      <mdb-input label="Desde" v-model="date_from" type="date" required />
+                      <div class="form-group">
+                        <form-label name="Tipo de taller"></form-label>
+                        <select class="browser-default custom-select" v-model="workshop_type_id" required>
+                          <option selected disabled>Elegir</option>
+                          <option v-for="w in workshop_types" :key="w.workshop_type_id" :value="w.workshop_type_id">{{w.name}}</option>
+                        </select>
+                      </div>
                     </div>
 
-                    <!-- Hasta -->
+                    <!-- Nivel -->
                     <div class="col-lg-6">
-                      <mdb-input label="Hasta" v-model="date_to" type="date" required />
+                      <div class="form-group">
+                        <form-label name="Nivel"></form-label>
+                        <select class="browser-default custom-select" v-model="level_id" required>
+                          <option selected disabled>Elegir</option>
+                          <option v-for="l in levels" :key="l.level_id" :value="l.level_id">{{l.name}}</option>
+                        </select>
+                      </div>
                     </div>
 
                   </div>
@@ -63,7 +75,7 @@
               </div>
               <!-- /.Row -->
             </div>
-            <!-- /.Información del ciclo lectivo -->
+            <!-- /.Información de la clase -->
           </div>
           <!-- /.Row -->
         </form>
@@ -78,21 +90,24 @@ import axios from 'axios'
 import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
+import backLink from '@/components/dashboard/buttons/BackLink'
 import formLabel from '@/components/Label'
 import alert from '@/components/Alert'
 
 export default {
   data () {
     return {
-      pagetitle: 'Cargar un nuevo ciclo lectivo',
+      pagetitle: 'Cargar una nueva clase',
+      returnPath: '/lessons',
       messageData: {},
       // Form values for select
-      semesters: {},
-      // Cycle form information
-      semester_id: '',
-      year: '',
-      date_from: '',
-      date_to: ''
+      cycle_workshops: {},
+      workshop_types: {},
+      levels: {},
+      // Lesson form information
+      cycle_workshop_id: '',
+      workshop_type_id: '',
+      level_id: ''
     }
   },
   created () {
@@ -102,33 +117,34 @@ export default {
     mdbInput,
     'dashboard': Dashboard,
     'dashboard-title': dashboardTitle,
+    'back-link': backLink,
     'form-label': formLabel,
     'alert': alert
   },
   methods: {
     fetchFormData () {
-      const path = '/api/cycle/form_data'
+      const path = '/api/lesson/form_data'
       axios.get(path).then((res) => {
-        this.semesters = res.data.semesters
+        this.cycle_workshops = res.data.cycle_workshops
+        this.workshop_types = res.data.workshop_types
+        this.levels = res.data.levels
       }).catch((error) => {
         this.fetchFormData()
         console.log(error)
       })
     },
     restoreValues () {
-      this.semester_id = ''
-      this.year = ''
-      this.date_from = ''
-      this.date_to = ''
+      this.cycle_workshop_id = ''
+      this.workshop_type_id = ''
+      this.level_id = ''
     },
-    createCycle () {
+    createLesson () {
       this.messageData = ''
-      const path = '/api/cycle/create'
+      const path = '/api/lesson/create'
       axios.post(path, {
-        semester_id: this.semester_id,
-        year: this.year,
-        date_from: this.date_from,
-        date_to: this.date_to
+        cycle_workshop_id: this.cycle_workshop_id,
+        workshop_type_id: this.workshop_type_id,
+        level_id: this.level_id
       }).then((res) => {
         if (res.data.status === 'success') {
           this.restoreValues()

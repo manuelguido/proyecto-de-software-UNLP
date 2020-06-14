@@ -18,8 +18,8 @@
           <div class="col-12 col-lg-4 text-right pt-3">
             <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
-            <form v-on:submit.prevent="deleteTeacher" class="display-inline">
-              <input class="display-none" value="{{teacher.teacher_id}}" v-model="teacher_id">
+            <form v-on:submit.prevent="deleteLesson" class="display-inline">
+              <input class="display-none" v-model="lesson_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
           </div>
@@ -32,14 +32,12 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-12 col-xl-8">
-                    <h1 class="h5 w600 black-c">{{teacher.name}} {{teacher.lastname}}</h1>
+                    <h1 class="h5 w600 black-c">{{lesson.year}} {{lesson.semester}}</h1>
                   </div>
                   <div class="col-12">
-                    <p class="w600 my-2">Género: {{teacher.gender}}</p>
-                    <p class="w600 my-2">Documento: {{teacher.document_type}} {{teacher.document_number}}</p>
-                    <p class="w600 my-2">Teléfono: {{teacher.phone}}</p>
-                    <p class="my-2">Fecha de nacimiento: {{teacher.birth_date | formatDateFull}}</p>
-                    <p class="my-2">Localidad: {{teacher.location}}</p>
+                    <p class="w600 my-2">{{lesson.workshop}}</p>
+                    <p class="w600 mt-2 mb-3">{{lesson.workshop_type}}</p>
+                    <level-button :level="lesson.level"></level-button>
                   </div>
                 </div>
               </div>
@@ -63,11 +61,11 @@ import alert from '@/components/Alert'
 export default {
   data () {
     return {
-      pagetitle: 'Información del docente',
-      returnPath: '/teachers',
-      editPath: '/teacher/edit/' + this.teacher_id,
-      teacher: '',
-      confirmDeleteMsg: '¿Estás seguro de eliminar al docente? Esta accion no se puede deshacer',
+      pagetitle: 'Información de la clase',
+      returnPath: '/lessons',
+      editPath: '/lesson/edit/' + this.lesson_id,
+      lesson: '',
+      confirmDeleteMsg: '¿Estás seguro de eliminar la clase? Esta accion no se puede deshacer',
       messageData: {}
     }
   },
@@ -75,7 +73,7 @@ export default {
     this.fetchData()
   },
   props: {
-    teacher_id: Number
+    lesson_id: Number
   },
   components: {
     'dashboard': Dashboard,
@@ -86,23 +84,23 @@ export default {
   },
   methods: {
     fetchData () {
-      const path = '/api/teacher/' + this.teacher_id
+      const path = '/api/lesson/' + this.lesson_id
       axios.get(path).then((response) => {
-        this.teacher = response.data
+        this.lesson = response.data
       }).catch((error) => {
         console.log(error)
         this.fetchData()
       })
     },
-    deleteTeacher () {
+    deleteLesson () {
       if (confirm(this.confirmDeleteMsg)) {
-        const path = '/api/teacher/delete'
+        const path = '/api/lesson/delete'
         axios.post(path, {
-          teacher_id: this.teacher_id
+          lesson_id: this.lesson_id
         }).then((response) => {
           this.messageData = response.data
           setTimeout(function () {
-            window.location.href = '/teachers'
+            window.location.href = '/lessons'
           }, 400)
         }).catch((error) => {
           console.log(error)

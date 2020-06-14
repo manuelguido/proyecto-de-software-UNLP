@@ -104,7 +104,7 @@ export default {
         if (respuesta.data.success) {
           setTimeout(function () {
             window.location.href = '/dashboard'
-          }, 300)
+          }, 200)
         } else {
           this.loading = false
           this.status_message = respuesta.data.message
