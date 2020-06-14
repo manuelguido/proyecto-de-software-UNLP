@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import MainRoutes from '@/router/MainRoutes'
+import AssistanceRoutes from '@/router/AssistanceRoutes'
 import CoreRoutes from '@/router/CoreRoutes'
 import StudentRoutes from '@/router/StudentRoutes'
 import TeacherRoutes from '@/router/TeacherRoutes'
@@ -17,6 +18,7 @@ Vue.use(Router)
 var allRoutes = []
 allRoutes = allRoutes.concat(
   MainRoutes,
+  AssistanceRoutes,
   CoreRoutes,
   StudentRoutes,
   TeacherRoutes,

@@ -14,6 +14,7 @@ class Lesson(object):
             INNER JOIN workshop_types ON workshop_types.workshop_type_id = lessons.workshop_type_id
             INNER JOIN semesters ON semesters.semester_id = cycles.semester_id
             INNER JOIN levels ON levels.level_id = lessons.level_id
+            ORDER BY cycles.year DESC, semesters.name DESC
         """
         cursor.execute(sql)
         return cursor.fetchall()

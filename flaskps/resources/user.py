@@ -252,6 +252,10 @@ def routes():
             new = {'name': 'Clases', 'url': '/lessons', 'icon': 'fas fa-chalkboard-teacher'}
             user_routes.append(new)
 
+        if (User.has_permission(session['id'],'asistencia_index')):
+            new = {'name': 'Asistencia', 'url': '/assistances', 'icon': 'fas fa-user-plus'}
+            user_routes.append(new)
+            
         if (User.has_permission(session['id'],'usuario_index')):
             new = {'name': 'Usuarios', 'url': '/users', 'icon': 'fas fa-user-friends'}
             user_routes.append(new)
@@ -273,6 +277,22 @@ def routes():
 
         #Returning data
         return jsonify(routes)
+
+#---------------------------------------------------#
+#   Retorna las rutas del usuario loggeado
+#---------------------------------------------------#
+def permissions():
+    #Auth check
+    auth.authenticated_or_401()
+    #Listado de rutas
+    user_permissions = []
+    User.db = get_db()
+    if (not User.has_roles(session['id'])):
+        return jsonify(user_permissions)
+    else:
+        user_permissions = User.permissions(session['id'])
+    #Returning data
+    return jsonify(user_permissions)
 
 #---------------------------------------------------#
 #   Actualiza el estado (active/inactive) del usuario

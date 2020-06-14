@@ -5,6 +5,7 @@
       :center="center"
       :options="mapOptions"
       style="height: 100%"
+      class="map-rounded"
       @update:center="centerUpdate"
       @update:zoom="zoomUpdate"
     >
@@ -55,7 +56,7 @@ export default {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      currentZoom: 12,
+      currentZoom: 11,
       currentCenter: latLng(-34.9060, -57.89),
       showParagraph: false,
       mapOptions: {
@@ -84,10 +85,17 @@ export default {
 #map {
   width: 100%;
   height: 400px;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  box-shadow: 0 .07em .125em 0 rgba(0,0,0,.15) !important;
+}
+.map-rounded {
+  border-radius: 8px !important;
 }
 @media (min-width: 992px) {
   #map {
-    height: 600px;
+    height: 500px;
   }
 }
 .marker-popup {

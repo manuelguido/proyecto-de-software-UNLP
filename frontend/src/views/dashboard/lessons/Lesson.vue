@@ -275,7 +275,6 @@ export default {
         schedule_id: scheduleId
       }).then((res) => {
         if (res.data.status === 'success') {
-          
           this.fetchSchedules()
         }
         this.messageData = res.data

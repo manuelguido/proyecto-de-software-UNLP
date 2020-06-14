@@ -72,4 +72,7 @@ thead.table-header {
     min-width: 300px !important;
   }
 }
+/* .dataTables_length label {
+  display: none !important;
+} */
 </style>

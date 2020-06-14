@@ -88,6 +88,18 @@ export default {
         this.getUserRoutes()
       })
     },
+    // Obtener los permisos del usuario
+    getUserPermissions: function () {
+      const path = '/api/user/permissions'
+      axios.get(path).then((res) => {
+        // this.routes = res.data
+        localStorage.setItem('permissions', JSON.stringify(res.data))
+        // this.loading = false
+      }).catch((error) => {
+        console.log(error + 'Retring')
+        this.getUserPermissions()
+      })
+    },
     // Obtener si el usuario tiene al menos un rol
     userHasRole: function () {
       const path = '/api/user/has_role'
@@ -116,6 +128,10 @@ export default {
       this.routes = JSON.parse(routes)
     } else {
       this.getUserRoutes()
+    }
+    // Obtener los permisos del usuario
+    if (!localStorage.permissions) {
+      this.getUserPermissions()
     }
   }
 }
