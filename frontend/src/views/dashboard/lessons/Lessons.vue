@@ -39,7 +39,7 @@ export default {
     return {
       pagetitle: 'Clases',
       lessons: '',
-      showLessonPath: '/lesson/',
+      showLessonSchedulesPath: '/lesson/',
       newLessonPath: '/new/lesson/',
       editLessonPath: '/lesson/edit/',
       columns: [
@@ -65,7 +65,7 @@ export default {
         },
         {
           label: '',
-          field: 'show'
+          field: 'schedules'
         },
         {
           label: '',
@@ -100,7 +100,7 @@ export default {
         workshop: lesson.workshop,
         workshop_type: lesson.workshop_type,
         level: lesson.level,
-        show: '<a href="' + this.showLessonPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
+        schedules: '<a href="' + this.showLessonSchedulesPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-clock mr-3"></i>Horarios</a>',
         edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
       }
       this.rows.push(newrow)

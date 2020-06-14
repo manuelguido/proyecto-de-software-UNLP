@@ -151,16 +151,6 @@ class ValidateLessonWithId(Form):
 class ValidateLessonId(Form):
     lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------#
 #   Validar horario
 #---------------------------------------------------#
@@ -168,8 +158,24 @@ class ValidateSchedule(Form):
     lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
     core_id = IntegerField('Núcleo', [validators.required(), validators.NumberRange(min=1, max=None)])
     day_id = IntegerField('Día', [validators.required(), validators.NumberRange(min=1, max=None)])
-    hour_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
-    hour_to = StringField(u'Hasta', [validators.required(), validators.length(max=100)])
+    # hour_from = StringField(u'Desde', [validators.required(), validators.length(max=100)])
+    # hour_to = StringField(u'Hasta', [validators.required(), validators.length(max=100)])
+
+class ValidateScheduleId(Form):
+    schedule_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #---------------------------------------------------#
 #   Validar asistencia

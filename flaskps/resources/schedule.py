@@ -2,6 +2,10 @@ from flask import redirect, render_template, request, url_for, abort, session, f
 from flaskps.db import get_db
 from flaskps.models.user import User
 from flaskps.models.lesson import Lesson
+from flaskps.models.schedule import Schedule
+from flaskps.models.core import Core
+from flaskps.models.day import Day
+
 from flaskps.models.cycle_workshop import CycleWorkshop
 from flaskps.models.workshop_type import WorkshopType
 from flaskps.models.level import Level
@@ -16,17 +20,17 @@ wtforms_json.init()
 #---------------------------------------------------#
 #   Retorna todos las clases
 #---------------------------------------------------#
-def all():
+def get_schedules(lesson_id):
     #Auth check
     auth.authenticated_or_401()
     
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'administrativo_index')):
+    if (not User.has_permission(session['id'],'horario_index')):
         abort(401)
     else:
-        Lesson.db = get_db()
-        return jsonify(Lesson.all())
+        Schedule.db = get_db()
+        return jsonify(Schedule.all(lesson_id))
 
 #---------------------------------------------------#
 #   Retorna al clase por su id
@@ -37,88 +41,66 @@ def get(lesson_id):
     
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'administrativo_show')):
+    if (not User.has_permission(session['id'],'horario_show')):
         abort(401)
     else:
         Lesson.db = get_db()
         return jsonify(Lesson.get(lesson_id))
 
 #---------------------------------------------------#
-#   Crea un ciclo lectivo
+#   Crea un horario
 #---------------------------------------------------#
-def create():
+def add():
     #Auth check
     auth.authenticated_or_401()
 
     if request.method == "POST":
         #Chequea permiso
         User.db = get_db()
-        if (not User.has_permission(session['id'],'administrativo_new')):
+        if (not User.has_permission(session['id'],'horario_new')):
             abort(401)
         else:
             post_data = request.get_json()
             #Form validation
-            form = forms.ValidateLesson.from_json(post_data, skip_unknown_keys=False)
+            form = forms.ValidateSchedule.from_json(post_data, skip_unknown_keys=True)
             if not form.validate():
                 response_object = {'status': 'error', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
-                Lesson.db = get_db()
-                if Lesson.lesson_exists(post_data):
-                    response_object = {'status': 'warning', 'message': 'La clase que quieres crear ya existe.'}
+                Schedule.db = get_db()
+                if Schedule.schedule_exists(post_data):
+                    response_object = {'status': 'warning', 'message': 'La clase ya tiene ese horario.'}
                 else:
-                    Lesson.create(post_data)
-                    response_object = {'status': 'success', 'message': 'Creaste la clase correctamente.'}
+                    newschedule = Schedule.add(post_data)
+                    response_object = {'status': 'success', 'message': 'Agregaste el horario correctamente.'}
+                    response_object = {
+                        'status': 'success',
+                        'message': 'Agregaste el horario correctamente.',
+                        'new_schedule': newschedule
+                        }
             return jsonify(response_object)
 
 #---------------------------------------------------#
-#   Actualiza un ciclo lectivo
+#   Elimina un horario
 #---------------------------------------------------#
-def update():
+def remove():
     #Auth check
     auth.authenticated_or_401()
 
     if request.method == "POST":
         #Chequea permiso
         User.db = get_db()
-        if (not User.has_permission(session['id'],'administrativo_update')):
+        if (not User.has_permission(session['id'],'horario_destroy')):
             abort(401)
         else:
             post_data = request.get_json()
             #Form validation
-            form = forms.ValidateLessonWithId.from_json(post_data, skip_unknown_keys=False)
+            form = forms.ValidateScheduleId.from_json(post_data, skip_unknown_keys=True)
             if not form.validate():
                 response_object = {'status': 'error', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
             else:
-                Lesson.db = get_db()
-                if Lesson.lesson_exists_not_self(post_data):
-                    response_object = {'status': 'warning', 'message': 'La clase que quieres crear ya existe.'}
-                else:
-                    Lesson.update(post_data)
-                    response_object = {'status': 'success', 'message': 'Actualizaste la clase correctamente.'}
-            return jsonify(response_object)
-
-#---------------------------------------------------#
-#   Elimina un ciclo lectivo
-#---------------------------------------------------#
-def delete():
-    #Auth check
-    auth.authenticated_or_401()
-
-    if request.method == "POST":
-        #Chequea permiso
-        User.db = get_db()
-        if (not User.has_permission(session['id'],'administrativo_destroy')):
-            abort(401)
-        else:
-            post_data = request.get_json()
-            #Form validation
-            form = forms.ValidateLessonId.from_json(post_data, skip_unknown_keys=True)
-            if not form.validate():
-                response_object = {'status': 'error', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
-            else:
-                Lesson.db = get_db()
-                Lesson.delete(post_data['lesson_id'])
-                response_object = {'status': 'success', 'message': 'Eliminaste la clase correctamente.'}
+                Schedule.db = get_db()
+                Schedule.remove(post_data['schedule_id'])
+                response_object = {'status': 'success', 'message': 'Eliminaste el horario correctamente.'}
                 return jsonify(response_object)
 
 #---------------------------------------------------#
@@ -130,15 +112,13 @@ def getFormData():
 
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'administrativo_new')):
+    if (not User.has_permission(session['id'],'horario_new')):
         abort(401)
     else:
-        CycleWorkshop.db = get_db()
-        WorkshopType.db = get_db()
-        Level.db = get_db()
+        Core.db = get_db()
+        Day.db = get_db()
         response_json = {
-            'cycle_workshops': CycleWorkshop.all(),
-            'workshop_types': WorkshopType.all(),
-            'levels': Level.all()
+            'cores': Core.all(),
+            'days': Day.all()
             }
         return response_json
