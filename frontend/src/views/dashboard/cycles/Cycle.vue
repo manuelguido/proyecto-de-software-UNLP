@@ -18,9 +18,9 @@
           <!-- /.BackLink -->
 
           <div class="col-12 col-lg-4 text-right pt-3">
-            <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
+            <router-link v-if="administrativo_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
-            <form v-on:submit.prevent="deleteCycle" class="display-inline">
+            <form v-if="administrativo_destroy" v-on:submit.prevent="deleteCycle" class="display-inline">
               <input class="display-none" value="{{cycle.cycle_id}}" v-model="cycle_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
@@ -67,10 +67,14 @@ export default {
       editPath: '/cycle/edit/' + this.cycle_id,
       cycle: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar el ciclo lectivo? Esta accion no se puede deshacer. Toda la información relacionada con el ciclo también será eliminada.',
-      messageData: {}
+      messageData: {},
+      administrativo_update: false,
+      administrativo_destroy: false
     }
   },
-  created () {
+  mounted () {
+    this.fetchUpdate()
+    this.fetchDestroy()
     this.fetchData()
   },
   props: {
@@ -89,8 +93,24 @@ export default {
       axios.get(path).then((response) => {
         this.cycle = response.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/administrativo_update').then((res) => {
+        this.administrativo_update = res.data
+      }).catch((error) => {
+        this.fetchUpdate()
+        console.log(error)
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/administrativo_destroy').then((res) => {
+        this.administrativo_destroy = res.data
+      }).catch((error) => {
+        this.fetchDestroy()
+        console.log(error)
       })
     },
     deleteCycle () {

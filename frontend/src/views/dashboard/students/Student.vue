@@ -98,24 +98,24 @@ export default {
       axios.get(path).then((response) => {
         this.student = response.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/estudiante_update').then((res) => {
         this.estudiante_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     fetchDestroy () {
       axios.get('/api/user/permission/estudiante_destroy').then((res) => {
         this.estudiante_destroy = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchDestroy()
+        console.log(error)
       })
     },
     deleteStudent () {

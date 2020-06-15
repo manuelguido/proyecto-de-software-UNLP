@@ -165,7 +165,7 @@ def getFormData():
 
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'instrumento_new')):
+    if (not User.has_permission(session['id'],'instrumento_index')):
         abort(401)
     else:
         InstrumentType.db = get_db()

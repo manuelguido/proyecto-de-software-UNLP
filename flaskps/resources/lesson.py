@@ -131,7 +131,7 @@ def getFormData():
 
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'administrativo_new')):
+    if (not User.has_permission(session['id'],'administrativo_index')):
         abort(401)
     else:
         CycleWorkshop.db = get_db()
@@ -153,11 +153,11 @@ def students(lesson_id):
     
     #Chequea permiso
     User.db = get_db()
-    if (User.has_permission(session['id'],'estudiante_index')):
+    if (not User.has_permission(session['id'],'asistencia_index')):
+        abort(401)
+    else:
         Student.db = get_db()
         return jsonify(Student.all_by_lesson(lesson_id))
-    else:
-        abort(401)
 
 #---------------------------------------------------#
 #   Crea un horario
@@ -169,7 +169,7 @@ def add_student():
     if request.method == "POST":
         #Chequea permiso
         User.db = get_db()
-        if (not User.has_permission(session['id'],'horario_new')):
+        if (not User.has_permission(session['id'],'asistencia_new')):
             abort(401)
         else:
             post_data = request.get_json()
@@ -199,7 +199,7 @@ def remove_student():
     if request.method == "POST":
         #Chequea permiso
         User.db = get_db()
-        if (not User.has_permission(session['id'],'horario_destroy')):
+        if (not User.has_permission(session['id'],'asistencia_destroy')):
             abort(401)
         else:
             post_data = request.get_json()

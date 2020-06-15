@@ -14,9 +14,9 @@
             <back-link :url="returnPath" text="Talleres"></back-link>
           </div>
           <div class="col-12 col-lg-4 text-right pt-3">
-            <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
+            <router-link v-if="administrativo_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
-            <form v-on:submit.prevent="deleteWorkshop" class="display-inline">
+            <form v-if="administrativo_destroy" v-on:submit.prevent="deleteWorkshop" class="display-inline">
               <input class="display-none" :value="workshop_id" v-model="workshop_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
@@ -63,10 +63,14 @@ export default {
       editPath: '/workshop/edit/' + this.workshop_id,
       workshop: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar el taller? Esta accion no se puede deshacer',
-      messageData: {}
+      messageData: {},
+      administrativo_update: false,
+      administrativo_destroy: false
     }
   },
-  created () {
+  mounted () {
+    this.fetchUpdate()
+    this.fetchDestroy()
     this.fetchData()
   },
   props: {
@@ -85,8 +89,24 @@ export default {
       axios.get(path).then((response) => {
         this.workshop = response.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/administrativo_update').then((res) => {
+        this.administrativo_update = res.data
+      }).catch((error) => {
+        this.fetchUpdate()
+        console.log(error)
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/administrativo_destroy').then((res) => {
+        this.administrativo_destroy = res.data
+      }).catch((error) => {
+        this.fetchDestroy()
+        console.log(error)
       })
     },
     deleteWorkshop () {

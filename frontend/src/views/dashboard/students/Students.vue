@@ -93,8 +93,8 @@ export default {
         this.students = respuesta.data
         this.loadStudents()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions
@@ -102,24 +102,24 @@ export default {
       axios.get('/api/user/permission/estudiante_new').then((res) => {
         this.estudiante_new = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchNew()
+        console.log(error)
       })
     },
     fetchShow () {
       axios.get('/api/user/permission/estudiante_show').then((res) => {
         this.estudiante_show = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchShow()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/estudiante_update').then((res) => {
         this.estudiante_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     loadStudents () {

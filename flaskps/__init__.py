@@ -194,7 +194,7 @@ def authorize():
 
 
 @app.errorhandler(500)
-def error404(error):
+def error500(error):
     return jsonify({'status': 'error', 'message': 'Ocurrio un error momentaneo en el servidor. Refresca la página para actualizar los datos.'})
 
 @app.errorhandler(404)

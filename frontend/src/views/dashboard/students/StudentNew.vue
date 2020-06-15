@@ -202,7 +202,7 @@ export default {
       responsable_type_id: ''
     }
   },
-  created () {
+  mounted () {
     this.fetchFormData()
   },
   components: {

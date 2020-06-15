@@ -18,7 +18,7 @@
           </div>
           <!-- /.Col -->
           <!-- Col -->
-          <div class="col-12 col-md-10 col-lg-8 mb-5">
+          <div v-if="administrativo_new" class="col-12 col-md-10 col-lg-8 mb-5">
 
             <!-- Form -->
             <form v-on:submit.prevent="assignWorkshop">
@@ -49,7 +49,7 @@
 
                 <!-- Col 12 -->
                 <div class="col-12 col-lg-3">
-                  <button type="submit" class="btn seed-btn-b btn-block waves-effect mx-0">Asignar</button>
+                  <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Asignar</button>
                 </div>
                 <!-- /.Col 12 -->
               </div>
@@ -94,6 +94,8 @@ export default {
       returnPath: '/workshops',
       unassignCycleWorkshopPath: '/unassign/workshop/',
       messageData: false,
+      administrativo_new: false,
+      administrativo_destroy: false,
       // From data
       cycles: {},
       workshops: {},
@@ -122,6 +124,8 @@ export default {
   mounted () {
     this.fetchData()
     this.fetchFormData()
+    this.fetchNew()
+    this.fetchDestroy()
   },
   components: {
     'dashboard': Dashboard,
@@ -138,8 +142,8 @@ export default {
         this.cycle_workshops = res.data
         this.loadCycleWorkshops()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     fetchFormData () {
@@ -152,11 +156,31 @@ export default {
         console.log(error)
       })
     },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/administrativo_new').then((res) => {
+        this.administrativo_new = res.data
+      }).catch((error) => {
+        this.fetchNew()
+        console.log(error)
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/administrativo_destroy').then((res) => {
+        this.administrativo_destroy = res.data
+      }).catch((error) => {
+        this.fetchShow()
+        console.log(error)
+      })
+    },
     addRow (cycleWorkshop) {
-      var newrow = {
+      let newrow = {}
+      var vardestroy = '<p class="display-none">-</p>'
+      if (this.administrativo_destroy) { vardestroy = '<a href="' + this.unassignCycleWorkshopPath + cycleWorkshop.cycle_workshop_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-times mr-3"></i>Desasignar</a>' }
+      newrow = {
         cycle: cycleWorkshop.year + ' ' + cycleWorkshop.semester,
         workshop: cycleWorkshop.name,
-        unassign: '<a href="' + this.unassignCycleWorkshopPath + cycleWorkshop.cycle_workshop_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-times mr-3"></i>Desasignar</a>'
+        unassign: vardestroy
       }
       this.rows.push(newrow)
     },

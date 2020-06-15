@@ -26,9 +26,9 @@
               </div>
 
               <div class="col-12 col-lg-3 text-lg-right uns">
-                <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
+                <router-link v-if="instrumento_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
                 <!-- Form -->
-                <form v-on:submit.prevent="deleteInstrument" class="display-inline">
+                <form v-if="instrumento_destroy" v-on:submit.prevent="deleteInstrument" class="display-inline">
                   <input class="display-none" value="{{instrument_id}}" v-model="instrument_id">
                   <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
                 </form>
@@ -78,10 +78,14 @@ export default {
       instrument: '',
       image: false,
       confirmDeleteMsg: '¿Estás seguro de eliminar el instrumento? Esta accion no se puede deshacer',
-      messageData: {}
+      messageData: {},
+      instrumento_update: false,
+      instrumento_destroy: false
     }
   },
-  created () {
+  mounted () {
+    this.fetchUpdate()
+    this.fetchDestroy()
     this.fetchData()
   },
   props: {
@@ -103,6 +107,22 @@ export default {
       }).catch((error) => {
         console.log(error)
         this.fetchData()
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/instrumento_update').then((res) => {
+        this.instrumento_update = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchUpdate()
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/instrumento_destroy').then((res) => {
+        this.instrumento_destroy = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchDestroy()
       })
     },
     fetchImage () {

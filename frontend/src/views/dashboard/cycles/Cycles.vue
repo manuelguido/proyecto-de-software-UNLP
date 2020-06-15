@@ -13,7 +13,7 @@
             <dashboard-title title="Listado de ciclos lectivos"></dashboard-title>
           </div>
           <div class="col-12 col-md-6 text-md-right">
-            <router-link :to="newCyclePath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo ciclo lectivo</router-link>
+            <router-link v-if="administrativo_new" :to="newCyclePath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo ciclo lectivo</router-link>
           </div>
           <div class="col-12">
             <dashboard-table
@@ -44,6 +44,10 @@ export default {
       showCyclePath: '/cycle/',
       newCyclePath: '/new/cycle/',
       editCyclePath: '/cycle/edit/',
+      // Permissions
+      administrativo_new: false,
+      administrativo_show: false,
+      administrativo_update: false,
       columns: [
         {
           label: 'Año',
@@ -71,7 +75,10 @@ export default {
       rows: []
     }
   },
-  created () {
+  mounted () {
+    this.fetchNew()
+    this.fetchShow()
+    this.fetchUpdate()
     this.fetchData()
   },
   components: {
@@ -90,19 +97,50 @@ export default {
         this.fetchData()
       })
     },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/administrativo_new').then((res) => {
+        this.administrativo_new = res.data
+      }).catch((error) => {
+        this.fetchNew()
+        console.log(error)
+      })
+    },
+    fetchShow () {
+      axios.get('/api/user/permission/administrativo_show').then((res) => {
+        this.administrativo_show = res.data
+      }).catch((error) => {
+        this.fetchShow()
+        console.log(error)
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/administrativo_update').then((res) => {
+        this.administrativo_update = res.data
+      }).catch((error) => {
+        this.fetchUpdate()
+        console.log(error)
+      })
+    },
     dateFormat (value) {
       moment.locale('es')
       return moment(String(value)).format('ll')
     },
     loadCycles () {
       let newrow = {}
+      var varshow
+      var varedit
       for (let i = 0; i < this.cycles.length; i++) {
+        varshow = '<p class="display-none">-</p>'
+        varedit = '<p class="display-none">-</p>'
+        if (this.administrativo_show) { varshow = '<a href="' + this.showCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>' }
+        if (this.administrativo_update) { varedit = '<a href="' + this.editCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>' }
         newrow = {
           semester: this.cycles[i].semester,
           year: this.cycles[i].year,
           period: 'Desde: ' + this.dateFormat(this.cycles[i].date_from) + '<br>Hasta: &nbsp;' + this.dateFormat(this.cycles[i].date_to),
-          show: '<a href="' + this.showCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editCyclePath + this.cycles[i].cycle_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
+          show: varshow,
+          edit: varedit
         }
         this.rows.push(newrow)
       }
