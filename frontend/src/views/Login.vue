@@ -34,7 +34,7 @@
                           <i class="fas fa-envelope white-text"></i>
                         </div>
                       </div>
-                      <input type="email" v-model="email" name="email" class="form-control py-0" id="email" placeholder="Ingrese su email" required>
+                      <input type="text" v-model="email" name="email" class="form-control py-0" id="email" placeholder="Email o nombre de usuario" required>
                     </div>
                   </div>
                   <!-- /.Email -->
@@ -48,7 +48,7 @@
                           <i class="fas fa-lock white-text"></i>
                         </div>
                       </div>
-                      <input type="password" v-model="password" name="password" id="password" class="form-control py-0"  placeholder="Ingrese su contraseña" required>
+                      <input type="password" v-model="password" name="password" id="password" class="form-control py-0"  placeholder="Contraseña" required>
                     </div>
                   </div>
                   <!-- /.Password -->

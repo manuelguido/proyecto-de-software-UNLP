@@ -6,7 +6,10 @@
     <mdb-navbar-toggler>
       <mdb-navbar-nav class="web-hide">
         <router-link to="/dashboard" class="nav-item web-hide"><i class="fas fa-home mr-2"></i>Inicio</router-link>
-        <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide"><i :class="link.icon" class="mr-2"></i>{{link.name}}</router-link>
+        <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide">
+          <span class="icon"><i :class="link.icon" class="mx-auto"></i>
+          {{link.name}}
+        </router-link>
         <router-link to="/logout" class="nav-item web-hide"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
@@ -53,17 +56,23 @@ export default {
   border-radius: 6.2px !important;
   border: 0 none !important;
   background: none;
-  color: var(--black-a);
+  color: var(--white-a);
   transition: 0.1s all !important;
 }
 .nav-item i {
-  color: var(--black-d);
+  color: var(--white-b);
+}
+
+.icon {
+  display: inline-block;
+  width: 34px !important;
+  text-align: center !important;
 }
 
 .nav-item:hover,
 .nav-item:active,
 .nav-item.active {
-  background: var(--color-d-light);
+  background: var(--color-d);
 }
 
 .nav-item.router-link-active,
