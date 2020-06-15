@@ -40,6 +40,7 @@ export default {
       pagetitle: 'Clases',
       lessons: '',
       showLessonSchedulesPath: '/lesson/',
+      showLessonStudentsPath: '/lesson/students/',
       newLessonPath: '/new/lesson/',
       editLessonPath: '/lesson/edit/',
       columns: [
@@ -66,6 +67,10 @@ export default {
         {
           label: '',
           field: 'schedules'
+        },
+        {
+          label: '',
+          field: 'students'
         },
         {
           label: '',
@@ -101,6 +106,7 @@ export default {
         workshop_type: lesson.workshop_type,
         level: lesson.level,
         schedules: '<a href="' + this.showLessonSchedulesPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-clock mr-3"></i>Horarios</a>',
+        students: '<a href="' + this.showLessonStudentsPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="fas fa-user mr-3"></i>Estudiantes</a>',
         edit: '<a href="' + this.editLessonPath + lesson.lesson_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
       }
       this.rows.push(newrow)

@@ -4,6 +4,7 @@ from flaskps.models.user import User
 from flaskps.models.lesson import Lesson
 from flaskps.models.cycle_workshop import CycleWorkshop
 from flaskps.models.workshop_type import WorkshopType
+from flaskps.models.student import Student
 from flaskps.models.level import Level
 from flaskps.helpers import auth
 from flaskps.resources import forms
@@ -142,3 +143,72 @@ def getFormData():
             'levels': Level.all()
             }
         return response_json
+
+#---------------------------------------------------#
+#   Retorna los estudiantes de la clase
+#---------------------------------------------------#
+def students(lesson_id):
+    #Auth check
+    auth.authenticated_or_401()
+    
+    #Chequea permiso
+    User.db = get_db()
+    if (User.has_permission(session['id'],'estudiante_index')):
+        Student.db = get_db()
+        return jsonify(Student.all_by_lesson(lesson_id))
+    else:
+        abort(401)
+
+#---------------------------------------------------#
+#   Crea un horario
+#---------------------------------------------------#
+def add_student():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (not User.has_permission(session['id'],'horario_new')):
+            abort(401)
+        else:
+            post_data = request.get_json()
+            #Form validation
+            form = forms.ValidateLessonStudent.from_json(post_data, skip_unknown_keys=False)
+            if not form.validate():
+                response_object = {'status': 'error', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
+            else:
+                Lesson.db = get_db()
+                if Lesson.has_student(post_data):
+                    response_object = {'status': 'warning', 'message': 'El estudiante ya está asignado en la clase.'}
+                else:
+                    Lesson.add_student(post_data)
+                    response_object = {
+                        'status': 'success',
+                        'message': 'Asignaste el estudiante correctamente.'
+                        }
+            return jsonify(response_object)
+
+#---------------------------------------------------#
+#   Elimina un horario
+#---------------------------------------------------#
+def remove_student():
+    #Auth check
+    auth.authenticated_or_401()
+
+    if request.method == "POST":
+        #Chequea permiso
+        User.db = get_db()
+        if (not User.has_permission(session['id'],'horario_destroy')):
+            abort(401)
+        else:
+            post_data = request.get_json()
+            #Form validation
+            form = forms.ValidateLessonStudent.from_json(post_data, skip_unknown_keys=False)
+            if not form.validate():
+                response_object = {'status': 'error', 'message': 'Verifica los campos obligatorios y no ingreses valores no permitidos.'}
+            else:
+                Lesson.db = get_db()
+                Lesson.remove_student(post_data)
+                response_object = {'status': 'success', 'message': 'Desasignaste el estudiante correctamente.'}
+                return jsonify(response_object)

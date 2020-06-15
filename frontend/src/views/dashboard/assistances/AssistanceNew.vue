@@ -12,7 +12,7 @@
         <div class="row">
           <!-- Backlink -->
           <div class="col-12 text-left">
-            <back-link :url="returnPath" text="Clases"></back-link>
+            <back-link :url="returnPath" text="Listado de asistencia"></back-link>
           </div>
         </div>
         <!-- /.Edition row -->
@@ -107,8 +107,8 @@
                     A: &nbsp; {{r.hour_to}} hs
                   </td>
                   <td class="text-right">
-                    <form v-on:submit.prevent="removeSchedule(r.schedule_id)" class="display-inline p-0 m-0">
-                      <button type="submit" class="btn btn-danger btn-sm seed-rounded m-0" title="Eliminar">
+                    <form v-on:submit.prevent="removeSchedule(r.schedule_id)" class="display-inline m-0 p-0">
+                      <button type="submit" class="btn btn-danger btn-sm seed-rounded" title="Eliminar">
                         <i class="fas fa-times"></i>
                       </button>
                     </form>
@@ -138,27 +138,22 @@ import alert from '@/components/Alert'
 export default {
   data () {
     return {
-      pagetitle: 'Información de la clase y horarios',
-      returnPath: '/lessons',
-      editPath: '/lesson/edit/' + this.lesson_id,
-      studentsPath: '/lesson/students/' + this.lesson_id,
-      lesson: '',
+      pagetitle: 'Información para pasar asistencia',
+      returnPath: '/assistances',
+      assistances: {},
       schedules: {},
-      cores: {},
-      days: {},
+      students: {},
+      teachers: {},
       // Form data
-      new_core_id: 0,
-      new_day_id: 0,
-      new_hour_from: '',
-      new_hour_to: '',
-      confirmDeleteMsg: '¿Estás seguro de eliminar la clase? Esta accion no se puede deshacer',
-      confirmDeleteMsgSchedule: '¿Estás seguro de eliminar el horario? Esta accion no se puede deshacer',
+      new_schedule_id: 0,
+      new_student_id: 0,
+      new_teacher_id: 0,
       messageData: {},
       // Table data
       columns: [
         {
-          label: 'Núcleo',
-          field: 'core',
+          label: 'Estudiante',
+          field: 'student',
           sort: 'asc'
         },
         {
@@ -173,10 +168,6 @@ export default {
         {
           label: '',
           field: 'delete'
-        },
-        {
-          label: '',
-          field: 'students'
         }
       ]
     }
@@ -217,14 +208,22 @@ export default {
         this.fetchSchedules()
       })
     },
-    fetchFormData () {
-      const path = '/api/schedule/form_data'
+    fetchStudents () {
+      const path = '/api/students/' // + this.lesson_id
       axios.get(path).then((res) => {
-        this.cores = res.data.cores
-        this.days = res.data.days
+        this.students = res.data
       }).catch((error) => {
-        this.fetchFormData()
         console.log(error)
+        this.fetchStudents()
+      })
+    },
+    fetchTeachers () {
+      const path = '/api/teachers/' // + this.lesson_id
+      axios.get(path).then((res) => {
+        this.teachers = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchTeachers()
       })
     },
     addRow (schedule) {
@@ -246,12 +245,11 @@ export default {
       }
     },
     restoreValues () {
-      this.new_core_id = 0
-      this.new_day_id = 0
-      this.new_hour_from = ''
-      this.new_hour_to = ''
+      this.new_schedule_id = 0
+      this.new_student_id = 0
+      this.new_teacher_id = 0
     },
-    addSchedule () {
+    addAssistance () {
       this.messageData = false
       const path = '/api/schedule/add'
       axios.post(path, {
@@ -276,23 +274,21 @@ export default {
     },
     removeSchedule (scheduleId) {
       this.messageData = false
-      if (confirm(this.confirmDeleteMsgSchedule)) {
-        const path = '/api/schedule/remove'
-        axios.post(path, {
-          schedule_id: scheduleId
-        }).then((res) => {
-          if (res.data.status === 'success') {
-            this.fetchSchedules()
-          }
-          this.messageData = res.data
-          var $this = this
-          setTimeout(function () {
-            $this.messageData = false
-          }, 4000)
-        }).catch((error) => {
-          console.log(error)
-        })
-      }
+      const path = '/api/schedule/remove'
+      axios.post(path, {
+        schedule_id: scheduleId
+      }).then((res) => {
+        if (res.data.status === 'success') {
+          this.fetchSchedules()
+        }
+        this.messageData = res.data
+        var $this = this
+        setTimeout(function () {
+          $this.messageData = false
+        }, 4000)
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
 }

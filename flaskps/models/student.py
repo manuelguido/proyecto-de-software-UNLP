@@ -80,6 +80,24 @@ class Student(object):
         cls.db.commit()
         return True
 
+
+    @classmethod
+    def all_by_lesson(cls, lesson_id):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT students.student_id, students.name, students.lastname, students.document_number, document_types.name as document_type FROM students
+            INNER JOIN levels ON students.level_id = levels.level_id
+            INNER JOIN genders ON students.gender_id = genders.gender_id
+            INNER JOIN schools ON students.school_id = schools.school_id
+            INNER JOIN neighborhoods ON students.neighborhood_id = neighborhoods.neighborhood_id
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
+            INNER JOIN lesson_student ON students.student_id = lesson_student.student_id
+            INNER JOIN lessons ON lessons.lesson_id = lesson_student.lesson_id
+            WHERE lessons.lesson_id = %s
+        """
+        cursor.execute(sql, (lesson_id))
+        return cursor.fetchall()
+
     # @classmethod
     # def allEstudianteTaller(cls):
     #     cursor = cls.db.cursor()

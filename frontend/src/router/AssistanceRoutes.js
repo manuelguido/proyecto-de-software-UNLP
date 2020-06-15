@@ -1,9 +1,7 @@
 import axios from 'axios'
 
 import Assistances from '@/views/dashboard/assistances/Assistances'
-// import Lesson from '@/views/dashboard/lessons/Lesson'
-// import LessonNew from '@/views/dashboard/lessons/LessonNew'
-// import LessonEdit from '@/views/dashboard/lessons/LessonEdit'
+import AssistanceNew from '@/views/dashboard/assistances/AssistanceNew'
 
 const routes = [
   {
@@ -22,25 +20,25 @@ const routes = [
         console.log(error)
       })
     }
+  },
+  {
+    path: '/new/assistance/:lesson_id',
+    name: 'AssistanceNew',
+    component: AssistanceNew,
+    props: true,
+    beforeEnter (to, from, next) {
+      const path = '/auth/authenticated'
+      axios.get(path).then((respuesta) => {
+        if (respuesta.data.authenticated) {
+          next()
+        } else {
+          next({ name: 'Login' })
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
   }
-  // {
-  //   path: '/lesson/:lesson_id',
-  //   name: 'Lesson',
-  //   component: Lesson,
-  //   props: true,
-  //   beforeEnter (to, from, next) {
-  //     const path = '/auth/authenticated'
-  //     axios.get(path).then((respuesta) => {
-  //       if (respuesta.data.authenticated) {
-  //         next()
-  //       } else {
-  //         next({ name: 'Login' })
-  //       }
-  //     }).catch((error) => {
-  //       console.log(error)
-  //     })
-  //   }
-  // },
   // {
   //   path: '/new/lesson',
   //   name: 'LessonNew',

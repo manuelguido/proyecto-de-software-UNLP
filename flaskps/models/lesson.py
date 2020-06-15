@@ -81,3 +81,30 @@ class Lesson(object):
         result = cursor.execute(sql, (data['cycle_workshop_id'], data['workshop_type_id'], data['level_id'], data['lesson_id']))
         cls.db.commit()
         return (result > 0)
+
+    @classmethod
+    def has_student(cls, data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT lesson_student.lesson_id COUNT
+            FROM lesson_student
+            WHERE lesson_id=%s and student_id=%s
+        """
+        result = cursor.execute(sql, (data['lesson_id'], data['student_id']))
+        cls.db.commit()
+        return (result > 0)
+
+    @classmethod
+    def add_student(cls, data):
+        cursor = cls.db.cursor()
+        sql = "INSERT INTO lesson_student (lesson_id, student_id) VALUES (%s, %s)"
+        cursor.execute(sql, (data['lesson_id'], data['student_id']))
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def remove_student(cls, data):
+        cursor = cls.db.cursor()
+        cursor.execute("DELETE FROM lesson_student WHERE lesson_id=%s and student_id=%s", (data['lesson_id'], data['student_id']))
+        cls.db.commit()
+        return True

@@ -4,6 +4,7 @@ import Lessons from '@/views/dashboard/lessons/Lessons'
 import Lesson from '@/views/dashboard/lessons/Lesson'
 import LessonNew from '@/views/dashboard/lessons/LessonNew'
 import LessonEdit from '@/views/dashboard/lessons/LessonEdit'
+import LessonStudents from '@/views/dashboard/lessons/LessonStudents'
 
 const routes = [
   {
@@ -62,6 +63,24 @@ const routes = [
     path: '/lesson/edit/:lesson_id',
     name: 'LessonEdit',
     component: LessonEdit,
+    props: true,
+    beforeEnter (to, from, next) {
+      const path = '/auth/authenticated'
+      axios.get(path).then((respuesta) => {
+        if (respuesta.data.authenticated) {
+          next()
+        } else {
+          next({ name: 'Login' })
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  },
+  {
+    path: '/lesson/students/:lesson_id',
+    name: 'LessonStudents',
+    component: LessonStudents,
     props: true,
     beforeEnter (to, from, next) {
       const path = '/auth/authenticated'

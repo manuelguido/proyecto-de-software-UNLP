@@ -36,9 +36,7 @@ export default {
     return {
       pagetitle: 'Pasar asistencia',
       lessons: '',
-      // showLessonSchedulesPath: '/lesson/',
-      // newLessonPath: '/new/lesson/',
-      // editLessonPath: '/lesson/edit/',
+      newAssistancePath: '/new/assistance/',
       columns: [
         {
           label: 'Ciclo lectivo',
@@ -93,7 +91,7 @@ export default {
         workshop: lesson.workshop,
         workshop_type: lesson.workshop_type,
         level: lesson.level,
-        assistance: '<a href="' + this.showLessonSchedulesPath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="fas fa-plus mr-3"></i></i>Pasar asistencia</a>'
+        assistance: '<a href="' + this.newAssistancePath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="fas fa-plus mr-3"></i></i>Pasar asistencia</a>'
       }
       this.rows.push(newrow)
     },

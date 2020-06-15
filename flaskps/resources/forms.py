@@ -151,6 +151,12 @@ class ValidateLessonWithId(Form):
 class ValidateLessonId(Form):
     lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
 
+class ValidateLessonStudent(Form):
+    lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    student_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+
+
+
 #---------------------------------------------------#
 #   Validar horario
 #---------------------------------------------------#
@@ -166,7 +172,7 @@ class ValidateScheduleId(Form):
 
 
 
-
+ValidateLessonStudent
 
 
 

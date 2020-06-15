@@ -128,6 +128,10 @@ app.add_url_rule("/api/lesson/create", 'api_lesson_create', lesson.create, metho
 app.add_url_rule("/api/lesson/update", 'api_lesson_update', lesson.update, methods=['POST'])
 app.add_url_rule("/api/lesson/delete", 'api_lesson_delete', lesson.delete, methods=['POST'])
 app.add_url_rule("/api/lesson/form_data", 'api_lesson_form_data', lesson.getFormData, methods=['GET'])
+app.add_url_rule("/api/lesson/students/<int:lesson_id>", 'api_lesson_students', lesson.students, methods=['GET'])
+
+app.add_url_rule("/api/lesson/student/add", 'api_lesson_student_add', lesson.add_student, methods=['POST'])
+app.add_url_rule("/api/lesson/student/remove", 'api_lesson_student_remove', lesson.remove_student, methods=['POST'])
 
 # Horarios (Schedules)
 app.add_url_rule("/api/schedules/<int:lesson_id>", 'api_schedules', schedule.get_schedules, methods=['GET'])
