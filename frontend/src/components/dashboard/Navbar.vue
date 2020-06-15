@@ -1,5 +1,5 @@
 <template>
-  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none px-3" togglerClass="text-white bg-color-b" dark>
+  <mdb-navbar id="dashboard-navbar" class="fixed-top shadow-none px-3 uns" togglerClass="text-white bg-color-b" dark>
     <mdb-navbar-brand class="nav-brand">
       <span class="white-a w600 ls03 my-3">Panel</span>
     </mdb-navbar-brand>

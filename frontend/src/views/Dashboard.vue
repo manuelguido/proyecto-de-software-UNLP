@@ -34,6 +34,12 @@
                     </div>
                     <!-- /.Loading Spinner -->
                     <div v-else-if=user_has_role>
+                      <div class="row">
+                        <div class="col-12">
+                          <h1 class="h5 black-b w600 mb-4">Bienvenido nuevamente {{user.name}}</h1>
+                          <h2 class="h6 black-c w600 mb-5">Aquí tienes algunos accesos directos</h2>
+                        </div>
+                      </div>
                       <dashboard-items :items="routes"></dashboard-items>
                     </div>
                     <div v-else>
@@ -41,7 +47,6 @@
                     </div>
                   </slot>
                   <!-- /.Contenido -->
-
                 </div>
               </div>
             </div>
@@ -59,6 +64,7 @@ import sidebar from '@/components/dashboard/sidebar/Sidebar'
 import navbar from '@/components/dashboard/Navbar'
 import dashboardItems from '@/components/dashboard/items/DashboardItems'
 import noRoleMessage from '@/components/dashboard/NoRoleMessage'
+import dashboardTitle from '@/components/dashboard/Title'
 
 export default {
   name: 'Dashboard',
@@ -66,10 +72,12 @@ export default {
     'sidebar': sidebar,
     'navbar': navbar,
     'dashboard-items': dashboardItems,
+    'dashboard-title': dashboardTitle,
     'no-role-message': noRoleMessage
   },
   data () {
     return {
+      user: {},
       routes: null,
       loading: true,
       user_has_role: false
@@ -88,19 +96,17 @@ export default {
         this.getUserRoutes()
       })
     },
-    // // Obtener los permisos del usuario
-    // getUserPermissions: function () {
-    //   const path = '/api/user/permissions'
-    //   axios.get(path).then((res) => {
-    //     // this.routes = res.data
-    //     localStorage.setItem('permissions', JSON.stringify(res.data))
-    //     // this.loading = false
-    //   }).catch((error) => {
-    //     console.log(error + 'Retring')
-    //     this.getUserPermissions()
-    //   })
-    // },
-    // Obtener si el usuario tiene al menos un rol
+    getUserData: function () {
+      const path = '/api/user/profile'
+      axios.get(path).then((res) => {
+        this.user = res.data
+        localStorage.setItem('user', JSON.stringify(this.user))
+        this.loading = false
+      }).catch((error) => {
+        console.log(error + 'Retring')
+        this.getUserData()
+      })
+    },
     userHasRole: function () {
       const path = '/api/user/has_role'
       axios.get(path).then((res) => {
@@ -129,21 +135,18 @@ export default {
     } else {
       this.getUserRoutes()
     }
-    // // Obtener los permisos del usuario
-    // if (!localStorage.permissions) {
-    //   this.getUserPermissions()
-    // }
+    if (localStorage.user) {
+      this.user = JSON.parse(localStorage.getItem('user'))
+    } else {
+      this.getUserData()
+    }
   }
 }
 </script>
 
 <style>
-/* body {
-  background: #ededed !important;
-} */
 #dashboard-container {
   min-height: 100vh;
-  /* background-color: #ededed; */
   background: #fff;
 }
 @media(min-width: 1500px) {

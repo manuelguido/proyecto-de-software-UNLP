@@ -77,7 +77,7 @@ export default {
       estudiante_destroy: false
     }
   },
-  created () {
+  mounted () {
     this.fetchUpdate()
     this.fetchDestroy()
     this.fetchData()

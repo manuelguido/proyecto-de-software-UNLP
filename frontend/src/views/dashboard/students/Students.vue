@@ -75,7 +75,7 @@ export default {
       rows: []
     }
   },
-  created () {
+  mounted () {
     this.fetchNew()
     this.fetchShow()
     this.fetchUpdate()

@@ -74,7 +74,7 @@ export default {
       rows: []
     }
   },
-  created () {
+  mounted () {
     this.fetchNew()
     this.fetchShow()
     this.fetchUpdate()
@@ -92,8 +92,8 @@ export default {
         this.teachers = respuesta.data
         this.loadTeachers()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions
@@ -101,8 +101,8 @@ export default {
       axios.get('/api/user/permission/docente_new').then((res) => {
         this.docente_new = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchNew()
+        console.log(error)
       })
     },
     fetchShow () {

@@ -1,7 +1,7 @@
 <template>
-  <mdb-navbar id="topnav" class="shadow-none m-0" dark>
+  <mdb-navbar id="topnav" class="shadow-none m-0 uns" dark>
     <mdb-navbar-brand>
-      <span v-if="user" class="h6 white-a w300 ls02 my-3">{{user.name}} {{user.lastname}}</span>
+      <span v-if="user" class="h6 white-a w400 ls02 my-3"><i class="fas fa-user-alt mr-2 white-c"></i>{{user.name}} {{user.lastname}}</span>
       <div v-else-if="loading" class="spinner-border color-c my-0" role="status">
         <span class="sr-only">Loading...</span>
       </div>
