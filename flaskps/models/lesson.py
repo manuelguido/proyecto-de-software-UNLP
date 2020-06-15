@@ -108,3 +108,33 @@ class Lesson(object):
         cursor.execute("DELETE FROM lesson_student WHERE lesson_id=%s and student_id=%s", (data['lesson_id'], data['student_id']))
         cls.db.commit()
         return True
+
+    @classmethod
+    def students(cls, lesson_id):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT DISTINCT students.student_id, students.name, students.lastname, students.document_number, document_types.name as document_type FROM students
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
+            INNER JOIN lesson_student ON students.student_id = lesson_student.student_id
+            WHERE lesson_student.lesson_id=%s
+        """
+        cursor.execute(sql, (lesson_id))
+        return cursor.fetchall()
+
+    @classmethod
+    def students_for_assistance(cls, data):
+        cursor = cls.db.cursor()
+        sql = """
+            SELECT DISTINCT students.student_id, students.name, students.lastname, students.document_number, document_types.name as document_type FROM students
+            INNER JOIN document_types ON students.document_type_id = document_types.document_type_id
+            INNER JOIN lesson_student ON students.student_id = lesson_student.student_id
+            WHERE lesson_student.lesson_id=%s
+            AND students.student_id NOT IN (
+                SELECT student_id
+                FROM assistances
+                INNER JOIN schedules ON assistances.schedule_id = schedules.schedule_id
+                WHERE schedules.lesson_id = %s and schedules.schedule_id = %s and assistances.date = %s
+            )
+        """
+        cursor.execute(sql, (data['lesson_id'], data['lesson_id'], data['schedule_id'], data['date']))
+        return cursor.fetchall()

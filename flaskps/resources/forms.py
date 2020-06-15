@@ -155,8 +155,6 @@ class ValidateLessonStudent(Form):
     lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
     student_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-
-
 #---------------------------------------------------#
 #   Validar horario
 #---------------------------------------------------#
@@ -170,25 +168,13 @@ class ValidateSchedule(Form):
 class ValidateScheduleId(Form):
     schedule_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
 
-
-
-ValidateLessonStudent
-
-
-
-
-
-
-
-
-
-
 #---------------------------------------------------#
 #   Validar asistencia
 #---------------------------------------------------#
 class ValidateAssistance(Form):
-    teacher_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
-    student_id = IntegerField('Núcleo', [validators.required(), validators.NumberRange(min=1, max=None)])
-    schedule_id = IntegerField('Día', [validators.required(), validators.NumberRange(min=1, max=None)])
-    date = StringField(u'Desde', [validators.required(), validators.length(max=100)])
-    present = IntegerField('Taller', [validators.required(), validators.NumberRange(min=0, max=1)])
+    lesson_id = IntegerField('Clase', [validators.required(), validators.NumberRange(min=1, max=None)])
+    teacher_id = IntegerField('Docente', [validators.required(), validators.NumberRange(min=1, max=None)])
+    student_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
+    schedule_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
+    date = StringField(u'Fecha', [validators.required(), validators.length(max=100)])
+    present = IntegerField('Presente', [validators.required(), validators.NumberRange(min=0, max=1)])

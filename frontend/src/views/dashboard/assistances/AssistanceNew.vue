@@ -12,111 +12,111 @@
         <div class="row">
           <!-- Backlink -->
           <div class="col-12 text-left">
-            <back-link :url="returnPath" text="Listado de asistencia"></back-link>
+            <back-link :url="returnPath" text="Asistencias"></back-link>
           </div>
         </div>
         <!-- /.Edition row -->
-        <!-- Information row -->
+        <!-- Row -->
         <div class="row my-3">
+          <!-- Col 8 -->
           <div class="col-12 col-xl-8">
+            <!-- Card -->
             <div class="card">
               <!-- Header -->
               <div class="card-header">
-                <div class="row">
-                  <div class="col-9">
-                    <!-- Titulo -->
-                    <h1 class="h6 w600 black-c my-0">{{lesson.year}} - {{lesson.semester}}</h1>
-                  </div>
-                  <div class="col-3 text-right">
-                    <!-- Edicion -->
-                    <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
-                    <!-- Form -->
-                    <form v-on:submit.prevent="deleteLesson" class="display-inline">
-                      <input class="display-none" v-model="lesson_id">
-                      <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
-                    </form>
-                  </div>
-                </div>
+                <h1 class="h6 w600 black-c my-0">{{lesson.year}} - {{lesson.semester}}</h1>
               </div>
-              <!-- Header -->
+              <!-- Body -->
               <div class="card-body">
                 <p class="mb-3 black-c">{{lesson.workshop}} ({{lesson.workshop_type}})</p>
                 <level-button :level="lesson.level"></level-button>
               </div>
             </div>
+            <!-- /.Card -->
           </div>
+          <!-- /.Col 8 -->
+
+          <!-- Col 12 -->
           <div class="col-12 col-xl-8 pt-5 mt-5">
-            <dashboard-title title="Agregar un horario a la clase"></dashboard-title>
+            <dashboard-title title="Informacion para pasar asistencia"></dashboard-title>
             <!-- Form for adding a schedule -->
-            <form v-on:submit.prevent="addSchedule">
+            <form v-on:submit.prevent="fetchStudents">
+              <!-- Row -->
               <div class="row justify-content-end">
-
-                <!-- Núcleo -->
-                <div class="col-12 col-md-6 mb-2">
+                <!-- Docente -->
+                <div class="col-12 col-lg-6 mb-2">
                   <div class="form-group">
-                    <form-label name="Núcleo"></form-label>
-                    <select class="browser-default custom-select" v-model="new_core_id" required>
+                    <form-label name="Docente que pasa asistencia"></form-label>
+                    <select class="browser-default custom-select" v-model="new_teacher_id" required>
                       <option value="0" selected disabled>Elegir</option>
-                      <option v-for="c in cores" :key="c.core_id" :value="c.core_id">{{c.name}}</option>
+                      <option v-for="t in teachers" :key="t.teacher_id" :value="t.teacher_id">
+                        {{t.name}} {{t.lastname}} ({{t.document_type}} {{t.document_number}})
+                      </option>
                     </select>
                   </div>
                 </div>
-
-                <!-- Día -->
-                <div class="col-12 col-md-6 mb-2">
+                <!-- Fecha de nacimiento -->
+                <div class="col-12 col-lg-6">
+                  <mdb-input label="Fecha" v-model="new_date" type="date" required />
+                </div>
+                <!-- Horario -->
+                <div class="col-12 mb-2">
                   <div class="form-group">
-                    <form-label name="Día"></form-label>
-                    <select class="browser-default custom-select" v-model="new_day_id" required>
+                    <form-label name="Horario de la clase"></form-label>
+                    <select class="browser-default custom-select" v-model="new_schedule_id" required>
                       <option value="0" selected disabled>Elegir</option>
-                      <option v-for="d in days" :key="d.day_id" :value="d.day_id">{{d.name}}</option>
+                      <option v-for="s in schedules" :key="s.schedule_id" :value="s.schedule_id">
+                        {{s.day}} ({{s.hour_from}} - {{s.hour_to}}), en: {{s.core}}
+                      </option>
                     </select>
                   </div>
                 </div>
-
-                <!-- Desde hasta -->
-                <div class="col-12 col-md-6 mb-2">
-                  <form-label name="Desde"></form-label>
-                  <input class="form-control" v-model="new_hour_from" type="time" required>
-                </div>
-                <div class="col-12 col-md-6 mb-2">
-                  <form-label name="Hasta"></form-label>
-                  <input class="form-control" v-model="new_hour_to" type="time" required>
-                </div>
-
-                <!-- /.Información de persona responsable -->
+                <!-- /.Button -->
                 <div class="col-12 col-lg-5 mt-4">
-                  <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Agregar</button>
+                  <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Buscar</button>
                 </div>
-
               </div>
+              <!-- /.Row -->
             </form>
+            <!-- /.Form -->
 
-            <dashboard-title title="Listado de horarios" class="mt-5"></dashboard-title>
+            <dashboard-title title="Listado de alumnos de la clase" class="mt-5"></dashboard-title>
             <table class="table">
               <thead>
                 <tr>
-                  <th v-for="c in columns" :key="c.field" scope="col">{{c.label}}</th>
+                  <th v-for="c in columnsStudents" :key="c.field" scope="col">{{c.label}}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="r in schedules" :key="r.schedule_id">
-                  <td scope="row">{{r.core}}</td>
-                  <td>{{r.day}}</td>
-                  <td>
-                    De: {{r.hour_from}} hs<br>
-                    A: &nbsp; {{r.hour_to}} hs
+                <!-- Listado de estudiantes a pasar asistencia -->
+                <tr v-for="s in students" :key="s.student_id">
+                  <td scope="row">{{s.name}} {{s.lastname}}</td>
+                  <td>{{s.document_type}} {{s.document_number}}</td>
+                  <td class="text-right">
+                    <form v-on:submit.prevent="addAssistance(s.student_id, 1)" class="display-inline p-0 m-0">
+                      <button type="submit" class="btn btn-success btn-sm seed-rounded m-0">
+                        <i class="fas fa-check mr-3"></i>Presente
+                      </button>
+                    </form>
                   </td>
                   <td class="text-right">
-                    <form v-on:submit.prevent="removeSchedule(r.schedule_id)" class="display-inline m-0 p-0">
-                      <button type="submit" class="btn btn-danger btn-sm seed-rounded" title="Eliminar">
-                        <i class="fas fa-times"></i>
+                    <form v-on:submit.prevent="addAssistance(s.student_id, 0)" class="display-inline p-0 m-0">
+                      <button type="submit" class="btn btn-warning btn-sm seed-rounded m-0">
+                        <i class="fas fa-minus mr-3"></i>Ausente
                       </button>
                     </form>
                   </td>
                 </tr>
+                <!-- /.Listado de estudiantes a pasar asistencia -->
               </tbody>
             </table>
 
+          </div>
+          <div class="col-12 mt-5">
+            <dashboard-title title="Historial de asistencias"></dashboard-title>
+            <!-- Tabla de información de asistencias -->
+            <dashboard-table :columnas=columns :filas=rows></dashboard-table>
+            <!-- Tabla de información de asistencias -->
           </div>
         </div>
         <!-- /.Information row -->
@@ -127,6 +127,7 @@
 
 <script>
 import axios from 'axios'
+import { mdbInput } from 'mdbvue'
 import Dashboard from '@/views/Dashboard'
 import dashboardTitle from '@/components/dashboard/Title'
 import levelButton from '@/components/dashboard/buttons/LevelButton'
@@ -138,27 +139,49 @@ import alert from '@/components/Alert'
 export default {
   data () {
     return {
-      pagetitle: 'Información para pasar asistencia',
-      returnPath: '/assistances',
-      assistances: {},
-      schedules: {},
+      pagetitle: 'Tomar asistencia para la clase',
+      returnPath: '/assistances/',
+      lesson: '',
+      // Assistances data
       students: {},
-      teachers: {},
+      // Big table data
+      assistances: {},
       // Form data
-      new_schedule_id: 0,
-      new_student_id: 0,
+      teachers: {},
+      schedules: {},
+      // Form data
       new_teacher_id: 0,
+      new_schedule_id: 0,
+      new_date: new Date().toISOString().slice(0, 10),
+      new_student_id: 0,
+      // Messages
+      confirmDeleteMsg: '¿Estás seguro de eliminar esta asistencia? Esta accion no se puede deshacer',
       messageData: {},
       // Table data
-      columns: [
+      columnsStudents: [
         {
           label: 'Estudiante',
           field: 'student',
           sort: 'asc'
         },
         {
-          label: 'Día',
-          field: 'day',
+          label: 'Documento',
+          field: 'document',
+          sort: 'asc'
+        },
+        {
+          label: '',
+          field: 'assistance'
+        },
+        {
+          label: '',
+          field: 'unassistance'
+        }
+      ],
+      columns: [
+        {
+          label: 'Fecha',
+          field: 'date',
           sort: 'asc'
         },
         {
@@ -166,16 +189,30 @@ export default {
           field: 'schedule'
         },
         {
+          label: 'Estudiante',
+          field: 'student'
+        },
+        {
+          label: 'Documento',
+          field: 'document'
+        },
+        {
           label: '',
-          field: 'delete'
+          field: 'present'
+        },
+        {
+          label: 'Pasó asistencia',
+          field: 'teacher'
         }
-      ]
+      ],
+      rows: []
     }
   },
-  created () {
-    this.fetchData()
-    this.fetchFormData()
+  mounted () {
+    this.fetchLesson()
     this.fetchSchedules()
+    this.fetchTeachers()
+    this.fetchAllAssistances()
   },
   props: {
     lesson_id: Number
@@ -187,16 +224,31 @@ export default {
     'level-button': levelButton,
     'form-label': formLabel,
     'back-link': backLink,
-    'alert': alert
+    'alert': alert,
+    mdbInput
   },
   methods: {
-    fetchData () {
+    fetchLesson () {
       const path = '/api/lesson/' + this.lesson_id
       axios.get(path).then((res) => {
         this.lesson = res.data
       }).catch((error) => {
         console.log(error)
-        this.fetchData()
+        // this.fetchLesson()
+      })
+    },
+    fetchStudents () {
+      const path = '/api/lesson/students/assistance'
+      axios.post(path, {
+        lesson_id: this.lesson_id,
+        schedule_id: this.new_schedule_id,
+        date: this.new_date
+      }).then((res) => {
+        this.students = res.data
+        console.log(res.data)
+      }).catch((error) => {
+        console.log(error)
+        // this.fetchStudents()
       })
     },
     fetchSchedules () {
@@ -205,90 +257,95 @@ export default {
         this.schedules = res.data
       }).catch((error) => {
         console.log(error)
-        this.fetchSchedules()
-      })
-    },
-    fetchStudents () {
-      const path = '/api/students/' // + this.lesson_id
-      axios.get(path).then((res) => {
-        this.students = res.data
-      }).catch((error) => {
-        console.log(error)
-        this.fetchStudents()
+        // this.fetchSchedules()
       })
     },
     fetchTeachers () {
-      const path = '/api/teachers/' // + this.lesson_id
+      const path = '/api/teachers'
       axios.get(path).then((res) => {
         this.teachers = res.data
       }).catch((error) => {
+        // this.fetchStudents()
         console.log(error)
-        this.fetchTeachers()
       })
     },
-    addRow (schedule) {
-      this.schedules.push(schedule)
+    fetchAllAssistances () {
+      const path = '/api/assistances/' + this.lesson_id
+      axios.get(path).then((res) => {
+        this.assistances = res.data
+        this.loadAllAssistances()
+      }).catch((error) => {
+        console.log(error)
+      })
     },
-    deleteLesson () {
+    addRow (assistance) {
+      var btnclass
+      var presente
+      var newrow = {}
+      if (assistance.present) {
+        btnclass = 'success'
+        presente = 'PRESENTE'
+      } else {
+        btnclass = 'warning'
+        presente = 'AUSENTE'
+      }
+      newrow = {
+        date: assistance.date,
+        schedule: assistance.day + ' (' + assistance.hour_from + ' ' + assistance.hour_to + '), en: ' + assistance.core,
+        student: assistance.name + ' ' + assistance.lastname,
+        document: assistance.document_type + ' ' + assistance.document_number,
+        present: '<span class="btn btn-sm seed-rounded shadow-none c-default w600 m-0 btn-seed-' + btnclass + '">' + presente + '</span>',
+        teacher: assistance.teacher_name + ' ' + assistance.teacher_lastname
+      }
+      this.rows.push(newrow)
+    },
+    loadAllAssistances () {
+      for (let i = 0; i < this.assistances.length; i++) {
+        this.addRow(this.assistances[i])
+      }
+    },
+    addAssistance (studentId, newPresent) {
+      this.messageData = false
+      const path = '/api/assistance/add'
+      axios.post(path, {
+        lesson_id: this.lesson_id,
+        teacher_id: this.new_teacher_id,
+        student_id: studentId,
+        schedule_id: this.new_schedule_id,
+        date: this.new_date,
+        present: newPresent
+      }).then((res) => {
+        this.fetchStudents()
+        this.messageData = res.data
+        this.loadAllAssistances()
+        var $this = this
+        setTimeout(function () {
+          $this.messageData = false
+        }, 4000)
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    removeAssistance (studentId) {
+      this.messageData = false
       if (confirm(this.confirmDeleteMsg)) {
-        const path = '/api/lesson/delete'
+        const path = '/api/assistance/remove'
         axios.post(path, {
-          lesson_id: this.lesson_id
+          lesson_id: this.lesson_id,
+          student_id: studentId
         }).then((res) => {
+          if (res.data.status === 'success') {
+            this.fetchStudents()
+          }
           this.messageData = res.data
+          var $this = this
           setTimeout(function () {
-            window.location.href = '/lessons'
-          }, 400)
+            $this.messageData = false
+          }, 4000)
         }).catch((error) => {
           console.log(error)
         })
       }
-    },
-    restoreValues () {
-      this.new_schedule_id = 0
-      this.new_student_id = 0
-      this.new_teacher_id = 0
-    },
-    addAssistance () {
-      this.messageData = false
-      const path = '/api/schedule/add'
-      axios.post(path, {
-        lesson_id: this.lesson_id,
-        core_id: this.new_core_id,
-        day_id: this.new_day_id,
-        hour_from: this.new_hour_from,
-        hour_to: this.new_hour_to
-      }).then((res) => {
-        if (res.data.status === 'success') {
-          this.restoreValues()
-          this.addRow(res.data.new_schedule)
-        }
-        this.messageData = res.data
-        var $this = this
-        setTimeout(function () {
-          $this.messageData = false
-        }, 4000)
-      }).catch((error) => {
-        console.log(error)
-      })
-    },
-    removeSchedule (scheduleId) {
-      this.messageData = false
-      const path = '/api/schedule/remove'
-      axios.post(path, {
-        schedule_id: scheduleId
-      }).then((res) => {
-        if (res.data.status === 'success') {
-          this.fetchSchedules()
-        }
-        this.messageData = res.data
-        var $this = this
-        setTimeout(function () {
-          $this.messageData = false
-        }, 4000)
-      }).catch((error) => {
-        console.log(error)
-      })
     }
   }
 }

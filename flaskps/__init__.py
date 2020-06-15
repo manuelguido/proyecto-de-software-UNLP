@@ -132,6 +132,7 @@ app.add_url_rule("/api/lesson/students/<int:lesson_id>", 'api_lesson_students', 
 
 app.add_url_rule("/api/lesson/student/add", 'api_lesson_student_add', lesson.add_student, methods=['POST'])
 app.add_url_rule("/api/lesson/student/remove", 'api_lesson_student_remove', lesson.remove_student, methods=['POST'])
+app.add_url_rule("/api/lesson/students/assistance", 'api_lesson_students_for_assistance', assistance.students_for_assistance, methods=['POST'])
 
 # Horarios (Schedules)
 app.add_url_rule("/api/schedules/<int:lesson_id>", 'api_schedules', schedule.get_schedules, methods=['GET'])
@@ -140,6 +141,11 @@ app.add_url_rule("/api/schedule/remove", 'api_schedule_delete', schedule.remove,
 app.add_url_rule("/api/schedule/form_data", 'api_schedule_form_data', schedule.getFormData, methods=['GET'])
 
 # Asistencia (Assistance)
+app.add_url_rule("/api/assistances/<int:lesson_id>", 'api_assistances', assistance.get_assistances, methods=['GET'])
+app.add_url_rule("/api/assistance/add", 'api_assistance_add', assistance.add, methods=['POST'])
+app.add_url_rule("/api/assistance/remove", 'api_assistance_remove', assistance.remove, methods=['POST'])
+app.add_url_rule("/api/assistance/form_data", 'api_assistance_form_data', assistance.getFormData, methods=['GET'])
+
 # app.add_url_rule("/api/assistances", 'api_assistances', assistance.all, methods=['GET'])
 # app.add_url_rule("/api/assistance/<int:lesson_id>", 'api_assistance', assistance.get, methods=['GET'])
 # app.add_url_rule("/api/assistance/create", 'api_assistance_create', assistance.create, methods=['POST'])
