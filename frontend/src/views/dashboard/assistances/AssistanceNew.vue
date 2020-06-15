@@ -294,7 +294,7 @@ export default {
         schedule: assistance.day + ' (' + assistance.hour_from + ' ' + assistance.hour_to + '), en: ' + assistance.core,
         student: assistance.name + ' ' + assistance.lastname,
         document: assistance.document_type + ' ' + assistance.document_number,
-        present: '<span class="btn btn-sm seed-rounded shadow-none c-default w600 m-0 btn-seed-' + btnclass + '">' + presente + '</span>',
+        present: '<span class="btn btn-sm seed-rounded shadow-none c-default w600 m-0 seed-btn-' + btnclass + '">' + presente + '</span>',
         teacher: assistance.teacher_name + ' ' + assistance.teacher_lastname
       }
       this.rows.push(newrow)
