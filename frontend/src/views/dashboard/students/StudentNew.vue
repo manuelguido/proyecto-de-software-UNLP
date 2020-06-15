@@ -147,7 +147,7 @@
               <!-- /.Row -->
             </div>
             <!-- /.Información de persona responsable -->
-            <div class="col-12 col-lg-2 mt-4">
+            <div class="col-12 col-lg-4 mt-4">
               <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Guardar</button>
             </div>
           </div>

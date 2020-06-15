@@ -317,3 +317,13 @@ def user_roles(user_id):
     response['is_teacher'] = is_teacher
     response['is_preceptor'] = is_preceptor
     return response
+
+#---------------------------------------------------#
+#   Retorna las rutas del usuario loggeado
+#---------------------------------------------------#
+def has_permission(permission):
+    #Auth check
+    auth.authenticated_or_401()
+
+    User.db = get_db()
+    return jsonify(User.has_permission(session['id'], permission))

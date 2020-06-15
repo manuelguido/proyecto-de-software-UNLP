@@ -97,6 +97,7 @@ app.add_url_rule("/api/user/delete", 'api_user_delete', user.delete, methods=['P
 app.add_url_rule("/api/user/profile", 'api_profile', user.profile, methods=['GET']) # Obtener perfil de usuario loggeado
 app.add_url_rule("/api/user/routes", 'api_routes', user.routes, methods=['GET']) # Obtener rutas de usuario loggeado
 app.add_url_rule("/api/user/permissions", 'api_permissions', user.permissions, methods=['GET']) # Obtener permisos del usuario
+app.add_url_rule("/api/user/permission/<permission>", 'api_has_permission', user.has_permission, methods=['GET']) # Obtener permisos del usuario
 app.add_url_rule("/api/user/has_role", 'api_has_role', user.has_role, methods=['GET']) # Obtener si el usuario tiene al menos un rol
 
 # Ciclos lectivos (Cycles)

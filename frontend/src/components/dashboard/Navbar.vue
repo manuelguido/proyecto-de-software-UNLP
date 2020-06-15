@@ -5,12 +5,15 @@
     </mdb-navbar-brand>
     <mdb-navbar-toggler>
       <mdb-navbar-nav class="web-hide">
-        <router-link to="/dashboard" class="nav-item web-hide"><i class="fas fa-home mr-2"></i>Inicio</router-link>
-        <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide">
-          <span class="icon"><i :class="link.icon" class="mx-auto"></i>
-          {{link.name}}
+        <router-link to="/dashboard" class="nav-item web-hide">
+          <span class="icon"><i class="fas fa-home mr-2"></i></span>Inicio
         </router-link>
-        <router-link to="/logout" class="nav-item web-hide"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar sesión</router-link>
+        <router-link v-for="link in links" :key="link.name" :to="link.url" class="nav-item web-hide">
+          <span class="icon"><i :class="link.icon" class="mx-auto"></i></span>{{link.name}}
+        </router-link>
+        <router-link to="/logout" class="nav-item web-hide">
+          <span class="icon"><i class="fas fa-sign-out-alt mr-2"></i></span>Cerrar sesión
+        </router-link>
       </mdb-navbar-nav>
     </mdb-navbar-toggler>
   </mdb-navbar>

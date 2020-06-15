@@ -13,7 +13,7 @@
             <dashboard-title title="Listado de docentes"></dashboard-title>
           </div>
           <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newTeacherPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo docente</router-link>
+            <router-link v-if="docente_new" :to="newTeacherPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo docente</router-link>
           </div>
           <div class="col-12">
             <dashboard-table
@@ -43,6 +43,9 @@ export default {
       showTeacherPath: '/teacher/',
       newTeacherPath: '/new/teacher',
       editTeacherPath: '/teacher/edit/',
+      docente_show: false,
+      docente_new: false,
+      docente_update: false,
       columns: [
         {
           label: 'Apellido',
@@ -72,6 +75,9 @@ export default {
     }
   },
   created () {
+    this.fetchNew()
+    this.fetchShow()
+    this.fetchUpdate()
     this.fetchData()
   },
   components: {
@@ -90,15 +96,45 @@ export default {
         this.fetchData()
       })
     },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/docente_new').then((res) => {
+        this.docente_new = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchNew()
+      })
+    },
+    fetchShow () {
+      axios.get('/api/user/permission/docente_show').then((res) => {
+        this.docente_show = res.data
+      }).catch((error) => {
+        this.fetchShow()
+        console.log(error)
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/docente_update').then((res) => {
+        this.docente_update = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchUpdate()
+      })
+    },
     loadTeachers () {
       let newrow = {}
       for (let i = 0; i < this.teachers.length; i++) {
+        var varshow = '<p class="display-none">-</p>'
+        var varedit = '<p class="display-none">-</p>'
+
+        if (this.docente_show) { varshow = '<a href="' + this.showTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>' }
+        if (this.docente_update) { varedit = '<a href="' + this.editTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>' }
         newrow = {
           lastname: this.teachers[i].lastname,
           name: this.teachers[i].name,
           phone: this.teachers[i].phone,
-          show: '<a href="' + this.showTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editTeacherPath + this.teachers[i].teacher_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
+          show: varshow,
+          edit: varedit
         }
         this.rows.push(newrow)
       }

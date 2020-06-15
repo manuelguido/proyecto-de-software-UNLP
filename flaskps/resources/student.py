@@ -86,12 +86,12 @@ def delete():
     #Chequea permiso
     User.db = get_db()
     if (User.has_permission(session['id'],'estudiante_destroy')):
+        abort(401)
+    else:
         Student.db = get_db()
         Student.delete(request.get_json()['student_id'])
         response_object = {'status': 'success', 'message': 'Se eliminó el estudiante'}
         return jsonify(response_object)
-    else:
-        abort(401)
 
 def getFormData():
     #Auth check
@@ -99,7 +99,7 @@ def getFormData():
 
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'estudiante_new')):
+    if (not User.has_permission(session['id'],'estudiante_index')):
         abort(401)
     else:
         Neighborhood.db = get_db()
@@ -119,40 +119,3 @@ def getFormData():
             'responsable_types': ResponsableType.all(),
             }
         return response_json
-
-# def deleteEstudianteDocente():
-#     #Auth check
-#     auth.authenticated_or_401()
-
-#     #Chequea permiso
-#     User.db = get_db()
-#     if (User.tiene_permiso(session['id'],'administrativo_destroy')):
-#         if request.method == "POST" and forms.ValidateEstudianteDocenteTallerDelete(request.form).validate():
-#             Student.db = get_db()
-#             Student.deleteEstudianteTaller(request.form)
-#             flash("Se desasigno el estudiante del taller correctamente" ,'success')
-#         else:
-#             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-#         return redirect(url_for('panel_estudiantes_docentes'))
-#     else:
-#         abort(401)
-
-# def storeEstudianteDocente():
-#     #Auth check
-#     auth.authenticated_or_401()
-
-#     #Chequea permiso
-#     User.db = get_db()
-#     if (User.tiene_permiso(session['id'],'administrativo_new')):
-#         if request.method == "POST" and forms.ValidateEstudianteDocenteTaller(request.form).validate():
-#             Student.db = get_db()
-#             if Student.estudianteNoEnTaller(request.form):
-#                 Student.storeEstudianteTaller(request.form)
-#                 flash("Se asigno el estudiante al taller correctamente" ,'success')
-#             else:
-#                 flash("El estudiante ya esta asignado al taller", 'error')
-#         else:
-#             flash('Verifica los campos obligatorios. No ingreses valores no permitidos', 'error')
-#         return redirect(url_for('panel_estudiantes_docentes'))
-#     else:
-#         abort(401)

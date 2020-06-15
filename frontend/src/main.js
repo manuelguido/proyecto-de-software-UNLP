@@ -11,7 +11,6 @@ import moment from 'moment'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
 
 // Leaflet components
 Vue.component('l-map', LMap)
@@ -40,31 +39,31 @@ Vue.filter('formatDateForm', function (value) {
   }
 })
 
-var permissions
-var loaded = false
+// var permissions
+// var loaded = false
 
-Vue.mixin({
-  mounted: function () {
-    if (!loaded) {
-      if (localStorage.permissions) {
-        var perm = localStorage.getItem('permissions')
-        permissions = JSON.parse(perm)
-      } else {
-        const path = '/api/user/permissions'
-        axios.get(path).then((res) => {
-          localStorage.setItem('permissions', JSON.stringify(res.data))
-        }).catch((error) => {
-          console.log(error + ' => error loading permissions. Retrying.')
-          axios.get(path).then((res) => {
-            localStorage.setItem('permissions', JSON.stringify(res.data))
-          })
-        })
-      }
-      console.log(permissions)
-      loaded = true
-    }
-  }
-})
+// Vue.mixin({
+//   mounted: function () {
+//     if (!loaded) {
+//       if (localStorage.permissions) {
+//         var perm = localStorage.getItem('permissions')
+//         permissions = JSON.parse(perm)
+//       } else {
+//         const path = '/api/user/permissions'
+//         axios.get(path).then((res) => {
+//           localStorage.setItem('permissions', JSON.stringify(res.data))
+//         }).catch((error) => {
+//           console.log(error + ' => error loading permissions. Retrying.')
+//           axios.get(path).then((res) => {
+//             localStorage.setItem('permissions', JSON.stringify(res.data))
+//           })
+//         })
+//       }
+//       console.log(permissions)
+//       loaded = true
+//     }
+//   }
+// })
 
 /* eslint-disable no-new */
 new Vue({

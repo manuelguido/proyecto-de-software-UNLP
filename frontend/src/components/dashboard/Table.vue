@@ -1,7 +1,7 @@
 <template>
       <mdb-datatable
         :data="my_data"
-        class="mt-4"
+        class="mt-4 uns"
         responsive
         arrows
         defaultRow="No hay información"

@@ -16,9 +16,9 @@
           </div>
           <!-- /.BackLink -->
           <div class="col-12 col-lg-4 text-right pt-3">
-            <router-link :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
+            <router-link v-if="docente_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
-            <form v-on:submit.prevent="deleteTeacher" class="display-inline">
+            <form v-if="docente_destroy" v-on:submit.prevent="deleteTeacher" class="display-inline">
               <input class="display-none" value="{{teacher.teacher_id}}" v-model="teacher_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
@@ -68,10 +68,14 @@ export default {
       editPath: '/teacher/edit/' + this.teacher_id,
       teacher: '',
       confirmDeleteMsg: '¿Estás seguro de eliminar al docente? Esta accion no se puede deshacer',
-      messageData: {}
+      messageData: {},
+      docente_update: false,
+      docente_destroy: false
     }
   },
   created () {
+    this.fetchUpdate()
+    this.fetchDestroy()
     this.fetchData()
   },
   props: {
@@ -92,6 +96,22 @@ export default {
       }).catch((error) => {
         console.log(error)
         this.fetchData()
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/docente_update').then((res) => {
+        this.docente_update = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchUpdate()
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/docente_destroy').then((res) => {
+        this.docente_destroy = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchDestroy()
       })
     },
     deleteTeacher () {

@@ -97,7 +97,7 @@ def getFormData():
 
     #Chequea permiso
     User.db = get_db()
-    if (not User.has_permission(session['id'],'docente_new')):
+    if (not User.has_permission(session['id'],'docente_index')):
         abort(401)
     else:
         Gender.db = get_db()

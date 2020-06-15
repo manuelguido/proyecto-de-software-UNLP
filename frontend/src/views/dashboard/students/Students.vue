@@ -12,7 +12,7 @@
           <div class="col-12 col-md-8">
             <dashboard-title title="Listado de estudiantes"></dashboard-title>
           </div>
-          <div class="col-12 col-md-4 text-md-right">
+          <div v-if="estudiante_new" class="col-12 col-md-4 text-md-right">
             <router-link :to="newStudentPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo estudiante</router-link>
           </div>
           <div class="col-12">
@@ -43,6 +43,10 @@ export default {
       showStudentPath: '/student/',
       newStudentPath: '/new/student',
       editStudentPath: '/student/edit/',
+      // Permissions
+      estudiante_new: false,
+      estudiante_show: false,
+      estudiante_update: false,
       columns: [
         {
           label: 'Apellido',
@@ -72,6 +76,9 @@ export default {
     }
   },
   created () {
+    this.fetchNew()
+    this.fetchShow()
+    this.fetchUpdate()
     this.fetchData()
   },
   components: {
@@ -90,15 +97,44 @@ export default {
         this.fetchData()
       })
     },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/estudiante_new').then((res) => {
+        this.estudiante_new = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchNew()
+      })
+    },
+    fetchShow () {
+      axios.get('/api/user/permission/estudiante_show').then((res) => {
+        this.estudiante_show = res.data
+      }).catch((error) => {
+        this.fetchShow()
+        console.log(error)
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/estudiante_update').then((res) => {
+        this.estudiante_update = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchUpdate()
+      })
+    },
     loadStudents () {
       let newrow = {}
       for (let i = 0; i < this.students.length; i++) {
+        var varshow = '<p class="display-none">-</p>'
+        var varedit = '<p class="display-none">-</p>'
+        if (this.estudiante_show) { varshow = '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>' }
+        if (this.estudiante_update) { varedit = '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>' }
         newrow = {
           lastname: this.students[i].lastname,
           name: this.students[i].name,
           document: this.students[i].document_type + ' ' + this.students[i].document_number,
-          show: '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
+          show: varshow,
+          edit: varedit
         }
         this.rows.push(newrow)
       }

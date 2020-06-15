@@ -147,7 +147,7 @@
               <!-- /.Row -->
             </div>
             <!-- /.Información de persona responsable -->
-            <div class="col-12 col-lg-2 mt-4">
+            <div class="col-12 col-lg-4 mt-4">
               <button type="submit" class="btn seed-btn-a btn-block waves-effect mx-0">Actualizar</button>
             </div>
           </div>
@@ -191,17 +191,17 @@ export default {
       // Student form information
       name: '',
       lastname: '',
-      document_type_id: '',
+      document_type_id: 0,
       document_number: '',
-      gender_id: '',
+      gender_id: 0,
       birth_date: '',
-      school_id: '',
-      level_id: '',
+      school_id: 0,
+      level_id: 0,
       address: '',
       phone: '',
-      neighborhood_id: '',
-      location_id: '',
-      responsable_id: '',
+      neighborhood_id: 0,
+      location_id: 0,
+      responsable_id: 0,
       responsable_name: '',
       responsable_lastname: '',
       responsable_phone: '',
@@ -243,7 +243,6 @@ export default {
         this.name = res.data.name
         this.lastname = res.data.lastname
         this.birth_date = res.data.birth_date /// moment(res.data.birth).format('DD/MM/YYYY') // hh:mm')
-        console.log(this.birth_date)
         // console.log(this.birth_date)
         // console.log(moment(this.birth_date).subtract(10, 'days').calendar())
         this.neighborhood_id = res.data.neighborhood_id
