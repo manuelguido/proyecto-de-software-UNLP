@@ -13,7 +13,7 @@
             <dashboard-title title="Listado de usuarios"></dashboard-title>
           </div>
           <div class="col-12 col-md-4 text-md-right">
-            <router-link :to="newUserPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo usuario</router-link>
+            <router-link v-if="usuario_new" :to="newUserPath" class="btn btn-outline-success seed-rounded mx-0"><i class="fas fa-plus mr-3"></i>Nuevo usuario</router-link>
           </div>
           <div class="col-12">
             <dashboard-table
@@ -43,6 +43,9 @@ export default {
       showUserPath: '/user/',
       newUserPath: '/new/user',
       editUserPath: '/user/edit/',
+      usuario_new: false,
+      usuario_show: false,
+      usuario_update: false,
       columns: [
         {
           label: 'Apellido',
@@ -71,7 +74,10 @@ export default {
       rows: []
     }
   },
-  created () {
+  mounted () {
+    this.fetchNew()
+    this.fetchShow()
+    this.fetchUpdate()
     this.fetchData()
   },
   components: {
@@ -90,15 +96,46 @@ export default {
         this.fetchData()
       })
     },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/usuario_new').then((res) => {
+        this.usuario_new = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchNew()
+      })
+    },
+    fetchShow () {
+      axios.get('/api/user/permission/usuario_show').then((res) => {
+        this.usuario_show = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchShow()
+      })
+    },
+    fetchUpdate () {
+      axios.get('/api/user/permission/usuario_update').then((res) => {
+        this.usuario_update = res.data
+      }).catch((error) => {
+        console.log(error)
+        this.fetchUpdate()
+      })
+    },
     loadUsers () {
       let newrow = {}
+      var varshow
+      var varedit
       for (let i = 0; i < this.users.length; i++) {
+        varshow = '<p class="display-none">-</p>'
+        varedit = '<p class="display-none">-</p>'
+        if (this.usuario_show) { varshow = '<a href="' + this.showUserPath + this.users[i].user_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>' }
+        if (this.usuario_update) { varedit = '<a href="' + this.editUserPath + this.users[i].user_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>' }
         newrow = {
           lastname: this.users[i].lastname,
           name: this.users[i].name,
           username: this.users[i].username,
-          show: '<a href="' + this.showUserPath + this.users[i].user_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>',
-          edit: '<a href="' + this.editUserPath + this.users[i].user_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>'
+          show: varshow,
+          edit: varedit
         }
         this.rows.push(newrow)
       }

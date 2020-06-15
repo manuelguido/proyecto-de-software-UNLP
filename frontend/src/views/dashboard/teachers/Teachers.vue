@@ -92,8 +92,8 @@ export default {
         this.teachers = respuesta.data
         this.loadTeachers()
       }).catch((error) => {
-        this.fetchData()
         console.log(error)
+        this.fetchData()
       })
     },
     // Data fetch for permissions
@@ -101,16 +101,16 @@ export default {
       axios.get('/api/user/permission/docente_new').then((res) => {
         this.docente_new = res.data
       }).catch((error) => {
-        this.fetchNew()
         console.log(error)
+        this.fetchNew()
       })
     },
     fetchShow () {
       axios.get('/api/user/permission/docente_show').then((res) => {
         this.docente_show = res.data
       }).catch((error) => {
-        this.fetchShow()
         console.log(error)
+        this.fetchShow()
       })
     },
     fetchUpdate () {

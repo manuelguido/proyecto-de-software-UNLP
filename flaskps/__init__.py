@@ -192,5 +192,19 @@ def authorize():
     # session.permanent = True  # make the session permanant so it keeps existing after broweser gets closed
     return redirect('/dashboard')
 
+
+@app.errorhandler(500)
+def error404(error):
+    return jsonify({'status': 'error', 'message': 'Ocurrio un error momentaneo en el servidor. Refresca la página para actualizar los datos.'})
+
+@app.errorhandler(404)
+def error404(error):
+    return jsonify({'status': 'error', 'message': 'La pagina a la cual quieres acceder no existe.'})
+
+@app.errorhandler(401)
+def error401(error):
+    return jsonify({'status': 'error', 'message': 'No tienes permiso para realizar esta accion.'})
+
 if __name__ == '__main__':
     app.run(debug=True)
+

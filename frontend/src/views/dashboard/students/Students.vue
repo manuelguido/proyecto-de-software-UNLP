@@ -110,8 +110,8 @@ export default {
       axios.get('/api/user/permission/estudiante_show').then((res) => {
         this.estudiante_show = res.data
       }).catch((error) => {
-        this.fetchShow()
         console.log(error)
+        this.fetchShow()
       })
     },
     fetchUpdate () {
@@ -124,9 +124,11 @@ export default {
     },
     loadStudents () {
       let newrow = {}
+      var varshow
+      var varedit
       for (let i = 0; i < this.students.length; i++) {
-        var varshow = '<p class="display-none">-</p>'
-        var varedit = '<p class="display-none">-</p>'
+        varshow = '<p class="display-none">-</p>'
+        varedit = '<p class="display-none">-</p>'
         if (this.estudiante_show) { varshow = '<a href="' + this.showStudentPath + this.students[i].student_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="far fa-eye mr-3"></i>Ver</a>' }
         if (this.estudiante_update) { varedit = '<a href="' + this.editStudentPath + this.students[i].student_id + '" class="btn seed-btn-secondary btn-sm seed-rounded"><i class="fas fa-pencil-alt mr-3"></i>Editar</a>' }
         newrow = {

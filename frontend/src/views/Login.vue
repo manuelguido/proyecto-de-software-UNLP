@@ -102,9 +102,7 @@ export default {
         password: this.password
       }).then((respuesta) => {
         if (respuesta.data.success) {
-          setTimeout(function () {
-            window.location.href = '/dashboard'
-          }, 200)
+          window.location.href = '/dashboard'
         } else {
           this.loading = false
           this.status_message = respuesta.data.message
