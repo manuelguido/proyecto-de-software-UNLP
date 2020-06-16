@@ -8,7 +8,7 @@ const routes = [
     name: 'Configuration',
     component: Configuration,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/configuration_all'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

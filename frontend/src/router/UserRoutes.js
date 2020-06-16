@@ -11,7 +11,7 @@ const routes = [
     name: 'Users',
     component: Users,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/usuario_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -29,7 +29,7 @@ const routes = [
     component: User,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/usuario_show'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -46,7 +46,7 @@ const routes = [
     name: 'UserNew',
     component: UserNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/usuario_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -64,7 +64,7 @@ const routes = [
     component: UserEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/usuario_update'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

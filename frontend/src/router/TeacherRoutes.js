@@ -11,7 +11,7 @@ const routes = [
     name: 'Teachers',
     component: Teachers,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/docente_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -29,7 +29,7 @@ const routes = [
     component: Teacher,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/docente_show'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -46,7 +46,7 @@ const routes = [
     name: 'TeacherNew',
     component: TeacherNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/docente_mew'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -64,7 +64,7 @@ const routes = [
     component: TeacherEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/docente_update'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

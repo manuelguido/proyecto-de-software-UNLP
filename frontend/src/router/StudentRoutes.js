@@ -11,7 +11,7 @@ const routes = [
     name: 'Students',
     component: Students,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/estudiante_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -29,7 +29,7 @@ const routes = [
     component: Student,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/estudiante_show'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -46,7 +46,7 @@ const routes = [
     name: 'StudentNew',
     component: StudentNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/estudiante_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -64,7 +64,7 @@ const routes = [
     component: StudentEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/estudiante_update'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

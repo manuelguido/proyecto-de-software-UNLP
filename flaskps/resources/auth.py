@@ -83,6 +83,17 @@ def authenticated():
     return jsonify(authenticated_object)
 
 #---------------------------------------------------#
+#   Chequea que el usuario esté autenticado
+#---------------------------------------------------#
+def authenticated_permission(permission):
+    authenticated_object = {'authenticated': False}
+    User.db = get_db()
+    if (auth.authenticated()) and (User.has_permission(session['id'], permission)):
+        authenticated_object = {'authenticated': True}
+    return jsonify(authenticated_object)
+
+
+#---------------------------------------------------#
 #   Desautentica al usuario
 #---------------------------------------------------#
 def unauthenticate():

@@ -163,6 +163,7 @@ app.add_url_rule("/auth/unauthenticate", 'auth_unauthenticate', auth.unauthentic
 app.add_url_rule("/auth/authenticate", 'auth_authenticate', auth.authenticate, methods=['POST'])
 #Chequea si el usuario está autenticado
 app.add_url_rule("/auth/authenticated", 'auth_authenticated', auth.authenticated, methods=['GET'])
+app.add_url_rule("/auth/authenticated/<string:permission>", 'auth_authenticated_permission', auth.authenticated_permission, methods=['GET'])
 
 #---------------------------------------------------#
 #   Inicio (Vista única)

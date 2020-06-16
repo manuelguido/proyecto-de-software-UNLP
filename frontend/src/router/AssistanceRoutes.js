@@ -9,7 +9,7 @@ const routes = [
     name: 'Assistances',
     component: Assistances,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/asistencia_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -27,7 +27,7 @@ const routes = [
     component: AssistanceNew,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/asistencia_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

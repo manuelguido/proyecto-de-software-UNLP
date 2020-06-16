@@ -37,6 +37,7 @@ export default {
       pagetitle: 'Pasar asistencia',
       lessons: '',
       newAssistancePath: '/new/assistance/',
+      asistencia_new: false,
       columns: [
         {
           label: 'Ciclo lectivo',
@@ -67,6 +68,7 @@ export default {
     }
   },
   created () {
+    this.fetchNew()
     this.fetchData()
   },
   components: {
@@ -81,17 +83,29 @@ export default {
         this.lessons = res.data
         this.loadLessons()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
+      })
+    },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/asistencia_new').then((res) => {
+        this.asistencia_new = res.data
+      }).catch((error) => {
+        this.fetchNew()
+        console.log(error)
       })
     },
     addRow (lesson) {
-      var newrow = {
+      let newrow
+      var varnew = '<p class="display-none">-</p>'
+      if (this.asistencia_new) { varnew = '<a href="' + this.newAssistancePath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="fas fa-plus mr-3"></i></i>Pasar asistencia</a>' }
+      newrow = {
         cycle: lesson.year + ' ' + lesson.semester,
         workshop: lesson.workshop,
         workshop_type: lesson.workshop_type,
         level: lesson.level,
-        assistance: '<a href="' + this.newAssistancePath + lesson.lesson_id + '" class="btn seed-btn-primary btn-sm seed-rounded"><i class="fas fa-plus mr-3"></i></i>Pasar asistencia</a>'
+        assistance: varnew
       }
       this.rows.push(newrow)
     },

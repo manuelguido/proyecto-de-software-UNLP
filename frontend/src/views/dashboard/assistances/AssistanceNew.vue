@@ -282,7 +282,7 @@ export default {
       var btnclass
       var presente
       var newrow = {}
-      if (assistance.present) {
+      if (assistance.present === 1) {
         btnclass = 'success'
         presente = 'PRESENTE'
       } else {
@@ -317,7 +317,6 @@ export default {
       }).then((res) => {
         this.fetchStudents()
         this.messageData = res.data
-        this.loadAllAssistances()
         var $this = this
         setTimeout(function () {
           $this.messageData = false

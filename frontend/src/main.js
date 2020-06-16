@@ -39,32 +39,6 @@ Vue.filter('formatDateForm', function (value) {
   }
 })
 
-// var permissions
-// var loaded = false
-
-// Vue.mixin({
-//   mounted: function () {
-//     if (!loaded) {
-//       if (localStorage.permissions) {
-//         var perm = localStorage.getItem('permissions')
-//         permissions = JSON.parse(perm)
-//       } else {
-//         const path = '/api/user/permissions'
-//         axios.get(path).then((res) => {
-//           localStorage.setItem('permissions', JSON.stringify(res.data))
-//         }).catch((error) => {
-//           console.log(error + ' => error loading permissions. Retrying.')
-//           axios.get(path).then((res) => {
-//             localStorage.setItem('permissions', JSON.stringify(res.data))
-//           })
-//         })
-//       }
-//       console.log(permissions)
-//       loaded = true
-//     }
-//   }
-// })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

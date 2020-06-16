@@ -12,7 +12,7 @@ const routes = [
     name: 'Lessons',
     component: Lessons,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -30,7 +30,7 @@ const routes = [
     component: Lesson,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_show'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -47,7 +47,7 @@ const routes = [
     name: 'LessonNew',
     component: LessonNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -65,7 +65,7 @@ const routes = [
     component: LessonEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_update'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -83,7 +83,7 @@ const routes = [
     component: LessonStudents,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()

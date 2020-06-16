@@ -177,4 +177,3 @@ class ValidateAssistance(Form):
     student_id = IntegerField('Estudiante', [validators.required(), validators.NumberRange(min=1, max=None)])
     schedule_id = IntegerField('Horario', [validators.required(), validators.NumberRange(min=1, max=None)])
     date = StringField(u'Fecha', [validators.required(), validators.length(max=100)])
-    present = IntegerField('Presente', [validators.required(), validators.NumberRange(min=0, max=1)])

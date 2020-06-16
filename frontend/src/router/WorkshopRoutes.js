@@ -13,7 +13,7 @@ const routes = [
     name: 'Workshops',
     component: Workshops,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_index'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()
@@ -31,7 +31,7 @@ const routes = [
     component: Workshop,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_show'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()
@@ -48,7 +48,7 @@ const routes = [
     name: 'WorkshopNew',
     component: WorkshopNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_new'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()
@@ -66,7 +66,7 @@ const routes = [
     component: WorkshopEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_update'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()
@@ -83,7 +83,7 @@ const routes = [
     name: 'CycleWorkshops',
     component: CycleWorkshops,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_index'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()
@@ -101,7 +101,7 @@ const routes = [
     component: WorkshopUnassign,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_destroy'
       axios.get(path).then((res) => {
         if (res.data.authenticated) {
           next()

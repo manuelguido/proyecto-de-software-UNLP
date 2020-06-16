@@ -11,7 +11,7 @@ const routes = [
     name: 'Cycles',
     component: Cycles,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_index'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -29,7 +29,7 @@ const routes = [
     component: Cycle,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_show'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -46,7 +46,7 @@ const routes = [
     name: 'CycleNew',
     component: CycleNew,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_new'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
@@ -64,7 +64,7 @@ const routes = [
     component: CycleEdit,
     props: true,
     beforeEnter (to, from, next) {
-      const path = '/auth/authenticated'
+      const path = '/auth/authenticated/administrativo_update'
       axios.get(path).then((respuesta) => {
         if (respuesta.data.authenticated) {
           next()
