@@ -154,6 +154,8 @@ export default {
       confirmDeleteMsg: '¿Estás seguro de eliminar la clase? Esta accion no se puede deshacer',
       confirmDeleteMsgSchedule: '¿Estás seguro de eliminar el horario? Esta accion no se puede deshacer',
       messageData: {},
+      administrativo_new: false,
+      administrativo_destroy: false,
       // Table data
       columns: [
         {
@@ -181,7 +183,9 @@ export default {
       ]
     }
   },
-  created () {
+  mounted () {
+    this.fetchNew()
+    this.fetchDestroy()
     this.fetchData()
     this.fetchFormData()
     this.fetchSchedules()
@@ -206,6 +210,23 @@ export default {
       }).catch((error) => {
         console.log(error)
         this.fetchData()
+      })
+    },
+    // Data fetch for permissions
+    fetchNew () {
+      axios.get('/api/user/permission/administrativo_new').then((res) => {
+        this.administrativo_new = res.data
+      }).catch((error) => {
+        this.fetchNew()
+        console.log(error)
+      })
+    },
+    fetchDestroy () {
+      axios.get('/api/user/permission/administrativo_destroy').then((res) => {
+        this.administrativo_destroy = res.data
+      }).catch((error) => {
+        this.fetchShow()
+        console.log(error)
       })
     },
     fetchSchedules () {

@@ -122,10 +122,10 @@ export default {
     }
   },
   mounted () {
-    this.fetchData()
     this.fetchFormData()
     this.fetchNew()
     this.fetchDestroy()
+    this.fetchData()
   },
   components: {
     'dashboard': Dashboard,
