@@ -36,8 +36,8 @@ app.config['SESSION_COOKIE_NAME'] = 'google-login-session'
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id='185154570305-g0kqraggrm7hu87h93k5o3kjjumumfcp.apps.googleusercontent.com',
-    client_secret='rKXyFqoisiWI6YRjnOg5j19C',
+    client_id='YOUR CLIENT ID',
+    client_secret='YOUR CLIENT SECRET',
     access_token_url='https://accounts.google.com/o/oauth2/token',
     access_token_params=None,
     authorize_url='https://accounts.google.com/o/oauth2/auth',
@@ -146,13 +146,6 @@ app.add_url_rule("/api/assistances/<int:lesson_id>", 'api_assistances', assistan
 app.add_url_rule("/api/assistance/add", 'api_assistance_add', assistance.add, methods=['POST'])
 app.add_url_rule("/api/assistance/remove", 'api_assistance_remove', assistance.remove, methods=['POST'])
 app.add_url_rule("/api/assistance/form_data", 'api_assistance_form_data', assistance.getFormData, methods=['GET'])
-
-# app.add_url_rule("/api/assistances", 'api_assistances', assistance.all, methods=['GET'])
-# app.add_url_rule("/api/assistance/<int:lesson_id>", 'api_assistance', assistance.get, methods=['GET'])
-# app.add_url_rule("/api/assistance/create", 'api_assistance_create', assistance.create, methods=['POST'])
-# app.add_url_rule("/api/assistance/update", 'api_assistance_update', assistance.update, methods=['POST'])
-# app.add_url_rule("/api/assistance/delete", 'api_assistance_delete', assistance.delete, methods=['POST'])
-# app.add_url_rule("/api/assistance/form_data", 'api_assistance_form_data', assistance.getFormData, methods=['GET'])
 
 #---------------------------------------------------#
 #   Autenticacion
