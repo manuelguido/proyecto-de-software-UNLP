@@ -107,7 +107,7 @@ def update():
 
     if request.method == "POST":
         User.db = get_db()
-        if (User.has_permission(session['id'],'usuario_update')):
+        if (not User.has_permission(session['id'],'usuario_update')):
             abort(401)
         else:
             post_data = request.get_json() #Obtención de información

@@ -82,7 +82,7 @@
                     </div>
 
                     <!-- Errors -->
-                    <div class="col-12 mt-3">
+                    <div v-if="errors" class="col-12 mt-3">
                       <p v-for="r in errors" :key="r.name" class="mb-2 seed-warning w600">
                         <i class="fas fa-exclamation-triangle seed-warning mr-2"></i>{{r.message}}
                       </p>
@@ -170,6 +170,7 @@ export default {
     },
     updateUser () {
       this.messageData = ''
+      this.errors = ''
       const path = '/api/user/update'
       axios.post(path, {
         user_id: this.user_id,
