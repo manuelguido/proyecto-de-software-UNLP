@@ -1,4 +1,4 @@
-# proyecto
+# Proyecto de Software 2019 - Informática UNLP
 
 Es un single page application desarrollado en Python con Flask y VueJs para un trabajo de la materia "Proyecto de Software" de la Facultad de Informática (UNLP).
 
