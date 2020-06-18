@@ -4,9 +4,9 @@
       <homenav :to_login="false"></homenav>
       <div class="container">
         <div class="row justify-content-center pt-5">
-          <div class="col-12 col-lg-5 pt-lg-5">
+          <div class="col-12 col-lg-5 pt-4 pt-lg-5">
             <div class="card mt-lg-4">
-              <div class="card-body p-lg-5 text-center">
+              <div class="card-body p-5 text-center">
                 <h1 class="h4 mb-4">Iniciar sesión</h1>
                 <!-- Form -->
                 <form v-on:submit.prevent="login">
@@ -59,9 +59,11 @@
                 <!-- /.Form -->
                 <div class="row my-4">
                     <div class="col-12"><hr></div>
-                    <div class="col-12 w400 black-c">También podés</div>
+                    <div class="col-12 w400 black-c">También puedes</div>
                 </div>
+
                 <a href="/google_login" class="btn btn-danger btn-block waves-effect w600"><i class="fab fa-google mr-3"></i>Iniciar con google</a>
+
               </div>
               <!-- /.Card Body -->
             </div>
