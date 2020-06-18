@@ -7,12 +7,12 @@
       <div class="row justify-content-center py-5 my-lg-5">
         <div class="col-12 col-md-9 col-lg-7 py-md-5">
           <!-- Card -->
-          <div class="card home-card py-4">
+          <div class="card home-card py-4 animated fadeIn">
             <div class="card-body p-5">
               <!-- Row -->
               <div class="row">
                 <div class="col-12 col-md-4 py-0 text-center">
-                  <img id="home-logo" class="uns" src="../assets/logo.png" />
+                  <img id="home-logo" class="uns animated fadeIn" src="../assets/logo.png" />
                 </div>
                 <div class="col-12 py-0 col-md-8">
                   <div v-if="loading">
