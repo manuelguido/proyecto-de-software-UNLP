@@ -29,7 +29,7 @@
                 <router-link v-if="instrumento_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
                 <!-- Form -->
                 <form v-if="instrumento_destroy" v-on:submit.prevent="deleteInstrument" class="display-inline">
-                  <input class="display-none" value="{{instrument_id}}" v-model="instrument_id">
+                  <input class="display-none" v-model="instrument_id">
                   <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
                 </form>
               </div>

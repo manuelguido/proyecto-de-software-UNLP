@@ -19,7 +19,7 @@
             <router-link v-if="estudiante_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
             <form v-if="estudiante_destroy" v-on:submit.prevent="deleteStudent" class="display-inline">
-              <input class="display-none" value="{{student.student_id}}" v-model="student_id">
+              <input class="display-none" v-model="student_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
           </div>

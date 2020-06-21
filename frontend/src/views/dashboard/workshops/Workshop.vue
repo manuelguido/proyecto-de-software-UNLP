@@ -17,7 +17,7 @@
             <router-link v-if="administrativo_update" :to="editPath" title="Editar"><i class="far fa-edit click-icon"></i></router-link>
             <!-- Form -->
             <form v-if="administrativo_destroy" v-on:submit.prevent="deleteWorkshop" class="display-inline">
-              <input class="display-none" :value="workshop_id" v-model="workshop_id">
+              <input class="display-none" v-model="workshop_id">
               <button type="submit" class="bg-none b-0" title="Eliminar"><i class="fas fa-trash click-icon"></i></button>
             </form>
           </div>
