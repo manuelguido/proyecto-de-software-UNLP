@@ -2,7 +2,7 @@
 
 <p align="center mt-5">
   <a href="https://grupo37.proyecto2019.linti.unlp.edu.ar/">
-    <img width="100%" src="/gitimages/tech.jpg">
+    <img width="100%" src="/gitimages/tech.png">
   </a>
 </p>
 
