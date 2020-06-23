@@ -10,7 +10,7 @@ Además, si bien Flask sigue una estructura MVT (Model View Template) se nos pid
 
 <p align="center mt-5">
   <a href="https://grupo37.proyecto2019.linti.unlp.edu.ar/">
-    <img width="100%" src="/gitimages/banner.png">
+    <img width="100%" src="/gitimages/banner.jpg">
   </a>
 </p>
 
