@@ -1,6 +1,6 @@
 # Proyecto de Software 2019 - Informática UNLP
 
-<p align="center mt-5">
+<p align="center">
   <a href="https://grupo37.proyecto2019.linti.unlp.edu.ar/">
     <img width="100%" src="/gitimages/tech.png">
   </a>
