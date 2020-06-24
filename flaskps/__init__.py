@@ -23,9 +23,9 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 # #Server Side session
 app.config['SESSION_TYPE'] = 'filesystem'
 # #Session(app)
-app.config['SECRET_KEY'] = b'6hc/_gsh,./;2ZZx3c6_s,1//'
+app.config['SECRET_KEY'] = b'YOUR SESSION KEY' #Your session key
 # Session config
-app.secret_key = b'6hc/_gsh,./;2ZZx3c6_s,1//'
+app.secret_key = b'YOUR SESSION KEY' #Your session key
 app.config['SESSION_COOKIE_NAME'] = 'google-login-session'
 # app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 
@@ -36,8 +36,8 @@ app.config['SESSION_COOKIE_NAME'] = 'google-login-session'
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id='YOUR CLIENT ID',
-    client_secret='YOUR CLIENT SECRET',
+    client_id='YOUR CLIENT ID', #Your client id
+    client_secret='YOUR CLIENT SECRET', #Your client secret
     access_token_url='https://accounts.google.com/o/oauth2/token',
     access_token_params=None,
     authorize_url='https://accounts.google.com/o/oauth2/auth',
