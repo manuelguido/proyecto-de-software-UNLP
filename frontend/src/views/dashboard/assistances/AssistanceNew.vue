@@ -233,8 +233,8 @@ export default {
       axios.get(path).then((res) => {
         this.lesson = res.data
       }).catch((error) => {
+        this.fetchLesson()
         console.log(error)
-        // this.fetchLesson()
       })
     },
     fetchStudents () {
@@ -247,8 +247,8 @@ export default {
         this.students = res.data
         console.log(res.data)
       }).catch((error) => {
+        this.fetchStudents()
         console.log(error)
-        // this.fetchStudents()
       })
     },
     fetchSchedules () {
@@ -256,8 +256,8 @@ export default {
       axios.get(path).then((res) => {
         this.schedules = res.data
       }).catch((error) => {
+        this.fetchSchedules()
         console.log(error)
-        // this.fetchSchedules()
       })
     },
     fetchTeachers () {
@@ -265,7 +265,7 @@ export default {
       axios.get(path).then((res) => {
         this.teachers = res.data
       }).catch((error) => {
-        // this.fetchStudents()
+        this.fetchTeachers()
         console.log(error)
       })
     },
@@ -275,6 +275,7 @@ export default {
         this.assistances = res.data
         this.loadAllAssistances()
       }).catch((error) => {
+        this.fetchAllAssistances()
         console.log(error)
       })
     },

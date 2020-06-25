@@ -1,8 +1,13 @@
 <template>
   <div class="uns">
     <homenav :to_login="nav_to_login"></homenav>
-    <home-banner></home-banner>
-    <div class="container-fluid w-100">
+    <home-banner :title="configuration.title"></home-banner>
+    <div v-if="loading" class="container-fluid text-center" style="padding: 100px 0;">
+      <div class="spinner-border color-c mt-5" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div v-else-if="configuration.active" class="container-fluid w-100">
       <div class="row row-eq-height">
 
         <!-- Blue column -->
@@ -12,11 +17,7 @@
               <h1 class="h2 white-a georgia">Orquesta Escuela Berisso</h1>
               <p class="white-a italic mb-3 mb-lg-5 georgia">Fundación el 19 de septiembre de 2005</p>
               <p class="white-a arial">
-                La Orquesta Escuela de Berisso comenzó a funcionar en septiembre del 2005 en el barrio de El Carmen de la localidad de Berisso bajo la dirección del Mtro. Juan Carlos Herrero, orientada especialmente a la atención de chicos en situación de vulnerabilidad socio-cultural.
-                Desde sus 20 alumnos iniciales fue creciendo hasta atender actualmente una matrícula de aproximadamente 530 chicos, distribuidos en los 15 núcleos que la conforman y dirigida a una franja etaria de 5 a 23 años, cubriendo en su accionar a la casi totalidad de los barrios de Berisso más los espacios cedidos por el Club Español y el Teatro Argentino
-              </p>
-              <p class="white-a arial">
-                En 2015, enmarcado en el festejo por sus 10 años, brindó una serie de conciertos entre los que se incluyó la invitación del Teatro Argentino para formar parte del Ciclo de la Sala A. Piazzolla, una presentación en el CCK de Bs. As, un concierto en el Teatro Mitre de San Salvador de Jujuy para presentarse junto al Sistema de Orquestas Juveniles de Jujuy bajo la dirección del Mtro. Sergio Jurado y el estreno de la Misa Mestiza, escrita en honor de SS el papa Francisco, junto al Vocal de Cámara Platense, el coro de Cámara de la facultad de Bellas Artes y el Ensamble de Percusión de Pehuajó, con la dirección del Mtro. Fernando Tomé.
+                {{configuration.description}}
               </p>
             </div>
 
@@ -46,7 +47,7 @@
             </div>
             <div class="col-12 offset-lg-1 offset-xl-2 col-lg-12 col-xl-10 mt-3 mt-md-5 pt-4">
               <p class="black-b w400 arial">
-                Elegí el instrumento que más te gusta y escribinos a oeberisso@gmail.com o por mensaje de Facebook diciéndonos en que zona de Berisso o alrededores vivís, en que horarios vas al colegio y
+                Elegí el instrumento que más te gusta y escribinos a {{configuration.email}} o por mensaje de Facebook diciéndonos en que zona de Berisso o alrededores vivís, en que horarios vas al colegio y
                 te informaremos en cual de nuestros núcleos podés inscribirte, o también podes acercarte los días sábados de 9 a 12hs a la Escuela Nº 25 de Berisso, calle 126 e/ 89 y 90.
               </p>
               <router-link class="btn btn-outline-primary btn-sm mx-0 mt-3 shadow-none" to="/">Ver más</router-link>
@@ -74,6 +75,13 @@
         </div>
         <!-- /.Last column -->
 
+      </div>
+    </div>
+    <div v-else class="container py-5">
+      <div class="row py-5">
+        <div class="col-12 text-center py-5 mb-5">
+          <p class="black-b h5">El sitio se encuentra en mantenimiento</p>
+        </div>
       </div>
     </div>
     <home-footer/>

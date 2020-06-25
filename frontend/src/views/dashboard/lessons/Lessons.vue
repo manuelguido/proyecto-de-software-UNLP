@@ -102,8 +102,8 @@ export default {
         this.lessons = res.data
         this.loadLessons()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions

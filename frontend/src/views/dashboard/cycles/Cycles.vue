@@ -93,8 +93,8 @@ export default {
         this.cycles = res.data
         this.loadCycles()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions

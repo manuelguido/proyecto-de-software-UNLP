@@ -102,24 +102,24 @@ export default {
       axios.get('/api/user/permission/instrumento_new').then((res) => {
         this.instrumento_new = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchNew()
+        console.log(error)
       })
     },
     fetchShow () {
       axios.get('/api/user/permission/instrumento_show').then((res) => {
         this.instrumento_show = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchShow()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/instrumento_update').then((res) => {
         this.instrumento_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     loadInstruments () {

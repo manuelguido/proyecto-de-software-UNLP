@@ -102,16 +102,16 @@ export default {
       axios.get(path).then((res) => {
         this.user = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/usuario_update').then((res) => {
         this.usuario_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     fetchDestroy () {

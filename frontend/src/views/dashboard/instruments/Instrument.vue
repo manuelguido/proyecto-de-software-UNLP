@@ -105,24 +105,24 @@ export default {
         this.instrument = res.data
         this.fetchImage()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/instrumento_update').then((res) => {
         this.instrumento_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     fetchDestroy () {
       axios.get('/api/user/permission/instrumento_destroy').then((res) => {
         this.instrumento_destroy = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchDestroy()
+        console.log(error)
       })
     },
     fetchImage () {

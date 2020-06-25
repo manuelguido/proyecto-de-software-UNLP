@@ -71,8 +71,8 @@ export default {
         this.cores = respuesta.data
         this.loadCores()
       }).catch((error) => {
-        console.log(error)
         this.getCores()
+        console.log(error)
       })
     },
     loadCores () {

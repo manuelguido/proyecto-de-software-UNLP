@@ -4,7 +4,7 @@
       <div class="container-fluid pt-5">
         <div class="row pt-5 mt-3">
           <div class="col-12 text-center pt-3 pt-lg-5 mt-4 mt-lg-5">
-            <h1 id="title" class="white-a w600 animated fadeIn">Bienvenidos a la Orquesta Escuela Berisso</h1>
+            <h1 id="title" class="white-a w600 animated fadeIn">{{title}}</h1>
             <h2 id="hashtag" class="white-a ls03 animated fadeIn">#LaOrquestaSomosTodos</h2>
           </div>
           <div class="col-12 text-center pt-3 pt-xl-5">
@@ -16,6 +16,13 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Banner',
+  props: ['title']
+}
+</script>
 
 <style scoped>
   .bg {

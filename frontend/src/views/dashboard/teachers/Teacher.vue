@@ -94,16 +94,16 @@ export default {
       axios.get(path).then((response) => {
         this.teacher = response.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/docente_update').then((res) => {
         this.docente_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     fetchDestroy () {

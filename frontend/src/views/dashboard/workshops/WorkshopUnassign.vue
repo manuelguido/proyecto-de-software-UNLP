@@ -81,8 +81,8 @@ export default {
       axios.get(path).then((res) => {
         this.cycle_workshop = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     unAssignWorkshop () {

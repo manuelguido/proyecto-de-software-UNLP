@@ -92,8 +92,8 @@ export default {
         localStorage.setItem('routes', JSON.stringify(this.routes))
         this.loading = false
       }).catch((error) => {
-        console.log(error + 'Retring')
         this.getUserRoutes()
+        console.log(error + 'Retring')
       })
     },
     getUserData: function () {
@@ -103,8 +103,8 @@ export default {
         localStorage.setItem('user', JSON.stringify(this.user))
         this.loading = false
       }).catch((error) => {
-        console.log(error + 'Retring')
         this.getUserData()
+        console.log(error + 'Retring')
       })
     },
     userHasRole: function () {
@@ -114,8 +114,8 @@ export default {
         localStorage.setItem('role', JSON.stringify(res.data))
         this.loading = false
       }).catch((error) => {
-        console.log(error)
         this.userHasRole()
+        console.log(error)
       })
     }
   },

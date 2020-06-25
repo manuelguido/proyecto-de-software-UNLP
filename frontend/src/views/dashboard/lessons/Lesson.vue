@@ -208,8 +208,8 @@ export default {
       axios.get(path).then((res) => {
         this.lesson = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions
@@ -234,8 +234,8 @@ export default {
       axios.get(path).then((res) => {
         this.schedules = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchSchedules()
+        console.log(error)
       })
     },
     fetchFormData () {

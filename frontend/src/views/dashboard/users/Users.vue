@@ -92,8 +92,8 @@ export default {
         this.users = respuesta.data
         this.loadUsers()
       }).catch((error) => {
-        console.log(error)
         this.fetchData()
+        console.log(error)
       })
     },
     // Data fetch for permissions
@@ -101,24 +101,24 @@ export default {
       axios.get('/api/user/permission/usuario_new').then((res) => {
         this.usuario_new = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchNew()
+        console.log(error)
       })
     },
     fetchShow () {
       axios.get('/api/user/permission/usuario_show').then((res) => {
         this.usuario_show = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchShow()
+        console.log(error)
       })
     },
     fetchUpdate () {
       axios.get('/api/user/permission/usuario_update').then((res) => {
         this.usuario_update = res.data
       }).catch((error) => {
-        console.log(error)
         this.fetchUpdate()
+        console.log(error)
       })
     },
     loadUsers () {
